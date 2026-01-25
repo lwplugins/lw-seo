@@ -83,6 +83,7 @@ final class Plugin {
 		add_action( 'init', [ $this, 'load_textdomain' ] );
 		add_action( 'wp_head', [ $this, 'output_meta_tags' ], 1 );
 		add_filter( 'document_title_parts', [ $this, 'filter_title' ], 10, 1 );
+		add_filter( 'document_title_separator', [ $this, 'filter_title_separator' ], 10, 1 );
 
 		// Cleanup hooks.
 		if ( Options::get( 'remove_shortlinks' ) ) {
@@ -182,6 +183,22 @@ final class Plugin {
 		}
 
 		return $title_parts;
+	}
+
+	/**
+	 * Filter document title separator.
+	 *
+	 * @param string $sep Default separator.
+	 * @return string
+	 */
+	public function filter_title_separator( string $sep ): string {
+		$custom_sep = Options::get( 'separator' );
+
+		if ( ! empty( $custom_sep ) ) {
+			return $custom_sep;
+		}
+
+		return $sep;
 	}
 
 	/**
