@@ -14,21 +14,50 @@ Lightweight SEO plugin for WordPress - minimal footprint, maximum impact.
 
 LW SEO provides essential SEO features without the bloat. No upsells, no tracking, just clean and efficient SEO optimization.
 
-**Features:**
+= Features =
+
+**Meta & Titles**
 
 * Custom meta titles with template variables
 * Auto-generated meta descriptions
+* Customizable title separator
 * Canonical URLs
-* Open Graph tags for social sharing
-* Twitter Cards support
-* XML Sitemap generation
-* Schema.org / JSON-LD structured data
-* Breadcrumbs with shortcode and PHP function
-* robots.txt optimization
-* llms.txt for AI crawlers
-* Cleanup unnecessary WordPress head tags
+* Per-post/page SEO settings via meta box
 
-**Template Variables:**
+**Social Media**
+
+* Open Graph tags for Facebook, LinkedIn, etc.
+* Twitter Cards support
+* Default social image for posts without featured image
+* Custom OG title, description and image per post
+
+**Technical SEO**
+
+* XML Sitemap generation
+* Schema.org / JSON-LD structured data (Organization/Person)
+* robots.txt optimization
+* Breadcrumbs with shortcode and PHP function
+
+**AI & LLM**
+
+* llms.txt generation for AI crawlers
+* Block/allow individual AI crawlers (GPTBot, ChatGPT-User, Claude-Web, Google-Extended, Bytespider, CCBot, PerplexityBot, Cohere-AI)
+
+**Cleanup**
+
+* Remove shortlinks from head
+* Remove RSD link
+* Remove Windows Live Writer manifest
+
+**Admin**
+
+* Unified "LW Plugins" admin menu
+* Modern tabbed settings interface
+* WordPress media library integration
+
+= Template Variables =
+
+Use these in your title templates:
 
 * `%%sitename%%` - Site name
 * `%%sitedesc%%` - Site tagline
@@ -37,16 +66,19 @@ LW SEO provides essential SEO features without the bloat. No upsells, no trackin
 * `%%excerpt%%` - Post excerpt
 * `%%author%%` - Author name
 * `%%category%%` - Primary category
+* `%%term_title%%` - Taxonomy term title
+* `%%searchphrase%%` - Search query
+* `%%currentdate%%` - Current date
 
-**Conflict Detection:**
+= Conflict Detection =
 
-LW SEO automatically disables when detecting Yoast SEO, Rank Math, or All in One SEO.
+LW SEO automatically disables its output when detecting Yoast SEO, Rank Math, or All in One SEO to prevent conflicts.
 
 == Installation ==
 
 1. Upload the `lw-seo` folder to `/wp-content/plugins/`
 2. Activate the plugin through the 'Plugins' menu
-3. Go to Settings → LW SEO to configure
+3. Go to **LW Plugins → SEO** to configure
 
 Or install via Composer:
 
@@ -66,16 +98,35 @@ Use the shortcode `[lw_breadcrumbs]` in your content or the PHP function `lw_seo
 
 The llms.txt file provides information to AI crawlers about your website. See https://llmstxt.org/ for more details.
 
+= How do I block AI crawlers like ChatGPT or Claude? =
+
+Go to **LW Plugins → SEO → AI/LLM** tab and enable blocking for the crawlers you want to block. This adds the appropriate rules to your robots.txt.
+
+= How do I set a default social image? =
+
+Go to **LW Plugins → SEO → Social** tab and upload a default image. This will be used for Open Graph and Twitter Cards when a post has no featured image.
+
 = How do I flush the sitemap? =
 
-Go to Settings → Permalinks and click Save. This regenerates the rewrite rules.
+Go to **Settings → Permalinks** and click Save. This regenerates the rewrite rules.
+
+= Where can I find the sitemap? =
+
+Your sitemap is available at `yoursite.com/sitemap.xml`
+
+= Where can I find robots.txt and llms.txt? =
+
+* robots.txt: `yoursite.com/robots.txt`
+* llms.txt: `yoursite.com/llms.txt`
 
 == Screenshots ==
 
 1. SEO meta box in post editor
-2. Settings page - General options
-3. Settings page - Social media options
-4. Settings page - Sitemap options
+2. Settings page - General tab with title templates
+3. Settings page - Social tab with default image
+4. Settings page - AI/LLM tab with crawler control
+5. Settings page - Sitemap tab
+6. Settings page - Advanced tab
 
 == Changelog ==
 

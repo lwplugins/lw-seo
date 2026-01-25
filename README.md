@@ -2,6 +2,8 @@
 
 Lightweight SEO plugin for WordPress - minimal footprint, maximum impact.
 
+[![CI](https://github.com/lwplugins/lw-seo/actions/workflows/ci.yml/badge.svg)](https://github.com/lwplugins/lw-seo/actions/workflows/ci.yml)
+
 **Website:** [lwplugins.com](https://lwplugins.com)
 **GitHub:** [github.com/lwplugins/lw-seo](https://github.com/lwplugins/lw-seo)
 
@@ -10,18 +12,21 @@ Lightweight SEO plugin for WordPress - minimal footprint, maximum impact.
 ### Meta Tags & Titles
 - **Custom Titles** - Per-post/page title override with template variables
 - **Meta Descriptions** - Auto-generated from excerpt or content
+- **Title Separator** - Customizable separator character
 - **Canonical URLs** - Prevent duplicate content issues
 - **Robots Control** - noindex/nofollow per post
 
 ### Social Media
 - **Open Graph** - Facebook, LinkedIn sharing optimization
 - **Twitter Cards** - Summary and large image cards
+- **Default Social Image** - Fallback when post has no featured image
 - **Custom OG Images** - Per-post social images
 
 ### XML Sitemap
 - **Auto-generated** - Posts, pages, categories, tags
 - **Search Engine Ping** - Automatic sitemap submission
 - **Configurable** - Enable/disable per content type
+- Available at `yoursite.com/sitemap.xml`
 
 ### Schema.org / JSON-LD
 - **WebSite Schema** - Site-wide structured data
@@ -36,12 +41,26 @@ Lightweight SEO plugin for WordPress - minimal footprint, maximum impact.
 
 ### AI & Crawlers
 - **robots.txt** - Auto sitemap reference
-- **llms.txt** - AI crawler information file
+- **llms.txt** - AI crawler information file ([llmstxt.org](https://llmstxt.org/))
+- **AI Crawler Control** - Block/allow individual crawlers:
+  - GPTBot (OpenAI)
+  - ChatGPT-User
+  - Claude-Web (Anthropic)
+  - Google-Extended
+  - Bytespider (ByteDance)
+  - CCBot (Common Crawl)
+  - PerplexityBot
+  - Cohere-AI
 
 ### Cleanup
 - Remove shortlinks
 - Remove RSD links
 - Remove WLW manifest
+
+### Admin Interface
+- Unified **LW Plugins** menu
+- Modern tabbed settings interface
+- WordPress media library integration
 
 ## Installation
 
@@ -56,7 +75,7 @@ composer require lwplugins/lw-seo
 1. Download the latest release
 2. Upload to `/wp-content/plugins/lw-seo/`
 3. Activate in WordPress admin
-4. Go to **Settings → LW SEO**
+4. Go to **LW Plugins → SEO**
 
 ## Template Variables
 
@@ -77,7 +96,7 @@ Use these in title templates:
 
 ## Requirements
 
-- PHP 8.0+
+- PHP 8.2+
 - WordPress 6.0+
 
 ## Conflict Detection
