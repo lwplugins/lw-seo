@@ -20,25 +20,30 @@ final class TabLocal implements TabInterface {
 	use FieldRendererTrait;
 
 	/**
-	 * Days of the week.
+	 * Days of the week (lazy loaded to avoid early translation).
 	 *
-	 * @var array<string, string>
+	 * @var array<string, string>|null
 	 */
-	private array $days;
+	private ?array $days = null;
 
 	/**
-	 * Constructor.
+	 * Get days of the week with translations.
+	 *
+	 * @return array<string, string>
 	 */
-	public function __construct() {
-		$this->days = [
-			'monday'    => __( 'Monday', 'lw-seo' ),
-			'tuesday'   => __( 'Tuesday', 'lw-seo' ),
-			'wednesday' => __( 'Wednesday', 'lw-seo' ),
-			'thursday'  => __( 'Thursday', 'lw-seo' ),
-			'friday'    => __( 'Friday', 'lw-seo' ),
-			'saturday'  => __( 'Saturday', 'lw-seo' ),
-			'sunday'    => __( 'Sunday', 'lw-seo' ),
-		];
+	private function get_days(): array {
+		if ( null === $this->days ) {
+			$this->days = [
+				'monday'    => __( 'Monday', 'lw-seo' ),
+				'tuesday'   => __( 'Tuesday', 'lw-seo' ),
+				'wednesday' => __( 'Wednesday', 'lw-seo' ),
+				'thursday'  => __( 'Thursday', 'lw-seo' ),
+				'friday'    => __( 'Friday', 'lw-seo' ),
+				'saturday'  => __( 'Saturday', 'lw-seo' ),
+				'sunday'    => __( 'Sunday', 'lw-seo' ),
+			];
+		}
+		return $this->days;
 	}
 
 	/**
@@ -382,7 +387,7 @@ final class TabLocal implements TabInterface {
 		</table>
 
 		<table class="form-table lw-seo-hours-table">
-			<?php foreach ( $this->days as $day_key => $day_label ) : ?>
+			<?php foreach ( $this->get_days() as $day_key => $day_label ) : ?>
 				<tr>
 					<th scope="row"><?php echo esc_html( $day_label ); ?></th>
 					<td>

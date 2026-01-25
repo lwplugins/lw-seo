@@ -3,7 +3,7 @@ Contributors: lwplugins
 Tags: seo, sitemap, schema, opengraph, breadcrumbs
 Requires at least: 6.0
 Tested up to: 6.7
-Stable tag: 1.0.10
+Stable tag: 1.0.11
 Requires PHP: 8.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -130,6 +130,9 @@ Your sitemap is available at `yoursite.com/sitemap.xml`
 
 == Changelog ==
 
+= 1.0.11 =
+* Fix: Early translation loading warning on WordPress 6.7+
+
 = 1.0.10 =
 * Fix: Remove obsolete require_once from main plugin file
 
@@ -192,6 +195,9 @@ Your sitemap is available at `yoursite.com/sitemap.xml`
 * llms.txt generation
 
 == Upgrade Notice ==
+
+= 1.0.11 =
+Fix for WordPress 6.7+ translation warning.
 
 = 1.0.10 =
 Hotfix for PSR-4 autoloading.
