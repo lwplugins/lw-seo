@@ -110,7 +110,7 @@ final class ParentPage {
 	 */
 	private static function render_disable_commands_card(): void {
 		$is_active    = defined( 'LW_DISABLE_COMMANDS_VERSION' );
-		$settings_url = admin_url( 'options-general.php?page=lw-disable-commands' );
+		$settings_url = admin_url( 'admin.php?page=lw-disable-commands' );
 		$install_url  = 'https://github.com/lwplugins/lw-disable-commands';
 		?>
 		<div class="lw-plugin-card" style="background: #fff; border: 1px solid #ccd0d4; border-radius: 4px; padding: 20px; width: 300px;">
