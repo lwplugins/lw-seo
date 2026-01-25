@@ -14,7 +14,7 @@ use LightweightPlugins\SEO\Options;
 /**
  * Provides posts for sitemap.
  */
-final class Post_Provider implements Provider_Interface {
+class Post_Provider implements Provider_Interface {
 
     /**
      * Items per page.
