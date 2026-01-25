@@ -5,7 +5,7 @@
  * Description:       Lightweight SEO plugin for WordPress - minimal footprint, maximum impact.
  * Version:           1.0.4
  * Requires at least: 6.0
- * Requires PHP:      8.0
+ * Requires PHP:      8.2
  * Author:            LW Plugins
  * Author URI:        https://lwplugins.com
  * License:           GPL-2.0-or-later
