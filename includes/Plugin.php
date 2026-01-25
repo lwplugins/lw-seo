@@ -17,6 +17,7 @@ use LightweightPlugins\SEO\Local\Schema as LocalSchema;
 use LightweightPlugins\SEO\Local\Shortcodes as LocalShortcodes;
 use LightweightPlugins\SEO\Redirects\Handler as RedirectHandler;
 use LightweightPlugins\SEO\Redirects\Ajax as RedirectAjax;
+use LightweightPlugins\SEO\NotFoundHandler;
 
 /**
  * Main plugin class.
@@ -101,6 +102,9 @@ final class Plugin {
 		if ( is_admin() ) {
 			new RedirectAjax();
 		}
+
+		// 404 handler.
+		new NotFoundHandler();
 	}
 
 	/**

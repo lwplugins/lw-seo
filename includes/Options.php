@@ -135,6 +135,9 @@ final class Options {
 
 			// Redirects.
 			'redirects_enabled'     => true,
+
+			// 404.
+			'redirect_404_to_home'  => false,
 		];
 	}
 

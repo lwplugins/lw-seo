@@ -59,6 +59,7 @@ final class ParentPage {
 
 			<div class="lw-plugins-cards" style="display: flex; gap: 20px; flex-wrap: wrap; margin-top: 20px;">
 				<?php self::render_seo_card(); ?>
+				<?php self::render_disable_commands_card(); ?>
 
 				<?php
 				/**
@@ -97,6 +98,37 @@ final class ParentPage {
 				<a href="<?php echo esc_url( admin_url( 'admin.php?page=lw-seo' ) ); ?>" class="button button-primary">
 					<?php esc_html_e( 'Settings', 'lw-seo' ); ?>
 				</a>
+			</p>
+		</div>
+		<?php
+	}
+
+	/**
+	 * Render Disable Commands plugin card.
+	 *
+	 * @return void
+	 */
+	private static function render_disable_commands_card(): void {
+		$is_active    = defined( 'LW_DISABLE_COMMANDS_VERSION' );
+		$settings_url = admin_url( 'options-general.php?page=lw-disable-commands' );
+		$install_url  = 'https://github.com/lwplugins/lw-disable-commands';
+		?>
+		<div class="lw-plugin-card" style="background: #fff; border: 1px solid #ccd0d4; border-radius: 4px; padding: 20px; width: 300px;">
+			<h2 style="margin-top: 0;">
+				<span class="dashicons dashicons-editor-code" style="color: #2271b1;"></span>
+				<?php esc_html_e( 'LW Disable Commands', 'lw-seo' ); ?>
+			</h2>
+			<p><?php esc_html_e( 'Disable or customize the WordPress Command Palette (Cmd/Ctrl+K) keyboard shortcut.', 'lw-seo' ); ?></p>
+			<p>
+				<?php if ( $is_active ) : ?>
+					<a href="<?php echo esc_url( $settings_url ); ?>" class="button button-primary">
+						<?php esc_html_e( 'Settings', 'lw-seo' ); ?>
+					</a>
+				<?php else : ?>
+					<a href="<?php echo esc_url( $install_url ); ?>" class="button" target="_blank">
+						<?php esc_html_e( 'Get Plugin', 'lw-seo' ); ?>
+					</a>
+				<?php endif; ?>
 			</p>
 		</div>
 		<?php

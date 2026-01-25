@@ -19,6 +19,7 @@ use LightweightPlugins\SEO\Admin\Settings\TabAdvanced;
 use LightweightPlugins\SEO\Admin\Settings\TabWooCommerce;
 use LightweightPlugins\SEO\Admin\Settings\TabLocal;
 use LightweightPlugins\SEO\Admin\Settings\TabRedirects;
+use LightweightPlugins\SEO\Admin\Settings\Tab404;
 use LightweightPlugins\SEO\WooCommerce\WooCommerce;
 use LightweightPlugins\SEO\Options;
 
@@ -69,6 +70,7 @@ final class SettingsPage {
 			new TabAi(),
 			new TabLocal(),
 			new TabRedirects(),
+			new Tab404(),
 			new TabAdvanced(),
 		];
 
