@@ -89,10 +89,20 @@ final class Options {
             'breadcrumbs_enabled' => true,
             'schema_enabled'      => true,
             'robots_txt_enabled'  => true,
-            'llms_txt_enabled'    => true,
             'remove_shortlinks'   => true,
             'remove_rsd'          => true,
             'remove_wlw'          => true,
+
+            // AI/LLM Crawlers.
+            'llms_txt_enabled'    => true,
+            'block_gptbot'        => false,
+            'block_chatgpt_user'  => false,
+            'block_claude_web'    => false,
+            'block_google_extended' => false,
+            'block_bytespider'    => false,
+            'block_ccbot'         => false,
+            'block_perplexitybot' => false,
+            'block_cohere_ai'     => false,
         ];
     }
 

@@ -3,7 +3,7 @@ Contributors: lwplugins
 Tags: seo, sitemap, schema, opengraph, breadcrumbs
 Requires at least: 6.0
 Tested up to: 6.7
-Stable tag: 1.0.2
+Stable tag: 1.0.3
 Requires PHP: 8.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -79,6 +79,15 @@ Go to Settings → Permalinks and click Save. This regenerates the rewrite rules
 
 == Changelog ==
 
+= 1.0.3 =
+* New: Unified "LW Plugins" admin menu for all LW plugins
+* New: Plugin overview dashboard page
+* New: Tabbed settings interface with vertical navigation
+* New: AI/LLM section to control AI crawler access (GPTBot, Claude-Web, etc.)
+* New: Block/allow individual AI crawlers via robots.txt
+* Change: Settings moved from Settings → LW SEO to LW Plugins → SEO
+* Dev: Refactored settings page to atomic structure for maintainability
+
 = 1.0.2 =
 * Fix: Add rewrite rules for robots.txt to work independently of server config
 
@@ -96,6 +105,9 @@ Go to Settings → Permalinks and click Save. This regenerates the rewrite rules
 * llms.txt generation
 
 == Upgrade Notice ==
+
+= 1.0.3 =
+New tabbed settings UI, AI crawler control, and unified LW Plugins menu.
 
 = 1.0.2 =
 robots.txt now works on all server configurations.

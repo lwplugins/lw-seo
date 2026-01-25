@@ -98,6 +98,17 @@ final class Robots_Txt {
             $lines[] = '';
         }
 
+        // Add AI crawler blocks.
+        $ai_blocks = $this->get_ai_crawler_blocks();
+        if ( ! empty( $ai_blocks ) ) {
+            $lines[] = '# AI Crawler Restrictions';
+            foreach ( $ai_blocks as $agent ) {
+                $lines[] = 'User-agent: ' . $agent;
+                $lines[] = 'Disallow: /';
+                $lines[] = '';
+            }
+        }
+
         // Add llms.txt reference if enabled.
         if ( Options::get( 'llms_txt_enabled' ) ) {
             $lines[] = '# AI Crawler Information';
@@ -105,6 +116,34 @@ final class Robots_Txt {
         }
 
         return implode( "\n", $lines );
+    }
+
+    /**
+     * Get list of blocked AI crawler user agents.
+     *
+     * @return array<string>
+     */
+    private function get_ai_crawler_blocks(): array {
+        $blocked = [];
+
+        $crawlers = [
+            'gptbot'          => 'GPTBot',
+            'chatgpt_user'    => 'ChatGPT-User',
+            'claude_web'      => 'Claude-Web',
+            'google_extended' => 'Google-Extended',
+            'bytespider'      => 'Bytespider',
+            'ccbot'           => 'CCBot',
+            'perplexitybot'   => 'PerplexityBot',
+            'cohere_ai'       => 'cohere-ai',
+        ];
+
+        foreach ( $crawlers as $key => $agent ) {
+            if ( Options::get( 'block_' . $key ) ) {
+                $blocked[] = $agent;
+            }
+        }
+
+        return $blocked;
     }
 
     /**
@@ -125,6 +164,17 @@ final class Robots_Txt {
         if ( Options::get( 'sitemap_enabled' ) ) {
             $sitemap_url = Sitemap::get_index_url();
             $additions[] = 'Sitemap: ' . $sitemap_url;
+        }
+
+        // Add AI crawler blocks.
+        $ai_blocks = $this->get_ai_crawler_blocks();
+        if ( ! empty( $ai_blocks ) ) {
+            $additions[] = '';
+            $additions[] = '# AI Crawler Restrictions';
+            foreach ( $ai_blocks as $agent ) {
+                $additions[] = 'User-agent: ' . $agent;
+                $additions[] = 'Disallow: /';
+            }
         }
 
         // Add llms.txt reference if enabled.

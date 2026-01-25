@@ -76,11 +76,89 @@
     }
 
     /**
+     * Initialize settings page tabs.
+     */
+    function initSettingsTabs() {
+        const tabLinks = document.querySelectorAll('.lw-seo-tabs a');
+        const tabPanels = document.querySelectorAll('.lw-seo-tab-panel');
+
+        if (!tabLinks.length || !tabPanels.length) return;
+
+        const storageKey = 'lwSeoActiveTab';
+
+        // Get saved tab or default to first.
+        let activeTab = localStorage.getItem(storageKey) || 'general';
+
+        // Activate saved tab.
+        activateTab(activeTab);
+
+        // Handle tab clicks.
+        tabLinks.forEach(function (link) {
+            link.addEventListener('click', function (e) {
+                e.preventDefault();
+                const tabId = this.getAttribute('href').substring(1);
+                activateTab(tabId);
+                localStorage.setItem(storageKey, tabId);
+            });
+        });
+
+        function activateTab(tabId) {
+            // Update tab links.
+            tabLinks.forEach(function (link) {
+                const linkTabId = link.getAttribute('href').substring(1);
+                if (linkTabId === tabId) {
+                    link.classList.add('active');
+                } else {
+                    link.classList.remove('active');
+                }
+            });
+
+            // Update tab panels.
+            tabPanels.forEach(function (panel) {
+                if (panel.id === 'tab-' + tabId) {
+                    panel.classList.add('active');
+                } else {
+                    panel.classList.remove('active');
+                }
+            });
+        }
+    }
+
+    /**
+     * Initialize crawler card visual feedback.
+     */
+    function initCrawlerCards() {
+        const cards = document.querySelectorAll('.lw-seo-crawler-card');
+
+        cards.forEach(function (card) {
+            const checkbox = card.querySelector('input[type="checkbox"]');
+            if (!checkbox) return;
+
+            // Update card state on change.
+            function updateCardState() {
+                if (checkbox.checked) {
+                    card.classList.add('blocked');
+                } else {
+                    card.classList.remove('blocked');
+                }
+            }
+
+            // Initial state.
+            updateCardState();
+
+            // Listen for changes.
+            checkbox.addEventListener('change', updateCardState);
+        });
+    }
+
+    /**
      * Initialize on DOM ready.
      */
     function init() {
         initCounters();
         initCollapsibles();
+        initSettingsTabs();
+        initCrawlerCards();
     }
 
     // Run on DOM ready.

@@ -42,6 +42,24 @@ final class Plugin {
         require_once LW_SEO_PATH . 'includes/class-llms-txt.php';
 
         // Admin.
+        require_once LW_SEO_PATH . 'includes/admin/class-parent-page.php';
+
+        // Admin settings - interface and trait first.
+        require_once LW_SEO_PATH . 'includes/admin/settings/interface-tab.php';
+        require_once LW_SEO_PATH . 'includes/admin/settings/trait-field-renderer.php';
+
+        // Admin data classes.
+        require_once LW_SEO_PATH . 'includes/admin/data/class-ai-crawlers.php';
+
+        // Admin settings tabs.
+        require_once LW_SEO_PATH . 'includes/admin/settings/class-tab-general.php';
+        require_once LW_SEO_PATH . 'includes/admin/settings/class-tab-content.php';
+        require_once LW_SEO_PATH . 'includes/admin/settings/class-tab-social.php';
+        require_once LW_SEO_PATH . 'includes/admin/settings/class-tab-sitemap.php';
+        require_once LW_SEO_PATH . 'includes/admin/settings/class-tab-ai.php';
+        require_once LW_SEO_PATH . 'includes/admin/settings/class-tab-advanced.php';
+
+        // Settings page coordinator.
         require_once LW_SEO_PATH . 'includes/admin/class-settings-page.php';
 
         // Sitemap.
