@@ -130,6 +130,46 @@ trait Field_Renderer {
 	}
 
 	/**
+	 * Render an image upload field.
+	 *
+	 * @param array{name: string, description?: string} $args Field arguments.
+	 * @return void
+	 */
+	protected function render_image_field( array $args ): void {
+		$name  = $args['name'];
+		$value = Options::get( $name );
+		$desc  = $args['description'] ?? '';
+
+		?>
+		<div class="lw-seo-image-field">
+			<input
+				type="url"
+				id="<?php echo esc_attr( $name ); ?>"
+				name="<?php echo esc_attr( Options::OPTION_NAME ); ?>[<?php echo esc_attr( $name ); ?>]"
+				value="<?php echo esc_url( (string) $value ); ?>"
+				class="regular-text lw-seo-image-url"
+			/>
+			<button type="button" class="button lw-seo-upload-image">
+				<?php esc_html_e( 'Select Image', 'lw-seo' ); ?>
+			</button>
+			<?php if ( $value ) : ?>
+				<div class="lw-seo-image-preview" style="margin-top: 10px;">
+					<img src="<?php echo esc_url( (string) $value ); ?>" style="max-width: 300px; height: auto;" />
+				</div>
+			<?php else : ?>
+				<div class="lw-seo-image-preview" style="margin-top: 10px; display: none;">
+					<img src="" style="max-width: 300px; height: auto;" />
+				</div>
+			<?php endif; ?>
+		</div>
+		<?php
+
+		if ( $desc ) {
+			printf( '<p class="description">%s</p>', esc_html( $desc ) );
+		}
+	}
+
+	/**
 	 * Render separator select field.
 	 *
 	 * @return void

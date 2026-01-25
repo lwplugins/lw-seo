@@ -179,6 +179,59 @@
 	}
 
 	/**
+	 * Initialize media uploader for image fields.
+	 */
+	function initMediaUploader() {
+		const uploadButtons = document.querySelectorAll( '.lw-seo-upload-image' );
+
+		uploadButtons.forEach(
+			function (button) {
+				button.addEventListener(
+					'click',
+					function (e) {
+						e.preventDefault();
+
+						const container  = this.closest( '.lw-seo-image-field' );
+						const input      = container.querySelector( '.lw-seo-image-url' );
+						const preview    = container.querySelector( '.lw-seo-image-preview' );
+						const previewImg = preview.querySelector( 'img' );
+
+						// Check if wp.media exists.
+						if (typeof wp === 'undefined' || typeof wp.media === 'undefined') {
+							alert( 'Media library not available.' );
+							return;
+						}
+
+						// Create media frame.
+						const frame = wp.media(
+							{
+								title: 'Select Image',
+								multiple: false,
+								library: { type: 'image' }
+							}
+						);
+
+						// Handle selection.
+						frame.on(
+							'select',
+							function () {
+								const attachment = frame.state().get( 'selection' ).first().toJSON();
+								input.value      = attachment.url;
+
+								// Show preview.
+								previewImg.src        = attachment.url;
+								preview.style.display = 'block';
+							}
+						);
+
+						frame.open();
+					}
+				);
+			}
+		);
+	}
+
+	/**
 	 * Initialize on DOM ready.
 	 */
 	function init() {
@@ -186,6 +239,7 @@
 		initCollapsibles();
 		initSettingsTabs();
 		initCrawlerCards();
+		initMediaUploader();
 	}
 
 	// Run on DOM ready.

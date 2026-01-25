@@ -101,6 +101,9 @@ final class Settings_Page {
 			return;
 		}
 
+		// Enqueue WordPress media library.
+		wp_enqueue_media();
+
 		wp_enqueue_style(
 			'lw-seo-settings',
 			LW_SEO_URL . 'assets/css/settings.css',
@@ -111,7 +114,7 @@ final class Settings_Page {
 		wp_enqueue_script(
 			'lw-seo-settings',
 			LW_SEO_URL . 'assets/js/admin.js',
-			[],
+			[ 'jquery' ],
 			LW_SEO_VERSION,
 			true
 		);

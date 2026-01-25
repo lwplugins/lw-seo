@@ -114,6 +114,21 @@ final class Tab_Social implements Tab_Interface {
 					?>
 				</td>
 			</tr>
+			<tr>
+				<th scope="row">
+					<label for="default_og_image"><?php esc_html_e( 'Default Social Image', 'lw-seo' ); ?></label>
+				</th>
+				<td>
+					<?php
+					$this->render_image_field(
+						[
+							'name'        => 'default_og_image',
+							'description' => __( 'Used when a post has no featured image. Recommended: 1200x630px.', 'lw-seo' ),
+						]
+					);
+					?>
+				</td>
+			</tr>
 		</table>
 		<?php
 	}

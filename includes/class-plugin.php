@@ -390,6 +390,12 @@ final class Plugin {
 			}
 		}
 
+		// Fallback to default OG image.
+		$default_image = Options::get( 'default_og_image' );
+		if ( ! empty( $default_image ) ) {
+			return $default_image;
+		}
+
 		return '';
 	}
 

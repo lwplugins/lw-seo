@@ -40,7 +40,7 @@ final class Tab_Sitemap implements Tab_Interface {
 	 * @return string
 	 */
 	public function get_icon(): string {
-		return 'dashicons-sitemap';
+		return 'dashicons-networking';
 	}
 
 	/**

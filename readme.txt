@@ -3,7 +3,7 @@ Contributors: lwplugins
 Tags: seo, sitemap, schema, opengraph, breadcrumbs
 Requires at least: 6.0
 Tested up to: 6.7
-Stable tag: 1.0.4
+Stable tag: 1.0.5
 Requires PHP: 8.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -79,6 +79,11 @@ Go to Settings → Permalinks and click Save. This regenerates the rewrite rules
 
 == Changelog ==
 
+= 1.0.5 =
+* New: Default social image setting for posts without featured image
+* New: Image upload field with WordPress media library
+* Fix: Sitemap tab icon now displays correctly
+
 = 1.0.4 =
 * Fix: PHPCS/WPCS coding standards compliance
 * Dev: Move template function to separate functions.php
@@ -110,6 +115,9 @@ Go to Settings → Permalinks and click Save. This regenerates the rewrite rules
 * llms.txt generation
 
 == Upgrade Notice ==
+
+= 1.0.5 =
+Set a default social image for posts without featured images.
 
 = 1.0.4 =
 Code quality improvements and WPCS compliance.

@@ -67,6 +67,7 @@ final class Options {
 			'opengraph_enabled'     => true,
 			'twitter_enabled'       => true,
 			'twitter_card_type'     => 'summary_large_image',
+			'default_og_image'      => '',
 			'social_facebook'       => '',
 			'social_twitter'        => '',
 			'social_instagram'      => '',
