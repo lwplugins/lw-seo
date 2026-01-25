@@ -18,6 +18,7 @@ use LightweightPlugins\SEO\Admin\Settings\TabAi;
 use LightweightPlugins\SEO\Admin\Settings\TabAdvanced;
 use LightweightPlugins\SEO\Admin\Settings\TabWooCommerce;
 use LightweightPlugins\SEO\Admin\Settings\TabLocal;
+use LightweightPlugins\SEO\Admin\Settings\TabRedirects;
 use LightweightPlugins\SEO\WooCommerce\WooCommerce;
 use LightweightPlugins\SEO\Options;
 
@@ -67,6 +68,7 @@ final class SettingsPage {
 			new TabSitemap(),
 			new TabAi(),
 			new TabLocal(),
+			new TabRedirects(),
 			new TabAdvanced(),
 		];
 
@@ -127,6 +129,34 @@ final class SettingsPage {
 			[ 'jquery' ],
 			LW_SEO_VERSION,
 			true
+		);
+
+		// Redirects JavaScript.
+		wp_enqueue_script(
+			'lw-seo-redirects',
+			LW_SEO_URL . 'assets/js/redirects.js',
+			[],
+			LW_SEO_VERSION,
+			true
+		);
+
+		wp_localize_script(
+			'lw-seo-redirects',
+			'lwSeoRedirectsL10n',
+			[
+				'nonce'          => wp_create_nonce( 'lw_seo_redirects' ),
+				'addButton'      => __( 'Add Redirect', 'lw-seo' ),
+				'updateButton'   => __( 'Update Redirect', 'lw-seo' ),
+				'editButton'     => __( 'Edit', 'lw-seo' ),
+				'deleteButton'   => __( 'Delete', 'lw-seo' ),
+				'confirmDelete'  => __( 'Are you sure you want to delete this redirect?', 'lw-seo' ),
+				'sourceRequired' => __( 'Source URL is required.', 'lw-seo' ),
+				'selectFile'     => __( 'Please select a CSV file.', 'lw-seo' ),
+				'importErrors'   => __( 'Some rows could not be imported:', 'lw-seo' ),
+				'notRequired'    => __( 'Not required for this type', 'lw-seo' ),
+				'na'             => __( 'N/A', 'lw-seo' ),
+				'regex'          => __( 'Regex', 'lw-seo' ),
+			]
 		);
 	}
 

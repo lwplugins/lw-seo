@@ -15,6 +15,8 @@ use LightweightPlugins\SEO\Sitemap\Sitemap;
 use LightweightPlugins\SEO\WooCommerce\WooCommerce;
 use LightweightPlugins\SEO\Local\Schema as LocalSchema;
 use LightweightPlugins\SEO\Local\Shortcodes as LocalShortcodes;
+use LightweightPlugins\SEO\Redirects\Handler as RedirectHandler;
+use LightweightPlugins\SEO\Redirects\Ajax as RedirectAjax;
 
 /**
  * Main plugin class.
@@ -93,6 +95,12 @@ final class Plugin {
 		// Local SEO.
 		new LocalSchema();
 		new LocalShortcodes();
+
+		// Redirects.
+		new RedirectHandler();
+		if ( is_admin() ) {
+			new RedirectAjax();
+		}
 	}
 
 	/**

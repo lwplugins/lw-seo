@@ -3,7 +3,7 @@ Contributors: lwplugins
 Tags: seo, sitemap, schema, opengraph, breadcrumbs
 Requires at least: 6.0
 Tested up to: 6.7
-Stable tag: 1.0.12
+Stable tag: 1.1.0
 Requires PHP: 8.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -37,6 +37,9 @@ LW SEO provides essential SEO features without the bloat. No upsells, no trackin
 * Schema.org / JSON-LD structured data (Organization/Person)
 * robots.txt optimization
 * Breadcrumbs with shortcode and PHP function
+* URL Redirect Manager (301, 302, 307, 410, 451)
+* Regex redirect support
+* CSV import/export for redirects
 
 **AI & LLM**
 
@@ -130,6 +133,13 @@ Your sitemap is available at `yoursite.com/sitemap.xml`
 
 == Changelog ==
 
+= 1.1.0 =
+* New: Redirect Manager for creating and managing URL redirects
+* New: Support for 301, 302, 307, 410, and 451 redirect types
+* New: Regex support for advanced redirect patterns
+* New: CSV import/export for bulk redirect management
+* New: Hit counter and last accessed tracking for redirects
+
 = 1.0.12 =
 * Fix: Early translation loading in Local SEO shortcodes (WordPress 6.7+)
 
@@ -198,6 +208,9 @@ Your sitemap is available at `yoursite.com/sitemap.xml`
 * llms.txt generation
 
 == Upgrade Notice ==
+
+= 1.1.0 =
+New Redirect Manager feature with support for 301, 302, 307, 410, 451 redirects.
 
 = 1.0.12 =
 Fix for early translation loading in Local SEO shortcodes.

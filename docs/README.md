@@ -10,11 +10,12 @@ Lightweight SEO plugin for WordPress - minimal footprint, maximum impact.
 4. [Social Media](settings-social.md)
 5. [Sitemap](settings-sitemap.md)
 6. [Local SEO](settings-local.md)
-7. [AI/LLM Settings](settings-ai.md)
-8. [Advanced Settings](settings-advanced.md)
-9. [Shortcodes](shortcodes.md)
-10. [Template Variables](template-variables.md)
-11. [For Developers](developers.md)
+7. [Redirects](settings-redirects.md)
+8. [AI/LLM Settings](settings-ai.md)
+9. [Advanced Settings](settings-advanced.md)
+10. [Shortcodes](shortcodes.md)
+11. [Template Variables](template-variables.md)
+12. [For Developers](developers.md)
 
 ## Quick Start
 

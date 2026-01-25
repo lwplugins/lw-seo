@@ -278,6 +278,122 @@
 	Responsive
 	========================================================================== */
 
+/* ==========================================================================
+	Redirects Table
+	========================================================================== */
+
+#lw-seo-redirects-table {
+	margin-top: 15px;
+}
+
+#lw-seo-redirects-table .column-source {
+	width: 30%;
+}
+
+#lw-seo-redirects-table .column-destination {
+	width: 30%;
+}
+
+#lw-seo-redirects-table .column-type {
+	width: 80px;
+	text-align: center;
+}
+
+#lw-seo-redirects-table .column-hits {
+	width: 100px;
+	text-align: center;
+}
+
+#lw-seo-redirects-table .column-actions {
+	width: 150px;
+}
+
+#lw-seo-redirects-table code {
+	background: #f0f0f1;
+	padding: 2px 6px;
+	border-radius: 3px;
+	font-size: 12px;
+	word-break: break-all;
+}
+
+#lw-seo-redirects-table small {
+	color: #646970;
+	font-size: 11px;
+}
+
+/* Badge */
+.lw-seo-badge {
+	display: inline-block;
+	padding: 2px 6px;
+	background: #dba617;
+	color: #fff;
+	font-size: 10px;
+	font-weight: 600;
+	border-radius: 3px;
+	text-transform: uppercase;
+	margin-left: 5px;
+	vertical-align: middle;
+}
+
+/* Type colors */
+.lw-seo-type-301,
+.lw-seo-type-302,
+.lw-seo-type-307 {
+	display: inline-block;
+	padding: 3px 8px;
+	background: #d4edda;
+	color: #155724;
+	border-radius: 3px;
+	font-weight: 600;
+	font-size: 12px;
+}
+
+.lw-seo-type-410,
+.lw-seo-type-451 {
+	display: inline-block;
+	padding: 3px 8px;
+	background: #f8d7da;
+	color: #721c24;
+	border-radius: 3px;
+	font-weight: 600;
+	font-size: 12px;
+}
+
+/* Redirect form */
+.lw-seo-redirect-form input.code {
+	font-family: Consolas, Monaco, monospace;
+}
+
+/* Message */
+.lw-seo-message {
+	display: inline-block;
+	margin-left: 10px;
+	padding: 5px 10px;
+	border-radius: 3px;
+	font-size: 13px;
+}
+
+.lw-seo-message--success {
+	background: #d4edda;
+	color: #155724;
+}
+
+.lw-seo-message--error {
+	background: #f8d7da;
+	color: #721c24;
+}
+
+/* Count badge in h3 */
+h3 .count {
+	font-weight: normal;
+	color: #646970;
+	font-size: 13px;
+}
+
+/* ==========================================================================
+	Responsive
+	========================================================================== */
+
 @media screen and (max-width: 960px) {
 	.lw-seo-settings {
 		flex-direction: column;

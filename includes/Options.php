@@ -132,6 +132,9 @@ final class Options {
 			'local_lat'             => '',
 			'local_lng'             => '',
 			'local_hours_enabled'   => false,
+
+			// Redirects.
+			'redirects_enabled'     => true,
 		];
 	}
 
