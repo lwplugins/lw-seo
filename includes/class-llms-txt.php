@@ -19,176 +19,178 @@ namespace LightweightPlugins\SEO;
  */
 final class Llms_Txt {
 
-    /**
-     * Constructor.
-     */
-    public function __construct() {
-        if ( ! Options::get( 'llms_txt_enabled' ) ) {
-            return;
-        }
+	/**
+	 * Constructor.
+	 */
+	public function __construct() {
+		if ( ! Options::get( 'llms_txt_enabled' ) ) {
+			return;
+		}
 
-        add_action( 'init', [ $this, 'add_rewrite_rules' ] );
-        add_action( 'template_redirect', [ $this, 'handle_request' ] );
-        add_filter( 'query_vars', [ $this, 'add_query_vars' ] );
-    }
+		add_action( 'init', [ $this, 'add_rewrite_rules' ] );
+		add_action( 'template_redirect', [ $this, 'handle_request' ] );
+		add_filter( 'query_vars', [ $this, 'add_query_vars' ] );
+	}
 
-    /**
-     * Add rewrite rules.
-     *
-     * @return void
-     */
-    public function add_rewrite_rules(): void {
-        add_rewrite_rule(
-            '^llms\.txt$',
-            'index.php?lw_llms_txt=1',
-            'top'
-        );
-    }
+	/**
+	 * Add rewrite rules.
+	 *
+	 * @return void
+	 */
+	public function add_rewrite_rules(): void {
+		add_rewrite_rule(
+			'^llms\.txt$',
+			'index.php?lw_llms_txt=1',
+			'top'
+		);
+	}
 
-    /**
-     * Add query vars.
-     *
-     * @param array<string> $vars Query vars.
-     * @return array<string>
-     */
-    public function add_query_vars( array $vars ): array {
-        $vars[] = 'lw_llms_txt';
-        return $vars;
-    }
+	/**
+	 * Add query vars.
+	 *
+	 * @param array<string> $vars Query vars.
+	 * @return array<string>
+	 */
+	public function add_query_vars( array $vars ): array {
+		$vars[] = 'lw_llms_txt';
+		return $vars;
+	}
 
-    /**
-     * Handle llms.txt request.
-     *
-     * @return void
-     */
-    public function handle_request(): void {
-        if ( ! get_query_var( 'lw_llms_txt' ) ) {
-            return;
-        }
+	/**
+	 * Handle llms.txt request.
+	 *
+	 * @return void
+	 */
+	public function handle_request(): void {
+		if ( ! get_query_var( 'lw_llms_txt' ) ) {
+			return;
+		}
 
-        header( 'Content-Type: text/plain; charset=UTF-8' );
-        header( 'X-Robots-Tag: noindex' );
+		header( 'Content-Type: text/plain; charset=UTF-8' );
+		header( 'X-Robots-Tag: noindex' );
 
-        echo $this->generate_content(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo $this->generate_content(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 
-        exit;
-    }
+		exit;
+	}
 
-    /**
-     * Generate llms.txt content.
-     *
-     * @return string
-     */
-    private function generate_content(): string {
-        $lines = [];
+	/**
+	 * Generate llms.txt content.
+	 *
+	 * @return string
+	 */
+	private function generate_content(): string {
+		$lines = [];
 
-        // Header.
-        $lines[] = '# ' . get_bloginfo( 'name' );
-        $lines[] = '';
-        $lines[] = '> ' . get_bloginfo( 'description' );
-        $lines[] = '';
+		// Header.
+		$lines[] = '# ' . get_bloginfo( 'name' );
+		$lines[] = '';
+		$lines[] = '> ' . get_bloginfo( 'description' );
+		$lines[] = '';
 
-        // Site information.
-        $lines[] = '## Site Information';
-        $lines[] = '';
-        $lines[] = '- **URL**: ' . home_url( '/' );
-        $lines[] = '- **Language**: ' . get_locale();
+		// Site information.
+		$lines[] = '## Site Information';
+		$lines[] = '';
+		$lines[] = '- **URL**: ' . home_url( '/' );
+		$lines[] = '- **Language**: ' . get_locale();
 
-        $knowledge_type = Options::get( 'knowledge_type' );
-        $knowledge_name = Options::get( 'knowledge_name' );
+		$knowledge_type = Options::get( 'knowledge_type' );
+		$knowledge_name = Options::get( 'knowledge_name' );
 
-        if ( $knowledge_type && $knowledge_name ) {
-            $lines[] = '- **' . ucfirst( $knowledge_type ) . '**: ' . $knowledge_name;
-        }
+		if ( $knowledge_type && $knowledge_name ) {
+			$lines[] = '- **' . ucfirst( $knowledge_type ) . '**: ' . $knowledge_name;
+		}
 
-        $lines[] = '';
+		$lines[] = '';
 
-        // Content summary.
-        $lines[] = '## Content';
-        $lines[] = '';
+		// Content summary.
+		$lines[] = '## Content';
+		$lines[] = '';
 
-        // Post count.
-        $post_count = wp_count_posts( 'post' );
-        $lines[]    = '- **Published Posts**: ' . (int) $post_count->publish;
+		// Post count.
+		$post_count = wp_count_posts( 'post' );
+		$lines[]    = '- **Published Posts**: ' . (int) $post_count->publish;
 
-        // Page count.
-        $page_count = wp_count_posts( 'page' );
-        $lines[]    = '- **Published Pages**: ' . (int) $page_count->publish;
+		// Page count.
+		$page_count = wp_count_posts( 'page' );
+		$lines[]    = '- **Published Pages**: ' . (int) $page_count->publish;
 
-        // Categories.
-        $cat_count = wp_count_terms( [ 'taxonomy' => 'category' ] );
-        if ( ! is_wp_error( $cat_count ) ) {
-            $lines[] = '- **Categories**: ' . (int) $cat_count;
-        }
+		// Categories.
+		$cat_count = wp_count_terms( [ 'taxonomy' => 'category' ] );
+		if ( ! is_wp_error( $cat_count ) ) {
+			$lines[] = '- **Categories**: ' . (int) $cat_count;
+		}
 
-        $lines[] = '';
+		$lines[] = '';
 
-        // Important pages.
-        $lines[] = '## Important Pages';
-        $lines[] = '';
+		// Important pages.
+		$lines[] = '## Important Pages';
+		$lines[] = '';
 
-        // Homepage.
-        $lines[] = '- [Home](' . home_url( '/' ) . ')';
+		// Homepage.
+		$lines[] = '- [Home](' . home_url( '/' ) . ')';
 
-        // Front page if different from home.
-        $front_page_id = get_option( 'page_on_front' );
-        if ( $front_page_id ) {
-            $lines[] = '- [' . get_the_title( $front_page_id ) . '](' . get_permalink( $front_page_id ) . ')';
-        }
+		// Front page if different from home.
+		$front_page_id = get_option( 'page_on_front' );
+		if ( $front_page_id ) {
+			$lines[] = '- [' . get_the_title( $front_page_id ) . '](' . get_permalink( $front_page_id ) . ')';
+		}
 
-        // Blog page if different.
-        $blog_page_id = get_option( 'page_for_posts' );
-        if ( $blog_page_id ) {
-            $lines[] = '- [' . get_the_title( $blog_page_id ) . '](' . get_permalink( $blog_page_id ) . ')';
-        }
+		// Blog page if different.
+		$blog_page_id = get_option( 'page_for_posts' );
+		if ( $blog_page_id ) {
+			$lines[] = '- [' . get_the_title( $blog_page_id ) . '](' . get_permalink( $blog_page_id ) . ')';
+		}
 
-        // Privacy policy.
-        $privacy_page_id = get_option( 'wp_page_for_privacy_policy' );
-        if ( $privacy_page_id ) {
-            $lines[] = '- [Privacy Policy](' . get_permalink( $privacy_page_id ) . ')';
-        }
+		// Privacy policy.
+		$privacy_page_id = get_option( 'wp_page_for_privacy_policy' );
+		if ( $privacy_page_id ) {
+			$lines[] = '- [Privacy Policy](' . get_permalink( $privacy_page_id ) . ')';
+		}
 
-        $lines[] = '';
+		$lines[] = '';
 
-        // Recent posts.
-        $lines[] = '## Recent Posts';
-        $lines[] = '';
+		// Recent posts.
+		$lines[] = '## Recent Posts';
+		$lines[] = '';
 
-        $recent_posts = get_posts( [
-            'numberposts' => 10,
-            'post_status' => 'publish',
-        ] );
+		$recent_posts = get_posts(
+			[
+				'numberposts' => 10,
+				'post_status' => 'publish',
+			]
+		);
 
-        foreach ( $recent_posts as $post ) {
-            $lines[] = '- [' . get_the_title( $post ) . '](' . get_permalink( $post ) . ')';
-        }
+		foreach ( $recent_posts as $post ) {
+			$lines[] = '- [' . get_the_title( $post ) . '](' . get_permalink( $post ) . ')';
+		}
 
-        $lines[] = '';
+		$lines[] = '';
 
-        // Sitemap reference.
-        if ( Options::get( 'sitemap_enabled' ) ) {
-            $lines[] = '## Sitemap';
-            $lines[] = '';
-            $lines[] = 'A complete XML sitemap is available at:';
-            $lines[] = home_url( '/sitemap.xml' );
-            $lines[] = '';
-        }
+		// Sitemap reference.
+		if ( Options::get( 'sitemap_enabled' ) ) {
+			$lines[] = '## Sitemap';
+			$lines[] = '';
+			$lines[] = 'A complete XML sitemap is available at:';
+			$lines[] = home_url( '/sitemap.xml' );
+			$lines[] = '';
+		}
 
-        // Footer.
-        $lines[] = '---';
-        $lines[] = 'Generated by LW SEO - ' . wp_date( 'Y-m-d H:i:s' );
+		// Footer.
+		$lines[] = '---';
+		$lines[] = 'Generated by LW SEO - ' . wp_date( 'Y-m-d H:i:s' );
 
-        return implode( "\n", $lines );
-    }
+		return implode( "\n", $lines );
+	}
 
-    /**
-     * Flush rewrite rules on activation.
-     *
-     * @return void
-     */
-    public static function activate(): void {
-        $llms = new self();
-        $llms->add_rewrite_rules();
-        flush_rewrite_rules();
-    }
+	/**
+	 * Flush rewrite rules on activation.
+	 *
+	 * @return void
+	 */
+	public static function activate(): void {
+		$llms = new self();
+		$llms->add_rewrite_rules();
+		flush_rewrite_rules();
+	}
 }

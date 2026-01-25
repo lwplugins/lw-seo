@@ -3,7 +3,7 @@ Contributors: lwplugins
 Tags: seo, sitemap, schema, opengraph, breadcrumbs
 Requires at least: 6.0
 Tested up to: 6.7
-Stable tag: 1.0.3
+Stable tag: 1.0.4
 Requires PHP: 8.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -79,6 +79,11 @@ Go to Settings → Permalinks and click Save. This regenerates the rewrite rules
 
 == Changelog ==
 
+= 1.0.4 =
+* Fix: PHPCS/WPCS coding standards compliance
+* Dev: Move template function to separate functions.php
+* Dev: Update phpcs.xml.dist configuration
+
 = 1.0.3 =
 * New: Unified "LW Plugins" admin menu for all LW plugins
 * New: Plugin overview dashboard page
@@ -105,6 +110,9 @@ Go to Settings → Permalinks and click Save. This regenerates the rewrite rules
 * llms.txt generation
 
 == Upgrade Notice ==
+
+= 1.0.4 =
+Code quality improvements and WPCS compliance.
 
 = 1.0.3 =
 New tabbed settings UI, AI crawler control, and unified LW Plugins menu.

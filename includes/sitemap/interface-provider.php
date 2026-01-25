@@ -14,25 +14,25 @@ namespace LightweightPlugins\SEO\Sitemap;
  */
 interface Provider_Interface {
 
-    /**
-     * Check if this provider is enabled.
-     *
-     * @return bool
-     */
-    public function is_enabled(): bool;
+	/**
+	 * Check if this provider is enabled.
+	 *
+	 * @return bool
+	 */
+	public function is_enabled(): bool;
 
-    /**
-     * Get total number of pages.
-     *
-     * @return int
-     */
-    public function get_total_pages(): int;
+	/**
+	 * Get total number of pages.
+	 *
+	 * @return int
+	 */
+	public function get_total_pages(): int;
 
-    /**
-     * Get items for a specific page.
-     *
-     * @param int $page Page number.
-     * @return array<array{loc: string, lastmod?: string, changefreq?: string, priority?: string}>
-     */
-    public function get_items( int $page ): array;
+	/**
+	 * Get items for a specific page.
+	 *
+	 * @param int $page Page number.
+	 * @return array<array{loc: string, lastmod?: string, changefreq?: string, priority?: string}>
+	 */
+	public function get_items( int $page ): array;
 }

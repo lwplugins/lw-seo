@@ -14,17 +14,17 @@ namespace LightweightPlugins\SEO\Sitemap;
  */
 final class Page_Provider extends Post_Provider {
 
-    /**
-     * Post type.
-     *
-     * @var string
-     */
-    protected string $post_type = 'page';
+	/**
+	 * Post type.
+	 *
+	 * @var string
+	 */
+	protected string $post_type = 'page';
 
-    /**
-     * Option key.
-     *
-     * @var string
-     */
-    protected string $option_key = 'sitemap_pages';
+	/**
+	 * Option key.
+	 *
+	 * @var string
+	 */
+	protected string $option_key = 'sitemap_pages';
 }

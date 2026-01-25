@@ -3,315 +3,315 @@
  */
 
 /* ==========================================================================
-   Tabbed Layout
-   ========================================================================== */
+	Tabbed Layout
+	========================================================================== */
 
 .lw-seo-settings {
-    display: flex;
-    gap: 0;
-    margin-top: 20px;
-    background: #fff;
-    border: 1px solid #c3c4c7;
-    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
+	display: flex;
+	gap: 0;
+	margin-top: 20px;
+	background: #fff;
+	border: 1px solid #c3c4c7;
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
 }
 
 /* Vertical Tab Navigation */
 .lw-seo-tabs {
-    width: 200px;
-    min-width: 200px;
-    background: #f6f7f7;
-    border-right: 1px solid #c3c4c7;
-    margin: 0;
-    padding: 0;
-    list-style: none;
+	width: 200px;
+	min-width: 200px;
+	background: #f6f7f7;
+	border-right: 1px solid #c3c4c7;
+	margin: 0;
+	padding: 0;
+	list-style: none;
 }
 
 .lw-seo-tabs li {
-    margin: 0;
-    padding: 0;
+	margin: 0;
+	padding: 0;
 }
 
 .lw-seo-tabs a {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 15px 20px;
-    text-decoration: none;
-    color: #1d2327;
-    border-bottom: 1px solid #c3c4c7;
-    border-left: 3px solid transparent;
-    transition: all 0.15s ease;
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	padding: 15px 20px;
+	text-decoration: none;
+	color: #1d2327;
+	border-bottom: 1px solid #c3c4c7;
+	border-left: 3px solid transparent;
+	transition: all 0.15s ease;
 }
 
 .lw-seo-tabs a:hover {
-    background: #fff;
-    color: #2271b1;
+	background: #fff;
+	color: #2271b1;
 }
 
 .lw-seo-tabs a.active {
-    background: #fff;
-    border-left-color: #2271b1;
-    color: #2271b1;
-    font-weight: 600;
-    margin-right: -1px;
+	background: #fff;
+	border-left-color: #2271b1;
+	color: #2271b1;
+	font-weight: 600;
+	margin-right: -1px;
 }
 
 .lw-seo-tabs .dashicons {
-    font-size: 18px;
-    width: 18px;
-    height: 18px;
+	font-size: 18px;
+	width: 18px;
+	height: 18px;
 }
 
 /* Tab Content */
 .lw-seo-tab-content {
-    flex: 1;
-    padding: 20px 30px;
-    min-height: 500px;
+	flex: 1;
+	padding: 20px 30px;
+	min-height: 500px;
 }
 
 .lw-seo-tab-panel {
-    display: none;
+	display: none;
 }
 
 .lw-seo-tab-panel.active {
-    display: block;
+	display: block;
 }
 
 .lw-seo-tab-panel h2 {
-    margin-top: 0;
-    padding-bottom: 10px;
-    border-bottom: 1px solid #dcdcde;
-    color: #1d2327;
+	margin-top: 0;
+	padding-bottom: 10px;
+	border-bottom: 1px solid #dcdcde;
+	color: #1d2327;
 }
 
 .lw-seo-tab-panel h3 {
-    margin: 25px 0 15px;
-    font-size: 14px;
-    color: #1d2327;
+	margin: 25px 0 15px;
+	font-size: 14px;
+	color: #1d2327;
 }
 
 .lw-seo-tab-panel h3:first-child {
-    margin-top: 0;
+	margin-top: 0;
 }
 
 /* ==========================================================================
-   Form Elements
-   ========================================================================== */
+	Form Elements
+	========================================================================== */
 
 .lw-seo-settings .form-table {
-    margin-top: 0;
+	margin-top: 0;
 }
 
 .lw-seo-settings .form-table th {
-    width: 200px;
-    padding: 15px 10px 15px 0;
-    font-weight: 500;
+	width: 200px;
+	padding: 15px 10px 15px 0;
+	font-weight: 500;
 }
 
 .lw-seo-settings .form-table td {
-    padding: 15px 10px;
+	padding: 15px 10px;
 }
 
 .lw-seo-settings .regular-text {
-    width: 350px;
-    max-width: 100%;
+	width: 350px;
+	max-width: 100%;
 }
 
 .lw-seo-settings .large-text {
-    width: 100%;
-    max-width: 500px;
+	width: 100%;
+	max-width: 500px;
 }
 
 .lw-seo-settings .description {
-    color: #646970;
-    font-style: normal;
-    font-size: 13px;
-    margin-top: 5px;
+	color: #646970;
+	font-style: normal;
+	font-size: 13px;
+	margin-top: 5px;
 }
 
 /* Section description box */
 .lw-seo-section-description {
-    margin-bottom: 20px;
-    padding: 12px 15px;
-    background: #f0f6fc;
-    border-left: 4px solid #2271b1;
-    border-radius: 0 4px 4px 0;
+	margin-bottom: 20px;
+	padding: 12px 15px;
+	background: #f0f6fc;
+	border-left: 4px solid #2271b1;
+	border-radius: 0 4px 4px 0;
 }
 
 .lw-seo-section-description p {
-    margin: 0;
-    color: #1d2327;
+	margin: 0;
+	color: #1d2327;
 }
 
 /* ==========================================================================
-   Checkbox Groups
-   ========================================================================== */
+	Checkbox Groups
+	========================================================================== */
 
 .lw-seo-checkbox-group {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
 }
 
 .lw-seo-checkbox-item {
-    display: flex;
-    align-items: flex-start;
-    gap: 8px;
+	display: flex;
+	align-items: flex-start;
+	gap: 8px;
 }
 
 .lw-seo-checkbox-item input[type="checkbox"] {
-    margin-top: 2px;
+	margin-top: 2px;
 }
 
 .lw-seo-checkbox-item label {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
 }
 
 .lw-seo-checkbox-item .label-text {
-    font-weight: 500;
+	font-weight: 500;
 }
 
 .lw-seo-checkbox-item .label-description {
-    color: #646970;
-    font-size: 12px;
+	color: #646970;
+	font-size: 12px;
 }
 
 /* ==========================================================================
-   LLM/AI Crawler Section
-   ========================================================================== */
+	LLM/AI Crawler Section
+	========================================================================== */
 
 .lw-seo-crawler-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 15px;
-    margin-top: 15px;
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+	gap: 15px;
+	margin-top: 15px;
 }
 
 .lw-seo-crawler-card {
-    display: flex;
-    align-items: flex-start;
-    gap: 12px;
-    padding: 15px;
-    background: #f6f7f7;
-    border: 1px solid #dcdcde;
-    border-radius: 4px;
-    transition: border-color 0.15s ease;
+	display: flex;
+	align-items: flex-start;
+	gap: 12px;
+	padding: 15px;
+	background: #f6f7f7;
+	border: 1px solid #dcdcde;
+	border-radius: 4px;
+	transition: border-color 0.15s ease;
 }
 
 .lw-seo-crawler-card:hover {
-    border-color: #2271b1;
+	border-color: #2271b1;
 }
 
 .lw-seo-crawler-card.blocked {
-    background: #fcf0f1;
-    border-color: #d63638;
+	background: #fcf0f1;
+	border-color: #d63638;
 }
 
 .lw-seo-crawler-card input[type="checkbox"] {
-    margin-top: 3px;
+	margin-top: 3px;
 }
 
 .lw-seo-crawler-info {
-    flex: 1;
+	flex: 1;
 }
 
 .lw-seo-crawler-name {
-    font-weight: 600;
-    color: #1d2327;
-    margin-bottom: 2px;
+	font-weight: 600;
+	color: #1d2327;
+	margin-bottom: 2px;
 }
 
 .lw-seo-crawler-company {
-    font-size: 12px;
-    color: #646970;
+	font-size: 12px;
+	color: #646970;
 }
 
 .lw-seo-crawler-agent {
-    font-size: 11px;
-    color: #8c8f94;
-    font-family: monospace;
-    margin-top: 4px;
+	font-size: 11px;
+	color: #8c8f94;
+	font-family: monospace;
+	margin-top: 4px;
 }
 
 /* ==========================================================================
-   Info Boxes
-   ========================================================================== */
+	Info Boxes
+	========================================================================== */
 
 .lw-seo-info-box {
-    display: flex;
-    align-items: flex-start;
-    gap: 10px;
-    padding: 12px 15px;
-    background: #fff8e5;
-    border: 1px solid #dba617;
-    border-radius: 4px;
-    margin: 15px 0;
+	display: flex;
+	align-items: flex-start;
+	gap: 10px;
+	padding: 12px 15px;
+	background: #fff8e5;
+	border: 1px solid #dba617;
+	border-radius: 4px;
+	margin: 15px 0;
 }
 
 .lw-seo-info-box .dashicons {
-    color: #dba617;
-    margin-top: 2px;
+	color: #dba617;
+	margin-top: 2px;
 }
 
 .lw-seo-info-box p {
-    margin: 0;
-    color: #1d2327;
+	margin: 0;
+	color: #1d2327;
 }
 
 .lw-seo-info-box a {
-    color: #2271b1;
+	color: #2271b1;
 }
 
 /* ==========================================================================
-   Submit Button
-   ========================================================================== */
+	Submit Button
+	========================================================================== */
 
 .lw-seo-settings .submit {
-    margin-top: 20px;
-    padding-top: 20px;
-    border-top: 1px solid #dcdcde;
+	margin-top: 20px;
+	padding-top: 20px;
+	border-top: 1px solid #dcdcde;
 }
 
 /* ==========================================================================
-   Responsive
-   ========================================================================== */
+	Responsive
+	========================================================================== */
 
 @media screen and (max-width: 960px) {
-    .lw-seo-settings {
-        flex-direction: column;
-    }
+	.lw-seo-settings {
+		flex-direction: column;
+	}
 
-    .lw-seo-tabs {
-        width: 100%;
-        min-width: 100%;
-        display: flex;
-        flex-wrap: wrap;
-        border-right: none;
-        border-bottom: 1px solid #c3c4c7;
-    }
+	.lw-seo-tabs {
+		width: 100%;
+		min-width: 100%;
+		display: flex;
+		flex-wrap: wrap;
+		border-right: none;
+		border-bottom: 1px solid #c3c4c7;
+	}
 
-    .lw-seo-tabs li {
-        flex: 1;
-        min-width: 120px;
-    }
+	.lw-seo-tabs li {
+		flex: 1;
+		min-width: 120px;
+	}
 
-    .lw-seo-tabs a {
-        justify-content: center;
-        border-bottom: none;
-        border-left: none;
-        border-bottom: 3px solid transparent;
-        padding: 12px 15px;
-    }
+	.lw-seo-tabs a {
+		justify-content: center;
+		border-bottom: none;
+		border-left: none;
+		border-bottom: 3px solid transparent;
+		padding: 12px 15px;
+	}
 
-    .lw-seo-tabs a.active {
-        border-left-color: transparent;
-        border-bottom-color: #2271b1;
-        margin-right: 0;
-    }
+	.lw-seo-tabs a.active {
+		border-left-color: transparent;
+		border-bottom-color: #2271b1;
+		margin-right: 0;
+	}
 
-    .lw-seo-tab-content {
-        padding: 20px;
-    }
+	.lw-seo-tab-content {
+		padding: 20px;
+	}
 }

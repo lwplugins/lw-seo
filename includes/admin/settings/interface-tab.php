@@ -14,31 +14,31 @@ namespace LightweightPlugins\SEO\Admin\Settings;
  */
 interface Tab_Interface {
 
-    /**
-     * Get the tab slug.
-     *
-     * @return string
-     */
-    public function get_slug(): string;
+	/**
+	 * Get the tab slug.
+	 *
+	 * @return string
+	 */
+	public function get_slug(): string;
 
-    /**
-     * Get the tab label.
-     *
-     * @return string
-     */
-    public function get_label(): string;
+	/**
+	 * Get the tab label.
+	 *
+	 * @return string
+	 */
+	public function get_label(): string;
 
-    /**
-     * Get the tab icon (dashicon class).
-     *
-     * @return string
-     */
-    public function get_icon(): string;
+	/**
+	 * Get the tab icon (dashicon class).
+	 *
+	 * @return string
+	 */
+	public function get_icon(): string;
 
-    /**
-     * Render the tab content.
-     *
-     * @return void
-     */
-    public function render(): void;
+	/**
+	 * Render the tab content.
+	 *
+	 * @return void
+	 */
+	public function render(): void;
 }

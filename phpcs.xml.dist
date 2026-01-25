@@ -18,6 +18,16 @@
     <rule ref="WordPress">
         <!-- Allow short array syntax -->
         <exclude name="Universal.Arrays.DisallowShortArraySyntax"/>
+        <!-- Allow reserved keyword parameter names (common practice) -->
+        <exclude name="Universal.NamingConventions.NoReservedKeywordParameterNames"/>
+        <!-- Allow code-like comments (placeholder patterns) -->
+        <exclude name="Squiz.PHP.CommentedOutCode"/>
+    </rule>
+
+    <!-- Acknowledge slow DB query (intentional for noindex filtering) -->
+    <rule ref="WordPress.DB.SlowDBQuery.slow_db_query_meta_query">
+        <type>warning</type>
+        <severity>0</severity>
     </rule>
 
     <!-- PHP Compatibility -->
@@ -41,6 +51,7 @@
         <properties>
             <property name="prefixes" type="array">
                 <element value="lw_seo"/>
+                <element value="lw_plugins"/>
                 <element value="LightweightPlugins\SEO"/>
             </property>
         </properties>
