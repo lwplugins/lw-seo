@@ -20,6 +20,34 @@ final class ParentPage {
 	public const SLUG = 'lw-plugins';
 
 	/**
+	 * Get all LW plugins registry.
+	 *
+	 * @return array<string, array{name: string, description: string, icon: string, icon_color: string, constant: string, settings_page: string, github: string}>
+	 */
+	public static function get_plugins_registry(): array {
+		return [
+			'lw-seo'              => [
+				'name'          => 'LW SEO',
+				'description'   => __( 'Essential SEO features without the bloat. Meta tags, sitemaps, schema, and more.', 'lw-seo' ),
+				'icon'          => 'dashicons-search',
+				'icon_color'    => '#2271b1',
+				'constant'      => 'LW_SEO_VERSION',
+				'settings_page' => 'lw-seo',
+				'github'        => 'https://github.com/lwplugins/lw-seo',
+			],
+			'lw-disable-commands' => [
+				'name'          => 'LW Disable Commands',
+				'description'   => __( 'Disable or customize the WordPress Command Palette (Cmd/Ctrl+K) keyboard shortcut.', 'lw-seo' ),
+				'icon'          => 'dashicons-editor-code',
+				'icon_color'    => '#d63638',
+				'constant'      => 'LW_DISABLE_COMMANDS_VERSION',
+				'settings_page' => 'lw-disable-commands',
+				'github'        => 'https://github.com/lwplugins/lw-disable-commands',
+			],
+		];
+	}
+
+	/**
 	 * Register the parent menu if not exists.
 	 *
 	 * @return void
@@ -58,8 +86,7 @@ final class ParentPage {
 			<p><?php esc_html_e( 'Lightweight plugins for WordPress - minimal footprint, maximum impact.', 'lw-seo' ); ?></p>
 
 			<div class="lw-plugins-cards" style="display: flex; gap: 20px; flex-wrap: wrap; margin-top: 20px;">
-				<?php self::render_seo_card(); ?>
-				<?php self::render_disable_commands_card(); ?>
+				<?php self::render_all_plugin_cards(); ?>
 
 				<?php
 				/**
@@ -82,50 +109,44 @@ final class ParentPage {
 	}
 
 	/**
-	 * Render SEO plugin card.
+	 * Render all plugin cards from registry.
 	 *
 	 * @return void
 	 */
-	private static function render_seo_card(): void {
-		?>
-		<div class="lw-plugin-card" style="background: #fff; border: 1px solid #ccd0d4; border-radius: 4px; padding: 20px; width: 300px;">
-			<h2 style="margin-top: 0;">
-				<span class="dashicons dashicons-search" style="color: #2271b1;"></span>
-				<?php esc_html_e( 'LW SEO', 'lw-seo' ); ?>
-			</h2>
-			<p><?php esc_html_e( 'Essential SEO features without the bloat. Meta tags, sitemaps, schema, and more.', 'lw-seo' ); ?></p>
-			<p>
-				<a href="<?php echo esc_url( admin_url( 'admin.php?page=lw-seo' ) ); ?>" class="button button-primary">
-					<?php esc_html_e( 'Settings', 'lw-seo' ); ?>
-				</a>
-			</p>
-		</div>
-		<?php
+	private static function render_all_plugin_cards(): void {
+		$plugins = self::get_plugins_registry();
+
+		foreach ( $plugins as $slug => $plugin ) {
+			self::render_plugin_card( $slug, $plugin );
+		}
 	}
 
 	/**
-	 * Render Disable Commands plugin card.
+	 * Render a single plugin card.
 	 *
+	 * @param string $slug   Plugin slug.
+	 * @param array  $plugin Plugin data.
 	 * @return void
 	 */
-	private static function render_disable_commands_card(): void {
-		$is_active    = defined( 'LW_DISABLE_COMMANDS_VERSION' );
-		$settings_url = admin_url( 'admin.php?page=lw-disable-commands' );
-		$install_url  = 'https://github.com/lwplugins/lw-disable-commands';
+	private static function render_plugin_card( string $slug, array $plugin ): void {
+		$is_active = defined( $plugin['constant'] );
 		?>
 		<div class="lw-plugin-card" style="background: #fff; border: 1px solid #ccd0d4; border-radius: 4px; padding: 20px; width: 300px;">
 			<h2 style="margin-top: 0;">
-				<span class="dashicons dashicons-editor-code" style="color: #2271b1;"></span>
-				<?php esc_html_e( 'LW Disable Commands', 'lw-seo' ); ?>
+				<span class="dashicons <?php echo esc_attr( $plugin['icon'] ); ?>" style="color: <?php echo esc_attr( $plugin['icon_color'] ); ?>;"></span>
+				<?php echo esc_html( $plugin['name'] ); ?>
+				<?php if ( $is_active ) : ?>
+					<span style="display: inline-block; background: #00a32a; color: #fff; font-size: 11px; padding: 2px 6px; border-radius: 3px; margin-left: 8px; vertical-align: middle;"><?php esc_html_e( 'Active', 'lw-seo' ); ?></span>
+				<?php endif; ?>
 			</h2>
-			<p><?php esc_html_e( 'Disable or customize the WordPress Command Palette (Cmd/Ctrl+K) keyboard shortcut.', 'lw-seo' ); ?></p>
+			<p><?php echo esc_html( $plugin['description'] ); ?></p>
 			<p>
 				<?php if ( $is_active ) : ?>
-					<a href="<?php echo esc_url( $settings_url ); ?>" class="button button-primary">
+					<a href="<?php echo esc_url( admin_url( 'admin.php?page=' . $plugin['settings_page'] ) ); ?>" class="button button-primary">
 						<?php esc_html_e( 'Settings', 'lw-seo' ); ?>
 					</a>
 				<?php else : ?>
-					<a href="<?php echo esc_url( $install_url ); ?>" class="button" target="_blank">
+					<a href="<?php echo esc_url( $plugin['github'] ); ?>" class="button" target="_blank">
 						<?php esc_html_e( 'Get Plugin', 'lw-seo' ); ?>
 					</a>
 				<?php endif; ?>

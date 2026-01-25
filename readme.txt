@@ -3,7 +3,7 @@ Contributors: lwplugins
 Tags: seo, sitemap, schema, opengraph, breadcrumbs
 Requires at least: 6.0
 Tested up to: 6.7
-Stable tag: 1.1.1
+Stable tag: 1.1.2
 Requires PHP: 8.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -134,6 +134,10 @@ Your sitemap is available at `yoursite.com/sitemap.xml`
 
 == Changelog ==
 
+= 1.1.2 =
+* Refactor: Unified LW Plugins overview page with centralized plugin registry
+* Refactor: Dynamic plugin cards with active/inactive status detection
+
 = 1.1.1 =
 * New: 404 settings tab with redirect to homepage option
 
@@ -212,6 +216,9 @@ Your sitemap is available at `yoursite.com/sitemap.xml`
 * llms.txt generation
 
 == Upgrade Notice ==
+
+= 1.1.2 =
+Unified LW Plugins overview page with centralized plugin registry.
 
 = 1.1.1 =
 New 404 settings tab with option to redirect all 404 errors to homepage.
