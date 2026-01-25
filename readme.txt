@@ -3,7 +3,7 @@ Contributors: lwplugins
 Tags: seo, sitemap, schema, opengraph, breadcrumbs
 Requires at least: 6.0
 Tested up to: 6.7
-Stable tag: 1.0.1
+Stable tag: 1.0.2
 Requires PHP: 8.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -79,6 +79,9 @@ Go to Settings → Permalinks and click Save. This regenerates the rewrite rules
 
 == Changelog ==
 
+= 1.0.2 =
+* Fix: Add rewrite rules for robots.txt to work independently of server config
+
 = 1.0.1 =
 * Fix: Remove final keyword from Post_Provider to allow Page_Provider extension
 
@@ -93,6 +96,9 @@ Go to Settings → Permalinks and click Save. This regenerates the rewrite rules
 * llms.txt generation
 
 == Upgrade Notice ==
+
+= 1.0.2 =
+robots.txt now works on all server configurations.
 
 = 1.0.1 =
 Bug fix for sitemap page provider.
