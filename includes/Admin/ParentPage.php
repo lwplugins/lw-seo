@@ -37,12 +37,21 @@ final class ParentPage {
 			],
 			'lw-disable-commands' => [
 				'name'          => 'LW Disable Commands',
-				'description'   => __( 'Disable or customize the WordPress Command Palette (Cmd/Ctrl+K) keyboard shortcut.', 'lw-seo' ),
+				'description'   => __( 'Disable admin commands.', 'lw-seo' ),
 				'icon'          => 'dashicons-editor-code',
 				'icon_color'    => '#d63638',
 				'constant'      => 'LW_DISABLE_COMMANDS_VERSION',
 				'settings_page' => 'lw-disable-commands',
 				'github'        => 'https://github.com/lwplugins/lw-disable-commands',
+			],
+			'lw-disable-comments' => [
+				'name'          => 'LW Disable Comments',
+				'description'   => __( 'Disable comments completely.', 'lw-seo' ),
+				'icon'          => 'dashicons-admin-comments',
+				'icon_color'    => '#d63638',
+				'constant'      => 'LW_DISABLE_COMMENTS_VERSION',
+				'settings_page' => 'lw-disable-comments',
+				'github'        => 'https://github.com/lwplugins/lw-disable-comments',
 			],
 		];
 	}
