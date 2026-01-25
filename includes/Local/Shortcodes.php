@@ -17,31 +17,41 @@ use LightweightPlugins\SEO\Options;
 final class Shortcodes {
 
 	/**
-	 * Days of the week with translations.
+	 * Days of the week (lazy loaded).
 	 *
-	 * @var array<string, string>
+	 * @var array<string, string>|null
 	 */
-	private array $days;
+	private ?array $days = null;
 
 	/**
 	 * Constructor.
 	 */
 	public function __construct() {
-		$this->days = [
-			'monday'    => __( 'Monday', 'lw-seo' ),
-			'tuesday'   => __( 'Tuesday', 'lw-seo' ),
-			'wednesday' => __( 'Wednesday', 'lw-seo' ),
-			'thursday'  => __( 'Thursday', 'lw-seo' ),
-			'friday'    => __( 'Friday', 'lw-seo' ),
-			'saturday'  => __( 'Saturday', 'lw-seo' ),
-			'sunday'    => __( 'Sunday', 'lw-seo' ),
-		];
-
 		add_shortcode( 'lw_address', [ $this, 'address_shortcode' ] );
 		add_shortcode( 'lw_phone', [ $this, 'phone_shortcode' ] );
 		add_shortcode( 'lw_email', [ $this, 'email_shortcode' ] );
 		add_shortcode( 'lw_hours', [ $this, 'hours_shortcode' ] );
 		add_shortcode( 'lw_map', [ $this, 'map_shortcode' ] );
+	}
+
+	/**
+	 * Get days of the week with translations.
+	 *
+	 * @return array<string, string>
+	 */
+	private function get_days(): array {
+		if ( null === $this->days ) {
+			$this->days = [
+				'monday'    => __( 'Monday', 'lw-seo' ),
+				'tuesday'   => __( 'Tuesday', 'lw-seo' ),
+				'wednesday' => __( 'Wednesday', 'lw-seo' ),
+				'thursday'  => __( 'Thursday', 'lw-seo' ),
+				'friday'    => __( 'Friday', 'lw-seo' ),
+				'saturday'  => __( 'Saturday', 'lw-seo' ),
+				'sunday'    => __( 'Sunday', 'lw-seo' ),
+			];
+		}
+		return $this->days;
 	}
 
 	/**
@@ -271,7 +281,7 @@ final class Shortcodes {
 			$output .= '<table class="lw-seo-hours-table">';
 			$output .= '<tbody>';
 
-			foreach ( $this->days as $day_key => $day_label ) {
+			foreach ( $this->get_days() as $day_key => $day_label ) {
 				$is_closed = Options::get( "local_hours_{$day_key}_closed", false );
 				$open      = Options::get( "local_hours_{$day_key}_open" );
 				$close     = Options::get( "local_hours_{$day_key}_close" );
@@ -304,7 +314,7 @@ final class Shortcodes {
 		} else {
 			$output .= '<ul class="lw-seo-hours-list">';
 
-			foreach ( $this->days as $day_key => $day_label ) {
+			foreach ( $this->get_days() as $day_key => $day_label ) {
 				$is_closed = Options::get( "local_hours_{$day_key}_closed", false );
 				$open      = Options::get( "local_hours_{$day_key}_open" );
 				$close     = Options::get( "local_hours_{$day_key}_close" );
