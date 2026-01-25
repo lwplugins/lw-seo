@@ -12,7 +12,7 @@ namespace LightweightPlugins\SEO\Sitemap;
 /**
  * Provides pages for sitemap.
  */
-final class Page_Provider extends Post_Provider {
+final class PageProvider extends PostProvider {
 
 	/**
 	 * Post type.

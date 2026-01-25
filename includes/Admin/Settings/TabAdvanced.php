@@ -12,9 +12,9 @@ namespace LightweightPlugins\SEO\Admin\Settings;
 /**
  * Handles the Advanced settings tab.
  */
-final class Tab_Advanced implements Tab_Interface {
+final class TabAdvanced implements TabInterface {
 
-	use Field_Renderer;
+	use FieldRendererTrait;
 
 	/**
 	 * Get the tab slug.

@@ -14,7 +14,7 @@ use LightweightPlugins\SEO\Options;
 /**
  * Trait for rendering form fields.
  */
-trait Field_Renderer {
+trait FieldRendererTrait {
 
 	/**
 	 * Render a text input field.

@@ -12,7 +12,7 @@ namespace LightweightPlugins\SEO\Sitemap;
 /**
  * Interface for sitemap providers.
  */
-interface Provider_Interface {
+interface ProviderInterface {
 
 	/**
 	 * Check if this provider is enabled.

@@ -9,21 +9,22 @@ declare(strict_types=1);
 
 namespace LightweightPlugins\SEO\Admin;
 
-use LightweightPlugins\SEO\Admin\Settings\Tab_Interface;
-use LightweightPlugins\SEO\Admin\Settings\Tab_General;
-use LightweightPlugins\SEO\Admin\Settings\Tab_Content;
-use LightweightPlugins\SEO\Admin\Settings\Tab_Social;
-use LightweightPlugins\SEO\Admin\Settings\Tab_Sitemap;
-use LightweightPlugins\SEO\Admin\Settings\Tab_AI;
-use LightweightPlugins\SEO\Admin\Settings\Tab_Advanced;
-use LightweightPlugins\SEO\Admin\Settings\Tab_WooCommerce;
+use LightweightPlugins\SEO\Admin\Settings\TabInterface;
+use LightweightPlugins\SEO\Admin\Settings\TabGeneral;
+use LightweightPlugins\SEO\Admin\Settings\TabContent;
+use LightweightPlugins\SEO\Admin\Settings\TabSocial;
+use LightweightPlugins\SEO\Admin\Settings\TabSitemap;
+use LightweightPlugins\SEO\Admin\Settings\TabAi;
+use LightweightPlugins\SEO\Admin\Settings\TabAdvanced;
+use LightweightPlugins\SEO\Admin\Settings\TabWooCommerce;
+use LightweightPlugins\SEO\Admin\Settings\TabLocal;
 use LightweightPlugins\SEO\WooCommerce\WooCommerce;
 use LightweightPlugins\SEO\Options;
 
 /**
  * Handles the plugin settings page.
  */
-final class Settings_Page {
+final class SettingsPage {
 
 	/**
 	 * Settings page slug.
@@ -38,7 +39,7 @@ final class Settings_Page {
 	/**
 	 * Registered tabs.
 	 *
-	 * @var array<Tab_Interface>
+	 * @var array<TabInterface>
 	 */
 	private array $tabs = [];
 
@@ -60,18 +61,19 @@ final class Settings_Page {
 	 */
 	private function register_tabs(): void {
 		$this->tabs = [
-			new Tab_General(),
-			new Tab_Content(),
-			new Tab_Social(),
-			new Tab_Sitemap(),
-			new Tab_AI(),
-			new Tab_Advanced(),
+			new TabGeneral(),
+			new TabContent(),
+			new TabSocial(),
+			new TabSitemap(),
+			new TabAi(),
+			new TabLocal(),
+			new TabAdvanced(),
 		];
 
 		// Add WooCommerce tab if WooCommerce is active.
 		if ( WooCommerce::is_active() ) {
-			// Insert before Advanced tab.
-			array_splice( $this->tabs, 5, 0, [ new Tab_WooCommerce() ] );
+			// Insert before Local tab.
+			array_splice( $this->tabs, 5, 0, [ new TabWooCommerce() ] );
 		}
 	}
 
@@ -81,10 +83,10 @@ final class Settings_Page {
 	 * @return void
 	 */
 	public function add_menu_page(): void {
-		Parent_Page::maybe_register();
+		ParentPage::maybe_register();
 
 		add_submenu_page(
-			Parent_Page::SLUG,
+			ParentPage::SLUG,
 			__( 'SEO Settings', 'lw-seo' ),
 			__( 'SEO', 'lw-seo' ),
 			'manage_options',
@@ -101,8 +103,8 @@ final class Settings_Page {
 	 */
 	public function enqueue_assets( string $hook ): void {
 		$valid_hooks = [
-			'toplevel_page_' . Parent_Page::SLUG,
-			Parent_Page::SLUG . '_page_' . self::SLUG,
+			'toplevel_page_' . ParentPage::SLUG,
+			ParentPage::SLUG . '_page_' . self::SLUG,
 		];
 
 		if ( ! in_array( $hook, $valid_hooks, true ) ) {

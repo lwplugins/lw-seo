@@ -12,9 +12,9 @@ namespace LightweightPlugins\SEO\Admin\Settings;
 /**
  * Handles the Social Media settings tab.
  */
-final class Tab_Social implements Tab_Interface {
+final class TabSocial implements TabInterface {
 
-	use Field_Renderer;
+	use FieldRendererTrait;
 
 	/**
 	 * Get the tab slug.

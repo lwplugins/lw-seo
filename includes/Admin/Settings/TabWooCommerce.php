@@ -12,9 +12,9 @@ namespace LightweightPlugins\SEO\Admin\Settings;
 /**
  * Handles the WooCommerce settings tab.
  */
-final class Tab_WooCommerce implements Tab_Interface {
+final class TabWooCommerce implements TabInterface {
 
-	use Field_Renderer;
+	use FieldRendererTrait;
 
 	/**
 	 * Get the tab slug.

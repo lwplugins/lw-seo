@@ -12,7 +12,7 @@ namespace LightweightPlugins\SEO;
 /**
  * Handles the SEO meta box in post editor.
  */
-final class Meta_Box {
+final class MetaBox {
 
 	/**
 	 * Meta box ID.

@@ -14,7 +14,7 @@ use LightweightPlugins\SEO\Sitemap\Sitemap;
 /**
  * Handles robots.txt generation.
  */
-final class Robots_Txt {
+final class RobotsTxt {
 
 	/**
 	 * Constructor.

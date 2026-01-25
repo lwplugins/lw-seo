@@ -9,15 +9,15 @@ declare(strict_types=1);
 
 namespace LightweightPlugins\SEO\Admin\Settings;
 
-use LightweightPlugins\SEO\Admin\Data\AI_Crawlers;
+use LightweightPlugins\SEO\Admin\Data\AiCrawlers;
 use LightweightPlugins\SEO\Options;
 
 /**
  * Handles the AI/LLM settings tab.
  */
-final class Tab_AI implements Tab_Interface {
+final class TabAi implements TabInterface {
 
-	use Field_Renderer;
+	use FieldRendererTrait;
 
 	/**
 	 * Get the tab slug.
@@ -115,7 +115,7 @@ final class Tab_AI implements Tab_Interface {
 
 		<div class="lw-seo-crawler-grid">
 			<?php
-			$crawlers = AI_Crawlers::get_all();
+			$crawlers = AiCrawlers::get_all();
 			foreach ( $crawlers as $key => $crawler ) :
 				$is_blocked = Options::get( 'block_' . $key );
 				?>

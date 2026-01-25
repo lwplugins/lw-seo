@@ -14,7 +14,7 @@ use LightweightPlugins\SEO\Options;
 /**
  * Provides taxonomy terms for sitemap.
  */
-final class Taxonomy_Provider implements Provider_Interface {
+final class TaxonomyProvider implements ProviderInterface {
 
 	/**
 	 * Items per page.

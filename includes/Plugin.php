@@ -9,10 +9,12 @@ declare(strict_types=1);
 
 namespace LightweightPlugins\SEO;
 
-use LightweightPlugins\SEO\Admin\Settings_Page;
+use LightweightPlugins\SEO\Admin\SettingsPage;
 use LightweightPlugins\SEO\Schema\Schema;
 use LightweightPlugins\SEO\Sitemap\Sitemap;
 use LightweightPlugins\SEO\WooCommerce\WooCommerce;
+use LightweightPlugins\SEO\Local\Schema as LocalSchema;
+use LightweightPlugins\SEO\Local\Shortcodes as LocalShortcodes;
 
 /**
  * Main plugin class.
@@ -31,56 +33,14 @@ final class Plugin {
 	/**
 	 * Load required files.
 	 *
+	 * PSR-4 autoloading handles all class loading via Composer.
+	 * Only non-class files need to be required manually.
+	 *
 	 * @return void
 	 */
 	private function load_dependencies(): void {
-		// Core classes.
-		require_once LW_SEO_PATH . 'includes/class-options.php';
-		require_once LW_SEO_PATH . 'includes/class-replace-vars.php';
-		require_once LW_SEO_PATH . 'includes/class-meta-box.php';
-		require_once LW_SEO_PATH . 'includes/class-breadcrumbs.php';
-		require_once LW_SEO_PATH . 'includes/class-robots-txt.php';
-		require_once LW_SEO_PATH . 'includes/class-llms-txt.php';
-		require_once LW_SEO_PATH . 'includes/functions.php';
-
-		// Admin.
-		require_once LW_SEO_PATH . 'includes/admin/class-parent-page.php';
-
-		// Admin settings - interface and trait first.
-		require_once LW_SEO_PATH . 'includes/admin/settings/interface-tab.php';
-		require_once LW_SEO_PATH . 'includes/admin/settings/trait-field-renderer.php';
-
-		// Admin data classes.
-		require_once LW_SEO_PATH . 'includes/admin/data/class-ai-crawlers.php';
-
-		// Admin settings tabs.
-		require_once LW_SEO_PATH . 'includes/admin/settings/class-tab-general.php';
-		require_once LW_SEO_PATH . 'includes/admin/settings/class-tab-content.php';
-		require_once LW_SEO_PATH . 'includes/admin/settings/class-tab-social.php';
-		require_once LW_SEO_PATH . 'includes/admin/settings/class-tab-sitemap.php';
-		require_once LW_SEO_PATH . 'includes/admin/settings/class-tab-ai.php';
-		require_once LW_SEO_PATH . 'includes/admin/settings/class-tab-advanced.php';
-
-		// Settings page coordinator.
-		require_once LW_SEO_PATH . 'includes/admin/class-settings-page.php';
-
-		// Sitemap.
-		require_once LW_SEO_PATH . 'includes/sitemap/interface-provider.php';
-		require_once LW_SEO_PATH . 'includes/sitemap/class-post-provider.php';
-		require_once LW_SEO_PATH . 'includes/sitemap/class-page-provider.php';
-		require_once LW_SEO_PATH . 'includes/sitemap/class-taxonomy-provider.php';
-		require_once LW_SEO_PATH . 'includes/sitemap/class-sitemap.php';
-
-		// Schema.
-		require_once LW_SEO_PATH . 'includes/schema/class-schema.php';
-
-		// WooCommerce integration.
-		require_once LW_SEO_PATH . 'includes/woocommerce/class-woocommerce.php';
-		require_once LW_SEO_PATH . 'includes/woocommerce/class-opengraph.php';
-		require_once LW_SEO_PATH . 'includes/woocommerce/class-schema.php';
-
-		// WooCommerce settings tab.
-		require_once LW_SEO_PATH . 'includes/admin/settings/class-tab-woocommerce.php';
+		// Note: All classes are loaded via PSR-4 autoloading (composer.json).
+		// functions.php is loaded via Composer's "files" autoload.
 	}
 
 	/**
@@ -116,19 +76,23 @@ final class Plugin {
 	private function init_components(): void {
 		// Admin components.
 		if ( is_admin() ) {
-			new Meta_Box();
-			new Settings_Page();
+			new MetaBox();
+			new SettingsPage();
 		}
 
 		// Frontend/shared components.
 		new Sitemap();
 		new Schema();
 		new Breadcrumbs();
-		new Robots_Txt();
-		new Llms_Txt();
+		new RobotsTxt();
+		new LlmsTxt();
 
 		// WooCommerce integration (self-checks if WooCommerce is active).
 		new WooCommerce();
+
+		// Local SEO.
+		new LocalSchema();
+		new LocalShortcodes();
 	}
 
 	/**
@@ -161,7 +125,7 @@ final class Plugin {
 					// Apply template.
 					$template = Options::get( 'title_' . $post->post_type );
 					if ( $template ) {
-						$title_parts['title'] = Replace_Vars::replace( $template, $post );
+						$title_parts['title'] = ReplaceVars::replace( $template, $post );
 						unset( $title_parts['site'], $title_parts['tagline'] );
 					}
 				}
@@ -170,26 +134,26 @@ final class Plugin {
 			$term     = get_queried_object();
 			$template = Options::get( 'title_' . ( $term->taxonomy ?? 'category' ) );
 			if ( $template && $term instanceof \WP_Term ) {
-				$title_parts['title'] = Replace_Vars::replace( $template, null, $term );
+				$title_parts['title'] = ReplaceVars::replace( $template, null, $term );
 				unset( $title_parts['site'], $title_parts['tagline'] );
 			}
 		} elseif ( is_author() ) {
 			$user     = get_queried_object();
 			$template = Options::get( 'title_author' );
 			if ( $template && $user instanceof \WP_User ) {
-				$title_parts['title'] = Replace_Vars::replace( $template, null, null, $user );
+				$title_parts['title'] = ReplaceVars::replace( $template, null, null, $user );
 				unset( $title_parts['site'], $title_parts['tagline'] );
 			}
 		} elseif ( is_search() ) {
 			$template = Options::get( 'title_search' );
 			if ( $template ) {
-				$title_parts['title'] = Replace_Vars::replace( $template );
+				$title_parts['title'] = ReplaceVars::replace( $template );
 				unset( $title_parts['site'], $title_parts['tagline'] );
 			}
 		} elseif ( is_404() ) {
 			$template = Options::get( 'title_404' );
 			if ( $template ) {
-				$title_parts['title'] = Replace_Vars::replace( $template );
+				$title_parts['title'] = ReplaceVars::replace( $template );
 				unset( $title_parts['site'], $title_parts['tagline'] );
 			}
 		}

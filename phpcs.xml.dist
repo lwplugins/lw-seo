@@ -22,6 +22,9 @@
         <exclude name="Universal.NamingConventions.NoReservedKeywordParameterNames"/>
         <!-- Allow code-like comments (placeholder patterns) -->
         <exclude name="Squiz.PHP.CommentedOutCode"/>
+        <!-- PSR-4 autoloading: use PascalCase filenames instead of class- prefix -->
+        <exclude name="WordPress.Files.FileName.NotHyphenatedLowercase"/>
+        <exclude name="WordPress.Files.FileName.InvalidClassFileName"/>
     </rule>
 
     <!-- Acknowledge slow DB query (intentional for noindex filtering) -->

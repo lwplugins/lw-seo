@@ -12,9 +12,9 @@ namespace LightweightPlugins\SEO\Admin\Settings;
 /**
  * Handles the Content Types settings tab.
  */
-final class Tab_Content implements Tab_Interface {
+final class TabContent implements TabInterface {
 
-	use Field_Renderer;
+	use FieldRendererTrait;
 
 	/**
 	 * Get the tab slug.

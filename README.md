@@ -60,6 +60,14 @@ Lightweight SEO plugin for WordPress - minimal footprint, maximum impact.
 - **Product Sitemap** - Include products and product categories
 - **Custom Settings** - Dedicated WooCommerce SEO settings tab
 
+### Local SEO
+- **LocalBusiness Schema** - 100+ business types supported
+- **Business Address** - Street, city, state, zip, country
+- **Contact Info** - Phone, email with schema markup
+- **Opening Hours** - Per-day hours with OpeningHoursSpecification
+- **Geo Coordinates** - Latitude/longitude for location
+- **Shortcodes** - `[lw_address]`, `[lw_phone]`, `[lw_email]`, `[lw_hours]`, `[lw_map]`
+
 ### Cleanup
 - Remove shortlinks
 - Remove RSD links

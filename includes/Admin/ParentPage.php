@@ -12,7 +12,7 @@ namespace LightweightPlugins\SEO\Admin;
 /**
  * Handles the LW Plugins parent menu page.
  */
-final class Parent_Page {
+final class ParentPage {
 
 	/**
 	 * Parent menu slug.

@@ -19,7 +19,7 @@ final class Sitemap {
 	/**
 	 * Sitemap providers.
 	 *
-	 * @var array<Provider_Interface>
+	 * @var array<ProviderInterface>
 	 */
 	private array $providers = [];
 
@@ -47,10 +47,10 @@ final class Sitemap {
 	 * @return void
 	 */
 	private function register_providers(): void {
-		$this->providers['post']     = new Post_Provider();
-		$this->providers['page']     = new Page_Provider();
-		$this->providers['category'] = new Taxonomy_Provider( 'category' );
-		$this->providers['post_tag'] = new Taxonomy_Provider( 'post_tag' );
+		$this->providers['post']     = new PostProvider();
+		$this->providers['page']     = new PageProvider();
+		$this->providers['category'] = new TaxonomyProvider( 'category' );
+		$this->providers['post_tag'] = new TaxonomyProvider( 'post_tag' );
 	}
 
 	/**

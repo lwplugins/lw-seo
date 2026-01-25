@@ -17,7 +17,7 @@ namespace LightweightPlugins\SEO;
  *
  * @see https://llmstxt.org/
  */
-final class Llms_Txt {
+final class LlmsTxt {
 
 	/**
 	 * Constructor.

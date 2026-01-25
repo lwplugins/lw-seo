@@ -12,7 +12,7 @@ namespace LightweightPlugins\SEO\Admin\Data;
 /**
  * Provides AI crawler data.
  */
-final class AI_Crawlers {
+final class AiCrawlers {
 
 	/**
 	 * Get all AI crawlers.

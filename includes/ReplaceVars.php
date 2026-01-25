@@ -12,7 +12,7 @@ namespace LightweightPlugins\SEO;
 /**
  * Handles replacement of %%variables%% in titles and descriptions.
  */
-final class Replace_Vars {
+final class ReplaceVars {
 
 	/**
 	 * Current post object.

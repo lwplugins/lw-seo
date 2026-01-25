@@ -12,9 +12,9 @@ namespace LightweightPlugins\SEO\Admin\Settings;
 /**
  * Handles the General settings tab.
  */
-final class Tab_General implements Tab_Interface {
+final class TabGeneral implements TabInterface {
 
-	use Field_Renderer;
+	use FieldRendererTrait;
 
 	/**
 	 * Get the tab slug.

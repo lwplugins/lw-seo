@@ -12,7 +12,7 @@ namespace LightweightPlugins\SEO\Admin\Settings;
 /**
  * Interface for settings tabs.
  */
-interface Tab_Interface {
+interface TabInterface {
 
 	/**
 	 * Get the tab slug.

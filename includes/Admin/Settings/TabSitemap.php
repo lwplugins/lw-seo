@@ -12,9 +12,9 @@ namespace LightweightPlugins\SEO\Admin\Settings;
 /**
  * Handles the XML Sitemap settings tab.
  */
-final class Tab_Sitemap implements Tab_Interface {
+final class TabSitemap implements TabInterface {
 
-	use Field_Renderer;
+	use FieldRendererTrait;
 
 	/**
 	 * Get the tab slug.

@@ -114,6 +114,24 @@ final class Options {
 			'sitemap_products'      => true,
 			'sitemap_product_cat'   => true,
 			'sitemap_product_tag'   => false,
+
+			// Local SEO.
+			'local_enabled'         => false,
+			'local_business_type'   => 'LocalBusiness',
+			'local_business_name'   => '',
+			'local_description'     => '',
+			'local_price_range'     => '',
+			'local_street'          => '',
+			'local_street_2'        => '',
+			'local_city'            => '',
+			'local_state'           => '',
+			'local_zip'             => '',
+			'local_country'         => '',
+			'local_phone'           => '',
+			'local_email'           => '',
+			'local_lat'             => '',
+			'local_lng'             => '',
+			'local_hours_enabled'   => false,
 		];
 	}
 
