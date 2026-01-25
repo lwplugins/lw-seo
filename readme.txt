@@ -3,8 +3,8 @@ Contributors: lwplugins
 Tags: seo, sitemap, schema, opengraph, breadcrumbs
 Requires at least: 6.0
 Tested up to: 6.7
-Stable tag: 1.1.2
-Requires PHP: 8.2
+Stable tag: 1.1.3
+Requires PHP: 8.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -134,6 +134,9 @@ Your sitemap is available at `yoursite.com/sitemap.xml`
 
 == Changelog ==
 
+= 1.1.3 =
+* Lower minimum PHP version to 8.1
+
 = 1.1.2 =
 * Refactor: Unified LW Plugins overview page with centralized plugin registry
 * Refactor: Dynamic plugin cards with active/inactive status detection
@@ -217,7 +220,7 @@ Your sitemap is available at `yoursite.com/sitemap.xml`
 
 == Upgrade Notice ==
 
-= 1.1.2 =
+= 1.1.3 =
 Unified LW Plugins overview page with centralized plugin registry.
 
 = 1.1.1 =
