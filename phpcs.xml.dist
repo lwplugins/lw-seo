@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<ruleset name="LW SEO Coding Standards">
+    <description>PHP CodeSniffer ruleset for LW SEO plugin.</description>
+
+    <!-- Scan these files -->
+    <file>.</file>
+
+    <!-- Exclude paths -->
+    <exclude-pattern>/vendor/*</exclude-pattern>
+    <exclude-pattern>/node_modules/*</exclude-pattern>
+    <exclude-pattern>/tests/*</exclude-pattern>
+
+    <!-- Show progress -->
+    <arg value="ps"/>
+    <arg name="colors"/>
+
+    <!-- Use WordPress Coding Standards -->
+    <rule ref="WordPress">
+        <!-- Allow short array syntax -->
+        <exclude name="Universal.Arrays.DisallowShortArraySyntax"/>
+    </rule>
+
+    <!-- PHP Compatibility -->
+    <rule ref="PHPCompatibilityWP"/>
+    <config name="testVersion" value="8.0-"/>
+
+    <!-- WordPress minimum version -->
+    <config name="minimum_wp_version" value="6.0"/>
+
+    <!-- Text domain -->
+    <rule ref="WordPress.WP.I18n">
+        <properties>
+            <property name="text_domain" type="array">
+                <element value="lw-seo"/>
+            </property>
+        </properties>
+    </rule>
+
+    <!-- Prefixes -->
+    <rule ref="WordPress.NamingConventions.PrefixAllGlobals">
+        <properties>
+            <property name="prefixes" type="array">
+                <element value="lw_seo"/>
+                <element value="LightweightPlugins\SEO"/>
+            </property>
+        </properties>
+    </rule>
+</ruleset>
