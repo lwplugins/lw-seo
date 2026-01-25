@@ -3,7 +3,7 @@ Contributors: lwplugins
 Tags: seo, sitemap, schema, opengraph, breadcrumbs
 Requires at least: 6.0
 Tested up to: 6.7
-Stable tag: 1.0.9
+Stable tag: 1.0.10
 Requires PHP: 8.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -130,6 +130,9 @@ Your sitemap is available at `yoursite.com/sitemap.xml`
 
 == Changelog ==
 
+= 1.0.10 =
+* Fix: Remove obsolete require_once from main plugin file
+
 = 1.0.9 =
 * Refactor: PSR-4 autoloading with PascalCase file/folder names
 * Refactor: Composer autoloader now handles all class loading
@@ -189,6 +192,9 @@ Your sitemap is available at `yoursite.com/sitemap.xml`
 * llms.txt generation
 
 == Upgrade Notice ==
+
+= 1.0.10 =
+Hotfix for PSR-4 autoloading.
 
 = 1.0.9 =
 PSR-4 autoloading refactor for better code organization.
