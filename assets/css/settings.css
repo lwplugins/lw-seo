@@ -1,0 +1,44 @@
+/**
+ * LW SEO Settings Page Styles
+ */
+
+.lw-seo-settings .form-table th {
+    width: 250px;
+}
+
+.lw-seo-settings .form-table td {
+    padding: 15px 10px;
+}
+
+.lw-seo-settings .regular-text {
+    width: 400px;
+    max-width: 100%;
+}
+
+.lw-seo-settings .large-text {
+    width: 100%;
+    max-width: 600px;
+}
+
+.lw-seo-settings h2 {
+    margin-top: 30px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #dcdcde;
+}
+
+.lw-seo-settings h2:first-of-type {
+    margin-top: 20px;
+}
+
+.lw-seo-settings .description {
+    color: #646970;
+    font-style: italic;
+}
+
+/* Section description */
+.lw-seo-settings .section-description {
+    margin-bottom: 15px;
+    padding: 10px 15px;
+    background: #f6f7f7;
+    border-left: 4px solid #2271b1;
+}
