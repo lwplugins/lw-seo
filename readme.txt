@@ -3,7 +3,7 @@ Contributors: lwplugins
 Tags: seo, sitemap, schema, opengraph, breadcrumbs
 Requires at least: 6.0
 Tested up to: 6.7
-Stable tag: 1.0.0
+Stable tag: 1.0.1
 Requires PHP: 8.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -79,6 +79,9 @@ Go to Settings → Permalinks and click Save. This regenerates the rewrite rules
 
 == Changelog ==
 
+= 1.0.1 =
+* Fix: Remove final keyword from Post_Provider to allow Page_Provider extension
+
 = 1.0.0 =
 * Initial release
 * Meta titles and descriptions
@@ -90,6 +93,9 @@ Go to Settings → Permalinks and click Save. This regenerates the rewrite rules
 * llms.txt generation
 
 == Upgrade Notice ==
+
+= 1.0.1 =
+Bug fix for sitemap page provider.
 
 = 1.0.0 =
 Initial release.
