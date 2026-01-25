@@ -16,6 +16,8 @@ use LightweightPlugins\SEO\Admin\Settings\Tab_Social;
 use LightweightPlugins\SEO\Admin\Settings\Tab_Sitemap;
 use LightweightPlugins\SEO\Admin\Settings\Tab_AI;
 use LightweightPlugins\SEO\Admin\Settings\Tab_Advanced;
+use LightweightPlugins\SEO\Admin\Settings\Tab_WooCommerce;
+use LightweightPlugins\SEO\WooCommerce\WooCommerce;
 use LightweightPlugins\SEO\Options;
 
 /**
@@ -65,6 +67,12 @@ final class Settings_Page {
 			new Tab_AI(),
 			new Tab_Advanced(),
 		];
+
+		// Add WooCommerce tab if WooCommerce is active.
+		if ( WooCommerce::is_active() ) {
+			// Insert before Advanced tab.
+			array_splice( $this->tabs, 5, 0, [ new Tab_WooCommerce() ] );
+		}
 	}
 
 	/**
@@ -147,10 +155,13 @@ final class Settings_Page {
 		$defaults  = Options::get_defaults();
 		$sanitized = [];
 
+		// URL fields that should be sanitized as URLs.
+		$url_fields = [ 'social_', 'default_og_image', 'knowledge_logo' ];
+
 		foreach ( $defaults as $key => $default ) {
 			if ( is_bool( $default ) ) {
 				$sanitized[ $key ] = ! empty( $input[ $key ] );
-			} elseif ( str_starts_with( $key, 'social_' ) ) {
+			} elseif ( $this->is_url_field( $key, $url_fields ) ) {
 				$sanitized[ $key ] = isset( $input[ $key ] ) ? esc_url_raw( $input[ $key ] ) : '';
 			} else {
 				$sanitized[ $key ] = isset( $input[ $key ] ) ? sanitize_text_field( $input[ $key ] ) : $default;
@@ -158,6 +169,22 @@ final class Settings_Page {
 		}
 
 		return $sanitized;
+	}
+
+	/**
+	 * Check if a field key is a URL field.
+	 *
+	 * @param string        $key        Field key.
+	 * @param array<string> $url_fields URL field patterns.
+	 * @return bool
+	 */
+	private function is_url_field( string $key, array $url_fields ): bool {
+		foreach ( $url_fields as $pattern ) {
+			if ( str_starts_with( $key, $pattern ) || $key === $pattern ) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	/**

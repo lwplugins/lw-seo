@@ -52,6 +52,14 @@ Lightweight SEO plugin for WordPress - minimal footprint, maximum impact.
   - PerplexityBot
   - Cohere-AI
 
+### WooCommerce Integration
+- **Auto-Detection** - Automatically enables when WooCommerce is active
+- **Product OpenGraph** - Price, currency, availability, brand, condition
+- **Product Schema** - Full Schema.org Product markup with offers
+- **Reviews Schema** - Product reviews and aggregate ratings
+- **Product Sitemap** - Include products and product categories
+- **Custom Settings** - Dedicated WooCommerce SEO settings tab
+
 ### Cleanup
 - Remove shortlinks
 - Remove RSD links

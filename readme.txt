@@ -3,7 +3,7 @@ Contributors: lwplugins
 Tags: seo, sitemap, schema, opengraph, breadcrumbs
 Requires at least: 6.0
 Tested up to: 6.7
-Stable tag: 1.0.6
+Stable tag: 1.0.7
 Requires PHP: 8.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -130,6 +130,13 @@ Your sitemap is available at `yoursite.com/sitemap.xml`
 
 == Changelog ==
 
+= 1.0.7 =
+* New: WooCommerce SEO integration (auto-detects WooCommerce)
+* New: Product-specific OpenGraph tags (price, availability, brand, condition)
+* New: Product Schema.org markup with reviews and offers
+* New: WooCommerce settings tab for product SEO configuration
+* New: Sitemap settings for products and product taxonomies
+
 = 1.0.6 =
 * Fix: Custom title separator now applies to document title
 
@@ -169,6 +176,9 @@ Your sitemap is available at `yoursite.com/sitemap.xml`
 * llms.txt generation
 
 == Upgrade Notice ==
+
+= 1.0.7 =
+WooCommerce SEO integration with product OpenGraph and Schema.org markup.
 
 = 1.0.6 =
 Title separator setting now works correctly.

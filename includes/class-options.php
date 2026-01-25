@@ -104,6 +104,16 @@ final class Options {
 			'block_ccbot'           => false,
 			'block_perplexitybot'   => false,
 			'block_cohere_ai'       => false,
+
+			// WooCommerce.
+			'woo_enabled'           => true,
+			'title_product'         => '%%title%% %%sep%% %%sitename%%',
+			'noindex_product'       => false,
+			'woo_schema_enabled'    => true,
+			'woo_schema_reviews'    => true,
+			'sitemap_products'      => true,
+			'sitemap_product_cat'   => true,
+			'sitemap_product_tag'   => false,
 		];
 	}
 

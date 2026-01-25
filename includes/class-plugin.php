@@ -12,6 +12,7 @@ namespace LightweightPlugins\SEO;
 use LightweightPlugins\SEO\Admin\Settings_Page;
 use LightweightPlugins\SEO\Schema\Schema;
 use LightweightPlugins\SEO\Sitemap\Sitemap;
+use LightweightPlugins\SEO\WooCommerce\WooCommerce;
 
 /**
  * Main plugin class.
@@ -72,6 +73,14 @@ final class Plugin {
 
 		// Schema.
 		require_once LW_SEO_PATH . 'includes/schema/class-schema.php';
+
+		// WooCommerce integration.
+		require_once LW_SEO_PATH . 'includes/woocommerce/class-woocommerce.php';
+		require_once LW_SEO_PATH . 'includes/woocommerce/class-opengraph.php';
+		require_once LW_SEO_PATH . 'includes/woocommerce/class-schema.php';
+
+		// WooCommerce settings tab.
+		require_once LW_SEO_PATH . 'includes/admin/settings/class-tab-woocommerce.php';
 	}
 
 	/**
@@ -117,6 +126,9 @@ final class Plugin {
 		new Breadcrumbs();
 		new Robots_Txt();
 		new Llms_Txt();
+
+		// WooCommerce integration (self-checks if WooCommerce is active).
+		new WooCommerce();
 	}
 
 	/**
