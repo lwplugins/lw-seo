@@ -105,6 +105,10 @@ final class Plugin {
 
 		// 404 handler.
 		new NotFoundHandler();
+
+		// REST API for headless support.
+		$rest_api = new RestApi();
+		$rest_api->init();
 	}
 
 	/**

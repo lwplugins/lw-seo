@@ -405,4 +405,100 @@ final class Breadcrumbs {
 
 		return $this->items;
 	}
+
+	/**
+	 * Build breadcrumbs for a specific post (REST API).
+	 *
+	 * @param \WP_Post             $post Post object.
+	 * @param array<string, mixed> $args Arguments.
+	 * @return array<array{title: string, url: string, position: int}>
+	 */
+	public function build_for_post( \WP_Post $post, array $args = [] ): array {
+		$args = wp_parse_args(
+			$args,
+			[
+				'home'         => __( 'Home', 'lw-seo' ),
+				'show_current' => true,
+			]
+		);
+
+		$items = [];
+
+		// Home.
+		$items[] = [
+			'title'    => $args['home'],
+			'url'      => home_url( '/' ),
+			'position' => 1,
+		];
+
+		$position = 2;
+
+		// Add post type archive for custom post types.
+		if ( 'post' !== $post->post_type && 'page' !== $post->post_type ) {
+			$post_type = get_post_type_object( $post->post_type );
+			if ( $post_type && $post_type->has_archive ) {
+				$items[] = [
+					'title'    => $post_type->labels->name,
+					'url'      => get_post_type_archive_link( $post->post_type ),
+					'position' => $position++,
+				];
+			}
+		}
+
+		// Add categories for posts.
+		if ( 'post' === $post->post_type ) {
+			$categories = get_the_category( $post->ID );
+			if ( ! empty( $categories ) ) {
+				$category = $categories[0];
+
+				// Add parent categories.
+				$parents = get_ancestors( $category->term_id, 'category' );
+				$parents = array_reverse( $parents );
+
+				foreach ( $parents as $parent_id ) {
+					$parent = get_term( $parent_id, 'category' );
+					if ( $parent instanceof \WP_Term ) {
+						$link    = get_term_link( $parent );
+						$items[] = [
+							'title'    => $parent->name,
+							'url'      => is_string( $link ) ? $link : '',
+							'position' => $position++,
+						];
+					}
+				}
+
+				$link    = get_term_link( $category );
+				$items[] = [
+					'title'    => $category->name,
+					'url'      => is_string( $link ) ? $link : '',
+					'position' => $position++,
+				];
+			}
+		}
+
+		// Add parent pages for pages.
+		if ( 'page' === $post->post_type && $post->post_parent ) {
+			$parents = get_ancestors( $post->ID, 'page' );
+			$parents = array_reverse( $parents );
+
+			foreach ( $parents as $parent_id ) {
+				$items[] = [
+					'title'    => get_the_title( $parent_id ),
+					'url'      => get_permalink( $parent_id ),
+					'position' => $position++,
+				];
+			}
+		}
+
+		// Current page.
+		if ( $args['show_current'] ) {
+			$items[] = [
+				'title'    => get_the_title( $post ),
+				'url'      => get_permalink( $post ),
+				'position' => $position,
+			];
+		}
+
+		return $items;
+	}
 }

@@ -3,7 +3,7 @@ Contributors: lwplugins
 Tags: seo, sitemap, schema, opengraph, breadcrumbs
 Requires at least: 6.0
 Tested up to: 6.7
-Stable tag: 1.1.5
+Stable tag: 1.1.6
 Requires PHP: 8.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -134,6 +134,14 @@ Your sitemap is available at `yoursite.com/sitemap.xml`
 
 == Changelog ==
 
+= 1.1.6 =
+* New: REST API for headless WordPress support
+* New: `/wp-json/lw-seo/v1/meta/{id}` - Get SEO meta data by post ID
+* New: `/wp-json/lw-seo/v1/meta/term/{id}` - Get SEO meta data by term ID
+* New: `/wp-json/lw-seo/v1/meta/author/{id}` - Get SEO meta data by author ID
+* New: `/wp-json/lw-seo/v1/schema/{id}` - Get Schema.org JSON-LD by post ID
+* New: `/wp-json/lw-seo/v1/breadcrumbs/{id}` - Get breadcrumbs by post ID
+
 = 1.1.5 =
 * New: Media library picker for Social Image in post meta box
 * New: Image preview in Social Image field
@@ -225,6 +233,9 @@ Your sitemap is available at `yoursite.com/sitemap.xml`
 * llms.txt generation
 
 == Upgrade Notice ==
+
+= 1.1.6 =
+REST API for headless WordPress - get SEO meta, schema, and breadcrumbs via JSON.
 
 = 1.1.3 =
 Unified LW Plugins overview page with centralized plugin registry.

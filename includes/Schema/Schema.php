@@ -332,4 +332,135 @@ final class Schema {
 		global $wp;
 		return home_url( $wp->request ? $wp->request . '/' : '' );
 	}
+
+	/**
+	 * Build Schema graph for a specific post (REST API).
+	 *
+	 * @param \WP_Post $post Post object.
+	 * @return array<string, mixed>
+	 */
+	public function build_graph_for_post( \WP_Post $post ): array {
+		$graph = [];
+
+		// Always add WebSite schema.
+		$graph[] = $this->get_website_schema();
+
+		// Add Organization or Person.
+		$knowledge = $this->get_knowledge_graph_schema();
+		if ( $knowledge ) {
+			$graph[] = $knowledge;
+		}
+
+		// Add WebPage schema.
+		$graph[] = $this->get_webpage_schema_for_post( $post );
+
+		// Add Article schema for posts.
+		if ( 'post' === $post->post_type ) {
+			$graph[] = $this->get_article_schema_for_post( $post );
+		}
+
+		return [
+			'@context' => 'https://schema.org',
+			'@graph'   => array_filter( $graph ),
+		];
+	}
+
+	/**
+	 * Get WebPage schema for a specific post.
+	 *
+	 * @param \WP_Post $post Post object.
+	 * @return array<string, mixed>
+	 */
+	private function get_webpage_schema_for_post( \WP_Post $post ): array {
+		$url = get_permalink( $post );
+
+		$schema = [
+			'@type'           => 'WebPage',
+			'@id'             => $url . '#webpage',
+			'url'             => $url,
+			'name'            => get_the_title( $post ),
+			'isPartOf'        => [ '@id' => home_url( '/#website' ) ],
+			'inLanguage'      => get_locale(),
+			'datePublished'   => get_the_date( 'c', $post ),
+			'dateModified'    => get_the_modified_date( 'c', $post ),
+			'potentialAction' => [
+				[
+					'@type'  => 'ReadAction',
+					'target' => [ $url ],
+				],
+			],
+		];
+
+		// Featured image.
+		if ( has_post_thumbnail( $post ) ) {
+			$image_url = get_the_post_thumbnail_url( $post, 'large' );
+
+			if ( $image_url ) {
+				$schema['primaryImageOfPage'] = [
+					'@id' => home_url( '/#primaryimage' ),
+				];
+				$schema['thumbnailUrl']       = $image_url;
+			}
+		}
+
+		return $schema;
+	}
+
+	/**
+	 * Get Article schema for a specific post.
+	 *
+	 * @param \WP_Post $post Post object.
+	 * @return array<string, mixed>
+	 */
+	private function get_article_schema_for_post( \WP_Post $post ): array {
+		$url = get_permalink( $post );
+
+		$schema = [
+			'@type'            => 'Article',
+			'@id'              => $url . '#article',
+			'headline'         => get_the_title( $post ),
+			'datePublished'    => get_the_date( 'c', $post ),
+			'dateModified'     => get_the_modified_date( 'c', $post ),
+			'mainEntityOfPage' => [ '@id' => $url . '#webpage' ],
+			'wordCount'        => str_word_count( wp_strip_all_tags( $post->post_content ) ),
+			'inLanguage'       => get_locale(),
+		];
+
+		// Author.
+		$author = get_userdata( $post->post_author );
+		if ( $author ) {
+			$schema['author'] = [
+				'@type' => 'Person',
+				'@id'   => get_author_posts_url( $author->ID ) . '#author',
+				'name'  => $author->display_name,
+				'url'   => get_author_posts_url( $author->ID ),
+			];
+		}
+
+		// Publisher.
+		$knowledge_type = Options::get( 'knowledge_type' );
+		if ( $knowledge_type ) {
+			$schema['publisher'] = [ '@id' => home_url( '/#' . $knowledge_type ) ];
+		}
+
+		// Featured image.
+		if ( has_post_thumbnail( $post ) ) {
+			$image_url = get_the_post_thumbnail_url( $post, 'large' );
+			if ( $image_url ) {
+				$schema['image'] = [
+					'@type' => 'ImageObject',
+					'@id'   => home_url( '/#primaryimage' ),
+					'url'   => $image_url,
+				];
+			}
+		}
+
+		// Categories as keywords.
+		$categories = get_the_category( $post->ID );
+		if ( ! empty( $categories ) ) {
+			$schema['keywords'] = implode( ', ', wp_list_pluck( $categories, 'name' ) );
+		}
+
+		return $schema;
+	}
 }
