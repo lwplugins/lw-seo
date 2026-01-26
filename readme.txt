@@ -3,7 +3,7 @@ Contributors: lwplugins
 Tags: seo, sitemap, schema, opengraph, breadcrumbs
 Requires at least: 6.0
 Tested up to: 6.7
-Stable tag: 1.1.4
+Stable tag: 1.1.5
 Requires PHP: 8.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -134,7 +134,7 @@ Your sitemap is available at `yoursite.com/sitemap.xml`
 
 == Changelog ==
 
-= 1.1.4 =
+= 1.1.5 =
 * New: Media library picker for Social Image in post meta box
 * New: Image preview in Social Image field
 * New: Remove button for Social Image
