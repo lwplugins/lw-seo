@@ -93,6 +93,9 @@ final class MetaBox {
 			return;
 		}
 
+		// Enqueue media library for image uploader.
+		wp_enqueue_media();
+
 		wp_enqueue_style(
 			'lw-seo-admin',
 			LW_SEO_URL . 'assets/css/admin.css',
@@ -103,7 +106,7 @@ final class MetaBox {
 		wp_enqueue_script(
 			'lw-seo-admin',
 			LW_SEO_URL . 'assets/js/admin.js',
-			[],
+			[ 'jquery' ],
 			LW_SEO_VERSION,
 			true
 		);
@@ -239,16 +242,32 @@ final class MetaBox {
 
 					<div class="lw-seo-field">
 						<label for="lw_seo_og_image" class="lw-seo-label">
-							<?php esc_html_e( 'Social Image URL', 'lw-seo' ); ?>
+							<?php esc_html_e( 'Social Image', 'lw-seo' ); ?>
 						</label>
-						<input
-							type="url"
-							id="lw_seo_og_image"
-							name="lw_seo_og_image"
-							value="<?php echo esc_url( $og_image ); ?>"
-							class="lw-seo-input"
-							placeholder="<?php esc_attr_e( 'Defaults to featured image', 'lw-seo' ); ?>"
-						/>
+						<div class="lw-seo-image-field">
+							<div class="lw-seo-image-input-row">
+								<input
+									type="url"
+									id="lw_seo_og_image"
+									name="lw_seo_og_image"
+									value="<?php echo esc_url( $og_image ); ?>"
+									class="lw-seo-input lw-seo-image-url"
+									placeholder="<?php esc_attr_e( 'Image URL', 'lw-seo' ); ?>"
+								/>
+								<button type="button" class="button lw-seo-upload-image">
+									<?php esc_html_e( 'Select Image', 'lw-seo' ); ?>
+								</button>
+								<button type="button" class="button lw-seo-remove-image" style="<?php echo empty( $og_image ) ? 'display: none;' : ''; ?>">
+									<?php esc_html_e( 'Remove', 'lw-seo' ); ?>
+								</button>
+							</div>
+							<div class="lw-seo-image-preview" style="<?php echo empty( $og_image ) ? 'display: none;' : ''; ?>">
+								<img src="<?php echo esc_url( $og_image ); ?>" alt="" />
+							</div>
+						</div>
+						<p class="lw-seo-description">
+							<?php esc_html_e( 'Priority: Social Image → Featured Image → Default Image.', 'lw-seo' ); ?>
+						</p>
 					</div>
 				</div>
 			</details>

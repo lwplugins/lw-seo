@@ -26,7 +26,7 @@ final class ParentPage {
 	 */
 	public static function get_plugins_registry(): array {
 		return [
-			'lw-seo'              => [
+			'lw-seo'          => [
 				'name'          => 'LW SEO',
 				'description'   => __( 'Essential SEO features without the bloat. Meta tags, sitemaps, schema, and more.', 'lw-seo' ),
 				'icon'          => 'dashicons-search',
@@ -35,23 +35,23 @@ final class ParentPage {
 				'settings_page' => 'lw-seo',
 				'github'        => 'https://github.com/lwplugins/lw-seo',
 			],
-			'lw-disable-commands' => [
-				'name'          => 'LW Disable Commands',
-				'description'   => __( 'Disable admin commands.', 'lw-seo' ),
-				'icon'          => 'dashicons-editor-code',
+			'lw-disable'      => [
+				'name'          => 'LW Disable',
+				'description'   => __( 'Disable WordPress features like comments and admin commands.', 'lw-seo' ),
+				'icon'          => 'dashicons-dismiss',
 				'icon_color'    => '#d63638',
-				'constant'      => 'LW_DISABLE_COMMANDS_VERSION',
-				'settings_page' => 'lw-disable-commands',
-				'github'        => 'https://github.com/lwplugins/lw-disable-commands',
+				'constant'      => 'LW_DISABLE_VERSION',
+				'settings_page' => 'lw-disable',
+				'github'        => 'https://github.com/lwplugins/lw-disable',
 			],
-			'lw-disable-comments' => [
-				'name'          => 'LW Disable Comments',
-				'description'   => __( 'Disable comments completely.', 'lw-seo' ),
-				'icon'          => 'dashicons-admin-comments',
-				'icon_color'    => '#d63638',
-				'constant'      => 'LW_DISABLE_COMMENTS_VERSION',
-				'settings_page' => 'lw-disable-comments',
-				'github'        => 'https://github.com/lwplugins/lw-disable-comments',
+			'lw-site-manager' => [
+				'name'          => 'LW Site Manager',
+				'description'   => __( 'Site maintenance via AI/REST using Abilities API.', 'lw-seo' ),
+				'icon'          => 'dashicons-admin-tools',
+				'icon_color'    => '#135e96',
+				'constant'      => 'LW_SITE_MANAGER_VERSION',
+				'settings_page' => 'lw-site-manager',
+				'github'        => 'https://github.com/lwplugins/lw-site-manager',
 			],
 		];
 	}

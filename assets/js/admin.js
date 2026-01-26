@@ -183,6 +183,7 @@
 	 */
 	function initMediaUploader() {
 		const uploadButtons = document.querySelectorAll( '.lw-seo-upload-image' );
+		const removeButtons = document.querySelectorAll( '.lw-seo-remove-image' );
 
 		uploadButtons.forEach(
 			function (button) {
@@ -191,10 +192,11 @@
 					function (e) {
 						e.preventDefault();
 
-						const container  = this.closest( '.lw-seo-image-field' );
-						const input      = container.querySelector( '.lw-seo-image-url' );
-						const preview    = container.querySelector( '.lw-seo-image-preview' );
-						const previewImg = preview.querySelector( 'img' );
+						const container    = this.closest( '.lw-seo-image-field' );
+						const input        = container.querySelector( '.lw-seo-image-url' );
+						const preview      = container.querySelector( '.lw-seo-image-preview' );
+						const previewImg   = preview.querySelector( 'img' );
+						const removeButton = container.querySelector( '.lw-seo-remove-image' );
 
 						// Check if wp.media exists.
 						if (typeof wp === 'undefined' || typeof wp.media === 'undefined') {
@@ -221,10 +223,42 @@
 								// Show preview.
 								previewImg.src        = attachment.url;
 								preview.style.display = 'block';
+
+								// Show remove button.
+								if (removeButton) {
+									removeButton.style.display = '';
+								}
 							}
 						);
 
 						frame.open();
+					}
+				);
+			}
+		);
+
+		// Handle remove button clicks.
+		removeButtons.forEach(
+			function (button) {
+				button.addEventListener(
+					'click',
+					function (e) {
+						e.preventDefault();
+
+						const container  = this.closest( '.lw-seo-image-field' );
+						const input      = container.querySelector( '.lw-seo-image-url' );
+						const preview    = container.querySelector( '.lw-seo-image-preview' );
+						const previewImg = preview.querySelector( 'img' );
+
+						// Clear input.
+						input.value = '';
+
+						// Hide preview.
+						previewImg.src        = '';
+						preview.style.display = 'none';
+
+						// Hide remove button.
+						this.style.display = 'none';
 					}
 				);
 			}
