@@ -1,4 +1,4 @@
-# LW SEO
+# Lightweight SEO
 
 Lightweight SEO plugin for WordPress - minimal footprint, maximum impact.
 
