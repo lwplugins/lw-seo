@@ -3,7 +3,7 @@ Contributors: lwplugins
 Tags: seo, sitemap, schema, opengraph, breadcrumbs
 Requires at least: 6.0
 Tested up to: 6.7
-Stable tag: 1.1.7
+Stable tag: 1.1.8
 Requires PHP: 8.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -134,6 +134,11 @@ Your sitemap is available at `yoursite.com/sitemap.xml`
 
 == Changelog ==
 
+= 1.1.8 =
+* New: FAQ Gutenberg block with FAQPage schema
+* New: LW Memberships and LW LMS in plugin registry
+* Fix: Include missing Blocks files in release
+
 = 1.1.7 =
 * New: RankMath SEO data migrator (Import tab)
 * New: Migrate global options, post meta, term meta, user meta
@@ -239,6 +244,9 @@ Your sitemap is available at `yoursite.com/sitemap.xml`
 * llms.txt generation
 
 == Upgrade Notice ==
+
+= 1.1.8 =
+FAQ Gutenberg block with FAQPage schema, plugin registry update.
 
 = 1.1.7 =
 RankMath SEO data migrator - import options, post meta, term meta with dry-run preview.

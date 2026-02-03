@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace LightweightPlugins\SEO\Schema;
 
+use LightweightPlugins\SEO\Blocks\FAQ\Schema as FAQSchema;
 use LightweightPlugins\SEO\Options;
 
 /**
@@ -76,6 +77,15 @@ final class Schema {
 
 			if ( is_singular( 'post' ) ) {
 				$graph[] = $this->get_article_schema();
+			}
+
+			// Add FAQ schema if post has FAQ blocks.
+			$post = get_queried_object();
+			if ( $post instanceof \WP_Post ) {
+				$faq_schema = FAQSchema::get_schema_for_post( $post );
+				if ( $faq_schema ) {
+					$graph[] = $faq_schema;
+				}
 			}
 		} elseif ( is_front_page() || is_home() ) {
 			$graph[] = $this->get_webpage_schema( 'CollectionPage' );
@@ -357,6 +367,12 @@ final class Schema {
 		// Add Article schema for posts.
 		if ( 'post' === $post->post_type ) {
 			$graph[] = $this->get_article_schema_for_post( $post );
+		}
+
+		// Add FAQ schema if post has FAQ blocks.
+		$faq_schema = FAQSchema::get_schema_for_post( $post );
+		if ( $faq_schema ) {
+			$graph[] = $faq_schema;
 		}
 
 		return [

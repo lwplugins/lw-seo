@@ -53,6 +53,24 @@ final class ParentPage {
 				'settings_page' => 'lw-site-manager',
 				'github'        => 'https://github.com/lwplugins/lw-site-manager',
 			],
+			'lw-memberships'  => [
+				'name'          => 'LW Memberships',
+				'description'   => __( 'Lightweight membership system with WooCommerce integration.', 'lw-seo' ),
+				'icon'          => 'dashicons-groups',
+				'icon_color'    => '#7b5e57',
+				'constant'      => 'LW_MEMBERSHIPS_VERSION',
+				'settings_page' => 'lw-memberships',
+				'github'        => 'https://github.com/lwplugins/lw-memberships',
+			],
+			'lw-lms'          => [
+				'name'          => 'LW LMS',
+				'description'   => __( 'Courses, lessons, and progress tracking.', 'lw-seo' ),
+				'icon'          => 'dashicons-welcome-learn-more',
+				'icon_color'    => '#4a9c5d',
+				'constant'      => 'LW_LMS_VERSION',
+				'settings_page' => 'lw-lms',
+				'github'        => 'https://github.com/lwplugins/lw-lms',
+			],
 		];
 	}
 

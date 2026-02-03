@@ -1,0 +1,59 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "lw-seo/faq",
+	"version": "1.0.0",
+	"title": "FAQ (LW SEO)",
+	"category": "lw-seo",
+	"description": "Add frequently asked questions with FAQPage schema markup for better SEO.",
+	"keywords": [ "faq", "questions", "answers", "schema", "seo" ],
+	"textdomain": "lw-seo",
+	"attributes": {
+		"questions": {
+			"type": "array",
+			"default": [],
+			"items": {
+				"type": "object"
+			}
+		},
+		"titleWrapper": {
+			"type": "string",
+			"default": "h3"
+		}
+	},
+	"supports": {
+		"className": true,
+		"anchor": true,
+		"align": [ "wide", "full" ],
+		"html": false,
+		"color": {
+			"background": true,
+			"text": true
+		},
+		"spacing": {
+			"margin": true,
+			"padding": true
+		},
+		"typography": {
+			"fontSize": true
+		}
+	},
+	"example": {
+		"attributes": {
+			"questions": [
+				{
+					"id": "faq-1",
+					"title": "What is LW SEO?",
+					"content": "LW SEO is a lightweight SEO plugin for WordPress that provides essential SEO features without bloat.",
+					"visible": true
+				},
+				{
+					"id": "faq-2",
+					"title": "Does it support FAQ schema?",
+					"content": "Yes! This FAQ block automatically generates FAQPage structured data for better search visibility.",
+					"visible": true
+				}
+			]
+		}
+	}
+}

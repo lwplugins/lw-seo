@@ -1,0 +1,60 @@
+/**
+ * LW SEO FAQ Block - Frontend Styles
+ *
+ * @package LightweightPlugins\SEO
+ */
+
+.lw-seo-faq {
+	margin: 1.5em 0;
+}
+
+.lw-seo-faq-item {
+	margin-bottom: 1.5em;
+	padding-bottom: 1.5em;
+	border-bottom: 1px solid #eee;
+}
+
+.lw-seo-faq-item:last-child {
+	margin-bottom: 0;
+	padding-bottom: 0;
+	border-bottom: none;
+}
+
+.lw-seo-faq-question {
+	margin: 0 0 0.75em 0;
+	font-weight: 600;
+	color: inherit;
+}
+
+.lw-seo-faq-answer {
+	color: inherit;
+	line-height: 1.7;
+}
+
+.lw-seo-faq-answer p:first-child {
+	margin-top: 0;
+}
+
+.lw-seo-faq-answer p:last-child {
+	margin-bottom: 0;
+}
+
+/* Accordion style (optional class) */
+.lw-seo-faq.is-accordion .lw-seo-faq-item {
+	border: 1px solid #ddd;
+	border-radius: 4px;
+	margin-bottom: 0.5em;
+	padding: 0;
+}
+
+.lw-seo-faq.is-accordion .lw-seo-faq-question {
+	margin: 0;
+	padding: 1em;
+	cursor: pointer;
+	background: #f9f9f9;
+	border-radius: 4px 4px 0 0;
+}
+
+.lw-seo-faq.is-accordion .lw-seo-faq-answer {
+	padding: 1em;
+}
