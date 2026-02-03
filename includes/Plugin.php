@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace LightweightPlugins\SEO;
 
 use LightweightPlugins\SEO\Admin\SettingsPage;
+use LightweightPlugins\SEO\Blocks\FAQ\Block as FAQBlock;
 use LightweightPlugins\SEO\Schema\Schema;
 use LightweightPlugins\SEO\Sitemap\Sitemap;
 use LightweightPlugins\SEO\WooCommerce\WooCommerce;
@@ -17,6 +18,7 @@ use LightweightPlugins\SEO\Local\Schema as LocalSchema;
 use LightweightPlugins\SEO\Local\Shortcodes as LocalShortcodes;
 use LightweightPlugins\SEO\Redirects\Handler as RedirectHandler;
 use LightweightPlugins\SEO\Redirects\Ajax as RedirectAjax;
+use LightweightPlugins\SEO\Migration\Ajax as MigrationAjax;
 use LightweightPlugins\SEO\NotFoundHandler;
 
 /**
@@ -90,6 +92,9 @@ final class Plugin {
 		new RobotsTxt();
 		new LlmsTxt();
 
+		// Gutenberg blocks.
+		new FAQBlock();
+
 		// WooCommerce integration (self-checks if WooCommerce is active).
 		new WooCommerce();
 
@@ -101,6 +106,7 @@ final class Plugin {
 		new RedirectHandler();
 		if ( is_admin() ) {
 			new RedirectAjax();
+			new MigrationAjax();
 		}
 
 		// 404 handler.

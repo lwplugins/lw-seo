@@ -394,6 +394,41 @@ h3 .count {
 	Responsive
 	========================================================================== */
 
+/* ==========================================================================
+	Migration
+	========================================================================== */
+
+.lw-seo-migration-detect-table,
+.lw-seo-migration-results-table {
+	max-width: 500px;
+	margin: 15px 0;
+}
+
+.lw-seo-migration-detect-table th,
+.lw-seo-migration-results-table th {
+	width: 200px;
+	font-weight: 500;
+}
+
+#lw-migration-detect-area .spinner,
+#lw-migration-actions .spinner {
+	float: none;
+	vertical-align: middle;
+	margin-top: -2px;
+}
+
+#lw-migration-run-results {
+	margin-top: 20px;
+}
+
+#lw-migration-run-results h4 {
+	margin: 0 0 10px;
+}
+
+#lw-migration-run-results .notice {
+	margin: 10px 0;
+}
+
 @media screen and (max-width: 960px) {
 	.lw-seo-settings {
 		flex-direction: column;

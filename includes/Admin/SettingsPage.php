@@ -20,6 +20,7 @@ use LightweightPlugins\SEO\Admin\Settings\TabWooCommerce;
 use LightweightPlugins\SEO\Admin\Settings\TabLocal;
 use LightweightPlugins\SEO\Admin\Settings\TabRedirects;
 use LightweightPlugins\SEO\Admin\Settings\Tab404;
+use LightweightPlugins\SEO\Admin\Settings\TabMigration;
 use LightweightPlugins\SEO\WooCommerce\WooCommerce;
 use LightweightPlugins\SEO\Options;
 
@@ -72,6 +73,7 @@ final class SettingsPage {
 			new TabRedirects(),
 			new Tab404(),
 			new TabAdvanced(),
+			new TabMigration(),
 		];
 
 		// Add WooCommerce tab if WooCommerce is active.
@@ -158,6 +160,40 @@ final class SettingsPage {
 				'notRequired'    => __( 'Not required for this type', 'lw-seo' ),
 				'na'             => __( 'N/A', 'lw-seo' ),
 				'regex'          => __( 'Regex', 'lw-seo' ),
+			]
+		);
+
+		// Migration JavaScript.
+		wp_enqueue_script(
+			'lw-seo-migration',
+			LW_SEO_URL . 'assets/js/migration.js',
+			[],
+			LW_SEO_VERSION,
+			true
+		);
+
+		wp_localize_script(
+			'lw-seo-migration',
+			'lwSeoMigrationL10n',
+			[
+				'nonce'           => wp_create_nonce( 'lw_seo_migration' ),
+				'noData'          => __( 'No RankMath SEO data found in the database.', 'lw-seo' ),
+				'options'         => __( 'Global Options', 'lw-seo' ),
+				'posts'           => __( 'Posts with SEO meta', 'lw-seo' ),
+				'terms'           => __( 'Terms with SEO meta', 'lw-seo' ),
+				'users'           => __( 'Users with SEO meta', 'lw-seo' ),
+				'found'           => __( 'Found', 'lw-seo' ),
+				'notFound'        => __( 'Not found', 'lw-seo' ),
+				'previewTitle'    => __( 'Preview Results (Dry Run)', 'lw-seo' ),
+				'resultTitle'     => __( 'Migration Results', 'lw-seo' ),
+				'optionsMigrated' => __( 'Options migrated', 'lw-seo' ),
+				'postsMigrated'   => __( 'Posts migrated', 'lw-seo' ),
+				'postsSkipped'    => __( 'Posts skipped', 'lw-seo' ),
+				'termsMigrated'   => __( 'Terms migrated', 'lw-seo' ),
+				'termsSkipped'    => __( 'Terms skipped', 'lw-seo' ),
+				'usersMigrated'   => __( 'Users migrated', 'lw-seo' ),
+				'dryRunNotice'    => __( 'This was a preview. No data was modified.', 'lw-seo' ),
+				'confirmRun'      => __( 'Are you sure you want to run the migration? Existing LW SEO data will not be overwritten.', 'lw-seo' ),
 			]
 		);
 	}

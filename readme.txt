@@ -3,7 +3,7 @@ Contributors: lwplugins
 Tags: seo, sitemap, schema, opengraph, breadcrumbs
 Requires at least: 6.0
 Tested up to: 6.7
-Stable tag: 1.1.6
+Stable tag: 1.1.7
 Requires PHP: 8.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -134,6 +134,12 @@ Your sitemap is available at `yoursite.com/sitemap.xml`
 
 == Changelog ==
 
+= 1.1.7 =
+* New: RankMath SEO data migrator (Import tab)
+* New: Migrate global options, post meta, term meta, user meta
+* New: Dry-run preview before migration
+* New: Template variable conversion (%var% → %%var%%)
+
 = 1.1.6 =
 * New: REST API for headless WordPress support
 * New: `/wp-json/lw-seo/v1/meta/{id}` - Get SEO meta data by post ID
@@ -233,6 +239,9 @@ Your sitemap is available at `yoursite.com/sitemap.xml`
 * llms.txt generation
 
 == Upgrade Notice ==
+
+= 1.1.7 =
+RankMath SEO data migrator - import options, post meta, term meta with dry-run preview.
 
 = 1.1.6 =
 REST API for headless WordPress - get SEO meta, schema, and breadcrumbs via JSON.
