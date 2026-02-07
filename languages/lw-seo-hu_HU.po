@@ -1,0 +1,1884 @@
+# Copyright (C) 2026 LW Plugins
+# This file is distributed under the GPL-2.0-or-later.
+msgid ""
+msgstr ""
+"Project-Id-Version: Lightweight SEO 1.1.9\n"
+"Report-Msgid-Bugs-To: https://github.com/lwplugins/lw-seo/issues\n"
+"POT-Creation-Date: 2026-02-07T08:51:04+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LW Plugins <info@lwplugins.com>\n"
+"Language: hu_HU\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Domain: lw-seo\n"
+"X-Generator: WP-CLI 2.12.0\n"
+
+#. Plugin Name of the plugin
+#: lw-seo.php
+msgid "Lightweight SEO"
+msgstr "Lightweight SEO"
+
+#. Plugin URI of the plugin
+#: lw-seo.php
+msgid "https://github.com/lwplugins/lw-seo"
+msgstr "https://github.com/lwplugins/lw-seo"
+
+#. Description of the plugin
+#: lw-seo.php
+msgid ""
+"Lightweight SEO plugin for WordPress - minimal footprint, maximum impact."
+msgstr ""
+"Lightweight SEO bővítmény WordPresshez – minimális erőforrásigény, maximális"
+" hatás."
+
+#. Author of the plugin
+#: lw-seo.php includes/Admin/ParentPage.php:104
+#: includes/Admin/ParentPage.php:105 includes/Admin/ParentPage.php:126
+msgid "LW Plugins"
+msgstr "LW Plugins"
+
+#. Author URI of the plugin
+#: lw-seo.php
+msgid "https://lwplugins.com"
+msgstr "https://lwplugins.com"
+
+#: includes/Admin/Data/BusinessTypes.php:24
+msgid "Local Business (General)"
+msgstr "Helyi vállalkozás (általános)"
+
+#: includes/Admin/Data/BusinessTypes.php:25
+msgid "Animal Shelter"
+msgstr "Állatmenhely"
+
+#: includes/Admin/Data/BusinessTypes.php:26
+msgid "Automotive Business"
+msgstr "Autóipari vállalkozás"
+
+#: includes/Admin/Data/BusinessTypes.php:27
+#: includes/Admin/Data/BusinessTypes.php:142
+msgid "Auto Body Shop"
+msgstr "Karosszéria javító műhely"
+
+#: includes/Admin/Data/BusinessTypes.php:28
+#: includes/Admin/Data/BusinessTypes.php:143
+msgid "Auto Dealer"
+msgstr "Autókereskedés"
+
+#: includes/Admin/Data/BusinessTypes.php:29
+#: includes/Admin/Data/BusinessTypes.php:144
+msgid "Auto Parts Store"
+msgstr "Autóalkatrész-üzlet"
+
+#: includes/Admin/Data/BusinessTypes.php:30
+msgid "Auto Rental"
+msgstr "Autókölcsönző"
+
+#: includes/Admin/Data/BusinessTypes.php:31
+#: includes/Admin/Data/BusinessTypes.php:145
+msgid "Auto Repair"
+msgstr "Autószerelő"
+
+#: includes/Admin/Data/BusinessTypes.php:32
+#: includes/Admin/Data/BusinessTypes.php:146
+msgid "Auto Wash"
+msgstr "Autómosó"
+
+#: includes/Admin/Data/BusinessTypes.php:33
+#: includes/Admin/Data/BusinessTypes.php:147
+msgid "Gas Station"
+msgstr "Benzinkút"
+
+#: includes/Admin/Data/BusinessTypes.php:34
+msgid "Motorcycle Dealer"
+msgstr "Motorkerékpár-kereskedés"
+
+#: includes/Admin/Data/BusinessTypes.php:35
+msgid "Motorcycle Repair"
+msgstr "Motorkerékpár-szerviz"
+
+#: includes/Admin/Data/BusinessTypes.php:36
+msgid "Child Care"
+msgstr "Gyermekfelügyelet"
+
+#: includes/Admin/Data/BusinessTypes.php:37
+#: includes/Admin/Data/BusinessTypes.php:160
+msgid "Dentist"
+msgstr "Fogorvos"
+
+#: includes/Admin/Data/BusinessTypes.php:38
+msgid "Dry Cleaning / Laundry"
+msgstr "Vegytisztítás / mosoda"
+
+#: includes/Admin/Data/BusinessTypes.php:39
+msgid "Emergency Service"
+msgstr "Sürgősségi szolgáltatás"
+
+#: includes/Admin/Data/BusinessTypes.php:40
+msgid "Employment Agency"
+msgstr "Munkaerő-közvetítő"
+
+#: includes/Admin/Data/BusinessTypes.php:41
+msgid "Entertainment Business"
+msgstr "Szórakoztatóipari vállalkozás"
+
+#: includes/Admin/Data/BusinessTypes.php:42
+msgid "Amusement Park"
+msgstr "Vidámpark"
+
+#: includes/Admin/Data/BusinessTypes.php:43
+msgid "Art Gallery"
+msgstr "Művészeti galéria"
+
+#: includes/Admin/Data/BusinessTypes.php:44
+msgid "Casino"
+msgstr "Kaszinó"
+
+#: includes/Admin/Data/BusinessTypes.php:45
+msgid "Comedy Club"
+msgstr "Comedy klub"
+
+#: includes/Admin/Data/BusinessTypes.php:46
+msgid "Night Club"
+msgstr "Éjszakai klub"
+
+#: includes/Admin/Data/BusinessTypes.php:47
+msgid "Financial Service"
+msgstr "Pénzügyi szolgáltatás"
+
+#: includes/Admin/Data/BusinessTypes.php:48
+#: includes/Admin/Data/BusinessTypes.php:174
+msgid "Accounting Service"
+msgstr "Könyvelési szolgáltatás"
+
+#: includes/Admin/Data/BusinessTypes.php:49
+msgid "Bank"
+msgstr "Bank"
+
+#: includes/Admin/Data/BusinessTypes.php:50
+msgid "Insurance Agency"
+msgstr "Biztosítási ügynökség"
+
+#: includes/Admin/Data/BusinessTypes.php:51
+msgid "Food Establishment"
+msgstr "Élelmiszeripari egység"
+
+#: includes/Admin/Data/BusinessTypes.php:52
+#: includes/Admin/Data/BusinessTypes.php:152
+msgid "Bakery"
+msgstr "Pékség"
+
+#: includes/Admin/Data/BusinessTypes.php:53
+#: includes/Admin/Data/BusinessTypes.php:153
+msgid "Bar / Pub"
+msgstr "Bár / pub"
+
+#: includes/Admin/Data/BusinessTypes.php:54
+msgid "Brewery"
+msgstr "Sörfőzde"
+
+#: includes/Admin/Data/BusinessTypes.php:55
+#: includes/Admin/Data/BusinessTypes.php:151
+msgid "Cafe / Coffee Shop"
+msgstr "Kávézó / kávézó és presszó"
+
+#: includes/Admin/Data/BusinessTypes.php:56
+#: includes/Admin/Data/BusinessTypes.php:154
+msgid "Fast Food Restaurant"
+msgstr "Gyorsétterem"
+
+#: includes/Admin/Data/BusinessTypes.php:57
+msgid "Ice Cream Shop"
+msgstr "Fagylaltozó"
+
+#: includes/Admin/Data/BusinessTypes.php:58
+#: includes/Admin/Data/BusinessTypes.php:150
+msgid "Restaurant"
+msgstr "Étterem"
+
+#: includes/Admin/Data/BusinessTypes.php:59
+msgid "Winery"
+msgstr "Borászat"
+
+#: includes/Admin/Data/BusinessTypes.php:60
+msgid "Government Office"
+msgstr "Kormányzati hivatal"
+
+#: includes/Admin/Data/BusinessTypes.php:61
+msgid "Health & Beauty Business"
+msgstr "Egészség- és szépségipari vállalkozás"
+
+#: includes/Admin/Data/BusinessTypes.php:62
+#: includes/Admin/Data/BusinessTypes.php:157
+msgid "Beauty Salon"
+msgstr "Szépségszalon"
+
+#: includes/Admin/Data/BusinessTypes.php:63
+#: includes/Admin/Data/BusinessTypes.php:159
+msgid "Day Spa"
+msgstr "Day spa"
+
+#: includes/Admin/Data/BusinessTypes.php:64
+#: includes/Admin/Data/BusinessTypes.php:158
+msgid "Hair Salon"
+msgstr "Fodrászat"
+
+#: includes/Admin/Data/BusinessTypes.php:65
+msgid "Nail Salon"
+msgstr "Körömszalon"
+
+#: includes/Admin/Data/BusinessTypes.php:66
+msgid "Tattoo Parlor"
+msgstr "Tetoválószalon"
+
+#: includes/Admin/Data/BusinessTypes.php:67
+msgid "Home & Construction Business"
+msgstr "Otthon és építőipari vállalkozás"
+
+#: includes/Admin/Data/BusinessTypes.php:68
+#: includes/Admin/Data/BusinessTypes.php:176
+msgid "Electrician"
+msgstr "Villanyszerelő"
+
+#: includes/Admin/Data/BusinessTypes.php:69
+msgid "HVAC Business"
+msgstr "HVAC vállalkozás"
+
+#: includes/Admin/Data/BusinessTypes.php:70
+#: includes/Admin/Data/BusinessTypes.php:178
+msgid "Locksmith"
+msgstr "Lakatos"
+
+#: includes/Admin/Data/BusinessTypes.php:71
+#: includes/Admin/Data/BusinessTypes.php:177
+msgid "Plumber"
+msgstr "Vízvezeték-szerelő"
+
+#: includes/Admin/Data/BusinessTypes.php:72
+msgid "Roofing Contractor"
+msgstr "Tetőfedő kivitelező"
+
+#: includes/Admin/Data/BusinessTypes.php:73
+msgid "Internet Cafe"
+msgstr "Internetcafé"
+
+#: includes/Admin/Data/BusinessTypes.php:74
+msgid "Legal Service"
+msgstr "Jogi szolgáltatás"
+
+#: includes/Admin/Data/BusinessTypes.php:75
+#: includes/Admin/Data/BusinessTypes.php:173
+msgid "Attorney"
+msgstr "Ügyvéd"
+
+#: includes/Admin/Data/BusinessTypes.php:76
+msgid "Notary"
+msgstr "Közjegyző"
+
+#: includes/Admin/Data/BusinessTypes.php:77
+msgid "Library"
+msgstr "Könyvtár"
+
+#: includes/Admin/Data/BusinessTypes.php:78
+msgid "Lodging Business"
+msgstr "Szálláshely"
+
+#: includes/Admin/Data/BusinessTypes.php:79
+#: includes/Admin/Data/BusinessTypes.php:181
+msgid "Hotel"
+msgstr "Szálloda"
+
+#: includes/Admin/Data/BusinessTypes.php:80
+#: includes/Admin/Data/BusinessTypes.php:182
+msgid "Motel"
+msgstr "Motel"
+
+#: includes/Admin/Data/BusinessTypes.php:81
+#: includes/Admin/Data/BusinessTypes.php:183
+msgid "Hostel"
+msgstr "Hostel"
+
+#: includes/Admin/Data/BusinessTypes.php:82
+msgid "Medical Business"
+msgstr "Egészségügyi vállalkozás"
+
+#: includes/Admin/Data/BusinessTypes.php:83
+msgid "Optician"
+msgstr "Optikus"
+
+#: includes/Admin/Data/BusinessTypes.php:84
+#: includes/Admin/Data/BusinessTypes.php:162
+msgid "Pharmacy"
+msgstr "Gyógyszertár"
+
+#: includes/Admin/Data/BusinessTypes.php:85
+#: includes/Admin/Data/BusinessTypes.php:161
+msgid "Physician"
+msgstr "Orvos"
+
+#: includes/Admin/Data/BusinessTypes.php:86
+#: includes/Admin/Data/BusinessTypes.php:139
+msgid "Professional Service"
+msgstr "Szakmai szolgáltatás"
+
+#: includes/Admin/Data/BusinessTypes.php:87
+msgid "Radio Station"
+msgstr "Rádióállomás"
+
+#: includes/Admin/Data/BusinessTypes.php:88
+#: includes/Admin/Data/BusinessTypes.php:175
+msgid "Real Estate Agent"
+msgstr "Ingatlanügynök"
+
+#: includes/Admin/Data/BusinessTypes.php:89
+msgid "Recycling Center"
+msgstr "Újrahasznosító központ"
+
+#: includes/Admin/Data/BusinessTypes.php:90
+msgid "Self Storage"
+msgstr "Önkiszolgáló raktár"
+
+#: includes/Admin/Data/BusinessTypes.php:91
+msgid "Shopping Center"
+msgstr "Bevásárlóközpont"
+
+#: includes/Admin/Data/BusinessTypes.php:92
+msgid "Sports Activity Location"
+msgstr "Sporttevékenység helyszíne"
+
+#: includes/Admin/Data/BusinessTypes.php:93
+msgid "Golf Course"
+msgstr "Golfpálya"
+
+#: includes/Admin/Data/BusinessTypes.php:94
+msgid "Health Club / Gym"
+msgstr "Egészségklub / edzőterem"
+
+#: includes/Admin/Data/BusinessTypes.php:95
+msgid "Sports Club"
+msgstr "Sportklub"
+
+#: includes/Admin/Data/BusinessTypes.php:96
+msgid "Stadium / Arena"
+msgstr "Stadion / aréna"
+
+#: includes/Admin/Data/BusinessTypes.php:97
+#: includes/Admin/Data/BusinessTypes.php:165
+msgid "Store (General)"
+msgstr "Bolt (általános)"
+
+#: includes/Admin/Data/BusinessTypes.php:98
+msgid "Bike Store"
+msgstr "Kerékpárbolt"
+
+#: includes/Admin/Data/BusinessTypes.php:99
+msgid "Book Store"
+msgstr "Könyvesbolt"
+
+#: includes/Admin/Data/BusinessTypes.php:100
+#: includes/Admin/Data/BusinessTypes.php:166
+msgid "Clothing Store"
+msgstr "Ruházati üzlet"
+
+#: includes/Admin/Data/BusinessTypes.php:101
+msgid "Computer Store"
+msgstr "Számítógépbolt"
+
+#: includes/Admin/Data/BusinessTypes.php:102
+msgid "Convenience Store"
+msgstr "Kisbolt"
+
+#: includes/Admin/Data/BusinessTypes.php:103
+#: includes/Admin/Data/BusinessTypes.php:167
+msgid "Electronics Store"
+msgstr "Elektronikai üzlet"
+
+#: includes/Admin/Data/BusinessTypes.php:104
+msgid "Florist"
+msgstr "Virágüzlet"
+
+#: includes/Admin/Data/BusinessTypes.php:105
+msgid "Furniture Store"
+msgstr "Bútorbolt"
+
+#: includes/Admin/Data/BusinessTypes.php:106
+msgid "Garden Store"
+msgstr "Kertészeti üzlet"
+
+#: includes/Admin/Data/BusinessTypes.php:107
+#: includes/Admin/Data/BusinessTypes.php:168
+msgid "Grocery Store"
+msgstr "Élelmiszerbolt"
+
+#: includes/Admin/Data/BusinessTypes.php:108
+#: includes/Admin/Data/BusinessTypes.php:169
+msgid "Hardware Store"
+msgstr "Vasbolt"
+
+#: includes/Admin/Data/BusinessTypes.php:109
+msgid "Hobby Shop"
+msgstr "Hobbi bolt"
+
+#: includes/Admin/Data/BusinessTypes.php:110
+#: includes/Admin/Data/BusinessTypes.php:170
+msgid "Jewelry Store"
+msgstr "Ékszerüzlet"
+
+#: includes/Admin/Data/BusinessTypes.php:111
+msgid "Liquor Store"
+msgstr "Italbolt"
+
+#: includes/Admin/Data/BusinessTypes.php:112
+msgid "Mobile Phone Store"
+msgstr "Mobiltelefon bolt"
+
+#: includes/Admin/Data/BusinessTypes.php:113
+msgid "Movie Rental Store"
+msgstr "Videókölcsönző"
+
+#: includes/Admin/Data/BusinessTypes.php:114
+msgid "Music Store"
+msgstr "Zeneüzlet"
+
+#: includes/Admin/Data/BusinessTypes.php:115
+msgid "Office Equipment Store"
+msgstr "Irodai felszerelés bolt"
+
+#: includes/Admin/Data/BusinessTypes.php:116
+msgid "Outlet Store"
+msgstr "Outlet"
+
+#: includes/Admin/Data/BusinessTypes.php:117
+msgid "Pawn Shop"
+msgstr "Zálogház"
+
+#: includes/Admin/Data/BusinessTypes.php:118
+msgid "Pet Store"
+msgstr "Állatkereskedés"
+
+#: includes/Admin/Data/BusinessTypes.php:119
+msgid "Shoe Store"
+msgstr "Cipőbolt"
+
+#: includes/Admin/Data/BusinessTypes.php:120
+msgid "Sporting Goods Store"
+msgstr "Sportfelszerelés bolt"
+
+#: includes/Admin/Data/BusinessTypes.php:121
+msgid "Tire Shop"
+msgstr "Gumiabroncs-szerviz"
+
+#: includes/Admin/Data/BusinessTypes.php:122
+msgid "Toy Store"
+msgstr "Játékbolt"
+
+#: includes/Admin/Data/BusinessTypes.php:123
+msgid "Wholesale Store"
+msgstr "Nagykereskedés"
+
+#: includes/Admin/Data/BusinessTypes.php:124
+msgid "Television Station"
+msgstr "Televízióállomás"
+
+#: includes/Admin/Data/BusinessTypes.php:125
+msgid "Tourist Information Center"
+msgstr "Turisztikai információs központ"
+
+#: includes/Admin/Data/BusinessTypes.php:126
+msgid "Travel Agency"
+msgstr "Utazási iroda"
+
+#: includes/Admin/Data/BusinessTypes.php:137
+#: includes/Admin/Settings/TabGeneral.php:34
+#: includes/Admin/Settings/TabWooCommerce.php:72
+msgid "General"
+msgstr "Általános"
+
+#: includes/Admin/Data/BusinessTypes.php:138
+msgid "Local Business"
+msgstr "Helyi vállalkozás"
+
+#: includes/Admin/Data/BusinessTypes.php:141
+msgid "Automotive"
+msgstr "Autóipar"
+
+#: includes/Admin/Data/BusinessTypes.php:149
+msgid "Food & Drink"
+msgstr "Étel és ital"
+
+#: includes/Admin/Data/BusinessTypes.php:156
+msgid "Health & Beauty"
+msgstr "Egészség és szépség"
+
+#: includes/Admin/Data/BusinessTypes.php:164
+msgid "Store"
+msgstr "Bolt"
+
+#: includes/Admin/Data/BusinessTypes.php:172
+msgid "Services"
+msgstr "Szolgáltatások"
+
+#: includes/Admin/Data/BusinessTypes.php:180
+msgid "Lodging"
+msgstr "Szállás"
+
+#: includes/Admin/ParentPage.php:127
+msgid "Lightweight plugins for WordPress - minimal footprint, maximum impact."
+msgstr "Könnyű WordPress bővítmények – minimális terhelés, maximális hatás."
+
+#: includes/Admin/ParentPage.php:180
+msgid "Active"
+msgstr "Aktív"
+
+#: includes/Admin/ParentPage.php:187
+msgid "Settings"
+msgstr "Beállítások"
+
+#: includes/Admin/ParentPage.php:191
+msgid "Get Plugin"
+msgstr "Bővítmény letöltése"
+
+#: includes/Admin/Settings/FieldRendererTrait.php:153 includes/MetaBox.php:258
+msgid "Select Image"
+msgstr "Kép kiválasztása"
+
+#: includes/Admin/Settings/Tab404.php:34
+msgid "404"
+msgstr "404"
+
+#: includes/Admin/Settings/Tab404.php:53
+msgid "404 Error Handling"
+msgstr "404 hibakezelés"
+
+#: includes/Admin/Settings/Tab404.php:56
+msgid "Configure how 404 (Not Found) errors are handled on your site."
+msgstr ""
+"Állítsd be, hogyan legyenek kezelve a 404 (Nem található) hibák az "
+"oldaladon."
+
+#: includes/Admin/Settings/Tab404.php:61
+msgid "Redirect 404 to Homepage"
+msgstr "404 átirányítása a kezdőlapra"
+
+#: includes/Admin/Settings/Tab404.php:67
+msgid "Automatically redirect all 404 errors to the homepage"
+msgstr "Minden 404 hiba automatikus átirányítása a kezdőlapra"
+
+#: includes/Admin/Settings/Tab404.php:72
+msgid ""
+"When enabled, visitors who land on a non-existent page will be redirected to"
+" your homepage with a 302 (temporary) redirect."
+msgstr ""
+"Ha engedélyezed, a nem létező oldalra érkező látogatók a kezdőlapodra "
+"lesznek átirányítva 302-es (ideiglenes) átirányítással."
+
+#: includes/Admin/Settings/TabAdvanced.php:34 includes/MetaBox.php:278
+msgid "Advanced"
+msgstr "Speciális"
+
+#: includes/Admin/Settings/TabAdvanced.php:53
+msgid "Advanced Settings"
+msgstr "Speciális beállítások"
+
+#: includes/Admin/Settings/TabAdvanced.php:56
+msgid "Advanced settings and cleanup options."
+msgstr "Speciális beállítások és takarítási opciók."
+
+#: includes/Admin/Settings/TabAdvanced.php:72
+msgid "Features"
+msgstr "Funkciók"
+
+#: includes/Admin/Settings/TabAdvanced.php:75
+msgid "Breadcrumbs"
+msgstr "Morzsamenü"
+
+#: includes/Admin/Settings/TabAdvanced.php:81
+msgid "Enable breadcrumbs"
+msgstr "Morzsamenü engedélyezése"
+
+#: includes/Admin/Settings/TabAdvanced.php:86
+msgid "Use shortcode [lw_breadcrumbs] or function lw_seo_breadcrumbs()"
+msgstr ""
+"Használd a [lw_breadcrumbs] shortcode-ot vagy a lw_seo_breadcrumbs() "
+"függvényt"
+
+#: includes/Admin/Settings/TabAdvanced.php:91
+#: includes/Admin/Settings/TabWooCommerce.php:131
+msgid "Schema.org"
+msgstr "Schema.org"
+
+#: includes/Admin/Settings/TabAdvanced.php:97
+msgid "Enable Schema.org JSON-LD output"
+msgstr "Schema.org JSON-LD kimenet engedélyezése"
+
+#: includes/Admin/Settings/TabAdvanced.php:104
+msgid "robots.txt"
+msgstr "robots.txt"
+
+#: includes/Admin/Settings/TabAdvanced.php:110
+msgid "Add sitemap URL and AI rules to robots.txt"
+msgstr "Sitemap URL és AI szabályok hozzáadása a robots.txt-hez"
+
+#: includes/Admin/Settings/TabAdvanced.php:118
+msgid "Your robots.txt"
+msgstr "A robots.txt fájlod"
+
+#: includes/Admin/Settings/TabAdvanced.php:137
+msgid "Head Cleanup"
+msgstr "Head takarítás"
+
+#: includes/Admin/Settings/TabAdvanced.php:140
+msgid "Shortlinks"
+msgstr "Rövid linkek"
+
+#: includes/Admin/Settings/TabAdvanced.php:146
+msgid "Remove shortlinks from head"
+msgstr "Rövid linkek eltávolítása a head-ből"
+
+#: includes/Admin/Settings/TabAdvanced.php:153
+msgid "RSD Link"
+msgstr "RSD link"
+
+#: includes/Admin/Settings/TabAdvanced.php:159
+msgid "Remove RSD link from head"
+msgstr "RSD link eltávolítása a head-ből"
+
+#: includes/Admin/Settings/TabAdvanced.php:166
+msgid "WLW Manifest"
+msgstr "WLW manifest"
+
+#: includes/Admin/Settings/TabAdvanced.php:172
+msgid "Remove Windows Live Writer link"
+msgstr "Windows Live Writer link eltávolítása"
+
+#: includes/Admin/Settings/TabAi.php:37
+msgid "AI / LLM"
+msgstr "AI / LLM"
+
+#: includes/Admin/Settings/TabAi.php:56
+msgid "AI / LLM Settings"
+msgstr "AI / LLM beállítások"
+
+#: includes/Admin/Settings/TabAi.php:59
+msgid "Control how AI crawlers interact with your site."
+msgstr "Szabályozd, hogyan lépnek kapcsolatba az AI crawler-ek az oldaladdal."
+
+#: includes/Admin/Settings/TabAi.php:75
+msgid "llms.txt File"
+msgstr "llms.txt fájl"
+
+#: includes/Admin/Settings/TabAi.php:78
+msgid "llms.txt"
+msgstr "llms.txt"
+
+#: includes/Admin/Settings/TabAi.php:84
+msgid "Enable llms.txt for AI crawlers"
+msgstr "Engedélyezd az llms.txt-t AI crawler-ek számára"
+
+#. translators: %1$s: llms.txt URL, %2$s: llmstxt.org link
+#: includes/Admin/Settings/TabAi.php:92
+#, php-format
+msgid "Your llms.txt: %1$s — %2$s"
+msgstr "A llms.txt-d: %1$s — %2$s"
+
+#: includes/Admin/Settings/TabAi.php:94
+msgid "Learn more"
+msgstr "Tudj meg többet"
+
+#: includes/Admin/Settings/TabAi.php:111
+msgid "AI Crawler Access"
+msgstr "AI crawler hozzáférés"
+
+#: includes/Admin/Settings/TabAi.php:113
+msgid ""
+"Block specific AI crawlers from accessing your site via robots.txt. Checked "
+"= Blocked."
+msgstr ""
+"Tiltsd le, hogy bizonyos AI crawler-ek a robots.txt-n keresztül "
+"hozzáférjenek az oldaladhoz. Bejelölve = letiltva."
+
+#: includes/Admin/Settings/TabAi.php:142
+msgid ""
+"Blocking crawlers adds Disallow rules to your robots.txt. Note: AI companies"
+" may not always respect these rules."
+msgstr ""
+"A crawler-ek tiltása Disallow szabályokat ad a robots.txt-dhez. Megjegyzés: "
+"az AI cégek nem mindig tartják tiszteletben ezeket a szabályokat."
+
+#: includes/Admin/Settings/TabContent.php:34
+msgid "Content"
+msgstr "Tartalom"
+
+#: includes/Admin/Settings/TabContent.php:53
+msgid "Content Types"
+msgstr "Tartalomtípusok"
+
+#: includes/Admin/Settings/TabContent.php:56
+msgid "Title templates and indexing settings for different content types."
+msgstr "Címsablonok és indexelési beállítások a különböző tartalomtípusokhoz."
+
+#: includes/Admin/Settings/TabContent.php:74
+msgid "Posts"
+msgstr "Bejegyzések"
+
+#: includes/Admin/Settings/TabContent.php:78
+#: includes/Admin/Settings/TabContent.php:110
+msgid "Title Template"
+msgstr "Címsablon"
+
+#: includes/Admin/Settings/TabContent.php:83
+msgid "Default Index"
+msgstr "Alapértelmezett indexelés"
+
+#: includes/Admin/Settings/TabContent.php:89
+msgid "Set posts to noindex by default"
+msgstr "Bejegyzések beállítása alapértelmezetten noindexre"
+
+#: includes/Admin/Settings/TabContent.php:106
+msgid "Pages"
+msgstr "Oldalak"
+
+#: includes/Admin/Settings/TabContent.php:125
+msgid "Taxonomies"
+msgstr "Taxonómiák"
+
+#: includes/Admin/Settings/TabContent.php:129
+msgid "Categories Title"
+msgstr "Kategóriák címe"
+
+#: includes/Admin/Settings/TabContent.php:134
+msgid "Categories Index"
+msgstr "Kategóriák indexelése"
+
+#: includes/Admin/Settings/TabContent.php:140
+msgid "Set categories to noindex"
+msgstr "Kategóriák beállítása noindexre"
+
+#: includes/Admin/Settings/TabContent.php:147
+msgid "Tags Index"
+msgstr "Címkék indexelése"
+
+#: includes/Admin/Settings/TabContent.php:153
+msgid "Set tags to noindex"
+msgstr "Címkék beállítása noindexre"
+
+#: includes/Admin/Settings/TabContent.php:170
+msgid "Archives"
+msgstr "Archívumok"
+
+#: includes/Admin/Settings/TabContent.php:173
+msgid "Author Archives"
+msgstr "Szerzői archívumok"
+
+#: includes/Admin/Settings/TabContent.php:179
+msgid "Set author archives to noindex"
+msgstr "Szerzői archívumok beállítása noindexre"
+
+#: includes/Admin/Settings/TabContent.php:186
+msgid "Date Archives"
+msgstr "Dátum archívumok"
+
+#: includes/Admin/Settings/TabContent.php:192
+msgid "Set date archives to noindex"
+msgstr "Dátum archívumok beállítása noindexre"
+
+#: includes/Admin/Settings/TabGeneral.php:53
+msgid "General Settings"
+msgstr "Általános beállítások"
+
+#: includes/Admin/Settings/TabGeneral.php:56
+msgid "Basic SEO settings for your site."
+msgstr "Alapvető SEO beállítások az oldaladhoz."
+
+#: includes/Admin/Settings/TabGeneral.php:62
+msgid "Title Separator"
+msgstr "Címelválasztó"
+
+#: includes/Admin/Settings/TabGeneral.php:68
+msgid "Homepage Title"
+msgstr "Kezdőlap címe"
+
+#: includes/Admin/Settings/TabGeneral.php:75
+msgid "Variables: %%sitename%%, %%sitedesc%%, %%sep%%"
+msgstr "Változók: %%sitename%%, %%sitedesc%%, %%sep%%"
+
+#: includes/Admin/Settings/TabGeneral.php:83
+msgid "Homepage Description"
+msgstr "Kezdőlap leírása"
+
+#: includes/Admin/Settings/TabGeneral.php:90
+msgid "Leave empty to use the site tagline."
+msgstr "Hagyd üresen a webhely szlogenjének használatához."
+
+#: includes/Admin/Settings/TabGeneral.php:98
+msgid "Site Represents"
+msgstr "A webhelyet képviseli"
+
+#: includes/Admin/Settings/TabGeneral.php:106
+msgid "Organization"
+msgstr "Szervezet"
+
+#: includes/Admin/Settings/TabGeneral.php:107
+msgid "Person"
+msgstr "Személy"
+
+#: includes/Admin/Settings/TabGeneral.php:116
+msgid "Organization/Person Name"
+msgstr "Szervezet/Személy neve"
+
+#: includes/Admin/Settings/TabGeneral.php:123
+msgid "Used in Schema.org markup."
+msgstr "Schema.org jelölésben használva."
+
+#: includes/Admin/Settings/TabLocal.php:37 includes/Local/Shortcodes.php:45
+msgid "Monday"
+msgstr "Hétfő"
+
+#: includes/Admin/Settings/TabLocal.php:38 includes/Local/Shortcodes.php:46
+msgid "Tuesday"
+msgstr "Kedd"
+
+#: includes/Admin/Settings/TabLocal.php:39 includes/Local/Shortcodes.php:47
+msgid "Wednesday"
+msgstr "Szerda"
+
+#: includes/Admin/Settings/TabLocal.php:40 includes/Local/Shortcodes.php:48
+msgid "Thursday"
+msgstr "Csütörtök"
+
+#: includes/Admin/Settings/TabLocal.php:41 includes/Local/Shortcodes.php:49
+msgid "Friday"
+msgstr "Péntek"
+
+#: includes/Admin/Settings/TabLocal.php:42 includes/Local/Shortcodes.php:50
+msgid "Saturday"
+msgstr "Szombat"
+
+#: includes/Admin/Settings/TabLocal.php:43 includes/Local/Shortcodes.php:51
+msgid "Sunday"
+msgstr "Vasárnap"
+
+#: includes/Admin/Settings/TabLocal.php:64
+#: includes/Admin/Settings/TabLocal.php:83
+msgid "Local SEO"
+msgstr "Helyi SEO"
+
+#: includes/Admin/Settings/TabLocal.php:86
+msgid ""
+"Add LocalBusiness structured data to help your business appear in local "
+"search results."
+msgstr ""
+"Adj hozzá LocalBusiness strukturált adatokat, hogy a vállalkozásod "
+"megjelenjen a helyi keresési találatok között."
+
+#: includes/Admin/Settings/TabLocal.php:104
+msgid "Business Information"
+msgstr "Vállalkozási információk"
+
+#: includes/Admin/Settings/TabLocal.php:107
+msgid "Enable Local SEO"
+msgstr "Helyi SEO engedélyezése"
+
+#: includes/Admin/Settings/TabLocal.php:113
+msgid "Enable LocalBusiness schema"
+msgstr "LocalBusiness schema engedélyezése"
+
+#: includes/Admin/Settings/TabLocal.php:121
+msgid "Business Type"
+msgstr "Vállalkozás típusa"
+
+#: includes/Admin/Settings/TabLocal.php:126
+msgid "Select the type that best describes your business."
+msgstr "Válaszd ki azt a típust, ami a legjobban leírja a vállalkozásodat."
+
+#: includes/Admin/Settings/TabLocal.php:132
+msgid "Business Name"
+msgstr "Vállalkozás neve"
+
+#: includes/Admin/Settings/TabLocal.php:145
+msgid "Leave empty to use site name."
+msgstr "Hagyd üresen a webhely nevének használatához."
+
+#: includes/Admin/Settings/TabLocal.php:151
+msgid "Business Description"
+msgstr "Vállalkozás leírása"
+
+#: includes/Admin/Settings/TabLocal.php:166
+msgid "Price Range"
+msgstr "Árkategória"
+
+#: includes/Admin/Settings/TabLocal.php:174
+msgid "Not specified"
+msgstr "Nincs megadva"
+
+#: includes/Admin/Settings/TabLocal.php:220
+msgid "Address"
+msgstr "Cím"
+
+#: includes/Admin/Settings/TabLocal.php:224
+msgid "Street Address"
+msgstr "Utca, házszám"
+
+#: includes/Admin/Settings/TabLocal.php:239
+msgid "Address Line 2"
+msgstr "Cím 2. sora"
+
+#: includes/Admin/Settings/TabLocal.php:254
+msgid "City"
+msgstr "Város"
+
+#: includes/Admin/Settings/TabLocal.php:269
+msgid "State / Region"
+msgstr "Állam / régió"
+
+#: includes/Admin/Settings/TabLocal.php:284
+msgid "Postal Code"
+msgstr "Irányítószám"
+
+#: includes/Admin/Settings/TabLocal.php:299
+msgid "Country"
+msgstr "Ország"
+
+#: includes/Admin/Settings/TabLocal.php:312
+msgid "Use ISO 3166-1 alpha-2 code (e.g., HU, US, DE)."
+msgstr "Használd az ISO 3166-1 alpha-2 kódot (pl. HU, US, DE)."
+
+#: includes/Admin/Settings/TabLocal.php:327
+msgid "Contact"
+msgstr "Kapcsolat"
+
+#: includes/Admin/Settings/TabLocal.php:331
+msgid "Phone"
+msgstr "Telefon"
+
+#: includes/Admin/Settings/TabLocal.php:347
+msgid "Email"
+msgstr "Email"
+
+#: includes/Admin/Settings/TabLocal.php:372
+msgid "Opening Hours"
+msgstr "Nyitvatartás"
+
+#: includes/Admin/Settings/TabLocal.php:375
+msgid "Use Opening Hours"
+msgstr "Nyitvatartás használata"
+
+#: includes/Admin/Settings/TabLocal.php:381
+msgid "Enable opening hours in schema"
+msgstr "Nyitvatartás engedélyezése a sémában"
+
+#: includes/Admin/Settings/TabLocal.php:425 includes/Local/Shortcodes.php:294
+#: includes/Local/Shortcodes.php:326
+msgid "Closed"
+msgstr "Zárva"
+
+#: includes/Admin/Settings/TabLocal.php:430
+msgid "Open:"
+msgstr "Nyitás:"
+
+#: includes/Admin/Settings/TabLocal.php:441
+msgid "Close:"
+msgstr "Zárás:"
+
+#: includes/Admin/Settings/TabLocal.php:459
+msgid "Coordinates"
+msgstr "Koordináták"
+
+#: includes/Admin/Settings/TabLocal.php:463
+msgid "Latitude"
+msgstr "Szélesség"
+
+#: includes/Admin/Settings/TabLocal.php:479
+msgid "Longitude"
+msgstr "Hosszúság"
+
+#. translators: %s: Google Maps URL
+#: includes/Admin/Settings/TabLocal.php:498
+#, php-format
+msgid "Find coordinates at %s - right-click location and select \"What's here?\"."
+msgstr ""
+"Koordináták keresése itt: %s - kattints jobb gombbal a helyre, és válaszd a "
+"\"Mi van itt?\" opciót."
+
+#: includes/Admin/Settings/TabMigration.php:32
+#: includes/Admin/Settings/TabRedirects.php:240
+msgid "Import"
+msgstr "Importálás"
+
+#: includes/Admin/Settings/TabMigration.php:51
+msgid "Import SEO Data"
+msgstr "SEO adatok importálása"
+
+#: includes/Admin/Settings/TabMigration.php:54
+msgid ""
+"Import SEO data from other SEO plugins. Existing LW SEO data will not be "
+"overwritten."
+msgstr ""
+"SEO adatok importálása más SEO bővítményekből. A meglévő LW SEO adatok nem "
+"lesznek felülírva."
+
+#: includes/Admin/Settings/TabMigration.php:57
+msgid "RankMath SEO"
+msgstr "RankMath SEO"
+
+#: includes/Admin/Settings/TabMigration.php:61
+msgid "Detect RankMath SEO data in your database for migration."
+msgstr "RankMath SEO adatok észlelése az adatbázisodban a migrációhoz."
+
+#: includes/Admin/Settings/TabMigration.php:65
+msgid "Detect Data"
+msgstr "Adatok észlelése"
+
+#: includes/Admin/Settings/TabMigration.php:77
+msgid "Preview Migration"
+msgstr "Migráció előnézete"
+
+#: includes/Admin/Settings/TabMigration.php:80
+msgid "Run Migration"
+msgstr "Migráció futtatása"
+
+#: includes/Admin/Settings/TabRedirects.php:37
+msgid "Redirects"
+msgstr "Átirányítások"
+
+#: includes/Admin/Settings/TabRedirects.php:57
+msgid "Redirect Manager"
+msgstr "Átirányításkezelő"
+
+#: includes/Admin/Settings/TabRedirects.php:60
+msgid ""
+"Create and manage URL redirects to prevent 404 errors and preserve SEO "
+"value."
+msgstr ""
+"URL átirányítások létrehozása és kezelése a 404 hibák megelőzéséhez és az "
+"SEO érték megőrzéséhez."
+
+#: includes/Admin/Settings/TabRedirects.php:65
+msgid "Enable Redirects"
+msgstr "Átirányítások engedélyezése"
+
+#: includes/Admin/Settings/TabRedirects.php:71
+msgid "Process redirect rules"
+msgstr "Átirányítási szabályok feldolgozása"
+
+#: includes/Admin/Settings/TabRedirects.php:81
+msgid "Add New Redirect"
+msgstr "Új átirányítás hozzáadása"
+
+#: includes/Admin/Settings/TabRedirects.php:89
+msgid "Source URL"
+msgstr "Forrás URL"
+
+#: includes/Admin/Settings/TabRedirects.php:99
+msgid "The old URL path that should redirect (e.g., /old-page/)."
+msgstr "A régi URL útvonal, amit át kell irányítani (pl. /old-page/)."
+
+#: includes/Admin/Settings/TabRedirects.php:105
+msgid "Destination URL"
+msgstr "Cél URL"
+
+#: includes/Admin/Settings/TabRedirects.php:115
+msgid "The new URL to redirect to. Leave empty for 410/451 types."
+msgstr "Az új URL, amire átirányítson. Hagyd üresen a 410/451 típusokhoz."
+
+#: includes/Admin/Settings/TabRedirects.php:121
+msgid "Redirect Type"
+msgstr "Átirányítás típusa"
+
+#: includes/Admin/Settings/TabRedirects.php:134
+#: includes/Admin/Settings/TabRedirects.php:186
+#: includes/Admin/SettingsPage.php:162
+msgid "Regex"
+msgstr "Regex"
+
+#: includes/Admin/Settings/TabRedirects.php:138
+msgid "Source is a regular expression"
+msgstr "A forrás reguláris kifejezés"
+
+#: includes/Admin/Settings/TabRedirects.php:141
+msgid ""
+"Advanced: Use regex patterns like ^/category/(.*)$ with $1 in destination."
+msgstr ""
+"Speciális: Használj regex mintákat, például ^/category/(.*)$ és a célban "
+"$1-et."
+
+#: includes/Admin/Settings/TabRedirects.php:149
+#: includes/Admin/SettingsPage.php:152
+msgid "Add Redirect"
+msgstr "Átirányítás hozzáadása"
+
+#: includes/Admin/Settings/TabRedirects.php:152
+msgid "Cancel"
+msgstr "Mégse"
+
+#: includes/Admin/Settings/TabRedirects.php:163
+msgid "Existing Redirects"
+msgstr "Meglévő átirányítások"
+
+#: includes/Admin/Settings/TabRedirects.php:168
+msgid "No redirects configured yet."
+msgstr "Még nincs beállítva átirányítás."
+
+#: includes/Admin/Settings/TabRedirects.php:173
+msgid "Source"
+msgstr "Forrás"
+
+#: includes/Admin/Settings/TabRedirects.php:174
+msgid "Destination"
+msgstr "Cél"
+
+#: includes/Admin/Settings/TabRedirects.php:175
+msgid "Type"
+msgstr "Típus"
+
+#: includes/Admin/Settings/TabRedirects.php:176
+msgid "Hits"
+msgstr "Találatok"
+
+#: includes/Admin/Settings/TabRedirects.php:177
+msgid "Actions"
+msgstr "Műveletek"
+
+#: includes/Admin/Settings/TabRedirects.php:191
+#: includes/Admin/SettingsPage.php:161
+msgid "N/A"
+msgstr "N/A"
+
+#: includes/Admin/Settings/TabRedirects.php:210
+#: includes/Admin/SettingsPage.php:154
+msgid "Edit"
+msgstr "Szerkesztés"
+
+#: includes/Admin/Settings/TabRedirects.php:213
+#: includes/Admin/SettingsPage.php:155
+msgid "Delete"
+msgstr "Törlés"
+
+#: includes/Admin/Settings/TabRedirects.php:224
+msgid "Import / Export"
+msgstr "Import / Export"
+
+#: includes/Admin/Settings/TabRedirects.php:228
+msgid "Export"
+msgstr "Exportálás"
+
+#: includes/Admin/Settings/TabRedirects.php:231
+msgid "Download CSV"
+msgstr "CSV letöltése"
+
+#: includes/Admin/Settings/TabRedirects.php:234
+msgid "Export all redirects as a CSV file."
+msgstr "Az összes átirányítás exportálása CSV fájlba."
+
+#: includes/Admin/Settings/TabRedirects.php:245
+msgid "Import CSV"
+msgstr "CSV importálása"
+
+#: includes/Admin/Settings/TabRedirects.php:248
+msgid ""
+"Import redirects from a CSV file. Format: source,destination,type,regex"
+msgstr ""
+"Átirányítások importálása CSV fájlból. Formátum: "
+"source,destination,type,regex"
+
+#: includes/Admin/Settings/TabSitemap.php:34
+#: includes/Admin/Settings/TabWooCommerce.php:175
+msgid "Sitemap"
+msgstr "Oldaltérkép"
+
+#: includes/Admin/Settings/TabSitemap.php:54
+#: includes/Admin/Settings/TabSitemap.php:65
+msgid "XML Sitemap"
+msgstr "XML oldaltérkép"
+
+#: includes/Admin/Settings/TabSitemap.php:58
+msgid "Your sitemap:"
+msgstr "Az oldaltérképed:"
+
+#: includes/Admin/Settings/TabSitemap.php:71
+msgid "Enable XML sitemap"
+msgstr "XML oldaltérkép engedélyezése"
+
+#: includes/Admin/Settings/TabSitemap.php:78
+msgid "Include Posts"
+msgstr "Bejegyzések felvétele"
+
+#: includes/Admin/Settings/TabSitemap.php:84
+msgid "Include posts in sitemap"
+msgstr "Bejegyzések felvétele az oldaltérképbe"
+
+#: includes/Admin/Settings/TabSitemap.php:91
+msgid "Include Pages"
+msgstr "Oldalak felvétele"
+
+#: includes/Admin/Settings/TabSitemap.php:97
+msgid "Include pages in sitemap"
+msgstr "Oldalak felvétele az oldaltérképbe"
+
+#: includes/Admin/Settings/TabSitemap.php:104
+msgid "Include Categories"
+msgstr "Kategóriák felvétele"
+
+#: includes/Admin/Settings/TabSitemap.php:110
+msgid "Include categories in sitemap"
+msgstr "Kategóriák felvétele az oldaltérképbe"
+
+#: includes/Admin/Settings/TabSocial.php:34 includes/MetaBox.php:213
+msgid "Social"
+msgstr "Közösségi"
+
+#: includes/Admin/Settings/TabSocial.php:53
+msgid "Social Media"
+msgstr "Közösségi média"
+
+#: includes/Admin/Settings/TabSocial.php:56
+msgid "Settings for Open Graph and Twitter Cards."
+msgstr "Beállítások az Open Graph és a Twitter Cards funkcióhoz."
+
+#: includes/Admin/Settings/TabSocial.php:71
+msgid "Meta Tags"
+msgstr "Meta tagek"
+
+#: includes/Admin/Settings/TabSocial.php:74
+msgid "Open Graph"
+msgstr "Open Graph"
+
+#: includes/Admin/Settings/TabSocial.php:80
+msgid "Enable Open Graph meta tags"
+msgstr "Open Graph meta tagek engedélyezése"
+
+#: includes/Admin/Settings/TabSocial.php:87
+msgid "Twitter Cards"
+msgstr "Twitter Cards"
+
+#: includes/Admin/Settings/TabSocial.php:93
+msgid "Enable Twitter Card meta tags"
+msgstr "Twitter Card meta tagek engedélyezése"
+
+#: includes/Admin/Settings/TabSocial.php:101
+msgid "Default Card Type"
+msgstr "Alapértelmezett kártyatípus"
+
+#: includes/Admin/Settings/TabSocial.php:109
+msgid "Summary with large image"
+msgstr "Összefoglaló nagy képpel"
+
+#: includes/Admin/Settings/TabSocial.php:110
+msgid "Summary"
+msgstr "Összefoglaló"
+
+#: includes/Admin/Settings/TabSocial.php:119
+msgid "Default Social Image"
+msgstr "Alapértelmezett közösségi kép"
+
+#: includes/Admin/Settings/TabSocial.php:126
+msgid "Used when a post has no featured image. Recommended: 1200x630px."
+msgstr ""
+"Akkor használjuk, ha egy bejegyzésnek nincs kiemelt képe. Ajánlott: "
+"1200x630px."
+
+#: includes/Admin/Settings/TabSocial.php:143
+msgid "Facebook"
+msgstr "Facebook"
+
+#: includes/Admin/Settings/TabSocial.php:144
+msgid "Twitter / X"
+msgstr "Twitter / X"
+
+#: includes/Admin/Settings/TabSocial.php:145
+msgid "Instagram"
+msgstr "Instagram"
+
+#: includes/Admin/Settings/TabSocial.php:146
+msgid "LinkedIn"
+msgstr "LinkedIn"
+
+#: includes/Admin/Settings/TabSocial.php:147
+msgid "YouTube"
+msgstr "YouTube"
+
+#: includes/Admin/Settings/TabSocial.php:151
+msgid "Social Profiles"
+msgstr "Közösségi profilok"
+
+#: includes/Admin/Settings/TabWooCommerce.php:34
+msgid "WooCommerce"
+msgstr "WooCommerce"
+
+#: includes/Admin/Settings/TabWooCommerce.php:53
+#: includes/Admin/Settings/TabWooCommerce.php:75
+msgid "WooCommerce SEO"
+msgstr "WooCommerce SEO"
+
+#: includes/Admin/Settings/TabWooCommerce.php:56
+msgid ""
+"Optimize your WooCommerce products for search engines and social media."
+msgstr ""
+"Optimalizáld a WooCommerce termékeidet keresőmotorokhoz és közösségi "
+"médiához."
+
+#: includes/Admin/Settings/TabWooCommerce.php:81
+msgid "Enable WooCommerce SEO features"
+msgstr "WooCommerce SEO funkciók engedélyezése"
+
+#: includes/Admin/Settings/TabWooCommerce.php:87
+msgid ""
+"Adds product-specific OpenGraph tags, Schema.org Product markup, and more."
+msgstr ""
+"Termékspecifikus OpenGraph tageket, Schema.org Product jelölést és még sok "
+"mást ad hozzá."
+
+#: includes/Admin/Settings/TabWooCommerce.php:93
+msgid "Product Title"
+msgstr "Termék címe"
+
+#: includes/Admin/Settings/TabWooCommerce.php:108
+msgid "Noindex Products"
+msgstr "Termékek noindexelése"
+
+#: includes/Admin/Settings/TabWooCommerce.php:114
+msgid "Add noindex to product pages"
+msgstr "Noindex hozzáadása a termékoldalakhoz"
+
+#: includes/Admin/Settings/TabWooCommerce.php:134
+msgid "Product Schema"
+msgstr "Termék Schema"
+
+#: includes/Admin/Settings/TabWooCommerce.php:140
+msgid "Enable Product Schema.org markup"
+msgstr "Schema.org Product jelölés engedélyezése"
+
+#: includes/Admin/Settings/TabWooCommerce.php:146
+msgid ""
+"Adds structured data for products including price, availability, and "
+"reviews."
+msgstr ""
+"Strukturált adatokat ad hozzá a termékekhez, beleértve az árat, az "
+"elérhetőséget és az értékeléseket."
+
+#: includes/Admin/Settings/TabWooCommerce.php:151
+msgid "Include Reviews"
+msgstr "Értékelések beemelése"
+
+#: includes/Admin/Settings/TabWooCommerce.php:157
+msgid "Include product reviews in Schema"
+msgstr "Termékértékelések beemelése a Schema-ba"
+
+#: includes/Admin/Settings/TabWooCommerce.php:178
+msgid "Products in Sitemap"
+msgstr "Termékek a webhelytérképben"
+
+#: includes/Admin/Settings/TabWooCommerce.php:184
+msgid "Include products in XML sitemap"
+msgstr "Termékek beemelése az XML webhelytérképbe"
+
+#: includes/Admin/Settings/TabWooCommerce.php:192
+msgid "Product Categories"
+msgstr "Termékkategóriák"
+
+#: includes/Admin/Settings/TabWooCommerce.php:198
+msgid "Include product categories in XML sitemap"
+msgstr "Termékkategóriák beemelése az XML webhelytérképbe"
+
+#: includes/Admin/Settings/TabWooCommerce.php:206
+msgid "Product Tags"
+msgstr "Termékcímkék"
+
+#: includes/Admin/Settings/TabWooCommerce.php:212
+msgid "Include product tags in XML sitemap"
+msgstr "Termékcímkék beemelése az XML webhelytérképbe"
+
+#: includes/Admin/SettingsPage.php:96
+msgid "SEO Settings"
+msgstr "SEO beállítások"
+
+#: includes/Admin/SettingsPage.php:97
+msgid "SEO"
+msgstr "SEO"
+
+#: includes/Admin/SettingsPage.php:153
+msgid "Update Redirect"
+msgstr "Átirányítás frissítése"
+
+#: includes/Admin/SettingsPage.php:156
+msgid "Are you sure you want to delete this redirect?"
+msgstr "Biztos, hogy törölni akarod ezt az átirányítást?"
+
+#: includes/Admin/SettingsPage.php:157 includes/Redirects/Ajax.php:68
+#: includes/Redirects/Ajax.php:122
+msgid "Source URL is required."
+msgstr "A forrás URL megadása kötelező."
+
+#: includes/Admin/SettingsPage.php:158
+msgid "Please select a CSV file."
+msgstr "Kérlek, válassz egy CSV fájlt."
+
+#: includes/Admin/SettingsPage.php:159
+msgid "Some rows could not be imported:"
+msgstr "Néhány sort nem sikerült importálni:"
+
+#: includes/Admin/SettingsPage.php:160
+msgid "Not required for this type"
+msgstr "Ehhez a típushoz nem kötelező"
+
+#: includes/Admin/SettingsPage.php:180
+msgid "No RankMath SEO data found in the database."
+msgstr "Nem található RankMath SEO adat az adatbázisban."
+
+#: includes/Admin/SettingsPage.php:181
+msgid "Global Options"
+msgstr "Globális beállítások"
+
+#: includes/Admin/SettingsPage.php:182
+msgid "Posts with SEO meta"
+msgstr "Bejegyzések SEO meta adatokkal"
+
+#: includes/Admin/SettingsPage.php:183
+msgid "Terms with SEO meta"
+msgstr "Kifejezések SEO meta adatokkal"
+
+#: includes/Admin/SettingsPage.php:184
+msgid "Users with SEO meta"
+msgstr "Felhasználók SEO meta adatokkal"
+
+#: includes/Admin/SettingsPage.php:185
+msgid "Found"
+msgstr "Találat"
+
+#: includes/Admin/SettingsPage.php:186
+msgid "Not found"
+msgstr "Nincs találat"
+
+#: includes/Admin/SettingsPage.php:187
+msgid "Preview Results (Dry Run)"
+msgstr "Eredmények előnézete (Dry Run)"
+
+#: includes/Admin/SettingsPage.php:188
+msgid "Migration Results"
+msgstr "Migráció eredményei"
+
+#: includes/Admin/SettingsPage.php:189
+msgid "Options migrated"
+msgstr "Migrált beállítások"
+
+#: includes/Admin/SettingsPage.php:190
+msgid "Posts migrated"
+msgstr "Migrált bejegyzések"
+
+#: includes/Admin/SettingsPage.php:191
+msgid "Posts skipped"
+msgstr "Kihagyott bejegyzések"
+
+#: includes/Admin/SettingsPage.php:192
+msgid "Terms migrated"
+msgstr "Migrált kifejezések"
+
+#: includes/Admin/SettingsPage.php:193
+msgid "Terms skipped"
+msgstr "Kihagyott kifejezések"
+
+#: includes/Admin/SettingsPage.php:194
+msgid "Users migrated"
+msgstr "Migrált felhasználók"
+
+#: includes/Admin/SettingsPage.php:195
+msgid "This was a preview. No data was modified."
+msgstr "Ez egy előnézet volt. Nem módosult semmilyen adat."
+
+#: includes/Admin/SettingsPage.php:196
+msgid ""
+"Are you sure you want to run the migration? Existing LW SEO data will not be"
+" overwritten."
+msgstr ""
+"Biztos, hogy lefuttatod a migrációt? A meglévő LW SEO adatok nem lesznek "
+"felülírva."
+
+#: includes/Breadcrumbs.php:45 includes/Breadcrumbs.php:67
+#: includes/Breadcrumbs.php:400 includes/Breadcrumbs.php:420
+msgid "Home"
+msgstr "Kezdőlap"
+
+#. translators: %s: search query
+#: includes/Breadcrumbs.php:311
+#, php-format
+msgid "Search: %s"
+msgstr "Keresés: %s"
+
+#: includes/Breadcrumbs.php:328
+msgid "Page not found"
+msgstr "Az oldal nem található"
+
+#: includes/Breadcrumbs.php:358
+msgid "Breadcrumb"
+msgstr "Morzsamenü"
+
+#: includes/MetaBox.php:52 assets/js/blocks/faq.js:279
+msgid "LW SEO"
+msgstr "LW SEO"
+
+#: includes/MetaBox.php:121
+msgid "characters remaining"
+msgstr "karakter van hátra"
+
+#: includes/MetaBox.php:122
+msgid "Too long!"
+msgstr "Túl hosszú!"
+
+#: includes/MetaBox.php:152
+msgid "SEO Title"
+msgstr "SEO cím"
+
+#: includes/MetaBox.php:167
+msgid "Leave empty to use the default title template."
+msgstr "Hagyd üresen az alapértelmezett címsablon használatához."
+
+#: includes/MetaBox.php:173
+msgid "Meta Description"
+msgstr "Meta leírás"
+
+#: includes/MetaBox.php:181
+msgid "Enter a meta description..."
+msgstr "Adj meg egy meta leírást..."
+
+#: includes/MetaBox.php:196
+msgid "noindex"
+msgstr "noindex"
+
+#: includes/MetaBox.php:205
+msgid "nofollow"
+msgstr "nofollow"
+
+#: includes/MetaBox.php:218
+msgid "Social Title"
+msgstr "Közösségi cím"
+
+#: includes/MetaBox.php:226
+msgid "Defaults to SEO title"
+msgstr "Alapértelmezetten az SEO cím"
+
+#: includes/MetaBox.php:232
+msgid "Social Description"
+msgstr "Közösségi leírás"
+
+#: includes/MetaBox.php:239
+msgid "Defaults to meta description"
+msgstr "Alapértelmezetten a meta leírás"
+
+#: includes/MetaBox.php:245
+msgid "Social Image"
+msgstr "Közösségi kép"
+
+#: includes/MetaBox.php:255
+msgid "Image URL"
+msgstr "Kép URL"
+
+#: includes/MetaBox.php:261 assets/js/blocks/faq.js:84
+msgid "Remove"
+msgstr "Eltávolítás"
+
+#: includes/MetaBox.php:269
+msgid "Priority: Social Image → Featured Image → Default Image."
+msgstr "Prioritás: Közösségi kép → Kiemelt kép → Alapértelmezett kép."
+
+#: includes/MetaBox.php:283
+msgid "Canonical URL"
+msgstr "Kanonikus URL"
+
+#: includes/MetaBox.php:294
+msgid "Leave empty to use the default permalink."
+msgstr "Hagyd üresen az alapértelmezett permalink használatához."
+
+#: includes/Migration/Ajax.php:39 includes/Redirects/Ajax.php:36
+msgid "Security check failed."
+msgstr "Biztonsági ellenőrzés sikertelen."
+
+#: includes/Migration/Ajax.php:44 includes/Redirects/Ajax.php:41
+msgid "Permission denied."
+msgstr "Hozzáférés megtagadva."
+
+#: includes/Redirects/Ajax.php:77 includes/Redirects/Ajax.php:131
+msgid "Invalid regex pattern."
+msgstr "Érvénytelen regex minta."
+
+#: includes/Redirects/Ajax.php:85
+msgid "Failed to add redirect."
+msgstr "Nem sikerült hozzáadni az átirányítást."
+
+#: includes/Redirects/Ajax.php:91
+msgid "Redirect added successfully."
+msgstr "Az átirányítás sikeresen hozzáadva."
+
+#: includes/Redirects/Ajax.php:117 includes/Redirects/Ajax.php:165
+#: includes/Redirects/Ajax.php:193
+msgid "Invalid redirect ID."
+msgstr "Érvénytelen átirányítás-azonosító."
+
+#: includes/Redirects/Ajax.php:139
+msgid "Failed to update redirect."
+msgstr "Nem sikerült frissíteni az átirányítást."
+
+#: includes/Redirects/Ajax.php:145
+msgid "Redirect updated successfully."
+msgstr "Az átirányítás sikeresen frissítve."
+
+#: includes/Redirects/Ajax.php:172
+msgid "Failed to delete redirect."
+msgstr "Nem sikerült törölni az átirányítást."
+
+#: includes/Redirects/Ajax.php:176
+msgid "Redirect deleted successfully."
+msgstr "Az átirányítás sikeresen törölve."
+
+#: includes/Redirects/Ajax.php:200
+msgid "Redirect not found."
+msgstr "Átirányítás nem található."
+
+#: includes/Redirects/Ajax.php:241
+msgid "No CSV data provided."
+msgstr "Nincs CSV adat megadva."
+
+#. translators: 1: number of imported redirects, 2: number of skipped
+#. redirects
+#: includes/Redirects/Ajax.php:251
+#, php-format
+msgid "Imported %1$d redirects, skipped %2$d."
+msgstr "%1$d átirányítás importálva, %2$d kihagyva."
+
+#: includes/Redirects/Handler.php:131
+msgid "Content Deleted"
+msgstr "Tartalom törölve"
+
+#: includes/Redirects/Handler.php:132
+msgid "The content you are looking for has been permanently removed."
+msgstr "A keresett tartalom véglegesen eltávolítva."
+
+#: includes/Redirects/Handler.php:154
+msgid "Unavailable For Legal Reasons"
+msgstr "Nem elérhető jogi okokból"
+
+#: includes/Redirects/Handler.php:155
+msgid "This content is not available due to legal reasons."
+msgstr "Ez a tartalom jogi okokból nem elérhető."
+
+#: includes/Redirects/Handler.php:226
+msgid "Return to homepage"
+msgstr "Vissza a kezdőlapra"
+
+#. translators: 1: current page number, 2: total page count
+#: includes/ReplaceVars.php:327
+#, php-format
+msgid "Page %1$d of %2$d"
+msgstr "%1$d/%2$d oldal"
+
+#: includes/ReplaceVars.php:337
+msgid "Site name"
+msgstr "Webhely neve"
+
+#: includes/ReplaceVars.php:338
+msgid "Site tagline"
+msgstr "Webhely jelmondata"
+
+#: includes/ReplaceVars.php:339
+msgid "Separator"
+msgstr "Elválasztó"
+
+#: includes/ReplaceVars.php:340
+msgid "Post/page title"
+msgstr "Bejegyzés/oldal címe"
+
+#: includes/ReplaceVars.php:341
+msgid "Post excerpt"
+msgstr "Bejegyzés kivonata"
+
+#: includes/ReplaceVars.php:342
+msgid "Post date"
+msgstr "Bejegyzés dátuma"
+
+#: includes/ReplaceVars.php:343
+msgid "Post modified date"
+msgstr "Bejegyzés módosításának dátuma"
+
+#: includes/ReplaceVars.php:344
+msgid "Author name"
+msgstr "Szerző neve"
+
+#: includes/ReplaceVars.php:345
+msgid "Primary category"
+msgstr "Elsődleges kategória"
+
+#: includes/ReplaceVars.php:346
+msgid "First tag"
+msgstr "Első címke"
+
+#: includes/ReplaceVars.php:347
+msgid "Term name"
+msgstr "Kifejezés neve"
+
+#: includes/ReplaceVars.php:348
+msgid "Term description"
+msgstr "Kifejezés leírása"
+
+#: includes/ReplaceVars.php:349
+msgid "Search query"
+msgstr "Keresési lekérdezés"
+
+#: includes/ReplaceVars.php:350
+msgid "Current year"
+msgstr "Aktuális év"
+
+#: includes/ReplaceVars.php:351
+msgid "Current month"
+msgstr "Aktuális hónap"
+
+#: includes/ReplaceVars.php:352
+msgid "Current date"
+msgstr "Aktuális dátum"
+
+#: includes/ReplaceVars.php:353
+msgid "Page number"
+msgstr "Oldalszám"
+
+#: includes/ReplaceVars.php:354
+msgid "Page X of Y"
+msgstr "X/Y. oldal"
+
+#: includes/RestApi.php:60 includes/RestApi.php:123 includes/RestApi.php:142
+msgid "Post ID"
+msgstr "Bejegyzés ID"
+
+#: includes/RestApi.php:79
+msgid "Term ID"
+msgstr "Kifejezés ID"
+
+#: includes/RestApi.php:85
+msgid "Taxonomy name"
+msgstr "Taxonómia neve"
+
+#: includes/RestApi.php:104
+msgid "Author ID"
+msgstr "Szerző ID"
+
+#: includes/RestApi.php:162 includes/RestApi.php:241 includes/RestApi.php:273
+msgid "Post not found."
+msgstr "A bejegyzés nem található."
+
+#: includes/RestApi.php:171 includes/RestApi.php:249 includes/RestApi.php:281
+msgid "Post is not accessible."
+msgstr "A bejegyzés nem érhető el."
+
+#: includes/RestApi.php:195
+msgid "Term not found."
+msgstr "A kifejezés nem található."
+
+#: includes/RestApi.php:218
+msgid "Author not found."
+msgstr "A szerző nem található."
+
+#: assets/js/blocks/faq.js:45
+msgid "New Question"
+msgstr "Új kérdés"
+
+#: assets/js/blocks/faq.js:56
+msgid "Move up"
+msgstr "Mozgatás fel"
+
+#: assets/js/blocks/faq.js:66
+msgid "Move down"
+msgstr "Mozgatás le"
+
+#: assets/js/blocks/faq.js:75
+msgid "Hide"
+msgstr "Elrejtés"
+
+#: assets/js/blocks/faq.js:75
+msgid "Show"
+msgstr "Megjelenítés"
+
+#: assets/js/blocks/faq.js:97
+msgid "Question"
+msgstr "Kérdés"
+
+#: assets/js/blocks/faq.js:104
+msgid "Enter your question..."
+msgstr "Írd be a kérdést..."
+
+#: assets/js/blocks/faq.js:112
+msgid "Answer"
+msgstr "Válasz"
+
+#: assets/js/blocks/faq.js:119
+msgid "Enter the answer..."
+msgstr "Írd be a választ..."
+
+#: assets/js/blocks/faq.js:168
+msgid "FAQ Settings"
+msgstr "FAQ beállítások"
+
+#: assets/js/blocks/faq.js:172
+msgid "Question Heading Tag"
+msgstr "Kérdés címsor tag"
+
+#: assets/js/blocks/faq.js:189
+msgid "This block automatically generates FAQPage schema for better SEO."
+msgstr ""
+"Ez a blokk automatikusan létrehozza a FAQPage schema-t a jobb SEO érdekében."
+
+#: assets/js/blocks/faq.js:200
+msgid "FAQ Block"
+msgstr "FAQ blokk"
+
+#: assets/js/blocks/faq.js:204
+msgid "question"
+msgstr "kérdés"
+
+#: assets/js/blocks/faq.js:204
+msgid "questions"
+msgstr "kérdések"
+
+#: assets/js/blocks/faq.js:210
+msgid "No questions yet. Click the button below to add your first FAQ."
+msgstr ""
+"Még nincsenek kérdések. Kattints az alábbi gombra az első FAQ hozzáadásához."
+
+#: assets/js/blocks/faq.js:238
+msgid "Add Question"
+msgstr "Kérdés hozzáadása"
+
+#: includes/Blocks/FAQ/block.json
+msgctxt "block title"
+msgid "FAQ (LW SEO)"
+msgstr "FAQ (LW SEO)"
+
+#: includes/Blocks/FAQ/block.json
+msgctxt "block description"
+msgid ""
+"Add frequently asked questions with FAQPage schema markup for better SEO."
+msgstr ""
+"Adj hozzá gyakran ismételt kérdéseket FAQPage schema jelöléssel a jobb SEO "
+"érdekében."
+
+#: includes/Blocks/FAQ/block.json
+msgctxt "block keyword"
+msgid "faq"
+msgstr "faq"
+
+#: includes/Blocks/FAQ/block.json
+msgctxt "block keyword"
+msgid "questions"
+msgstr "kérdések"
+
+#: includes/Blocks/FAQ/block.json
+msgctxt "block keyword"
+msgid "answers"
+msgstr "válaszok"
+
+#: includes/Blocks/FAQ/block.json
+msgctxt "block keyword"
+msgid "schema"
+msgstr "schema"
+
+#: includes/Blocks/FAQ/block.json
+msgctxt "block keyword"
+msgid "seo"
+msgstr "seo"

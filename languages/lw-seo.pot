@@ -1,0 +1,1850 @@
+# Copyright (C) 2026 LW Plugins
+# This file is distributed under the GPL-2.0-or-later.
+msgid ""
+msgstr ""
+"Project-Id-Version: Lightweight SEO 1.1.9\n"
+"Report-Msgid-Bugs-To: https://github.com/lwplugins/lw-seo/issues\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LW Plugins <info@lwplugins.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-02-07T08:51:04+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.12.0\n"
+"X-Domain: lw-seo\n"
+
+#. Plugin Name of the plugin
+#: lw-seo.php
+msgid "Lightweight SEO"
+msgstr ""
+
+#. Plugin URI of the plugin
+#: lw-seo.php
+msgid "https://github.com/lwplugins/lw-seo"
+msgstr ""
+
+#. Description of the plugin
+#: lw-seo.php
+msgid "Lightweight SEO plugin for WordPress - minimal footprint, maximum impact."
+msgstr ""
+
+#. Author of the plugin
+#: lw-seo.php
+#: includes/Admin/ParentPage.php:104
+#: includes/Admin/ParentPage.php:105
+#: includes/Admin/ParentPage.php:126
+msgid "LW Plugins"
+msgstr ""
+
+#. Author URI of the plugin
+#: lw-seo.php
+msgid "https://lwplugins.com"
+msgstr ""
+
+#: includes/Admin/Data/BusinessTypes.php:24
+msgid "Local Business (General)"
+msgstr ""
+
+#: includes/Admin/Data/BusinessTypes.php:25
+msgid "Animal Shelter"
+msgstr ""
+
+#: includes/Admin/Data/BusinessTypes.php:26
+msgid "Automotive Business"
+msgstr ""
+
+#: includes/Admin/Data/BusinessTypes.php:27
+#: includes/Admin/Data/BusinessTypes.php:142
+msgid "Auto Body Shop"
+msgstr ""
+
+#: includes/Admin/Data/BusinessTypes.php:28
+#: includes/Admin/Data/BusinessTypes.php:143
+msgid "Auto Dealer"
+msgstr ""
+
+#: includes/Admin/Data/BusinessTypes.php:29
+#: includes/Admin/Data/BusinessTypes.php:144
+msgid "Auto Parts Store"
+msgstr ""
+
+#: includes/Admin/Data/BusinessTypes.php:30
+msgid "Auto Rental"
+msgstr ""
+
+#: includes/Admin/Data/BusinessTypes.php:31
+#: includes/Admin/Data/BusinessTypes.php:145
+msgid "Auto Repair"
+msgstr ""
+
+#: includes/Admin/Data/BusinessTypes.php:32
+#: includes/Admin/Data/BusinessTypes.php:146
+msgid "Auto Wash"
+msgstr ""
+
+#: includes/Admin/Data/BusinessTypes.php:33
+#: includes/Admin/Data/BusinessTypes.php:147
+msgid "Gas Station"
+msgstr ""
+
+#: includes/Admin/Data/BusinessTypes.php:34
+msgid "Motorcycle Dealer"
+msgstr ""
+
+#: includes/Admin/Data/BusinessTypes.php:35
+msgid "Motorcycle Repair"
+msgstr ""
+
+#: includes/Admin/Data/BusinessTypes.php:36
+msgid "Child Care"
+msgstr ""
+
+#: includes/Admin/Data/BusinessTypes.php:37
+#: includes/Admin/Data/BusinessTypes.php:160
+msgid "Dentist"
+msgstr ""
+
+#: includes/Admin/Data/BusinessTypes.php:38
+msgid "Dry Cleaning / Laundry"
+msgstr ""
+
+#: includes/Admin/Data/BusinessTypes.php:39
+msgid "Emergency Service"
+msgstr ""
+
+#: includes/Admin/Data/BusinessTypes.php:40
+msgid "Employment Agency"
+msgstr ""
+
+#: includes/Admin/Data/BusinessTypes.php:41
+msgid "Entertainment Business"
+msgstr ""
+
+#: includes/Admin/Data/BusinessTypes.php:42
+msgid "Amusement Park"
+msgstr ""
+
+#: includes/Admin/Data/BusinessTypes.php:43
+msgid "Art Gallery"
+msgstr ""
+
+#: includes/Admin/Data/BusinessTypes.php:44
+msgid "Casino"
+msgstr ""
+
+#: includes/Admin/Data/BusinessTypes.php:45
+msgid "Comedy Club"
+msgstr ""
+
+#: includes/Admin/Data/BusinessTypes.php:46
+msgid "Night Club"
+msgstr ""
+
+#: includes/Admin/Data/BusinessTypes.php:47
+msgid "Financial Service"
+msgstr ""
+
+#: includes/Admin/Data/BusinessTypes.php:48
+#: includes/Admin/Data/BusinessTypes.php:174
+msgid "Accounting Service"
+msgstr ""
+
+#: includes/Admin/Data/BusinessTypes.php:49
+msgid "Bank"
+msgstr ""
+
+#: includes/Admin/Data/BusinessTypes.php:50
+msgid "Insurance Agency"
+msgstr ""
+
+#: includes/Admin/Data/BusinessTypes.php:51
+msgid "Food Establishment"
+msgstr ""
+
+#: includes/Admin/Data/BusinessTypes.php:52
+#: includes/Admin/Data/BusinessTypes.php:152
+msgid "Bakery"
+msgstr ""
+
+#: includes/Admin/Data/BusinessTypes.php:53
+#: includes/Admin/Data/BusinessTypes.php:153
+msgid "Bar / Pub"
+msgstr ""
+
+#: includes/Admin/Data/BusinessTypes.php:54
+msgid "Brewery"
+msgstr ""
+
+#: includes/Admin/Data/BusinessTypes.php:55
+#: includes/Admin/Data/BusinessTypes.php:151
+msgid "Cafe / Coffee Shop"
+msgstr ""
+
+#: includes/Admin/Data/BusinessTypes.php:56
+#: includes/Admin/Data/BusinessTypes.php:154
+msgid "Fast Food Restaurant"
+msgstr ""
+
+#: includes/Admin/Data/BusinessTypes.php:57
+msgid "Ice Cream Shop"
+msgstr ""
+
+#: includes/Admin/Data/BusinessTypes.php:58
+#: includes/Admin/Data/BusinessTypes.php:150
+msgid "Restaurant"
+msgstr ""
+
+#: includes/Admin/Data/BusinessTypes.php:59
+msgid "Winery"
+msgstr ""
+
+#: includes/Admin/Data/BusinessTypes.php:60
+msgid "Government Office"
+msgstr ""
+
+#: includes/Admin/Data/BusinessTypes.php:61
+msgid "Health & Beauty Business"
+msgstr ""
+
+#: includes/Admin/Data/BusinessTypes.php:62
+#: includes/Admin/Data/BusinessTypes.php:157
+msgid "Beauty Salon"
+msgstr ""
+
+#: includes/Admin/Data/BusinessTypes.php:63
+#: includes/Admin/Data/BusinessTypes.php:159
+msgid "Day Spa"
+msgstr ""
+
+#: includes/Admin/Data/BusinessTypes.php:64
+#: includes/Admin/Data/BusinessTypes.php:158
+msgid "Hair Salon"
+msgstr ""
+
+#: includes/Admin/Data/BusinessTypes.php:65
+msgid "Nail Salon"
+msgstr ""
+
+#: includes/Admin/Data/BusinessTypes.php:66
+msgid "Tattoo Parlor"
+msgstr ""
+
+#: includes/Admin/Data/BusinessTypes.php:67
+msgid "Home & Construction Business"
+msgstr ""
+
+#: includes/Admin/Data/BusinessTypes.php:68
+#: includes/Admin/Data/BusinessTypes.php:176
+msgid "Electrician"
+msgstr ""
+
+#: includes/Admin/Data/BusinessTypes.php:69
+msgid "HVAC Business"
+msgstr ""
+
+#: includes/Admin/Data/BusinessTypes.php:70
+#: includes/Admin/Data/BusinessTypes.php:178
+msgid "Locksmith"
+msgstr ""
+
+#: includes/Admin/Data/BusinessTypes.php:71
+#: includes/Admin/Data/BusinessTypes.php:177
+msgid "Plumber"
+msgstr ""
+
+#: includes/Admin/Data/BusinessTypes.php:72
+msgid "Roofing Contractor"
+msgstr ""
+
+#: includes/Admin/Data/BusinessTypes.php:73
+msgid "Internet Cafe"
+msgstr ""
+
+#: includes/Admin/Data/BusinessTypes.php:74
+msgid "Legal Service"
+msgstr ""
+
+#: includes/Admin/Data/BusinessTypes.php:75
+#: includes/Admin/Data/BusinessTypes.php:173
+msgid "Attorney"
+msgstr ""
+
+#: includes/Admin/Data/BusinessTypes.php:76
+msgid "Notary"
+msgstr ""
+
+#: includes/Admin/Data/BusinessTypes.php:77
+msgid "Library"
+msgstr ""
+
+#: includes/Admin/Data/BusinessTypes.php:78
+msgid "Lodging Business"
+msgstr ""
+
+#: includes/Admin/Data/BusinessTypes.php:79
+#: includes/Admin/Data/BusinessTypes.php:181
+msgid "Hotel"
+msgstr ""
+
+#: includes/Admin/Data/BusinessTypes.php:80
+#: includes/Admin/Data/BusinessTypes.php:182
+msgid "Motel"
+msgstr ""
+
+#: includes/Admin/Data/BusinessTypes.php:81
+#: includes/Admin/Data/BusinessTypes.php:183
+msgid "Hostel"
+msgstr ""
+
+#: includes/Admin/Data/BusinessTypes.php:82
+msgid "Medical Business"
+msgstr ""
+
+#: includes/Admin/Data/BusinessTypes.php:83
+msgid "Optician"
+msgstr ""
+
+#: includes/Admin/Data/BusinessTypes.php:84
+#: includes/Admin/Data/BusinessTypes.php:162
+msgid "Pharmacy"
+msgstr ""
+
+#: includes/Admin/Data/BusinessTypes.php:85
+#: includes/Admin/Data/BusinessTypes.php:161
+msgid "Physician"
+msgstr ""
+
+#: includes/Admin/Data/BusinessTypes.php:86
+#: includes/Admin/Data/BusinessTypes.php:139
+msgid "Professional Service"
+msgstr ""
+
+#: includes/Admin/Data/BusinessTypes.php:87
+msgid "Radio Station"
+msgstr ""
+
+#: includes/Admin/Data/BusinessTypes.php:88
+#: includes/Admin/Data/BusinessTypes.php:175
+msgid "Real Estate Agent"
+msgstr ""
+
+#: includes/Admin/Data/BusinessTypes.php:89
+msgid "Recycling Center"
+msgstr ""
+
+#: includes/Admin/Data/BusinessTypes.php:90
+msgid "Self Storage"
+msgstr ""
+
+#: includes/Admin/Data/BusinessTypes.php:91
+msgid "Shopping Center"
+msgstr ""
+
+#: includes/Admin/Data/BusinessTypes.php:92
+msgid "Sports Activity Location"
+msgstr ""
+
+#: includes/Admin/Data/BusinessTypes.php:93
+msgid "Golf Course"
+msgstr ""
+
+#: includes/Admin/Data/BusinessTypes.php:94
+msgid "Health Club / Gym"
+msgstr ""
+
+#: includes/Admin/Data/BusinessTypes.php:95
+msgid "Sports Club"
+msgstr ""
+
+#: includes/Admin/Data/BusinessTypes.php:96
+msgid "Stadium / Arena"
+msgstr ""
+
+#: includes/Admin/Data/BusinessTypes.php:97
+#: includes/Admin/Data/BusinessTypes.php:165
+msgid "Store (General)"
+msgstr ""
+
+#: includes/Admin/Data/BusinessTypes.php:98
+msgid "Bike Store"
+msgstr ""
+
+#: includes/Admin/Data/BusinessTypes.php:99
+msgid "Book Store"
+msgstr ""
+
+#: includes/Admin/Data/BusinessTypes.php:100
+#: includes/Admin/Data/BusinessTypes.php:166
+msgid "Clothing Store"
+msgstr ""
+
+#: includes/Admin/Data/BusinessTypes.php:101
+msgid "Computer Store"
+msgstr ""
+
+#: includes/Admin/Data/BusinessTypes.php:102
+msgid "Convenience Store"
+msgstr ""
+
+#: includes/Admin/Data/BusinessTypes.php:103
+#: includes/Admin/Data/BusinessTypes.php:167
+msgid "Electronics Store"
+msgstr ""
+
+#: includes/Admin/Data/BusinessTypes.php:104
+msgid "Florist"
+msgstr ""
+
+#: includes/Admin/Data/BusinessTypes.php:105
+msgid "Furniture Store"
+msgstr ""
+
+#: includes/Admin/Data/BusinessTypes.php:106
+msgid "Garden Store"
+msgstr ""
+
+#: includes/Admin/Data/BusinessTypes.php:107
+#: includes/Admin/Data/BusinessTypes.php:168
+msgid "Grocery Store"
+msgstr ""
+
+#: includes/Admin/Data/BusinessTypes.php:108
+#: includes/Admin/Data/BusinessTypes.php:169
+msgid "Hardware Store"
+msgstr ""
+
+#: includes/Admin/Data/BusinessTypes.php:109
+msgid "Hobby Shop"
+msgstr ""
+
+#: includes/Admin/Data/BusinessTypes.php:110
+#: includes/Admin/Data/BusinessTypes.php:170
+msgid "Jewelry Store"
+msgstr ""
+
+#: includes/Admin/Data/BusinessTypes.php:111
+msgid "Liquor Store"
+msgstr ""
+
+#: includes/Admin/Data/BusinessTypes.php:112
+msgid "Mobile Phone Store"
+msgstr ""
+
+#: includes/Admin/Data/BusinessTypes.php:113
+msgid "Movie Rental Store"
+msgstr ""
+
+#: includes/Admin/Data/BusinessTypes.php:114
+msgid "Music Store"
+msgstr ""
+
+#: includes/Admin/Data/BusinessTypes.php:115
+msgid "Office Equipment Store"
+msgstr ""
+
+#: includes/Admin/Data/BusinessTypes.php:116
+msgid "Outlet Store"
+msgstr ""
+
+#: includes/Admin/Data/BusinessTypes.php:117
+msgid "Pawn Shop"
+msgstr ""
+
+#: includes/Admin/Data/BusinessTypes.php:118
+msgid "Pet Store"
+msgstr ""
+
+#: includes/Admin/Data/BusinessTypes.php:119
+msgid "Shoe Store"
+msgstr ""
+
+#: includes/Admin/Data/BusinessTypes.php:120
+msgid "Sporting Goods Store"
+msgstr ""
+
+#: includes/Admin/Data/BusinessTypes.php:121
+msgid "Tire Shop"
+msgstr ""
+
+#: includes/Admin/Data/BusinessTypes.php:122
+msgid "Toy Store"
+msgstr ""
+
+#: includes/Admin/Data/BusinessTypes.php:123
+msgid "Wholesale Store"
+msgstr ""
+
+#: includes/Admin/Data/BusinessTypes.php:124
+msgid "Television Station"
+msgstr ""
+
+#: includes/Admin/Data/BusinessTypes.php:125
+msgid "Tourist Information Center"
+msgstr ""
+
+#: includes/Admin/Data/BusinessTypes.php:126
+msgid "Travel Agency"
+msgstr ""
+
+#: includes/Admin/Data/BusinessTypes.php:137
+#: includes/Admin/Settings/TabGeneral.php:34
+#: includes/Admin/Settings/TabWooCommerce.php:72
+msgid "General"
+msgstr ""
+
+#: includes/Admin/Data/BusinessTypes.php:138
+msgid "Local Business"
+msgstr ""
+
+#: includes/Admin/Data/BusinessTypes.php:141
+msgid "Automotive"
+msgstr ""
+
+#: includes/Admin/Data/BusinessTypes.php:149
+msgid "Food & Drink"
+msgstr ""
+
+#: includes/Admin/Data/BusinessTypes.php:156
+msgid "Health & Beauty"
+msgstr ""
+
+#: includes/Admin/Data/BusinessTypes.php:164
+msgid "Store"
+msgstr ""
+
+#: includes/Admin/Data/BusinessTypes.php:172
+msgid "Services"
+msgstr ""
+
+#: includes/Admin/Data/BusinessTypes.php:180
+msgid "Lodging"
+msgstr ""
+
+#: includes/Admin/ParentPage.php:127
+msgid "Lightweight plugins for WordPress - minimal footprint, maximum impact."
+msgstr ""
+
+#: includes/Admin/ParentPage.php:180
+msgid "Active"
+msgstr ""
+
+#: includes/Admin/ParentPage.php:187
+msgid "Settings"
+msgstr ""
+
+#: includes/Admin/ParentPage.php:191
+msgid "Get Plugin"
+msgstr ""
+
+#: includes/Admin/Settings/FieldRendererTrait.php:153
+#: includes/MetaBox.php:258
+msgid "Select Image"
+msgstr ""
+
+#: includes/Admin/Settings/Tab404.php:34
+msgid "404"
+msgstr ""
+
+#: includes/Admin/Settings/Tab404.php:53
+msgid "404 Error Handling"
+msgstr ""
+
+#: includes/Admin/Settings/Tab404.php:56
+msgid "Configure how 404 (Not Found) errors are handled on your site."
+msgstr ""
+
+#: includes/Admin/Settings/Tab404.php:61
+msgid "Redirect 404 to Homepage"
+msgstr ""
+
+#: includes/Admin/Settings/Tab404.php:67
+msgid "Automatically redirect all 404 errors to the homepage"
+msgstr ""
+
+#: includes/Admin/Settings/Tab404.php:72
+msgid "When enabled, visitors who land on a non-existent page will be redirected to your homepage with a 302 (temporary) redirect."
+msgstr ""
+
+#: includes/Admin/Settings/TabAdvanced.php:34
+#: includes/MetaBox.php:278
+msgid "Advanced"
+msgstr ""
+
+#: includes/Admin/Settings/TabAdvanced.php:53
+msgid "Advanced Settings"
+msgstr ""
+
+#: includes/Admin/Settings/TabAdvanced.php:56
+msgid "Advanced settings and cleanup options."
+msgstr ""
+
+#: includes/Admin/Settings/TabAdvanced.php:72
+msgid "Features"
+msgstr ""
+
+#: includes/Admin/Settings/TabAdvanced.php:75
+msgid "Breadcrumbs"
+msgstr ""
+
+#: includes/Admin/Settings/TabAdvanced.php:81
+msgid "Enable breadcrumbs"
+msgstr ""
+
+#: includes/Admin/Settings/TabAdvanced.php:86
+msgid "Use shortcode [lw_breadcrumbs] or function lw_seo_breadcrumbs()"
+msgstr ""
+
+#: includes/Admin/Settings/TabAdvanced.php:91
+#: includes/Admin/Settings/TabWooCommerce.php:131
+msgid "Schema.org"
+msgstr ""
+
+#: includes/Admin/Settings/TabAdvanced.php:97
+msgid "Enable Schema.org JSON-LD output"
+msgstr ""
+
+#: includes/Admin/Settings/TabAdvanced.php:104
+msgid "robots.txt"
+msgstr ""
+
+#: includes/Admin/Settings/TabAdvanced.php:110
+msgid "Add sitemap URL and AI rules to robots.txt"
+msgstr ""
+
+#: includes/Admin/Settings/TabAdvanced.php:118
+msgid "Your robots.txt"
+msgstr ""
+
+#: includes/Admin/Settings/TabAdvanced.php:137
+msgid "Head Cleanup"
+msgstr ""
+
+#: includes/Admin/Settings/TabAdvanced.php:140
+msgid "Shortlinks"
+msgstr ""
+
+#: includes/Admin/Settings/TabAdvanced.php:146
+msgid "Remove shortlinks from head"
+msgstr ""
+
+#: includes/Admin/Settings/TabAdvanced.php:153
+msgid "RSD Link"
+msgstr ""
+
+#: includes/Admin/Settings/TabAdvanced.php:159
+msgid "Remove RSD link from head"
+msgstr ""
+
+#: includes/Admin/Settings/TabAdvanced.php:166
+msgid "WLW Manifest"
+msgstr ""
+
+#: includes/Admin/Settings/TabAdvanced.php:172
+msgid "Remove Windows Live Writer link"
+msgstr ""
+
+#: includes/Admin/Settings/TabAi.php:37
+msgid "AI / LLM"
+msgstr ""
+
+#: includes/Admin/Settings/TabAi.php:56
+msgid "AI / LLM Settings"
+msgstr ""
+
+#: includes/Admin/Settings/TabAi.php:59
+msgid "Control how AI crawlers interact with your site."
+msgstr ""
+
+#: includes/Admin/Settings/TabAi.php:75
+msgid "llms.txt File"
+msgstr ""
+
+#: includes/Admin/Settings/TabAi.php:78
+msgid "llms.txt"
+msgstr ""
+
+#: includes/Admin/Settings/TabAi.php:84
+msgid "Enable llms.txt for AI crawlers"
+msgstr ""
+
+#. translators: %1$s: llms.txt URL, %2$s: llmstxt.org link
+#: includes/Admin/Settings/TabAi.php:92
+#, php-format
+msgid "Your llms.txt: %1$s — %2$s"
+msgstr ""
+
+#: includes/Admin/Settings/TabAi.php:94
+msgid "Learn more"
+msgstr ""
+
+#: includes/Admin/Settings/TabAi.php:111
+msgid "AI Crawler Access"
+msgstr ""
+
+#: includes/Admin/Settings/TabAi.php:113
+msgid "Block specific AI crawlers from accessing your site via robots.txt. Checked = Blocked."
+msgstr ""
+
+#: includes/Admin/Settings/TabAi.php:142
+msgid "Blocking crawlers adds Disallow rules to your robots.txt. Note: AI companies may not always respect these rules."
+msgstr ""
+
+#: includes/Admin/Settings/TabContent.php:34
+msgid "Content"
+msgstr ""
+
+#: includes/Admin/Settings/TabContent.php:53
+msgid "Content Types"
+msgstr ""
+
+#: includes/Admin/Settings/TabContent.php:56
+msgid "Title templates and indexing settings for different content types."
+msgstr ""
+
+#: includes/Admin/Settings/TabContent.php:74
+msgid "Posts"
+msgstr ""
+
+#: includes/Admin/Settings/TabContent.php:78
+#: includes/Admin/Settings/TabContent.php:110
+msgid "Title Template"
+msgstr ""
+
+#: includes/Admin/Settings/TabContent.php:83
+msgid "Default Index"
+msgstr ""
+
+#: includes/Admin/Settings/TabContent.php:89
+msgid "Set posts to noindex by default"
+msgstr ""
+
+#: includes/Admin/Settings/TabContent.php:106
+msgid "Pages"
+msgstr ""
+
+#: includes/Admin/Settings/TabContent.php:125
+msgid "Taxonomies"
+msgstr ""
+
+#: includes/Admin/Settings/TabContent.php:129
+msgid "Categories Title"
+msgstr ""
+
+#: includes/Admin/Settings/TabContent.php:134
+msgid "Categories Index"
+msgstr ""
+
+#: includes/Admin/Settings/TabContent.php:140
+msgid "Set categories to noindex"
+msgstr ""
+
+#: includes/Admin/Settings/TabContent.php:147
+msgid "Tags Index"
+msgstr ""
+
+#: includes/Admin/Settings/TabContent.php:153
+msgid "Set tags to noindex"
+msgstr ""
+
+#: includes/Admin/Settings/TabContent.php:170
+msgid "Archives"
+msgstr ""
+
+#: includes/Admin/Settings/TabContent.php:173
+msgid "Author Archives"
+msgstr ""
+
+#: includes/Admin/Settings/TabContent.php:179
+msgid "Set author archives to noindex"
+msgstr ""
+
+#: includes/Admin/Settings/TabContent.php:186
+msgid "Date Archives"
+msgstr ""
+
+#: includes/Admin/Settings/TabContent.php:192
+msgid "Set date archives to noindex"
+msgstr ""
+
+#: includes/Admin/Settings/TabGeneral.php:53
+msgid "General Settings"
+msgstr ""
+
+#: includes/Admin/Settings/TabGeneral.php:56
+msgid "Basic SEO settings for your site."
+msgstr ""
+
+#: includes/Admin/Settings/TabGeneral.php:62
+msgid "Title Separator"
+msgstr ""
+
+#: includes/Admin/Settings/TabGeneral.php:68
+msgid "Homepage Title"
+msgstr ""
+
+#: includes/Admin/Settings/TabGeneral.php:75
+msgid "Variables: %%sitename%%, %%sitedesc%%, %%sep%%"
+msgstr ""
+
+#: includes/Admin/Settings/TabGeneral.php:83
+msgid "Homepage Description"
+msgstr ""
+
+#: includes/Admin/Settings/TabGeneral.php:90
+msgid "Leave empty to use the site tagline."
+msgstr ""
+
+#: includes/Admin/Settings/TabGeneral.php:98
+msgid "Site Represents"
+msgstr ""
+
+#: includes/Admin/Settings/TabGeneral.php:106
+msgid "Organization"
+msgstr ""
+
+#: includes/Admin/Settings/TabGeneral.php:107
+msgid "Person"
+msgstr ""
+
+#: includes/Admin/Settings/TabGeneral.php:116
+msgid "Organization/Person Name"
+msgstr ""
+
+#: includes/Admin/Settings/TabGeneral.php:123
+msgid "Used in Schema.org markup."
+msgstr ""
+
+#: includes/Admin/Settings/TabLocal.php:37
+#: includes/Local/Shortcodes.php:45
+msgid "Monday"
+msgstr ""
+
+#: includes/Admin/Settings/TabLocal.php:38
+#: includes/Local/Shortcodes.php:46
+msgid "Tuesday"
+msgstr ""
+
+#: includes/Admin/Settings/TabLocal.php:39
+#: includes/Local/Shortcodes.php:47
+msgid "Wednesday"
+msgstr ""
+
+#: includes/Admin/Settings/TabLocal.php:40
+#: includes/Local/Shortcodes.php:48
+msgid "Thursday"
+msgstr ""
+
+#: includes/Admin/Settings/TabLocal.php:41
+#: includes/Local/Shortcodes.php:49
+msgid "Friday"
+msgstr ""
+
+#: includes/Admin/Settings/TabLocal.php:42
+#: includes/Local/Shortcodes.php:50
+msgid "Saturday"
+msgstr ""
+
+#: includes/Admin/Settings/TabLocal.php:43
+#: includes/Local/Shortcodes.php:51
+msgid "Sunday"
+msgstr ""
+
+#: includes/Admin/Settings/TabLocal.php:64
+#: includes/Admin/Settings/TabLocal.php:83
+msgid "Local SEO"
+msgstr ""
+
+#: includes/Admin/Settings/TabLocal.php:86
+msgid "Add LocalBusiness structured data to help your business appear in local search results."
+msgstr ""
+
+#: includes/Admin/Settings/TabLocal.php:104
+msgid "Business Information"
+msgstr ""
+
+#: includes/Admin/Settings/TabLocal.php:107
+msgid "Enable Local SEO"
+msgstr ""
+
+#: includes/Admin/Settings/TabLocal.php:113
+msgid "Enable LocalBusiness schema"
+msgstr ""
+
+#: includes/Admin/Settings/TabLocal.php:121
+msgid "Business Type"
+msgstr ""
+
+#: includes/Admin/Settings/TabLocal.php:126
+msgid "Select the type that best describes your business."
+msgstr ""
+
+#: includes/Admin/Settings/TabLocal.php:132
+msgid "Business Name"
+msgstr ""
+
+#: includes/Admin/Settings/TabLocal.php:145
+msgid "Leave empty to use site name."
+msgstr ""
+
+#: includes/Admin/Settings/TabLocal.php:151
+msgid "Business Description"
+msgstr ""
+
+#: includes/Admin/Settings/TabLocal.php:166
+msgid "Price Range"
+msgstr ""
+
+#: includes/Admin/Settings/TabLocal.php:174
+msgid "Not specified"
+msgstr ""
+
+#: includes/Admin/Settings/TabLocal.php:220
+msgid "Address"
+msgstr ""
+
+#: includes/Admin/Settings/TabLocal.php:224
+msgid "Street Address"
+msgstr ""
+
+#: includes/Admin/Settings/TabLocal.php:239
+msgid "Address Line 2"
+msgstr ""
+
+#: includes/Admin/Settings/TabLocal.php:254
+msgid "City"
+msgstr ""
+
+#: includes/Admin/Settings/TabLocal.php:269
+msgid "State / Region"
+msgstr ""
+
+#: includes/Admin/Settings/TabLocal.php:284
+msgid "Postal Code"
+msgstr ""
+
+#: includes/Admin/Settings/TabLocal.php:299
+msgid "Country"
+msgstr ""
+
+#: includes/Admin/Settings/TabLocal.php:312
+msgid "Use ISO 3166-1 alpha-2 code (e.g., HU, US, DE)."
+msgstr ""
+
+#: includes/Admin/Settings/TabLocal.php:327
+msgid "Contact"
+msgstr ""
+
+#: includes/Admin/Settings/TabLocal.php:331
+msgid "Phone"
+msgstr ""
+
+#: includes/Admin/Settings/TabLocal.php:347
+msgid "Email"
+msgstr ""
+
+#: includes/Admin/Settings/TabLocal.php:372
+msgid "Opening Hours"
+msgstr ""
+
+#: includes/Admin/Settings/TabLocal.php:375
+msgid "Use Opening Hours"
+msgstr ""
+
+#: includes/Admin/Settings/TabLocal.php:381
+msgid "Enable opening hours in schema"
+msgstr ""
+
+#: includes/Admin/Settings/TabLocal.php:425
+#: includes/Local/Shortcodes.php:294
+#: includes/Local/Shortcodes.php:326
+msgid "Closed"
+msgstr ""
+
+#: includes/Admin/Settings/TabLocal.php:430
+msgid "Open:"
+msgstr ""
+
+#: includes/Admin/Settings/TabLocal.php:441
+msgid "Close:"
+msgstr ""
+
+#: includes/Admin/Settings/TabLocal.php:459
+msgid "Coordinates"
+msgstr ""
+
+#: includes/Admin/Settings/TabLocal.php:463
+msgid "Latitude"
+msgstr ""
+
+#: includes/Admin/Settings/TabLocal.php:479
+msgid "Longitude"
+msgstr ""
+
+#. translators: %s: Google Maps URL
+#: includes/Admin/Settings/TabLocal.php:498
+#, php-format
+msgid "Find coordinates at %s - right-click location and select \"What's here?\"."
+msgstr ""
+
+#: includes/Admin/Settings/TabMigration.php:32
+#: includes/Admin/Settings/TabRedirects.php:240
+msgid "Import"
+msgstr ""
+
+#: includes/Admin/Settings/TabMigration.php:51
+msgid "Import SEO Data"
+msgstr ""
+
+#: includes/Admin/Settings/TabMigration.php:54
+msgid "Import SEO data from other SEO plugins. Existing LW SEO data will not be overwritten."
+msgstr ""
+
+#: includes/Admin/Settings/TabMigration.php:57
+msgid "RankMath SEO"
+msgstr ""
+
+#: includes/Admin/Settings/TabMigration.php:61
+msgid "Detect RankMath SEO data in your database for migration."
+msgstr ""
+
+#: includes/Admin/Settings/TabMigration.php:65
+msgid "Detect Data"
+msgstr ""
+
+#: includes/Admin/Settings/TabMigration.php:77
+msgid "Preview Migration"
+msgstr ""
+
+#: includes/Admin/Settings/TabMigration.php:80
+msgid "Run Migration"
+msgstr ""
+
+#: includes/Admin/Settings/TabRedirects.php:37
+msgid "Redirects"
+msgstr ""
+
+#: includes/Admin/Settings/TabRedirects.php:57
+msgid "Redirect Manager"
+msgstr ""
+
+#: includes/Admin/Settings/TabRedirects.php:60
+msgid "Create and manage URL redirects to prevent 404 errors and preserve SEO value."
+msgstr ""
+
+#: includes/Admin/Settings/TabRedirects.php:65
+msgid "Enable Redirects"
+msgstr ""
+
+#: includes/Admin/Settings/TabRedirects.php:71
+msgid "Process redirect rules"
+msgstr ""
+
+#: includes/Admin/Settings/TabRedirects.php:81
+msgid "Add New Redirect"
+msgstr ""
+
+#: includes/Admin/Settings/TabRedirects.php:89
+msgid "Source URL"
+msgstr ""
+
+#: includes/Admin/Settings/TabRedirects.php:99
+msgid "The old URL path that should redirect (e.g., /old-page/)."
+msgstr ""
+
+#: includes/Admin/Settings/TabRedirects.php:105
+msgid "Destination URL"
+msgstr ""
+
+#: includes/Admin/Settings/TabRedirects.php:115
+msgid "The new URL to redirect to. Leave empty for 410/451 types."
+msgstr ""
+
+#: includes/Admin/Settings/TabRedirects.php:121
+msgid "Redirect Type"
+msgstr ""
+
+#: includes/Admin/Settings/TabRedirects.php:134
+#: includes/Admin/Settings/TabRedirects.php:186
+#: includes/Admin/SettingsPage.php:162
+msgid "Regex"
+msgstr ""
+
+#: includes/Admin/Settings/TabRedirects.php:138
+msgid "Source is a regular expression"
+msgstr ""
+
+#: includes/Admin/Settings/TabRedirects.php:141
+msgid "Advanced: Use regex patterns like ^/category/(.*)$ with $1 in destination."
+msgstr ""
+
+#: includes/Admin/Settings/TabRedirects.php:149
+#: includes/Admin/SettingsPage.php:152
+msgid "Add Redirect"
+msgstr ""
+
+#: includes/Admin/Settings/TabRedirects.php:152
+msgid "Cancel"
+msgstr ""
+
+#: includes/Admin/Settings/TabRedirects.php:163
+msgid "Existing Redirects"
+msgstr ""
+
+#: includes/Admin/Settings/TabRedirects.php:168
+msgid "No redirects configured yet."
+msgstr ""
+
+#: includes/Admin/Settings/TabRedirects.php:173
+msgid "Source"
+msgstr ""
+
+#: includes/Admin/Settings/TabRedirects.php:174
+msgid "Destination"
+msgstr ""
+
+#: includes/Admin/Settings/TabRedirects.php:175
+msgid "Type"
+msgstr ""
+
+#: includes/Admin/Settings/TabRedirects.php:176
+msgid "Hits"
+msgstr ""
+
+#: includes/Admin/Settings/TabRedirects.php:177
+msgid "Actions"
+msgstr ""
+
+#: includes/Admin/Settings/TabRedirects.php:191
+#: includes/Admin/SettingsPage.php:161
+msgid "N/A"
+msgstr ""
+
+#: includes/Admin/Settings/TabRedirects.php:210
+#: includes/Admin/SettingsPage.php:154
+msgid "Edit"
+msgstr ""
+
+#: includes/Admin/Settings/TabRedirects.php:213
+#: includes/Admin/SettingsPage.php:155
+msgid "Delete"
+msgstr ""
+
+#: includes/Admin/Settings/TabRedirects.php:224
+msgid "Import / Export"
+msgstr ""
+
+#: includes/Admin/Settings/TabRedirects.php:228
+msgid "Export"
+msgstr ""
+
+#: includes/Admin/Settings/TabRedirects.php:231
+msgid "Download CSV"
+msgstr ""
+
+#: includes/Admin/Settings/TabRedirects.php:234
+msgid "Export all redirects as a CSV file."
+msgstr ""
+
+#: includes/Admin/Settings/TabRedirects.php:245
+msgid "Import CSV"
+msgstr ""
+
+#: includes/Admin/Settings/TabRedirects.php:248
+msgid "Import redirects from a CSV file. Format: source,destination,type,regex"
+msgstr ""
+
+#: includes/Admin/Settings/TabSitemap.php:34
+#: includes/Admin/Settings/TabWooCommerce.php:175
+msgid "Sitemap"
+msgstr ""
+
+#: includes/Admin/Settings/TabSitemap.php:54
+#: includes/Admin/Settings/TabSitemap.php:65
+msgid "XML Sitemap"
+msgstr ""
+
+#: includes/Admin/Settings/TabSitemap.php:58
+msgid "Your sitemap:"
+msgstr ""
+
+#: includes/Admin/Settings/TabSitemap.php:71
+msgid "Enable XML sitemap"
+msgstr ""
+
+#: includes/Admin/Settings/TabSitemap.php:78
+msgid "Include Posts"
+msgstr ""
+
+#: includes/Admin/Settings/TabSitemap.php:84
+msgid "Include posts in sitemap"
+msgstr ""
+
+#: includes/Admin/Settings/TabSitemap.php:91
+msgid "Include Pages"
+msgstr ""
+
+#: includes/Admin/Settings/TabSitemap.php:97
+msgid "Include pages in sitemap"
+msgstr ""
+
+#: includes/Admin/Settings/TabSitemap.php:104
+msgid "Include Categories"
+msgstr ""
+
+#: includes/Admin/Settings/TabSitemap.php:110
+msgid "Include categories in sitemap"
+msgstr ""
+
+#: includes/Admin/Settings/TabSocial.php:34
+#: includes/MetaBox.php:213
+msgid "Social"
+msgstr ""
+
+#: includes/Admin/Settings/TabSocial.php:53
+msgid "Social Media"
+msgstr ""
+
+#: includes/Admin/Settings/TabSocial.php:56
+msgid "Settings for Open Graph and Twitter Cards."
+msgstr ""
+
+#: includes/Admin/Settings/TabSocial.php:71
+msgid "Meta Tags"
+msgstr ""
+
+#: includes/Admin/Settings/TabSocial.php:74
+msgid "Open Graph"
+msgstr ""
+
+#: includes/Admin/Settings/TabSocial.php:80
+msgid "Enable Open Graph meta tags"
+msgstr ""
+
+#: includes/Admin/Settings/TabSocial.php:87
+msgid "Twitter Cards"
+msgstr ""
+
+#: includes/Admin/Settings/TabSocial.php:93
+msgid "Enable Twitter Card meta tags"
+msgstr ""
+
+#: includes/Admin/Settings/TabSocial.php:101
+msgid "Default Card Type"
+msgstr ""
+
+#: includes/Admin/Settings/TabSocial.php:109
+msgid "Summary with large image"
+msgstr ""
+
+#: includes/Admin/Settings/TabSocial.php:110
+msgid "Summary"
+msgstr ""
+
+#: includes/Admin/Settings/TabSocial.php:119
+msgid "Default Social Image"
+msgstr ""
+
+#: includes/Admin/Settings/TabSocial.php:126
+msgid "Used when a post has no featured image. Recommended: 1200x630px."
+msgstr ""
+
+#: includes/Admin/Settings/TabSocial.php:143
+msgid "Facebook"
+msgstr ""
+
+#: includes/Admin/Settings/TabSocial.php:144
+msgid "Twitter / X"
+msgstr ""
+
+#: includes/Admin/Settings/TabSocial.php:145
+msgid "Instagram"
+msgstr ""
+
+#: includes/Admin/Settings/TabSocial.php:146
+msgid "LinkedIn"
+msgstr ""
+
+#: includes/Admin/Settings/TabSocial.php:147
+msgid "YouTube"
+msgstr ""
+
+#: includes/Admin/Settings/TabSocial.php:151
+msgid "Social Profiles"
+msgstr ""
+
+#: includes/Admin/Settings/TabWooCommerce.php:34
+msgid "WooCommerce"
+msgstr ""
+
+#: includes/Admin/Settings/TabWooCommerce.php:53
+#: includes/Admin/Settings/TabWooCommerce.php:75
+msgid "WooCommerce SEO"
+msgstr ""
+
+#: includes/Admin/Settings/TabWooCommerce.php:56
+msgid "Optimize your WooCommerce products for search engines and social media."
+msgstr ""
+
+#: includes/Admin/Settings/TabWooCommerce.php:81
+msgid "Enable WooCommerce SEO features"
+msgstr ""
+
+#: includes/Admin/Settings/TabWooCommerce.php:87
+msgid "Adds product-specific OpenGraph tags, Schema.org Product markup, and more."
+msgstr ""
+
+#: includes/Admin/Settings/TabWooCommerce.php:93
+msgid "Product Title"
+msgstr ""
+
+#: includes/Admin/Settings/TabWooCommerce.php:108
+msgid "Noindex Products"
+msgstr ""
+
+#: includes/Admin/Settings/TabWooCommerce.php:114
+msgid "Add noindex to product pages"
+msgstr ""
+
+#: includes/Admin/Settings/TabWooCommerce.php:134
+msgid "Product Schema"
+msgstr ""
+
+#: includes/Admin/Settings/TabWooCommerce.php:140
+msgid "Enable Product Schema.org markup"
+msgstr ""
+
+#: includes/Admin/Settings/TabWooCommerce.php:146
+msgid "Adds structured data for products including price, availability, and reviews."
+msgstr ""
+
+#: includes/Admin/Settings/TabWooCommerce.php:151
+msgid "Include Reviews"
+msgstr ""
+
+#: includes/Admin/Settings/TabWooCommerce.php:157
+msgid "Include product reviews in Schema"
+msgstr ""
+
+#: includes/Admin/Settings/TabWooCommerce.php:178
+msgid "Products in Sitemap"
+msgstr ""
+
+#: includes/Admin/Settings/TabWooCommerce.php:184
+msgid "Include products in XML sitemap"
+msgstr ""
+
+#: includes/Admin/Settings/TabWooCommerce.php:192
+msgid "Product Categories"
+msgstr ""
+
+#: includes/Admin/Settings/TabWooCommerce.php:198
+msgid "Include product categories in XML sitemap"
+msgstr ""
+
+#: includes/Admin/Settings/TabWooCommerce.php:206
+msgid "Product Tags"
+msgstr ""
+
+#: includes/Admin/Settings/TabWooCommerce.php:212
+msgid "Include product tags in XML sitemap"
+msgstr ""
+
+#: includes/Admin/SettingsPage.php:96
+msgid "SEO Settings"
+msgstr ""
+
+#: includes/Admin/SettingsPage.php:97
+msgid "SEO"
+msgstr ""
+
+#: includes/Admin/SettingsPage.php:153
+msgid "Update Redirect"
+msgstr ""
+
+#: includes/Admin/SettingsPage.php:156
+msgid "Are you sure you want to delete this redirect?"
+msgstr ""
+
+#: includes/Admin/SettingsPage.php:157
+#: includes/Redirects/Ajax.php:68
+#: includes/Redirects/Ajax.php:122
+msgid "Source URL is required."
+msgstr ""
+
+#: includes/Admin/SettingsPage.php:158
+msgid "Please select a CSV file."
+msgstr ""
+
+#: includes/Admin/SettingsPage.php:159
+msgid "Some rows could not be imported:"
+msgstr ""
+
+#: includes/Admin/SettingsPage.php:160
+msgid "Not required for this type"
+msgstr ""
+
+#: includes/Admin/SettingsPage.php:180
+msgid "No RankMath SEO data found in the database."
+msgstr ""
+
+#: includes/Admin/SettingsPage.php:181
+msgid "Global Options"
+msgstr ""
+
+#: includes/Admin/SettingsPage.php:182
+msgid "Posts with SEO meta"
+msgstr ""
+
+#: includes/Admin/SettingsPage.php:183
+msgid "Terms with SEO meta"
+msgstr ""
+
+#: includes/Admin/SettingsPage.php:184
+msgid "Users with SEO meta"
+msgstr ""
+
+#: includes/Admin/SettingsPage.php:185
+msgid "Found"
+msgstr ""
+
+#: includes/Admin/SettingsPage.php:186
+msgid "Not found"
+msgstr ""
+
+#: includes/Admin/SettingsPage.php:187
+msgid "Preview Results (Dry Run)"
+msgstr ""
+
+#: includes/Admin/SettingsPage.php:188
+msgid "Migration Results"
+msgstr ""
+
+#: includes/Admin/SettingsPage.php:189
+msgid "Options migrated"
+msgstr ""
+
+#: includes/Admin/SettingsPage.php:190
+msgid "Posts migrated"
+msgstr ""
+
+#: includes/Admin/SettingsPage.php:191
+msgid "Posts skipped"
+msgstr ""
+
+#: includes/Admin/SettingsPage.php:192
+msgid "Terms migrated"
+msgstr ""
+
+#: includes/Admin/SettingsPage.php:193
+msgid "Terms skipped"
+msgstr ""
+
+#: includes/Admin/SettingsPage.php:194
+msgid "Users migrated"
+msgstr ""
+
+#: includes/Admin/SettingsPage.php:195
+msgid "This was a preview. No data was modified."
+msgstr ""
+
+#: includes/Admin/SettingsPage.php:196
+msgid "Are you sure you want to run the migration? Existing LW SEO data will not be overwritten."
+msgstr ""
+
+#: includes/Breadcrumbs.php:45
+#: includes/Breadcrumbs.php:67
+#: includes/Breadcrumbs.php:400
+#: includes/Breadcrumbs.php:420
+msgid "Home"
+msgstr ""
+
+#. translators: %s: search query
+#: includes/Breadcrumbs.php:311
+#, php-format
+msgid "Search: %s"
+msgstr ""
+
+#: includes/Breadcrumbs.php:328
+msgid "Page not found"
+msgstr ""
+
+#: includes/Breadcrumbs.php:358
+msgid "Breadcrumb"
+msgstr ""
+
+#: includes/MetaBox.php:52
+#: assets/js/blocks/faq.js:279
+msgid "LW SEO"
+msgstr ""
+
+#: includes/MetaBox.php:121
+msgid "characters remaining"
+msgstr ""
+
+#: includes/MetaBox.php:122
+msgid "Too long!"
+msgstr ""
+
+#: includes/MetaBox.php:152
+msgid "SEO Title"
+msgstr ""
+
+#: includes/MetaBox.php:167
+msgid "Leave empty to use the default title template."
+msgstr ""
+
+#: includes/MetaBox.php:173
+msgid "Meta Description"
+msgstr ""
+
+#: includes/MetaBox.php:181
+msgid "Enter a meta description..."
+msgstr ""
+
+#: includes/MetaBox.php:196
+msgid "noindex"
+msgstr ""
+
+#: includes/MetaBox.php:205
+msgid "nofollow"
+msgstr ""
+
+#: includes/MetaBox.php:218
+msgid "Social Title"
+msgstr ""
+
+#: includes/MetaBox.php:226
+msgid "Defaults to SEO title"
+msgstr ""
+
+#: includes/MetaBox.php:232
+msgid "Social Description"
+msgstr ""
+
+#: includes/MetaBox.php:239
+msgid "Defaults to meta description"
+msgstr ""
+
+#: includes/MetaBox.php:245
+msgid "Social Image"
+msgstr ""
+
+#: includes/MetaBox.php:255
+msgid "Image URL"
+msgstr ""
+
+#: includes/MetaBox.php:261
+#: assets/js/blocks/faq.js:84
+msgid "Remove"
+msgstr ""
+
+#: includes/MetaBox.php:269
+msgid "Priority: Social Image → Featured Image → Default Image."
+msgstr ""
+
+#: includes/MetaBox.php:283
+msgid "Canonical URL"
+msgstr ""
+
+#: includes/MetaBox.php:294
+msgid "Leave empty to use the default permalink."
+msgstr ""
+
+#: includes/Migration/Ajax.php:39
+#: includes/Redirects/Ajax.php:36
+msgid "Security check failed."
+msgstr ""
+
+#: includes/Migration/Ajax.php:44
+#: includes/Redirects/Ajax.php:41
+msgid "Permission denied."
+msgstr ""
+
+#: includes/Redirects/Ajax.php:77
+#: includes/Redirects/Ajax.php:131
+msgid "Invalid regex pattern."
+msgstr ""
+
+#: includes/Redirects/Ajax.php:85
+msgid "Failed to add redirect."
+msgstr ""
+
+#: includes/Redirects/Ajax.php:91
+msgid "Redirect added successfully."
+msgstr ""
+
+#: includes/Redirects/Ajax.php:117
+#: includes/Redirects/Ajax.php:165
+#: includes/Redirects/Ajax.php:193
+msgid "Invalid redirect ID."
+msgstr ""
+
+#: includes/Redirects/Ajax.php:139
+msgid "Failed to update redirect."
+msgstr ""
+
+#: includes/Redirects/Ajax.php:145
+msgid "Redirect updated successfully."
+msgstr ""
+
+#: includes/Redirects/Ajax.php:172
+msgid "Failed to delete redirect."
+msgstr ""
+
+#: includes/Redirects/Ajax.php:176
+msgid "Redirect deleted successfully."
+msgstr ""
+
+#: includes/Redirects/Ajax.php:200
+msgid "Redirect not found."
+msgstr ""
+
+#: includes/Redirects/Ajax.php:241
+msgid "No CSV data provided."
+msgstr ""
+
+#. translators: 1: number of imported redirects, 2: number of skipped redirects
+#: includes/Redirects/Ajax.php:251
+#, php-format
+msgid "Imported %1$d redirects, skipped %2$d."
+msgstr ""
+
+#: includes/Redirects/Handler.php:131
+msgid "Content Deleted"
+msgstr ""
+
+#: includes/Redirects/Handler.php:132
+msgid "The content you are looking for has been permanently removed."
+msgstr ""
+
+#: includes/Redirects/Handler.php:154
+msgid "Unavailable For Legal Reasons"
+msgstr ""
+
+#: includes/Redirects/Handler.php:155
+msgid "This content is not available due to legal reasons."
+msgstr ""
+
+#: includes/Redirects/Handler.php:226
+msgid "Return to homepage"
+msgstr ""
+
+#. translators: 1: current page number, 2: total page count
+#: includes/ReplaceVars.php:327
+#, php-format
+msgid "Page %1$d of %2$d"
+msgstr ""
+
+#: includes/ReplaceVars.php:337
+msgid "Site name"
+msgstr ""
+
+#: includes/ReplaceVars.php:338
+msgid "Site tagline"
+msgstr ""
+
+#: includes/ReplaceVars.php:339
+msgid "Separator"
+msgstr ""
+
+#: includes/ReplaceVars.php:340
+msgid "Post/page title"
+msgstr ""
+
+#: includes/ReplaceVars.php:341
+msgid "Post excerpt"
+msgstr ""
+
+#: includes/ReplaceVars.php:342
+msgid "Post date"
+msgstr ""
+
+#: includes/ReplaceVars.php:343
+msgid "Post modified date"
+msgstr ""
+
+#: includes/ReplaceVars.php:344
+msgid "Author name"
+msgstr ""
+
+#: includes/ReplaceVars.php:345
+msgid "Primary category"
+msgstr ""
+
+#: includes/ReplaceVars.php:346
+msgid "First tag"
+msgstr ""
+
+#: includes/ReplaceVars.php:347
+msgid "Term name"
+msgstr ""
+
+#: includes/ReplaceVars.php:348
+msgid "Term description"
+msgstr ""
+
+#: includes/ReplaceVars.php:349
+msgid "Search query"
+msgstr ""
+
+#: includes/ReplaceVars.php:350
+msgid "Current year"
+msgstr ""
+
+#: includes/ReplaceVars.php:351
+msgid "Current month"
+msgstr ""
+
+#: includes/ReplaceVars.php:352
+msgid "Current date"
+msgstr ""
+
+#: includes/ReplaceVars.php:353
+msgid "Page number"
+msgstr ""
+
+#: includes/ReplaceVars.php:354
+msgid "Page X of Y"
+msgstr ""
+
+#: includes/RestApi.php:60
+#: includes/RestApi.php:123
+#: includes/RestApi.php:142
+msgid "Post ID"
+msgstr ""
+
+#: includes/RestApi.php:79
+msgid "Term ID"
+msgstr ""
+
+#: includes/RestApi.php:85
+msgid "Taxonomy name"
+msgstr ""
+
+#: includes/RestApi.php:104
+msgid "Author ID"
+msgstr ""
+
+#: includes/RestApi.php:162
+#: includes/RestApi.php:241
+#: includes/RestApi.php:273
+msgid "Post not found."
+msgstr ""
+
+#: includes/RestApi.php:171
+#: includes/RestApi.php:249
+#: includes/RestApi.php:281
+msgid "Post is not accessible."
+msgstr ""
+
+#: includes/RestApi.php:195
+msgid "Term not found."
+msgstr ""
+
+#: includes/RestApi.php:218
+msgid "Author not found."
+msgstr ""
+
+#: assets/js/blocks/faq.js:45
+msgid "New Question"
+msgstr ""
+
+#: assets/js/blocks/faq.js:56
+msgid "Move up"
+msgstr ""
+
+#: assets/js/blocks/faq.js:66
+msgid "Move down"
+msgstr ""
+
+#: assets/js/blocks/faq.js:75
+msgid "Hide"
+msgstr ""
+
+#: assets/js/blocks/faq.js:75
+msgid "Show"
+msgstr ""
+
+#: assets/js/blocks/faq.js:97
+msgid "Question"
+msgstr ""
+
+#: assets/js/blocks/faq.js:104
+msgid "Enter your question..."
+msgstr ""
+
+#: assets/js/blocks/faq.js:112
+msgid "Answer"
+msgstr ""
+
+#: assets/js/blocks/faq.js:119
+msgid "Enter the answer..."
+msgstr ""
+
+#: assets/js/blocks/faq.js:168
+msgid "FAQ Settings"
+msgstr ""
+
+#: assets/js/blocks/faq.js:172
+msgid "Question Heading Tag"
+msgstr ""
+
+#: assets/js/blocks/faq.js:189
+msgid "This block automatically generates FAQPage schema for better SEO."
+msgstr ""
+
+#: assets/js/blocks/faq.js:200
+msgid "FAQ Block"
+msgstr ""
+
+#: assets/js/blocks/faq.js:204
+msgid "question"
+msgstr ""
+
+#: assets/js/blocks/faq.js:204
+msgid "questions"
+msgstr ""
+
+#: assets/js/blocks/faq.js:210
+msgid "No questions yet. Click the button below to add your first FAQ."
+msgstr ""
+
+#: assets/js/blocks/faq.js:238
+msgid "Add Question"
+msgstr ""
+
+#: includes/Blocks/FAQ/block.json
+msgctxt "block title"
+msgid "FAQ (LW SEO)"
+msgstr ""
+
+#: includes/Blocks/FAQ/block.json
+msgctxt "block description"
+msgid "Add frequently asked questions with FAQPage schema markup for better SEO."
+msgstr ""
+
+#: includes/Blocks/FAQ/block.json
+msgctxt "block keyword"
+msgid "faq"
+msgstr ""
+
+#: includes/Blocks/FAQ/block.json
+msgctxt "block keyword"
+msgid "questions"
+msgstr ""
+
+#: includes/Blocks/FAQ/block.json
+msgctxt "block keyword"
+msgid "answers"
+msgstr ""
+
+#: includes/Blocks/FAQ/block.json
+msgctxt "block keyword"
+msgid "schema"
+msgstr ""
+
+#: includes/Blocks/FAQ/block.json
+msgctxt "block keyword"
+msgid "seo"
+msgstr ""
