@@ -98,13 +98,20 @@
 			return;
 		}
 
-		const storageKey = 'lwSeoActiveTab';
+		// Get active tab from URL hash or default to first tab.
+		const hash     = window.location.hash.substring( 1 );
+		const firstTab = tabLinks[0].getAttribute( 'href' ).substring( 1 );
+		let validTab   = false;
 
-		// Get saved tab or default to first.
-		let activeTab = localStorage.getItem( storageKey ) || 'general';
+		tabLinks.forEach(
+			function (link) {
+				if (link.getAttribute( 'href' ).substring( 1 ) === hash) {
+					validTab = true;
+				}
+			}
+		);
 
-		// Activate saved tab.
-		activateTab( activeTab );
+		activateTab( validTab ? hash : firstTab );
 
 		// Handle tab clicks.
 		tabLinks.forEach(
@@ -115,14 +122,35 @@
 						e.preventDefault();
 						const tabId = this.getAttribute( 'href' ).substring( 1 );
 						activateTab( tabId );
-						localStorage.setItem( storageKey, tabId );
+						history.replaceState( null, '', '#' + tabId );
 					}
 				);
 			}
 		);
 
+		// Preserve active tab on form submit.
+		const form = document.querySelector( '.lw-seo-settings' );
+		if (form) {
+			const formEl = form.closest( 'form' );
+			if (formEl) {
+				formEl.addEventListener(
+					'submit',
+					function () {
+						const activeLink = document.querySelector( '.lw-seo-tabs a.active' );
+						if ( ! activeLink) {
+							return;
+						}
+						const tabSlug = activeLink.getAttribute( 'href' ).substring( 1 );
+						const referer = formEl.querySelector( 'input[name="_wp_http_referer"]' );
+						if (referer && referer.value.indexOf( '#' ) === -1) {
+							referer.value += '#' + tabSlug;
+						}
+					}
+				);
+			}
+		}
+
 		function activateTab(tabId) {
-			// Update tab links.
 			tabLinks.forEach(
 				function (link) {
 					const linkTabId = link.getAttribute( 'href' ).substring( 1 );
@@ -134,7 +162,6 @@
 				}
 			);
 
-			// Update tab panels.
 			tabPanels.forEach(
 				function (panel) {
 					if (panel.id === 'tab-' + tabId) {

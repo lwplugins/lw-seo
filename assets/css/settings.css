@@ -2,6 +2,16 @@
  * LW SEO Settings Page Styles
  */
 
+/* Title Icon */
+.lw-title-icon {
+	width: 28px;
+	height: 28px;
+	vertical-align: middle;
+	margin-right: 4px;
+	position: relative;
+	top: -2px;
+}
+
 /* ==========================================================================
 	Tabbed Layout
 	========================================================================== */
@@ -46,6 +56,11 @@
 .lw-seo-tabs a:hover {
 	background: #fff;
 	color: #2271b1;
+}
+
+.lw-seo-tabs a:focus {
+	box-shadow: none;
+	outline: none;
 }
 
 .lw-seo-tabs a.active {

@@ -3,7 +3,7 @@ Contributors: lwplugins
 Tags: seo, sitemap, schema, opengraph, breadcrumbs
 Requires at least: 6.0
 Tested up to: 6.7
-Stable tag: 1.2.2
+Stable tag: 1.2.3
 Requires PHP: 8.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -133,6 +133,10 @@ Your sitemap is available at `yoursite.com/sitemap.xml`
 6. Settings page - Advanced tab
 
 == Changelog ==
+
+= 1.2.3 =
+* Hash-based tab navigation on settings page
+* Updated ParentPage with SVG icon support from registry
 
 = 1.2.2 =
 * Fix admin notice isolation for notices relocated by WordPress core JS
