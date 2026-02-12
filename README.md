@@ -7,6 +7,8 @@ Lightweight SEO plugin for WordPress - minimal footprint, maximum impact.
 **Website:** [lwplugins.com](https://lwplugins.com)
 **GitHub:** [github.com/lwplugins/lw-seo](https://github.com/lwplugins/lw-seo)
 
+![LW SEO Settings](.github/screenshot.png)
+
 ## Features
 
 ### Meta Tags & Titles
