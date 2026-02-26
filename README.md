@@ -143,3 +143,12 @@ composer test
 ## License
 
 GPL-2.0-or-later
+
+
+## Sponsor
+
+<a href="https://sinann.io/">
+  <img src="https://sinann.io/favicon.svg" alt="Sinann" width="40">
+</a>
+
+Supported by [Sinann](https://sinann.io/)
