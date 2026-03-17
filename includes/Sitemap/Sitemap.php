@@ -49,8 +49,14 @@ final class Sitemap {
 	private function register_providers(): void {
 		$this->providers['post']     = new PostProvider();
 		$this->providers['page']     = new PageProvider();
-		$this->providers['category'] = new TaxonomyProvider( 'category' );
-		$this->providers['post_tag'] = new TaxonomyProvider( 'post_tag' );
+		$this->providers['category'] = new TaxonomyProvider( 'category', 'sitemap_categories' );
+		$this->providers['post_tag'] = new TaxonomyProvider( 'post_tag', 'sitemap_tags' );
+
+		if ( Options::get( 'woo_enabled' ) ) {
+			$this->providers['product']     = new ProductProvider();
+			$this->providers['product_cat'] = new TaxonomyProvider( 'product_cat', 'sitemap_product_cat' );
+			$this->providers['product_tag'] = new TaxonomyProvider( 'product_tag', 'sitemap_product_tag' );
+		}
 	}
 
 	/**

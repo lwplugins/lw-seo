@@ -29,12 +29,21 @@ final class TaxonomyProvider implements ProviderInterface {
 	private string $taxonomy;
 
 	/**
+	 * Option key for enabled check.
+	 *
+	 * @var string
+	 */
+	private string $option_key;
+
+	/**
 	 * Constructor.
 	 *
-	 * @param string $taxonomy Taxonomy name.
+	 * @param string $taxonomy   Taxonomy name.
+	 * @param string $option_key Option key for enabled check.
 	 */
-	public function __construct( string $taxonomy ) {
-		$this->taxonomy = $taxonomy;
+	public function __construct( string $taxonomy, string $option_key ) {
+		$this->taxonomy   = $taxonomy;
+		$this->option_key = $option_key;
 	}
 
 	/**
@@ -43,8 +52,7 @@ final class TaxonomyProvider implements ProviderInterface {
 	 * @return bool
 	 */
 	public function is_enabled(): bool {
-		$key = 'sitemap_' . ( 'post_tag' === $this->taxonomy ? 'tags' : 'categories' );
-		return (bool) Options::get( $key );
+		return (bool) Options::get( $this->option_key );
 	}
 
 	/**
