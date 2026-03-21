@@ -2,23 +2,26 @@
 # This file is distributed under the GPL-2.0-or-later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Lightweight SEO 1.1.9\n"
+"Project-Id-Version: LW SEO 1.3.1\n"
 "Report-Msgid-Bugs-To: https://github.com/lwplugins/lw-seo/issues\n"
-"POT-Creation-Date: 2026-02-07T08:51:04+00:00\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2026-03-21T19:10:52+00:00\n"
+"PO-Revision-Date: 2026-03-21 19:10+0000\n"
+"Last-Translator: Claude AI <ai@anthropic.com>\n"
 "Language-Team: LW Plugins <info@lwplugins.com>\n"
 "Language: hu_HU\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Domain: lw-seo\n"
 "X-Generator: WP-CLI 2.12.0\n"
 
 #. Plugin Name of the plugin
 #: lw-seo.php
-msgid "Lightweight SEO"
-msgstr "Lightweight SEO"
+#: includes/MetaBox.php:52
+#: assets/js/blocks/faq.js:279
+msgid "LW SEO"
+msgstr "LW SEO"
 
 #. Plugin URI of the plugin
 #: lw-seo.php
@@ -27,15 +30,14 @@ msgstr "https://github.com/lwplugins/lw-seo"
 
 #. Description of the plugin
 #: lw-seo.php
-msgid ""
-"Lightweight SEO plugin for WordPress - minimal footprint, maximum impact."
-msgstr ""
-"Lightweight SEO bővítmény WordPresshez – minimális erőforrásigény, maximális"
-" hatás."
+msgid "Lightweight SEO — minimal footprint, maximum impact."
+msgstr "Lightweight SEO – minimális erőforrásigény, maximális hatás."
 
 #. Author of the plugin
-#: lw-seo.php includes/Admin/ParentPage.php:104
-#: includes/Admin/ParentPage.php:105 includes/Admin/ParentPage.php:126
+#: lw-seo.php
+#: includes/Admin/ParentPage.php:106
+#: includes/Admin/ParentPage.php:107
+#: includes/Admin/ParentPage.php:128
 msgid "LW Plugins"
 msgstr "LW Plugins"
 
@@ -523,23 +525,24 @@ msgstr "Szolgáltatások"
 msgid "Lodging"
 msgstr "Szállás"
 
-#: includes/Admin/ParentPage.php:127
+#: includes/Admin/ParentPage.php:129
 msgid "Lightweight plugins for WordPress - minimal footprint, maximum impact."
 msgstr "Könnyű WordPress bővítmények – minimális terhelés, maximális hatás."
 
-#: includes/Admin/ParentPage.php:180
+#: includes/Admin/ParentPage.php:190
 msgid "Active"
 msgstr "Aktív"
 
-#: includes/Admin/ParentPage.php:187
+#: includes/Admin/ParentPage.php:197
 msgid "Settings"
 msgstr "Beállítások"
 
-#: includes/Admin/ParentPage.php:191
+#: includes/Admin/ParentPage.php:201
 msgid "Get Plugin"
 msgstr "Bővítmény letöltése"
 
-#: includes/Admin/Settings/FieldRendererTrait.php:153 includes/MetaBox.php:258
+#: includes/Admin/Settings/FieldRendererTrait.php:153
+#: includes/MetaBox.php:258
 msgid "Select Image"
 msgstr "Kép kiválasztása"
 
@@ -573,7 +576,8 @@ msgstr ""
 "Ha engedélyezed, a nem létező oldalra érkező látogatók a kezdőlapodra "
 "lesznek átirányítva 302-es (ideiglenes) átirányítással."
 
-#: includes/Admin/Settings/TabAdvanced.php:34 includes/MetaBox.php:278
+#: includes/Admin/Settings/TabAdvanced.php:34
+#: includes/MetaBox.php:278
 msgid "Advanced"
 msgstr "Speciális"
 
@@ -665,43 +669,73 @@ msgid "Control how AI crawlers interact with your site."
 msgstr "Szabályozd, hogyan lépnek kapcsolatba az AI crawler-ek az oldaladdal."
 
 #: includes/Admin/Settings/TabAi.php:75
+msgid "Content Signals"
+msgstr "Tartalmi jelzések"
+
+#: includes/Admin/Settings/TabAi.php:77
+msgid "Tell AI agents how they may use your content. These signals are sent as HTTP headers and meta tags."
+msgstr "Közöld az AI ügynökökkel, hogyan használhatják a tartalmadat. Ezek a jelzések HTTP fejlécekként és meta tagekként kerülnek elküldésre."
+
+#: includes/Admin/Settings/TabAi.php:81
+#: includes/MetaBox.php:319
+msgid "AI Training"
+msgstr "AI tanítás"
+
+#: includes/Admin/Settings/TabAi.php:87
+msgid "Allow AI systems to use content for training"
+msgstr "AI rendszerek számára engedélyezett a tartalom tanítási célú felhasználása"
+
+#: includes/Admin/Settings/TabAi.php:94
+#: includes/MetaBox.php:331
+msgid "AI Input (RAG)"
+msgstr "AI bemenet (RAG)"
+
+#: includes/Admin/Settings/TabAi.php:100
+msgid "Allow AI systems to use content for responses"
+msgstr "AI rendszerek számára engedélyezett a tartalom válaszadáshoz való felhasználása"
+
+#: includes/Admin/Settings/TabAi.php:107
+msgid "Search"
+msgstr "Keresés"
+
+#: includes/Admin/Settings/TabAi.php:113
+msgid "Allow content to appear in AI search results"
+msgstr "A tartalom megjelenhet az AI keresési találatok között"
+
+#: includes/Admin/Settings/TabAi.php:131
 msgid "llms.txt File"
 msgstr "llms.txt fájl"
 
-#: includes/Admin/Settings/TabAi.php:78
+#: includes/Admin/Settings/TabAi.php:134
 msgid "llms.txt"
 msgstr "llms.txt"
 
-#: includes/Admin/Settings/TabAi.php:84
+#: includes/Admin/Settings/TabAi.php:140
 msgid "Enable llms.txt for AI crawlers"
 msgstr "Engedélyezd az llms.txt-t AI crawler-ek számára"
 
 #. translators: %1$s: llms.txt URL, %2$s: llmstxt.org link
-#: includes/Admin/Settings/TabAi.php:92
+#: includes/Admin/Settings/TabAi.php:148
 #, php-format
 msgid "Your llms.txt: %1$s — %2$s"
 msgstr "A llms.txt-d: %1$s — %2$s"
 
-#: includes/Admin/Settings/TabAi.php:94
+#: includes/Admin/Settings/TabAi.php:150
 msgid "Learn more"
 msgstr "Tudj meg többet"
 
-#: includes/Admin/Settings/TabAi.php:111
+#: includes/Admin/Settings/TabAi.php:167
 msgid "AI Crawler Access"
 msgstr "AI crawler hozzáférés"
 
-#: includes/Admin/Settings/TabAi.php:113
-msgid ""
-"Block specific AI crawlers from accessing your site via robots.txt. Checked "
-"= Blocked."
+#: includes/Admin/Settings/TabAi.php:169
+msgid "Block specific AI crawlers from accessing your site via robots.txt. Checked = Blocked."
 msgstr ""
 "Tiltsd le, hogy bizonyos AI crawler-ek a robots.txt-n keresztül "
 "hozzáférjenek az oldaladhoz. Bejelölve = letiltva."
 
-#: includes/Admin/Settings/TabAi.php:142
-msgid ""
-"Blocking crawlers adds Disallow rules to your robots.txt. Note: AI companies"
-" may not always respect these rules."
+#: includes/Admin/Settings/TabAi.php:198
+msgid "Blocking crawlers adds Disallow rules to your robots.txt. Note: AI companies may not always respect these rules."
 msgstr ""
 "A crawler-ek tiltása Disallow szabályokat ad a robots.txt-dhez. Megjegyzés: "
 "az AI cégek nem mindig tartják tiszteletben ezeket a szabályokat."
@@ -831,31 +865,38 @@ msgstr "Szervezet/Személy neve"
 msgid "Used in Schema.org markup."
 msgstr "Schema.org jelölésben használva."
 
-#: includes/Admin/Settings/TabLocal.php:37 includes/Local/Shortcodes.php:45
+#: includes/Admin/Settings/TabLocal.php:37
+#: includes/Local/Shortcodes.php:45
 msgid "Monday"
 msgstr "Hétfő"
 
-#: includes/Admin/Settings/TabLocal.php:38 includes/Local/Shortcodes.php:46
+#: includes/Admin/Settings/TabLocal.php:38
+#: includes/Local/Shortcodes.php:46
 msgid "Tuesday"
 msgstr "Kedd"
 
-#: includes/Admin/Settings/TabLocal.php:39 includes/Local/Shortcodes.php:47
+#: includes/Admin/Settings/TabLocal.php:39
+#: includes/Local/Shortcodes.php:47
 msgid "Wednesday"
 msgstr "Szerda"
 
-#: includes/Admin/Settings/TabLocal.php:40 includes/Local/Shortcodes.php:48
+#: includes/Admin/Settings/TabLocal.php:40
+#: includes/Local/Shortcodes.php:48
 msgid "Thursday"
 msgstr "Csütörtök"
 
-#: includes/Admin/Settings/TabLocal.php:41 includes/Local/Shortcodes.php:49
+#: includes/Admin/Settings/TabLocal.php:41
+#: includes/Local/Shortcodes.php:49
 msgid "Friday"
 msgstr "Péntek"
 
-#: includes/Admin/Settings/TabLocal.php:42 includes/Local/Shortcodes.php:50
+#: includes/Admin/Settings/TabLocal.php:42
+#: includes/Local/Shortcodes.php:50
 msgid "Saturday"
 msgstr "Szombat"
 
-#: includes/Admin/Settings/TabLocal.php:43 includes/Local/Shortcodes.php:51
+#: includes/Admin/Settings/TabLocal.php:43
+#: includes/Local/Shortcodes.php:51
 msgid "Sunday"
 msgstr "Vasárnap"
 
@@ -865,9 +906,7 @@ msgid "Local SEO"
 msgstr "Helyi SEO"
 
 #: includes/Admin/Settings/TabLocal.php:86
-msgid ""
-"Add LocalBusiness structured data to help your business appear in local "
-"search results."
+msgid "Add LocalBusiness structured data to help your business appear in local search results."
 msgstr ""
 "Adj hozzá LocalBusiness strukturált adatokat, hogy a vállalkozásod "
 "megjelenjen a helyi keresési találatok között."
@@ -968,7 +1007,8 @@ msgstr "Nyitvatartás használata"
 msgid "Enable opening hours in schema"
 msgstr "Nyitvatartás engedélyezése a sémában"
 
-#: includes/Admin/Settings/TabLocal.php:425 includes/Local/Shortcodes.php:294
+#: includes/Admin/Settings/TabLocal.php:425
+#: includes/Local/Shortcodes.php:294
 #: includes/Local/Shortcodes.php:326
 msgid "Closed"
 msgstr "Zárva"
@@ -1011,9 +1051,7 @@ msgid "Import SEO Data"
 msgstr "SEO adatok importálása"
 
 #: includes/Admin/Settings/TabMigration.php:54
-msgid ""
-"Import SEO data from other SEO plugins. Existing LW SEO data will not be "
-"overwritten."
+msgid "Import SEO data from other SEO plugins. Existing LW SEO data will not be overwritten."
 msgstr ""
 "SEO adatok importálása más SEO bővítményekből. A meglévő LW SEO adatok nem "
 "lesznek felülírva."
@@ -1047,9 +1085,7 @@ msgid "Redirect Manager"
 msgstr "Átirányításkezelő"
 
 #: includes/Admin/Settings/TabRedirects.php:60
-msgid ""
-"Create and manage URL redirects to prevent 404 errors and preserve SEO "
-"value."
+msgid "Create and manage URL redirects to prevent 404 errors and preserve SEO value."
 msgstr ""
 "URL átirányítások létrehozása és kezelése a 404 hibák megelőzéséhez és az "
 "SEO érték megőrzéséhez."
@@ -1097,8 +1133,7 @@ msgid "Source is a regular expression"
 msgstr "A forrás reguláris kifejezés"
 
 #: includes/Admin/Settings/TabRedirects.php:141
-msgid ""
-"Advanced: Use regex patterns like ^/category/(.*)$ with $1 in destination."
+msgid "Advanced: Use regex patterns like ^/category/(.*)$ with $1 in destination."
 msgstr ""
 "Speciális: Használj regex mintákat, például ^/category/(.*)$ és a célban "
 "$1-et."
@@ -1176,8 +1211,7 @@ msgid "Import CSV"
 msgstr "CSV importálása"
 
 #: includes/Admin/Settings/TabRedirects.php:248
-msgid ""
-"Import redirects from a CSV file. Format: source,destination,type,regex"
+msgid "Import redirects from a CSV file. Format: source,destination,type,regex"
 msgstr ""
 "Átirányítások importálása CSV fájlból. Formátum: "
 "source,destination,type,regex"
@@ -1224,7 +1258,8 @@ msgstr "Kategóriák felvétele"
 msgid "Include categories in sitemap"
 msgstr "Kategóriák felvétele az oldaltérképbe"
 
-#: includes/Admin/Settings/TabSocial.php:34 includes/MetaBox.php:213
+#: includes/Admin/Settings/TabSocial.php:34
+#: includes/MetaBox.php:213
 msgid "Social"
 msgstr "Közösségi"
 
@@ -1312,8 +1347,7 @@ msgid "WooCommerce SEO"
 msgstr "WooCommerce SEO"
 
 #: includes/Admin/Settings/TabWooCommerce.php:56
-msgid ""
-"Optimize your WooCommerce products for search engines and social media."
+msgid "Optimize your WooCommerce products for search engines and social media."
 msgstr ""
 "Optimalizáld a WooCommerce termékeidet keresőmotorokhoz és közösségi "
 "médiához."
@@ -1323,8 +1357,7 @@ msgid "Enable WooCommerce SEO features"
 msgstr "WooCommerce SEO funkciók engedélyezése"
 
 #: includes/Admin/Settings/TabWooCommerce.php:87
-msgid ""
-"Adds product-specific OpenGraph tags, Schema.org Product markup, and more."
+msgid "Adds product-specific OpenGraph tags, Schema.org Product markup, and more."
 msgstr ""
 "Termékspecifikus OpenGraph tageket, Schema.org Product jelölést és még sok "
 "mást ad hozzá."
@@ -1350,9 +1383,7 @@ msgid "Enable Product Schema.org markup"
 msgstr "Schema.org Product jelölés engedélyezése"
 
 #: includes/Admin/Settings/TabWooCommerce.php:146
-msgid ""
-"Adds structured data for products including price, availability, and "
-"reviews."
+msgid "Adds structured data for products including price, availability, and reviews."
 msgstr ""
 "Strukturált adatokat ad hozzá a termékekhez, beleértve az árat, az "
 "elérhetőséget és az értékeléseket."
@@ -1405,7 +1436,8 @@ msgstr "Átirányítás frissítése"
 msgid "Are you sure you want to delete this redirect?"
 msgstr "Biztos, hogy törölni akarod ezt az átirányítást?"
 
-#: includes/Admin/SettingsPage.php:157 includes/Redirects/Ajax.php:68
+#: includes/Admin/SettingsPage.php:157
+#: includes/Redirects/Ajax.php:68
 #: includes/Redirects/Ajax.php:122
 msgid "Source URL is required."
 msgstr "A forrás URL megadása kötelező."
@@ -1487,15 +1519,19 @@ msgid "This was a preview. No data was modified."
 msgstr "Ez egy előnézet volt. Nem módosult semmilyen adat."
 
 #: includes/Admin/SettingsPage.php:196
-msgid ""
-"Are you sure you want to run the migration? Existing LW SEO data will not be"
-" overwritten."
+msgid "Are you sure you want to run the migration? Existing LW SEO data will not be overwritten."
 msgstr ""
 "Biztos, hogy lefuttatod a migrációt? A meglévő LW SEO adatok nem lesznek "
 "felülírva."
 
-#: includes/Breadcrumbs.php:45 includes/Breadcrumbs.php:67
-#: includes/Breadcrumbs.php:400 includes/Breadcrumbs.php:420
+#: includes/Admin/SettingsPage.php:274
+msgid "Lightweight SEO"
+msgstr "Lightweight SEO"
+
+#: includes/Breadcrumbs.php:45
+#: includes/Breadcrumbs.php:67
+#: includes/Breadcrumbs.php:400
+#: includes/Breadcrumbs.php:420
 msgid "Home"
 msgstr "Kezdőlap"
 
@@ -1512,10 +1548,6 @@ msgstr "Az oldal nem található"
 #: includes/Breadcrumbs.php:358
 msgid "Breadcrumb"
 msgstr "Morzsamenü"
-
-#: includes/MetaBox.php:52 assets/js/blocks/faq.js:279
-msgid "LW SEO"
-msgstr "LW SEO"
 
 #: includes/MetaBox.php:121
 msgid "characters remaining"
@@ -1573,13 +1605,18 @@ msgstr "Közösségi kép"
 msgid "Image URL"
 msgstr "Kép URL"
 
-#: includes/MetaBox.php:261 assets/js/blocks/faq.js:84
+#: includes/MetaBox.php:261
+#: assets/js/blocks/faq.js:84
 msgid "Remove"
 msgstr "Eltávolítás"
 
 #: includes/MetaBox.php:269
 msgid "Priority: Social Image → Featured Image → Default Image."
 msgstr "Prioritás: Közösségi kép → Kiemelt kép → Alapértelmezett kép."
+
+#: includes/MetaBox.php:278
+msgid "Advanced"
+msgstr "Speciális"
 
 #: includes/MetaBox.php:283
 msgid "Canonical URL"
@@ -1589,15 +1626,50 @@ msgstr "Kanonikus URL"
 msgid "Leave empty to use the default permalink."
 msgstr "Hagyd üresen az alapértelmezett permalink használatához."
 
-#: includes/Migration/Ajax.php:39 includes/Redirects/Ajax.php:36
+#: includes/MetaBox.php:303
+msgid "AI Content Signals"
+msgstr "AI tartalmi jelzések"
+
+#: includes/MetaBox.php:312
+msgid "Default (use global setting)"
+msgstr "Alapértelmezett (globális beállítás használata)"
+
+#: includes/MetaBox.php:313
+msgid "Yes"
+msgstr "Igen"
+
+#: includes/MetaBox.php:314
+msgid "No"
+msgstr "Nem"
+
+#: includes/MetaBox.php:319
+msgid "AI Training"
+msgstr "AI tanítás"
+
+#: includes/MetaBox.php:331
+msgid "AI Input (RAG)"
+msgstr "AI bemenet (RAG)"
+
+#: includes/MetaBox.php:343
+msgid "AI Search"
+msgstr "AI keresés"
+
+#: includes/MetaBox.php:354
+msgid "Override the global Content Signals settings for this content."
+msgstr "Felülírja a globális Tartalmi jelzések beállításait ennél a tartalomnál."
+
+#: includes/Migration/Ajax.php:39
+#: includes/Redirects/Ajax.php:36
 msgid "Security check failed."
 msgstr "Biztonsági ellenőrzés sikertelen."
 
-#: includes/Migration/Ajax.php:44 includes/Redirects/Ajax.php:41
+#: includes/Migration/Ajax.php:44
+#: includes/Redirects/Ajax.php:41
 msgid "Permission denied."
 msgstr "Hozzáférés megtagadva."
 
-#: includes/Redirects/Ajax.php:77 includes/Redirects/Ajax.php:131
+#: includes/Redirects/Ajax.php:77
+#: includes/Redirects/Ajax.php:131
 msgid "Invalid regex pattern."
 msgstr "Érvénytelen regex minta."
 
@@ -1609,7 +1681,8 @@ msgstr "Nem sikerült hozzáadni az átirányítást."
 msgid "Redirect added successfully."
 msgstr "Az átirányítás sikeresen hozzáadva."
 
-#: includes/Redirects/Ajax.php:117 includes/Redirects/Ajax.php:165
+#: includes/Redirects/Ajax.php:117
+#: includes/Redirects/Ajax.php:165
 #: includes/Redirects/Ajax.php:193
 msgid "Invalid redirect ID."
 msgstr "Érvénytelen átirányítás-azonosító."
@@ -1638,8 +1711,7 @@ msgstr "Átirányítás nem található."
 msgid "No CSV data provided."
 msgstr "Nincs CSV adat megadva."
 
-#. translators: 1: number of imported redirects, 2: number of skipped
-#. redirects
+#. translators: 1: number of imported redirects, 2: number of skipped redirects
 #: includes/Redirects/Ajax.php:251
 #, php-format
 msgid "Imported %1$d redirects, skipped %2$d."
@@ -1743,7 +1815,9 @@ msgstr "Oldalszám"
 msgid "Page X of Y"
 msgstr "X/Y. oldal"
 
-#: includes/RestApi.php:60 includes/RestApi.php:123 includes/RestApi.php:142
+#: includes/RestApi.php:60
+#: includes/RestApi.php:123
+#: includes/RestApi.php:142
 msgid "Post ID"
 msgstr "Bejegyzés ID"
 
@@ -1759,11 +1833,15 @@ msgstr "Taxonómia neve"
 msgid "Author ID"
 msgstr "Szerző ID"
 
-#: includes/RestApi.php:162 includes/RestApi.php:241 includes/RestApi.php:273
+#: includes/RestApi.php:162
+#: includes/RestApi.php:241
+#: includes/RestApi.php:273
 msgid "Post not found."
 msgstr "A bejegyzés nem található."
 
-#: includes/RestApi.php:171 includes/RestApi.php:249 includes/RestApi.php:281
+#: includes/RestApi.php:171
+#: includes/RestApi.php:249
+#: includes/RestApi.php:281
 msgid "Post is not accessible."
 msgstr "A bejegyzés nem érhető el."
 
@@ -1774,6 +1852,13 @@ msgstr "A kifejezés nem található."
 #: includes/RestApi.php:218
 msgid "Author not found."
 msgstr "A szerző nem található."
+
+#: lw-seo.php:43
+msgid "Autoloader not found. Please run \"composer install\" in the plugin directory, or re-install the plugin from a release ZIP."
+msgstr ""
+"Az autoloader nem található. Kérlek, futtasd a \"composer install\" parancsot "
+"a bővítmény könyvtárában, vagy telepítsd újra a bővítményt egy kiadási ZIP "
+"fájlból."
 
 #: assets/js/blocks/faq.js:45
 msgid "New Question"
@@ -1852,8 +1937,7 @@ msgstr "FAQ (LW SEO)"
 
 #: includes/Blocks/FAQ/block.json
 msgctxt "block description"
-msgid ""
-"Add frequently asked questions with FAQPage schema markup for better SEO."
+msgid "Add frequently asked questions with FAQPage schema markup for better SEO."
 msgstr ""
 "Adj hozzá gyakran ismételt kérdéseket FAQPage schema jelöléssel a jobb SEO "
 "érdekében."

@@ -2,21 +2,23 @@
 # This file is distributed under the GPL-2.0-or-later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Lightweight SEO 1.1.9\n"
-"Report-Msgid-Bugs-To: https://github.com/lwplugins/lw-seo/issues\n"
+"Project-Id-Version: LW SEO 1.3.1\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/lw-seo\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LW Plugins <info@lwplugins.com>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-02-07T08:51:04+00:00\n"
+"POT-Creation-Date: 2026-03-21T19:10:52+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: lw-seo\n"
 
 #. Plugin Name of the plugin
 #: lw-seo.php
-msgid "Lightweight SEO"
+#: includes/MetaBox.php:52
+#: assets/js/blocks/faq.js:279
+msgid "LW SEO"
 msgstr ""
 
 #. Plugin URI of the plugin
@@ -26,14 +28,14 @@ msgstr ""
 
 #. Description of the plugin
 #: lw-seo.php
-msgid "Lightweight SEO plugin for WordPress - minimal footprint, maximum impact."
+msgid "Lightweight SEO — minimal footprint, maximum impact."
 msgstr ""
 
 #. Author of the plugin
 #: lw-seo.php
-#: includes/Admin/ParentPage.php:104
-#: includes/Admin/ParentPage.php:105
-#: includes/Admin/ParentPage.php:126
+#: includes/Admin/ParentPage.php:106
+#: includes/Admin/ParentPage.php:107
+#: includes/Admin/ParentPage.php:128
 msgid "LW Plugins"
 msgstr ""
 
@@ -521,19 +523,19 @@ msgstr ""
 msgid "Lodging"
 msgstr ""
 
-#: includes/Admin/ParentPage.php:127
+#: includes/Admin/ParentPage.php:129
 msgid "Lightweight plugins for WordPress - minimal footprint, maximum impact."
 msgstr ""
 
-#: includes/Admin/ParentPage.php:180
+#: includes/Admin/ParentPage.php:190
 msgid "Active"
 msgstr ""
 
-#: includes/Admin/ParentPage.php:187
+#: includes/Admin/ParentPage.php:197
 msgid "Settings"
 msgstr ""
 
-#: includes/Admin/ParentPage.php:191
+#: includes/Admin/ParentPage.php:201
 msgid "Get Plugin"
 msgstr ""
 
@@ -657,36 +659,70 @@ msgid "Control how AI crawlers interact with your site."
 msgstr ""
 
 #: includes/Admin/Settings/TabAi.php:75
+msgid "Content Signals"
+msgstr ""
+
+#: includes/Admin/Settings/TabAi.php:77
+msgid "Tell AI agents how they may use your content. These signals are sent as HTTP headers and meta tags."
+msgstr ""
+
+#: includes/Admin/Settings/TabAi.php:81
+#: includes/MetaBox.php:319
+msgid "AI Training"
+msgstr ""
+
+#: includes/Admin/Settings/TabAi.php:87
+msgid "Allow AI systems to use content for training"
+msgstr ""
+
+#: includes/Admin/Settings/TabAi.php:94
+#: includes/MetaBox.php:331
+msgid "AI Input (RAG)"
+msgstr ""
+
+#: includes/Admin/Settings/TabAi.php:100
+msgid "Allow AI systems to use content for responses"
+msgstr ""
+
+#: includes/Admin/Settings/TabAi.php:107
+msgid "Search"
+msgstr ""
+
+#: includes/Admin/Settings/TabAi.php:113
+msgid "Allow content to appear in AI search results"
+msgstr ""
+
+#: includes/Admin/Settings/TabAi.php:131
 msgid "llms.txt File"
 msgstr ""
 
-#: includes/Admin/Settings/TabAi.php:78
+#: includes/Admin/Settings/TabAi.php:134
 msgid "llms.txt"
 msgstr ""
 
-#: includes/Admin/Settings/TabAi.php:84
+#: includes/Admin/Settings/TabAi.php:140
 msgid "Enable llms.txt for AI crawlers"
 msgstr ""
 
 #. translators: %1$s: llms.txt URL, %2$s: llmstxt.org link
-#: includes/Admin/Settings/TabAi.php:92
+#: includes/Admin/Settings/TabAi.php:148
 #, php-format
 msgid "Your llms.txt: %1$s — %2$s"
 msgstr ""
 
-#: includes/Admin/Settings/TabAi.php:94
+#: includes/Admin/Settings/TabAi.php:150
 msgid "Learn more"
 msgstr ""
 
-#: includes/Admin/Settings/TabAi.php:111
+#: includes/Admin/Settings/TabAi.php:167
 msgid "AI Crawler Access"
 msgstr ""
 
-#: includes/Admin/Settings/TabAi.php:113
+#: includes/Admin/Settings/TabAi.php:169
 msgid "Block specific AI crawlers from accessing your site via robots.txt. Checked = Blocked."
 msgstr ""
 
-#: includes/Admin/Settings/TabAi.php:142
+#: includes/Admin/Settings/TabAi.php:198
 msgid "Blocking crawlers adds Disallow rules to your robots.txt. Note: AI companies may not always respect these rules."
 msgstr ""
 
@@ -1452,6 +1488,10 @@ msgstr ""
 msgid "Are you sure you want to run the migration? Existing LW SEO data will not be overwritten."
 msgstr ""
 
+#: includes/Admin/SettingsPage.php:274
+msgid "Lightweight SEO"
+msgstr ""
+
 #: includes/Breadcrumbs.php:45
 #: includes/Breadcrumbs.php:67
 #: includes/Breadcrumbs.php:400
@@ -1471,11 +1511,6 @@ msgstr ""
 
 #: includes/Breadcrumbs.php:358
 msgid "Breadcrumb"
-msgstr ""
-
-#: includes/MetaBox.php:52
-#: assets/js/blocks/faq.js:279
-msgid "LW SEO"
 msgstr ""
 
 #: includes/MetaBox.php:121
@@ -1549,6 +1584,30 @@ msgstr ""
 
 #: includes/MetaBox.php:294
 msgid "Leave empty to use the default permalink."
+msgstr ""
+
+#: includes/MetaBox.php:303
+msgid "AI Content Signals"
+msgstr ""
+
+#: includes/MetaBox.php:312
+msgid "Default (use global setting)"
+msgstr ""
+
+#: includes/MetaBox.php:313
+msgid "Yes"
+msgstr ""
+
+#: includes/MetaBox.php:314
+msgid "No"
+msgstr ""
+
+#: includes/MetaBox.php:343
+msgid "AI Search"
+msgstr ""
+
+#: includes/MetaBox.php:354
+msgid "Override the global Content Signals settings for this content."
 msgstr ""
 
 #: includes/Migration/Ajax.php:39
@@ -1744,6 +1803,10 @@ msgstr ""
 
 #: includes/RestApi.php:218
 msgid "Author not found."
+msgstr ""
+
+#: lw-seo.php:43
+msgid "Autoloader not found. Please run \"composer install\" in the plugin directory, or re-install the plugin from a release ZIP."
 msgstr ""
 
 #: assets/js/blocks/faq.js:45
