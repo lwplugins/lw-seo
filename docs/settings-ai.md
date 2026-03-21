@@ -1,35 +1,134 @@
 # AI/LLM Settings
 
-Navigate to **LW Plugins → SEO → AI/LLM** to control AI crawler access and llms.txt generation.
+Navigate to **LW Plugins > SEO > AI/LLM** to control AI content signals, crawler access, and llms.txt generation.
 
-## Overview
+## Content Signals
 
-As AI systems increasingly crawl the web for training data, you may want to control which AI crawlers can access your content.
+### What are Content Signals?
+
+Content Signals tell AI agents how they may use your content. They are sent as:
+- **HTTP header** (`X-Content-Signals`) on every response
+- **HTML meta tag** (`<meta name="ai-content-signals">`) in the `<head>`
+
+Inspired by [Cloudflare - Markdown for Agents](https://blog.cloudflare.com/markdown-for-agents/).
+
+### Global Settings
+
+Three checkboxes, all enabled by default:
+
+| Setting | Header key | Description |
+|---------|-----------|-------------|
+| AI Training | `ai-train` | Allow AI systems to use content for model training |
+| AI Input (RAG) | `ai-input` | Allow AI systems to use content for generating responses |
+| Search | `search` | Allow content to appear in AI search results |
+
+### Per-Content Override
+
+Each post/page has an **AI Content Signals** section in the LW SEO meta box (post editor). Three dropdowns:
+- **Default** - uses the global setting
+- **Yes** - explicitly allow
+- **No** - explicitly deny
+
+### Output Example
+
+HTTP header (every response):
+```
+X-Content-Signals: ai-train=yes, ai-input=yes, search=yes
+```
+
+HTML meta tag:
+```html
+<meta name="ai-content-signals" content="ai-train=yes, ai-input=no, search=yes" />
+```
+
+### Resolution Order
+
+1. Per-post meta value (if not "default")
+2. `lw_seo_content_signals` filter (if applied)
+3. Global setting from AI/LLM tab
+
+## Markdown Endpoint (/md)
+
+### What is it?
+
+Every post, page, taxonomy, and WooCommerce product is available as clean markdown. AI agents can consume content without parsing HTML.
+
+### Three Ways to Access
+
+**1. URL suffix:**
+```
+https://yoursite.com/hello-world/md/
+https://yoursite.com/category/news/md/
+https://yoursite.com/product/shoes/md/
+```
+
+**2. Query parameter:**
+```
+https://yoursite.com/?p=123&format=md
+```
+
+**3. Accept header (singular pages only):**
+```bash
+curl -H "Accept: text/markdown" https://yoursite.com/hello-world/
+```
+
+### Response Format
+
+**Headers:**
+```
+Content-Type: text/markdown; charset=UTF-8
+X-Content-Signals: ai-train=yes, ai-input=yes, search=yes
+X-Markdown-Tokens: 1250
+```
+
+**Body - YAML frontmatter + markdown:**
+```markdown
+---
+title: "Hello World"
+url: "https://yoursite.com/hello-world/"
+date: "2026-03-21"
+modified: "2026-03-21"
+author: "Admin"
+language: "hu_HU"
+categories: ["WordPress"]
+tags: ["example"]
+featured_image: "https://yoursite.com/image.jpg"
+---
+
+# Hello World
+
+Your post content converted to markdown...
+```
+
+### Security
+
+- Only `publish` and `private` (with capability) posts are accessible
+- Password-protected posts return 403
+- Non-public taxonomies return 404
+- Draft, pending, future posts return 404
+
+### Flush Rewrite Rules
+
+After activating the plugin, go to **Settings > Permalinks > Save Changes** to flush rewrite rules. Without this, the `/md/` URLs won't work.
 
 ## llms.txt
 
 ### What is llms.txt?
 
-The `llms.txt` file provides structured information about your website to AI systems. It's similar to robots.txt but specifically designed for Large Language Models.
+The `llms.txt` file provides structured information about your website to AI systems. Similar to robots.txt but designed for LLMs.
 
 Learn more: [llmstxt.org](https://llmstxt.org/)
 
-### Enable llms.txt
+When enabled, available at: `https://yoursite.com/llms.txt`
 
-Toggle llms.txt generation on/off.
-
-When enabled, your file is available at:
-```
-https://yoursite.com/llms.txt
-```
-
-### llms.txt Content
+### Content
 
 The generated file includes:
 - Site name and description
-- Contact information
-- Content guidelines for AI systems
-- Preferred citation format
+- Content summary (post/page/category counts)
+- Important pages
+- Recent posts
+- Sitemap reference
 
 ## AI Crawler Control
 
@@ -40,100 +139,34 @@ Block or allow specific AI crawlers via robots.txt rules.
 | Crawler | Company | Purpose |
 |---------|---------|---------|
 | GPTBot | OpenAI | ChatGPT training data |
-| ChatGPT-User | OpenAI | ChatGPT browsing feature |
-| Claude-Web | Anthropic | Claude training data |
-| Google-Extended | Google | Gemini/Bard training |
+| ChatGPT-User | OpenAI | ChatGPT browsing |
+| Claude-Web | Anthropic | Claude training |
+| Google-Extended | Google | Gemini training |
 | Bytespider | ByteDance | TikTok AI training |
 | CCBot | Common Crawl | Open dataset |
 | PerplexityBot | Perplexity | AI search engine |
-| Cohere-AI | Cohere | AI training data |
+| Cohere-AI | Cohere | AI training |
 
-### Blocking Crawlers
+### Blocking
 
-1. Find the crawler in the list
-2. Check "Block" to add a Disallow rule
-3. Save settings
-
-This adds rules to your virtual robots.txt:
-
+Check "Block" to add a `Disallow` rule to robots.txt:
 ```
 User-agent: GPTBot
 Disallow: /
-
-User-agent: Claude-Web
-Disallow: /
 ```
 
-### Allowing Crawlers
+## Content Signals vs Crawler Blocking
 
-Uncheck "Block" to allow the crawler access.
+| Feature | Scope | Enforcement |
+|---------|-------|-------------|
+| Content Signals | Per-content | Advisory (agent decides) |
+| AI Crawler Blocking | Site-wide | Hard block (robots.txt) |
 
-## robots.txt Integration
-
-The AI crawler rules are added to WordPress's virtual robots.txt.
-
-View your robots.txt at:
-```
-https://yoursite.com/robots.txt
-```
-
-### Sample Output
-
-```
-User-agent: *
-Disallow: /wp-admin/
-Allow: /wp-admin/admin-ajax.php
-
-# AI Crawlers
-User-agent: GPTBot
-Disallow: /
-
-User-agent: ChatGPT-User
-Disallow: /
-
-User-agent: Claude-Web
-Allow: /
-
-User-agent: Google-Extended
-Disallow: /
-
-Sitemap: https://yoursite.com/sitemap.xml
-```
-
-## Considerations
-
-### Why Block AI Crawlers?
-
-- Protect proprietary content from training data
-- Reduce server load from crawling
-- Maintain control over content usage
-- Privacy and copyright concerns
-
-### Why Allow AI Crawlers?
-
-- Increase visibility in AI-powered search
-- Help AI systems provide accurate information about your business
-- Be included in AI assistants' knowledge base
-- Support open web principles
-
-### Selective Blocking
-
-Consider your content type:
-- **News sites:** May want to block to protect exclusive content
-- **Educational sites:** May want to allow for knowledge sharing
-- **E-commerce:** Consider blocking product descriptions
-- **Personal blogs:** Personal preference
+Content Signals are advisory - the AI agent decides whether to respect them. Crawler blocking via robots.txt is a hard block (though also technically advisory).
 
 ## Technical Notes
 
-- robots.txt is advisory; crawlers may choose to ignore it
-- Blocking doesn't remove already-crawled content
-- Major AI companies generally respect robots.txt rules
-- Rules apply site-wide; no per-page control via robots.txt
-
-## Tips
-
-- Review and update AI crawler settings periodically
-- Monitor your server logs for AI crawler activity
-- Consider your content licensing when deciding
-- Major AI companies provide opt-out forms for existing training data
+- robots.txt blocking doesn't remove already-crawled content
+- Content Signals follow the emerging web standard for AI content permissions
+- The `/md` endpoint respects Content Signals but doesn't block content - it includes the signals in the response headers
+- `X-Markdown-Tokens` is an approximate token count (`mb_strlen / 4`)
