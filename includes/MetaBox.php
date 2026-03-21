@@ -296,6 +296,65 @@ final class MetaBox {
 					</div>
 				</div>
 			</details>
+
+			<!-- AI Content Signals (Collapsible) -->
+			<details class="lw-seo-section lw-seo-section--ai-signals">
+				<summary class="lw-seo-section__title">
+					<?php esc_html_e( 'AI Content Signals', 'lw-seo' ); ?>
+				</summary>
+				<div class="lw-seo-section__content">
+					<?php
+					$ai_train = Options::get_post_meta( $post->ID, 'ai_train' );
+					$ai_input = Options::get_post_meta( $post->ID, 'ai_input' );
+					$search   = Options::get_post_meta( $post->ID, 'search' );
+
+					$signal_options = [
+						'default' => __( 'Default (use global setting)', 'lw-seo' ),
+						'yes'     => __( 'Yes', 'lw-seo' ),
+						'no'      => __( 'No', 'lw-seo' ),
+					];
+					?>
+					<div class="lw-seo-field">
+						<label for="lw_seo_ai_train" class="lw-seo-label">
+							<?php esc_html_e( 'AI Training', 'lw-seo' ); ?>
+						</label>
+						<select id="lw_seo_ai_train" name="lw_seo_ai_train" class="lw-seo-input">
+							<?php foreach ( $signal_options as $value => $label ) : ?>
+								<option value="<?php echo esc_attr( $value ); ?>" <?php selected( $ai_train ? $ai_train : 'default', $value ); ?>>
+									<?php echo esc_html( $label ); ?>
+								</option>
+							<?php endforeach; ?>
+						</select>
+					</div>
+					<div class="lw-seo-field">
+						<label for="lw_seo_ai_input" class="lw-seo-label">
+							<?php esc_html_e( 'AI Input (RAG)', 'lw-seo' ); ?>
+						</label>
+						<select id="lw_seo_ai_input" name="lw_seo_ai_input" class="lw-seo-input">
+							<?php foreach ( $signal_options as $value => $label ) : ?>
+								<option value="<?php echo esc_attr( $value ); ?>" <?php selected( $ai_input ? $ai_input : 'default', $value ); ?>>
+									<?php echo esc_html( $label ); ?>
+								</option>
+							<?php endforeach; ?>
+						</select>
+					</div>
+					<div class="lw-seo-field">
+						<label for="lw_seo_search" class="lw-seo-label">
+							<?php esc_html_e( 'AI Search', 'lw-seo' ); ?>
+						</label>
+						<select id="lw_seo_search" name="lw_seo_search" class="lw-seo-input">
+							<?php foreach ( $signal_options as $value => $label ) : ?>
+								<option value="<?php echo esc_attr( $value ); ?>" <?php selected( $search ? $search : 'default', $value ); ?>>
+									<?php echo esc_html( $label ); ?>
+								</option>
+							<?php endforeach; ?>
+						</select>
+					</div>
+					<p class="lw-seo-description">
+						<?php esc_html_e( 'Override the global Content Signals settings for this content.', 'lw-seo' ); ?>
+					</p>
+				</div>
+			</details>
 		</div>
 		<?php
 	}
@@ -341,6 +400,9 @@ final class MetaBox {
 			'og_title'       => 'sanitize_text_field',
 			'og_description' => 'sanitize_textarea_field',
 			'og_image'       => 'esc_url_raw',
+			'ai_train'       => 'sanitize_text_field',
+			'ai_input'       => 'sanitize_text_field',
+			'search'         => 'sanitize_text_field',
 		];
 
 		foreach ( $fields as $field => $sanitize_callback ) {
