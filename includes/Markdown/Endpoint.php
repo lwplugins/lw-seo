@@ -26,16 +26,12 @@ final class Endpoint {
 	}
 
 	/**
-	 * Add rewrite rules for /md suffix.
+	 * Add /md rewrite endpoint to all permalink structures.
 	 *
 	 * @return void
 	 */
 	public function add_rewrite_rules(): void {
-		add_rewrite_rule(
-			'(.+?)/md/?$',
-			'index.php?lw_markdown=1&lw_markdown_path=$matches[1]',
-			'top'
-		);
+		add_rewrite_endpoint( 'md', EP_PERMALINK | EP_PAGES | EP_CATEGORIES | EP_TAGS );
 	}
 
 	/**
@@ -45,8 +41,6 @@ final class Endpoint {
 	 * @return array<string>
 	 */
 	public function add_query_vars( array $vars ): array {
-		$vars[] = 'lw_markdown';
-		$vars[] = 'lw_markdown_path';
 		$vars[] = 'format';
 		return $vars;
 	}
@@ -104,14 +98,18 @@ final class Endpoint {
 	 * @return bool
 	 */
 	private function is_markdown_request(): bool {
-		if ( get_query_var( 'lw_markdown' ) ) {
+		// Endpoint: /hello-world/md/ (add_rewrite_endpoint sets 'md' query var).
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only query var check.
+		if ( isset( $GLOBALS['wp_query']->query_vars['md'] ) ) {
 			return true;
 		}
 
+		// Query parameter: ?format=md.
 		if ( 'md' === get_query_var( 'format' ) ) {
 			return true;
 		}
 
+		// Accept header: text/markdown (singular pages only).
 		if ( is_singular() && $this->accepts_markdown() ) {
 			return true;
 		}
@@ -234,8 +232,7 @@ final class Endpoint {
 	 * @return void
 	 */
 	public static function activate(): void {
-		$endpoint = new self();
-		$endpoint->add_rewrite_rules();
+		add_rewrite_endpoint( 'md', EP_PERMALINK | EP_PAGES | EP_CATEGORIES | EP_TAGS );
 		flush_rewrite_rules();
 	}
 }
