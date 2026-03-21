@@ -60,8 +60,64 @@ final class TabAi implements TabInterface {
 		</div>
 
 		<?php
+		$this->render_content_signals_section();
 		$this->render_llms_section();
 		$this->render_crawlers_section();
+	}
+
+	/**
+	 * Render Content Signals section.
+	 *
+	 * @return void
+	 */
+	private function render_content_signals_section(): void {
+		?>
+		<h3><?php esc_html_e( 'Content Signals', 'lw-seo' ); ?></h3>
+		<p class="description" style="margin-bottom: 10px;">
+			<?php esc_html_e( 'Tell AI agents how they may use your content. These signals are sent as HTTP headers and meta tags.', 'lw-seo' ); ?>
+		</p>
+		<table class="form-table">
+			<tr>
+				<th scope="row"><?php esc_html_e( 'AI Training', 'lw-seo' ); ?></th>
+				<td>
+					<?php
+					$this->render_checkbox_field(
+						[
+							'name'  => 'content_signals_ai_train',
+							'label' => __( 'Allow AI systems to use content for training', 'lw-seo' ),
+						]
+					);
+					?>
+				</td>
+			</tr>
+			<tr>
+				<th scope="row"><?php esc_html_e( 'AI Input (RAG)', 'lw-seo' ); ?></th>
+				<td>
+					<?php
+					$this->render_checkbox_field(
+						[
+							'name'  => 'content_signals_ai_input',
+							'label' => __( 'Allow AI systems to use content for responses', 'lw-seo' ),
+						]
+					);
+					?>
+				</td>
+			</tr>
+			<tr>
+				<th scope="row"><?php esc_html_e( 'Search', 'lw-seo' ); ?></th>
+				<td>
+					<?php
+					$this->render_checkbox_field(
+						[
+							'name'  => 'content_signals_search',
+							'label' => __( 'Allow content to appear in AI search results', 'lw-seo' ),
+						]
+					);
+					?>
+				</td>
+			</tr>
+		</table>
+		<?php
 	}
 
 	/**
