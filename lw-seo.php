@@ -64,3 +64,15 @@ function lw_seo(): Plugin {
 
 // Initialize the plugin.
 add_action( 'plugins_loaded', __NAMESPACE__ . '\\lw_seo' );
+
+// Flush rewrite rules on activation (for llms.txt and /md endpoints).
+register_activation_hook(
+	__FILE__,
+	static function (): void {
+		if ( ! class_exists( LlmsTxt::class ) ) {
+			return;
+		}
+		LlmsTxt::activate();
+		Markdown\Endpoint::activate();
+	}
+);
