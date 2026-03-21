@@ -20,6 +20,7 @@ use LightweightPlugins\SEO\Redirects\Handler as RedirectHandler;
 use LightweightPlugins\SEO\Redirects\Ajax as RedirectAjax;
 use LightweightPlugins\SEO\Migration\Ajax as MigrationAjax;
 use LightweightPlugins\SEO\NotFoundHandler;
+use LightweightPlugins\SEO\Markdown\Endpoint as MarkdownEndpoint;
 
 /**
  * Main plugin class.
@@ -91,6 +92,12 @@ final class Plugin {
 		new Breadcrumbs();
 		new RobotsTxt();
 		new LlmsTxt();
+
+		// Content Signals.
+		new ContentSignals();
+
+		// Markdown endpoint.
+		new MarkdownEndpoint();
 
 		// Gutenberg blocks.
 		new FAQBlock();
