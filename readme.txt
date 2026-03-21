@@ -3,7 +3,7 @@ Contributors: lwplugins
 Tags: seo, sitemap, schema, opengraph, breadcrumbs
 Requires at least: 6.0
 Tested up to: 6.7
-Stable tag: 1.2.6
+Stable tag: 1.3.0
 Requires PHP: 8.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -133,6 +133,15 @@ Your sitemap is available at `yoursite.com/sitemap.xml`
 6. Settings page - Advanced tab
 
 == Changelog ==
+
+= 1.3.0 =
+* New: Content Signals - AI content usage HTTP headers and meta tags
+* New: Markdown endpoint (/md) for AI agent content consumption
+* New: Per-post AI content signal override (ai-train, ai-input, search)
+* New: Accept: text/markdown content negotiation support
+* New: WooCommerce product markdown rendering
+* New: Taxonomy/category markdown rendering
+* New: Hook system for extending markdown output
 
 = 1.2.6 =
 * Fix: Graceful error when autoloader is missing (admin notice instead of fatal error)
