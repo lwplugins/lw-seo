@@ -3,7 +3,7 @@ Contributors: lwplugins
 Tags: seo, sitemap, schema, opengraph, breadcrumbs
 Requires at least: 6.0
 Tested up to: 6.7
-Stable tag: 1.3.7
+Stable tag: 1.3.8
 Requires PHP: 8.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -133,6 +133,14 @@ Your sitemap is available at `yoursite.com/sitemap.xml`
 6. Settings page - Advanced tab
 
 == Changelog ==
+
+= 1.3.8 =
+* New: LW Site Manager integration - SEO abilities for AI agents
+* New: lw-seo/get-meta ability - get SEO meta for posts and terms
+* New: lw-seo/set-meta ability - set SEO meta for posts and terms
+* New: lw-seo/get-content-signals ability - get resolved AI content signals
+* New: lw-seo/get-markdown ability - get markdown representation of content
+* New: lw-seo/get-options ability - get global SEO settings
 
 = 1.3.7 =
 * New: Full SEO settings for taxonomy archives (title, description, noindex, social, AI signals)
