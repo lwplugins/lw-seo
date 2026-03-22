@@ -83,6 +83,7 @@ final class Plugin {
 		// Admin components.
 		if ( is_admin() ) {
 			new MetaBox();
+			new TermMetaBox();
 			new SettingsPage();
 		}
 
@@ -160,11 +161,19 @@ final class Plugin {
 				}
 			}
 		} elseif ( is_category() || is_tag() || is_tax() ) {
-			$term     = get_queried_object();
-			$template = Options::get( 'title_' . ( $term->taxonomy ?? 'category' ) );
-			if ( $template && $term instanceof \WP_Term ) {
-				$title_parts['title'] = ReplaceVars::replace( $template, null, $term );
-				unset( $title_parts['site'], $title_parts['tagline'] );
+			$term = get_queried_object();
+			if ( $term instanceof \WP_Term ) {
+				$custom_title = Options::get_term_meta( $term->term_id, 'title' );
+				if ( ! empty( $custom_title ) ) {
+					$title_parts['title'] = $custom_title;
+					unset( $title_parts['site'], $title_parts['tagline'] );
+				} else {
+					$template = Options::get( 'title_' . ( $term->taxonomy ?? 'category' ) );
+					if ( $template ) {
+						$title_parts['title'] = ReplaceVars::replace( $template, null, $term );
+						unset( $title_parts['site'], $title_parts['tagline'] );
+					}
+				}
 			}
 		} elseif ( is_author() ) {
 			$user     = get_queried_object();
@@ -321,21 +330,36 @@ final class Plugin {
 			return;
 		}
 
-		// Check noindex setting.
-		$noindex = Options::get( 'noindex_' . $term->taxonomy );
+		// Check noindex: per-term meta overrides global setting.
+		$noindex = Options::get_term_meta( $term->term_id, 'noindex' );
+		if ( ! $noindex ) {
+			$noindex = Options::get( 'noindex_' . $term->taxonomy );
+		}
 		if ( $noindex ) {
 			echo '<meta name="robots" content="noindex, follow" />' . "\n";
 		}
 
-		$term_title  = single_term_title( '', false );
-		$title       = ! empty( $term_title ) ? $term_title : $term->name;
+		// Title: per-term meta > template > term name.
+		$custom_title = Options::get_term_meta( $term->term_id, 'title' );
+		$term_title   = single_term_title( '', false );
+		$title        = ! empty( $custom_title ) ? $custom_title : ( ! empty( $term_title ) ? $term_title : $term->name );
+
+		// Description: per-term meta > term description.
+		$custom_desc = Options::get_term_meta( $term->term_id, 'description' );
 		$term_desc   = term_description( $term );
-		$description = ! empty( $term_desc ) ? $term_desc : '';
-		$description = wp_strip_all_tags( $description );
-		$url         = get_term_link( $term );
+		$description = ! empty( $custom_desc ) ? $custom_desc : ( ! empty( $term_desc ) ? wp_strip_all_tags( $term_desc ) : '' );
+
+		$url = get_term_link( $term );
+
+		// Social: per-term meta > defaults.
+		$og_title = Options::get_term_meta( $term->term_id, 'og_title' );
+		$og_title = ! empty( $og_title ) ? $og_title : $title;
+		$og_desc  = Options::get_term_meta( $term->term_id, 'og_description' );
+		$og_desc  = ! empty( $og_desc ) ? $og_desc : $description;
+		$og_image = Options::get_term_meta( $term->term_id, 'og_image' );
 
 		if ( is_string( $url ) ) {
-			$this->render_meta_tags( $title, $description, $url, $title, $description, '', 'website' );
+			$this->render_meta_tags( $title, $description, $url, $og_title, $og_desc, $og_image, 'website' );
 		}
 	}
 

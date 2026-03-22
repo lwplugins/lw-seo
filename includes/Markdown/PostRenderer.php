@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace LightweightPlugins\SEO\Markdown;
 
 use LightweightPlugins\SEO\Helpers\HtmlToMarkdown;
+use LightweightPlugins\SEO\Options;
 
 /**
  * Renders post/page content as markdown with YAML frontmatter.
@@ -86,6 +87,13 @@ final class PostRenderer implements RendererInterface {
 	 * @return string
 	 */
 	public function body(): string {
+		// Custom markdown overrides auto-generated content.
+		$custom_md = Options::get_post_meta( $this->post->ID, 'markdown_content' );
+		if ( ! empty( $custom_md ) ) {
+			/** This filter is documented below. */
+			return apply_filters( 'lw_seo_markdown_body', $custom_md, $this->post );
+		}
+
 		$content = apply_filters( 'the_content', $this->post->post_content ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Core WP filter.
 		$body    = '# ' . get_the_title( $this->post ) . "\n\n";
 		$body   .= HtmlToMarkdown::convert( $content );

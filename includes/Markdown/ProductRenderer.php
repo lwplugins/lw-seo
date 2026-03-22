@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace LightweightPlugins\SEO\Markdown;
 
 use LightweightPlugins\SEO\Helpers\HtmlToMarkdown;
+use LightweightPlugins\SEO\Options;
 
 /**
  * Renders WooCommerce product content as markdown.
@@ -53,7 +54,7 @@ final class ProductRenderer implements RendererInterface {
 			$data['price']           = $price_html ? html_entity_decode( wp_strip_all_tags( $price_html ), ENT_QUOTES, 'UTF-8' ) : '';
 			$data['sku']             = $product->get_sku();
 			$data['stock_status']    = $product->get_stock_status();
-			$data['add_to_cart_url'] = $product->add_to_cart_url();
+			$data['add_to_cart_url'] = add_query_arg( 'add-to-cart', $product->get_id(), get_permalink( $this->post ) );
 		}
 
 		// Product categories.
@@ -78,6 +79,13 @@ final class ProductRenderer implements RendererInterface {
 	 * @return string
 	 */
 	public function body(): string {
+		// Custom markdown overrides auto-generated content.
+		$custom_md = Options::get_post_meta( $this->post->ID, 'markdown_content' );
+		if ( ! empty( $custom_md ) ) {
+			/** This filter is documented in includes/Markdown/PostRenderer.php */
+			return apply_filters( 'lw_seo_markdown_body', $custom_md, $this->post );
+		}
+
 		$product = wc_get_product( $this->post->ID );
 		$body    = '# ' . get_the_title( $this->post ) . "\n\n";
 
@@ -99,8 +107,8 @@ final class ProductRenderer implements RendererInterface {
 		if ( $product ) {
 			$body .= $this->render_attributes( $product );
 
-			// Add to cart link.
-			$cart_url = $product->add_to_cart_url();
+			// Add to cart link (using permalink, not current URL which may contain /md/).
+			$cart_url = add_query_arg( 'add-to-cart', $product->get_id(), get_permalink( $this->post ) );
 			if ( $product->is_purchasable() && $product->is_in_stock() ) {
 				$body .= '**[' . $product->add_to_cart_text() . '](' . $cart_url . ")**\n\n";
 			}

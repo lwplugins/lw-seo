@@ -3,7 +3,7 @@ Contributors: lwplugins
 Tags: seo, sitemap, schema, opengraph, breadcrumbs
 Requires at least: 6.0
 Tested up to: 6.7
-Stable tag: 1.3.6
+Stable tag: 1.3.7
 Requires PHP: 8.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -133,6 +133,16 @@ Your sitemap is available at `yoursite.com/sitemap.xml`
 6. Settings page - Advanced tab
 
 == Changelog ==
+
+= 1.3.7 =
+* New: Full SEO settings for taxonomy archives (title, description, noindex, social, AI signals)
+* New: Custom markdown content field for posts, pages, products, and taxonomy terms
+* New: Markdown endpoint support for all custom taxonomies (product_cat, product_tag, etc.)
+* New: Per-term Content Signals override (ai-train, ai-input, search)
+* New: Per-term social meta (OG title, OG description, OG image)
+* New: Options::get_term_meta() / set_term_meta() for term meta management
+* Fix: Markdown endpoint /md URL now works for WooCommerce product categories and custom taxonomies
+* Fix: Product add-to-cart URL no longer contains /md/ path in markdown output
 
 = 1.3.6 =
 * Fix: Add X-Robots-Tag: noindex to markdown endpoint responses to prevent search indexing

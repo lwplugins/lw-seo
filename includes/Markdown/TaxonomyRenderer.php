@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace LightweightPlugins\SEO\Markdown;
 
 use LightweightPlugins\SEO\Helpers\HtmlToMarkdown;
+use LightweightPlugins\SEO\Options;
 
 /**
  * Renders taxonomy term content as markdown with YAML frontmatter.
@@ -63,6 +64,13 @@ final class TaxonomyRenderer implements RendererInterface {
 	 * @return string
 	 */
 	public function body(): string {
+		// Custom markdown overrides auto-generated content.
+		$custom_md = Options::get_term_meta( $this->term->term_id, 'markdown_content' );
+		if ( ! empty( $custom_md ) ) {
+			/** This filter is documented in includes/Markdown/PostRenderer.php */
+			return apply_filters( 'lw_seo_markdown_body', $custom_md, $this->term );
+		}
+
 		$body = '# ' . $this->term->name . "\n\n";
 
 		// Term description.

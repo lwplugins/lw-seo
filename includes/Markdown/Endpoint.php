@@ -31,9 +31,9 @@ final class Endpoint {
 	 * @return void
 	 */
 	public function add_rewrite_rules(): void {
-		$mask = EP_PERMALINK | EP_PAGES | EP_CATEGORIES | EP_TAGS;
-		add_rewrite_endpoint( 'md', $mask );
-		add_rewrite_endpoint( 'markdown', $mask );
+		// EP_ALL covers posts, pages, categories, tags, and custom taxonomies (product_cat, etc.).
+		add_rewrite_endpoint( 'md', EP_ALL );
+		add_rewrite_endpoint( 'markdown', EP_ALL );
 	}
 
 	/**
@@ -100,9 +100,15 @@ final class Endpoint {
 	 * @return bool
 	 */
 	private function is_markdown_request(): bool {
-		// Endpoint: /hello-world/md/ or /hello-world/markdown/.
+		// Endpoint query var: /hello-world/md/ (set by add_rewrite_endpoint).
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only query var check.
 		if ( isset( $GLOBALS['wp_query']->query_vars['md'] ) || isset( $GLOBALS['wp_query']->query_vars['markdown'] ) ) {
+			return true;
+		}
+
+		// URL suffix detection for taxonomy archives where endpoint rewrite may not work.
+		$path = trim( wp_parse_url( sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ?? '' ) ), PHP_URL_PATH ) ?? '', '/' );
+		if ( str_ends_with( $path, '/md' ) || str_ends_with( $path, '/markdown' ) ) {
 			return true;
 		}
 
@@ -156,6 +162,78 @@ final class Endpoint {
 
 		if ( $object instanceof \WP_Term ) {
 			return $object;
+		}
+
+		// Fallback: resolve from URL path when endpoint rewrite doesn't set the queried object.
+		return $this->resolve_from_url();
+	}
+
+	/**
+	 * Try to resolve a WP_Post or WP_Term from the current URL path.
+	 *
+	 * Strips the /md or /markdown suffix and queries WordPress for the base URL.
+	 *
+	 * @return \WP_Post|\WP_Term|null
+	 */
+	private function resolve_from_url(): \WP_Post|\WP_Term|null {
+		$path = trim( wp_parse_url( sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ?? '' ) ), PHP_URL_PATH ) ?? '', '/' );
+
+		// Strip /md or /markdown suffix.
+		if ( str_ends_with( $path, '/md' ) ) {
+			$path = substr( $path, 0, -3 );
+		} elseif ( str_ends_with( $path, '/markdown' ) ) {
+			$path = substr( $path, 0, -9 );
+		} else {
+			return null;
+		}
+
+		$base_url = home_url( '/' . $path . '/' );
+		$post_id  = url_to_postid( $base_url );
+
+		if ( $post_id ) {
+			$post = get_post( $post_id );
+			return $post instanceof \WP_Post ? $post : null;
+		}
+
+		// Try to resolve as taxonomy term.
+		return $this->resolve_term_from_path( $path );
+	}
+
+	/**
+	 * Try to resolve a taxonomy term from a URL path.
+	 *
+	 * @param string $path URL path without /md suffix.
+	 * @return \WP_Term|null
+	 */
+	private function resolve_term_from_path( string $path ): ?\WP_Term {
+		$taxonomies = get_taxonomies(
+			[
+				'public'  => true,
+				'rewrite' => true,
+			],
+			'objects'
+		);
+
+		foreach ( $taxonomies as $taxonomy ) {
+			$rewrite_slug = $taxonomy->rewrite['slug'] ?? $taxonomy->name;
+
+			if ( ! str_starts_with( $path, $rewrite_slug . '/' ) ) {
+				continue;
+			}
+
+			$term_slug = substr( $path, strlen( $rewrite_slug ) + 1 );
+			$term_slug = trim( $term_slug, '/' );
+
+			// Handle hierarchical slugs (parent/child).
+			if ( str_contains( $term_slug, '/' ) ) {
+				$parts     = explode( '/', $term_slug );
+				$term_slug = end( $parts );
+			}
+
+			$term = get_term_by( 'slug', $term_slug, $taxonomy->name );
+			if ( $term instanceof \WP_Term ) {
+				return $term;
+			}
 		}
 
 		return null;
@@ -235,9 +313,9 @@ final class Endpoint {
 	 * @return void
 	 */
 	public static function activate(): void {
-		$mask = EP_PERMALINK | EP_PAGES | EP_CATEGORIES | EP_TAGS;
-		add_rewrite_endpoint( 'md', $mask );
-		add_rewrite_endpoint( 'markdown', $mask );
+		// EP_ALL covers posts, pages, categories, tags, and custom taxonomies (product_cat, etc.).
+		add_rewrite_endpoint( 'md', EP_ALL );
+		add_rewrite_endpoint( 'markdown', EP_ALL );
 		flush_rewrite_rules();
 	}
 }

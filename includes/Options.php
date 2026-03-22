@@ -243,6 +243,36 @@ final class Options {
 	}
 
 	/**
+	 * Get term meta value.
+	 *
+	 * @param int    $term_id Term ID.
+	 * @param string $key     Meta key (without prefix).
+	 * @param mixed  $default Default value.
+	 * @return mixed
+	 */
+	public static function get_term_meta( int $term_id, string $key, mixed $default = '' ): mixed {
+		$value = get_term_meta( $term_id, self::META_PREFIX . $key, true );
+
+		return '' !== $value ? $value : $default;
+	}
+
+	/**
+	 * Set term meta value.
+	 *
+	 * @param int    $term_id Term ID.
+	 * @param string $key     Meta key (without prefix).
+	 * @param mixed  $value   Value to save.
+	 * @return bool
+	 */
+	public static function set_term_meta( int $term_id, string $key, mixed $value ): bool {
+		if ( '' === $value || null === $value ) {
+			return delete_term_meta( $term_id, self::META_PREFIX . $key );
+		}
+
+		return (bool) update_term_meta( $term_id, self::META_PREFIX . $key, $value );
+	}
+
+	/**
 	 * Get available separators.
 	 *
 	 * @return array<string, string>

@@ -38,16 +38,26 @@ final class ContentSignals {
 			'search'   => Options::get( 'content_signals_search' ) ? 'yes' : 'no',
 		];
 
+		$meta_keys = [
+			'ai-train' => 'ai_train',
+			'ai-input' => 'ai_input',
+			'search'   => 'search',
+		];
+
 		// Per-post override.
 		if ( $object instanceof \WP_Post ) {
-			$meta_keys = [
-				'ai-train' => 'ai_train',
-				'ai-input' => 'ai_input',
-				'search'   => 'search',
-			];
-
 			foreach ( $meta_keys as $signal_key => $meta_key ) {
 				$meta_value = Options::get_post_meta( $object->ID, $meta_key );
+				if ( '' !== $meta_value && 'default' !== $meta_value ) {
+					$signals[ $signal_key ] = $meta_value;
+				}
+			}
+		}
+
+		// Per-term override.
+		if ( $object instanceof \WP_Term ) {
+			foreach ( $meta_keys as $signal_key => $meta_key ) {
+				$meta_value = Options::get_term_meta( $object->term_id, $meta_key );
 				if ( '' !== $meta_value && 'default' !== $meta_value ) {
 					$signals[ $signal_key ] = $meta_value;
 				}
