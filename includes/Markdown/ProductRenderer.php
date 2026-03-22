@@ -50,7 +50,7 @@ final class ProductRenderer implements RendererInterface {
 
 		if ( $product ) {
 			$price_html              = $product->get_price_html();
-			$data['price']           = $price_html ? wp_strip_all_tags( $price_html ) : '';
+			$data['price']           = $price_html ? html_entity_decode( wp_strip_all_tags( $price_html ), ENT_QUOTES, 'UTF-8' ) : '';
 			$data['sku']             = $product->get_sku();
 			$data['stock_status']    = $product->get_stock_status();
 			$data['add_to_cart_url'] = $product->add_to_cart_url();
