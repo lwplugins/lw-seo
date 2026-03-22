@@ -220,6 +220,7 @@ final class Endpoint {
 		$token_count = (int) ( mb_strlen( $output ) / 4 );
 
 		header( 'Content-Type: text/markdown; charset=UTF-8' );
+		header( 'X-Robots-Tag: noindex' );
 		header( 'X-Content-Signals: ' . ContentSignals::format_header( $signals ) );
 		header( 'X-Markdown-Tokens: ' . $token_count );
 
