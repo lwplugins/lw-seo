@@ -49,10 +49,11 @@ final class ProductRenderer implements RendererInterface {
 		];
 
 		if ( $product ) {
-			$price_html           = $product->get_price_html();
-			$data['price']        = $price_html ? wp_strip_all_tags( $price_html ) : '';
-			$data['sku']          = $product->get_sku();
-			$data['stock_status'] = $product->get_stock_status();
+			$price_html              = $product->get_price_html();
+			$data['price']           = $price_html ? wp_strip_all_tags( $price_html ) : '';
+			$data['sku']             = $product->get_sku();
+			$data['stock_status']    = $product->get_stock_status();
+			$data['add_to_cart_url'] = $product->add_to_cart_url();
 		}
 
 		// Product categories.
@@ -97,6 +98,12 @@ final class ProductRenderer implements RendererInterface {
 		// Attributes table.
 		if ( $product ) {
 			$body .= $this->render_attributes( $product );
+
+			// Add to cart link.
+			$cart_url = $product->add_to_cart_url();
+			if ( $product->is_purchasable() && $product->is_in_stock() ) {
+				$body .= '**[' . $product->add_to_cart_text() . '](' . $cart_url . ")**\n\n";
+			}
 		}
 
 		/** This filter is documented in includes/Markdown/PostRenderer.php */
