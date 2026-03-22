@@ -3,7 +3,7 @@
  * Plugin Name:       LW SEO
  * Plugin URI:        https://github.com/lwplugins/lw-seo
  * Description:       Lightweight SEO — minimal footprint, maximum impact.
- * Version:           1.3.3
+ * Version:           1.3.4
  * Requires at least: 6.0
  * Requires PHP:      8.1
  * Author:            LW Plugins
@@ -26,15 +26,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Plugin constants.
-define( 'LW_SEO_VERSION', '1.3.3' );
+define( 'LW_SEO_VERSION', '1.3.4' );
 define( 'LW_SEO_FILE', __FILE__ );
 define( 'LW_SEO_PATH', plugin_dir_path( __FILE__ ) );
 define( 'LW_SEO_URL', plugin_dir_url( __FILE__ ) );
 
-// Autoloader (required for PSR-4 class loading).
+// Autoloader: local vendor (standalone/ZIP) or root Composer (dependency install).
 if ( file_exists( LW_SEO_PATH . 'vendor/autoload.php' ) ) {
 	require_once LW_SEO_PATH . 'vendor/autoload.php';
-} else {
+} elseif ( ! class_exists( Plugin::class ) ) {
 	add_action(
 		'admin_notices',
 		static function (): void {
