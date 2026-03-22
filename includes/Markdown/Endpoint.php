@@ -31,7 +31,9 @@ final class Endpoint {
 	 * @return void
 	 */
 	public function add_rewrite_rules(): void {
-		add_rewrite_endpoint( 'md', EP_PERMALINK | EP_PAGES | EP_CATEGORIES | EP_TAGS );
+		$mask = EP_PERMALINK | EP_PAGES | EP_CATEGORIES | EP_TAGS;
+		add_rewrite_endpoint( 'md', $mask );
+		add_rewrite_endpoint( 'markdown', $mask );
 	}
 
 	/**
@@ -98,9 +100,9 @@ final class Endpoint {
 	 * @return bool
 	 */
 	private function is_markdown_request(): bool {
-		// Endpoint: /hello-world/md/ (add_rewrite_endpoint sets 'md' query var).
+		// Endpoint: /hello-world/md/ or /hello-world/markdown/.
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only query var check.
-		if ( isset( $GLOBALS['wp_query']->query_vars['md'] ) ) {
+		if ( isset( $GLOBALS['wp_query']->query_vars['md'] ) || isset( $GLOBALS['wp_query']->query_vars['markdown'] ) ) {
 			return true;
 		}
 
@@ -232,7 +234,9 @@ final class Endpoint {
 	 * @return void
 	 */
 	public static function activate(): void {
-		add_rewrite_endpoint( 'md', EP_PERMALINK | EP_PAGES | EP_CATEGORIES | EP_TAGS );
+		$mask = EP_PERMALINK | EP_PAGES | EP_CATEGORIES | EP_TAGS;
+		add_rewrite_endpoint( 'md', $mask );
+		add_rewrite_endpoint( 'markdown', $mask );
 		flush_rewrite_rules();
 	}
 }
