@@ -3,7 +3,7 @@ Contributors: lwplugins
 Tags: seo, sitemap, schema, opengraph, breadcrumbs
 Requires at least: 6.0
 Tested up to: 6.7
-Stable tag: 1.3.2
+Stable tag: 1.3.3
 Requires PHP: 8.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -133,6 +133,9 @@ Your sitemap is available at `yoursite.com/sitemap.xml`
 6. Settings page - Advanced tab
 
 == Changelog ==
+
+= 1.3.3 =
+* Fix: HTML entities in product price markdown output (e.g. &amp;nbsp; &amp;#70;)
 
 = 1.3.2 =
 * New: Add to cart link in WooCommerce product markdown output
