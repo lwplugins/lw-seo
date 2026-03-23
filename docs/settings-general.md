@@ -6,7 +6,7 @@ Navigate to **LW Plugins → SEO → General** to configure basic SEO settings.
 
 Choose the character used between title parts. Default is `|`.
 
-Available options: `|`, `-`, `–`, `—`, `•`, `»`, `/`
+Available options: `|`, `-`, `>`, `»`, `·`, `—`, `/`
 
 Example: "My Post Title | Site Name"
 

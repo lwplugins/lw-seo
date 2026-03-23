@@ -20,8 +20,7 @@ Use these variables in title templates to dynamically generate page titles.
 | `%%currentmonth%%` | Current month name | January |
 | `%%page%%` | Page number for paginated content | Page 2 |
 | `%%pagetotal%%` | Total pages for paginated content | 5 |
-| `%%pt_single%%` | Post type singular name | Post |
-| `%%pt_plural%%` | Post type plural name | Posts |
+| `%%currentday%%` | Current day of month | 15 |
 
 ## Usage Examples
 

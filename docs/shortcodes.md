@@ -13,7 +13,7 @@ Display a breadcrumb navigation trail.
 | Attribute | Default | Description |
 |-----------|---------|-------------|
 | separator | `»` | Character between breadcrumb items |
-| home_text | `Home` | Text for home link |
+| home | `Home` | Text for home link |
 | schema | `true` | Include Schema.org markup |
 
 **Examples:**
@@ -21,7 +21,7 @@ Display a breadcrumb navigation trail.
 ```
 [lw_breadcrumbs]
 
-[lw_breadcrumbs separator=" / " home_text="Start"]
+[lw_breadcrumbs separator=" / " home="Start"]
 
 [lw_breadcrumbs schema="false"]
 ```

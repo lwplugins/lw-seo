@@ -177,7 +177,7 @@ $option_key = Options::OPTION_NAME; // 'lw_seo_options'
 
 ```php
 // General
-'title_separator'     // string: |, -, –, —, •, », /
+'title_separator'     // string: |, -, >, », ·, —, /
 'title_home'          // string: Homepage title template
 'title_post'          // string: Post title template
 'title_page'          // string: Page title template
@@ -188,7 +188,7 @@ $option_key = Options::OPTION_NAME; // 'lw_seo_options'
 'og_enabled'          // bool: Enable Open Graph
 'twitter_enabled'     // bool: Enable Twitter Cards
 'twitter_card_type'   // string: summary, summary_large_image
-'twitter_username'    // string: Twitter handle
+'social_twitter'      // string: Twitter handle
 'default_social_image'// int: Attachment ID
 
 // Sitemap
@@ -248,7 +248,7 @@ $custom_title = get_post_meta( $post_id, '_lw_seo_title', true );
  *
  * @param array $args {
  *     @type string $separator  Separator between items. Default '»'.
- *     @type string $home_text  Home link text. Default 'Home'.
+ *     @type string $home       Home link text. Default 'Home'.
  *     @type bool   $schema     Include schema markup. Default true.
  *     @type bool   $echo       Echo or return. Default true.
  * }
@@ -259,7 +259,7 @@ lw_seo_breadcrumbs( $args = [] );
 // Example
 lw_seo_breadcrumbs( [
     'separator' => ' / ',
-    'home_text' => 'Start',
+    'home'      => 'Start',
     'schema'    => true,
 ] );
 ```
