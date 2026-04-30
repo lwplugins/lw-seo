@@ -44,6 +44,7 @@ final class SeoAbilities {
 				'permission_callback' => $permissions->callback( 'can_edit_posts' ),
 				'input_schema'        => [
 					'type'       => 'object',
+					'default'    => [],
 					'properties' => [
 						'post_id' => [
 							'type'        => 'integer',
@@ -121,6 +122,7 @@ final class SeoAbilities {
 				'permission_callback' => $permissions->callback( 'can_edit_posts' ),
 				'input_schema'        => [
 					'type'       => 'object',
+					'default'    => [],
 					'properties' => [
 						'post_id' => [ 'type' => 'integer' ],
 						'term_id' => [ 'type' => 'integer' ],
@@ -155,6 +157,7 @@ final class SeoAbilities {
 				'permission_callback' => $permissions->callback( 'can_edit_posts' ),
 				'input_schema'        => [
 					'type'       => 'object',
+					'default'    => [],
 					'properties' => [
 						'post_id' => [ 'type' => 'integer' ],
 						'term_id' => [ 'type' => 'integer' ],

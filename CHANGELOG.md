@@ -1,5 +1,10 @@
 # Changelog
 
+## [1.3.9] - 2026-04-30
+
+### Changed
+- Added missing `'default' => []` to top-level `input_schema` of `lw-seo/get-meta`, `lw-seo/get-content-signals`, and `lw-seo/get-markdown` so they can be invoked without arguments via the Abilities API
+
 ## [1.3.8] - 2026-03-22
 
 ### Added
