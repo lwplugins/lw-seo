@@ -3,7 +3,7 @@ Contributors: lwplugins
 Tags: seo, sitemap, schema, opengraph, breadcrumbs
 Requires at least: 6.0
 Tested up to: 6.7
-Stable tag: 1.3.9
+Stable tag: 1.3.10
 Requires PHP: 8.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -133,6 +133,9 @@ Your sitemap is available at `yoursite.com/sitemap.xml`
 6. Settings page - Advanced tab
 
 == Changelog ==
+
+= 1.3.10 =
+* Fix: Homepage Title setting (`title_home`) was ignored — now applied to the document `<title>` and Open Graph / Twitter titles on the front page and blog page
 
 = 1.3.9 =
 * Change: Added missing `'default' => []` to top-level input_schemas of `lw-seo/get-meta`, `lw-seo/get-content-signals`, and `lw-seo/get-markdown` so they can be invoked without arguments

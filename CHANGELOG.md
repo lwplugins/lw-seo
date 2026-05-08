@@ -1,5 +1,10 @@
 # Changelog
 
+## [1.3.10] - 2026-05-08
+
+### Fixed
+- Homepage Title setting (`title_home`) was ignored — now applied to the document `<title>` and Open Graph / Twitter titles on the front page and blog page
+
 ## [1.3.9] - 2026-04-30
 
 ### Changed

@@ -148,7 +148,13 @@ final class Plugin {
 	 * @return array<string, string>
 	 */
 	public function filter_title( array $title_parts ): array {
-		if ( is_singular() ) {
+		if ( is_front_page() || is_home() ) {
+			$template = Options::get( 'title_home' );
+			if ( $template ) {
+				$title_parts['title'] = ReplaceVars::replace( $template );
+				unset( $title_parts['site'], $title_parts['tagline'] );
+			}
+		} elseif ( is_singular() ) {
 			$post = get_queried_object();
 			if ( $post instanceof \WP_Post ) {
 				$custom_title = Options::get_post_meta( $post->ID, 'title' );
@@ -313,10 +319,11 @@ final class Plugin {
 	 * @return void
 	 */
 	private function output_home_meta(): void {
-		$title       = get_bloginfo( 'name' );
-		$custom_desc = Options::get( 'desc_home' );
-		$description = ! empty( $custom_desc ) ? $custom_desc : get_bloginfo( 'description' );
-		$url         = home_url( '/' );
+		$title_template = Options::get( 'title_home' );
+		$title          = ! empty( $title_template ) ? ReplaceVars::replace( $title_template ) : get_bloginfo( 'name' );
+		$custom_desc    = Options::get( 'desc_home' );
+		$description    = ! empty( $custom_desc ) ? $custom_desc : get_bloginfo( 'description' );
+		$url            = home_url( '/' );
 
 		$this->render_meta_tags( $title, $description, $url, $title, $description, '', 'website' );
 	}
