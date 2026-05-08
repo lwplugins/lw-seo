@@ -3,7 +3,7 @@ Contributors: lwplugins
 Tags: seo, sitemap, schema, opengraph, breadcrumbs
 Requires at least: 6.0
 Tested up to: 6.7
-Stable tag: 1.3.10
+Stable tag: 1.3.11
 Requires PHP: 8.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -133,6 +133,10 @@ Your sitemap is available at `yoursite.com/sitemap.xml`
 6. Settings page - Advanced tab
 
 == Changelog ==
+
+= 1.3.11 =
+* Fix: Open Graph and Twitter title on the homepage now uses the Homepage Title setting when a static page is configured as the front page (previously the page title was used)
+* Fix: Default Social Image is now used as a fallback for OG/Twitter on the homepage, taxonomy archives, and author archives
 
 = 1.3.10 =
 * Fix: Homepage Title setting (`title_home`) was ignored — now applied to the document `<title>` and Open Graph / Twitter titles on the front page and blog page

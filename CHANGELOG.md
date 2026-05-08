@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.3.11] - 2026-05-08
+
+### Fixed
+- Open Graph and Twitter title on the homepage now uses the Homepage Title setting when a static page is configured as the front page (previously `output_meta_tags()` checked `is_singular()` before `is_front_page()`, so the singular meta path took over and rendered the page title instead)
+- Default Social Image is now used as a fallback for Open Graph / Twitter on the homepage, taxonomy archives, and author archives (previously only applied to single posts)
+
 ## [1.3.10] - 2026-05-08
 
 ### Fixed

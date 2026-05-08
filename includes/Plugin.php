@@ -235,10 +235,10 @@ final class Plugin {
 			return;
 		}
 
-		if ( is_singular() ) {
-			$this->output_singular_meta();
-		} elseif ( is_front_page() || is_home() ) {
+		if ( is_front_page() || is_home() ) {
 			$this->output_home_meta();
+		} elseif ( is_singular() ) {
+			$this->output_singular_meta();
 		} elseif ( is_category() || is_tag() || is_tax() ) {
 			$this->output_taxonomy_meta();
 		} elseif ( is_author() ) {
@@ -324,8 +324,9 @@ final class Plugin {
 		$custom_desc    = Options::get( 'desc_home' );
 		$description    = ! empty( $custom_desc ) ? $custom_desc : get_bloginfo( 'description' );
 		$url            = home_url( '/' );
+		$og_image       = (string) Options::get( 'default_og_image' );
 
-		$this->render_meta_tags( $title, $description, $url, $title, $description, '', 'website' );
+		$this->render_meta_tags( $title, $description, $url, $title, $description, $og_image, 'website' );
 	}
 
 	/**
@@ -367,6 +368,9 @@ final class Plugin {
 		$og_desc  = Options::get_term_meta( $term->term_id, 'og_description' );
 		$og_desc  = ! empty( $og_desc ) ? $og_desc : $description;
 		$og_image = Options::get_term_meta( $term->term_id, 'og_image' );
+		if ( empty( $og_image ) ) {
+			$og_image = (string) Options::get( 'default_og_image' );
+		}
 
 		if ( is_string( $url ) ) {
 			$this->render_meta_tags( $title, $description, $url, $og_title, $og_desc, $og_image, 'website' );
@@ -393,8 +397,9 @@ final class Plugin {
 		$title       = $author->display_name;
 		$description = get_the_author_meta( 'description', $author->ID );
 		$url         = get_author_posts_url( $author->ID );
+		$og_image    = (string) Options::get( 'default_og_image' );
 
-		$this->render_meta_tags( $title, $description, $url, $title, $description, '', 'profile' );
+		$this->render_meta_tags( $title, $description, $url, $title, $description, $og_image, 'profile' );
 	}
 
 	/**
