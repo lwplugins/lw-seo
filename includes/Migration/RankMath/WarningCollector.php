@@ -54,24 +54,28 @@ final class WarningCollector {
 			'wc_remove_product_base'          => 'Remove product base (/product/)',
 		];
 
-		$active = [];
+		$lw_options       = get_option( 'lw_seo_options', [] );
+		$active_unmatched = [];
+
 		foreach ( $flags as $key => $label ) {
-			if ( isset( $general[ $key ] ) && 'on' === $general[ $key ] ) {
-				$active[] = $label;
+			$rm_on = isset( $general[ $key ] ) && 'on' === $general[ $key ];
+			$lw_on = is_array( $lw_options ) && ! empty( $lw_options[ $key ] );
+			if ( $rm_on && ! $lw_on ) {
+				$active_unmatched[] = $label;
 			}
 		}
 
-		if ( empty( $active ) ) {
+		if ( empty( $active_unmatched ) ) {
 			return null;
 		}
 
 		return [
 			'code'     => 'woo_permalink',
-			'severity' => 'error',
+			'severity' => 'warning',
 			'message'  => sprintf(
-				/* translators: %s: comma-separated list of active RankMath WooCommerce permalink features. */
-				__( 'RankMath has active WooCommerce permalink rewrites (%s). LW SEO does not implement these — disabling RankMath will return 404 on the affected URLs. Prepare a redirect map or revert these settings before continuing.', 'lw-seo' ),
-				implode( ', ', $active )
+				/* translators: %s: comma-separated list of RankMath WooCommerce permalink features without an LW SEO equivalent enabled. */
+				__( 'RankMath has active WooCommerce permalink rewrites that LW SEO is not (yet) mirroring (%s). The migrator will copy these flags into LW SEO; running the migration applies the equivalent slug-only rules. Categories whose root slug collides with a page/reserved slug are auto-skipped to avoid 404s.', 'lw-seo' ),
+				implode( ', ', $active_unmatched )
 			),
 		];
 	}

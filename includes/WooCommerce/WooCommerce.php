@@ -61,6 +61,7 @@ final class WooCommerce {
 	private function init_components(): void {
 		new OpenGraph();
 		new Schema();
+		new PermalinkWatcher();
 	}
 
 	/**

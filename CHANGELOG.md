@@ -1,5 +1,20 @@
 # Changelog
 
+## [1.3.13] - 2026-05-21
+
+### Added
+- WooCommerce slug-only permalinks (RankMath feature parity). Three new options on the WC settings tab:
+  - `wc_remove_category_base` — strips `/product-category/`
+  - `wc_remove_category_parent_slugs` — exposes leaf-only category URLs
+  - `wc_remove_product_base` — strips `/product/`
+- `SlugCollisionDetector` — checks each category's root slug against published root-level pages, WP reserved slugs, taxonomy / public-CPT rewrite bases, and WooCommerce special pages (shop / cart / checkout / my-account / terms). Colliding categories are silently skipped and listed in a notice on the WC tab. RankMath does not perform this check.
+- `PermalinkRuleBuilder` — emits 5 rewrite rules per non-skipped category (root, embed, two feed variants, paginated), plus 2 product rules when `%product_cat%` is in the product permalink structure and `wc_remove_product_base` is on.
+- `PermalinkWatcher` — orchestrates `rewrite_rules_array`, `term_link`, and `post_type_link` filters; soft-flushes on category CRUD, page CRUD (so a newly created page can reclaim its slug), and option change.
+- RankMath migrator auto-copies `wc_remove_category_base`, `wc_remove_category_parent_slugs`, `wc_remove_product_base` from `rank-math-options-general` and flushes rewrites at the end of the migration run.
+
+### Changed
+- Migration "Woo permalink" warning is now severity `warning` (was `error`) and only fires when the LW SEO parity flag is OFF for a RankMath flag that is ON. Once the migrator copies the flag the warning clears.
+
 ## [1.3.12] - 2026-05-21
 
 ### Added

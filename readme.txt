@@ -3,7 +3,7 @@ Contributors: lwplugins
 Tags: seo, sitemap, schema, opengraph, breadcrumbs
 Requires at least: 6.0
 Tested up to: 6.7
-Stable tag: 1.3.12
+Stable tag: 1.3.13
 Requires PHP: 8.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -133,6 +133,13 @@ Your sitemap is available at `yoursite.com/sitemap.xml`
 6. Settings page - Advanced tab
 
 == Changelog ==
+
+= 1.3.13 =
+* New: WooCommerce slug-only permalinks (RankMath parity) — three options on the WooCommerce tab: remove `/product-category/`, remove parent category slugs, remove `/product/`
+* New: Slug collision detector — categories whose root slug would shadow a page, reserved WordPress slug, taxonomy/CPT base, or WooCommerce special page are auto-skipped and reported on the WC settings tab (RankMath has no equivalent check)
+* New: RankMath migrator now auto-copies `wc_remove_category_base`, `wc_remove_category_parent_slugs`, `wc_remove_product_base` from `rank-math-options-general` into the new LW SEO options
+* Change: The migration "Woo permalink" warning becomes a `warning` instead of an `error` and only fires when LW SEO hasn't yet enabled the corresponding parity flag — once the migrator copies the flag, the warning clears
+* Change: Rewrite rules are soft-flushed and the slug-blocker cache invalidated on permalink option change, page CRUD, and product-category CRUD
 
 = 1.3.12 =
 * New: RankMath migrator now imports primary terms (`rank_math_primary_category`, `rank_math_primary_product_cat`, `rank_math_primary_product_brand`)

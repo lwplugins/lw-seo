@@ -9,6 +9,8 @@ declare(strict_types=1);
 
 namespace LightweightPlugins\SEO\Migration\RankMath;
 
+use LightweightPlugins\SEO\WooCommerce\SlugCollisionDetector;
+
 /**
  * Wires together all the per-area RankMath sub-migrators and surfaces
  * detection counts + warnings for the migration UI.
@@ -44,6 +46,11 @@ final class Migrator {
 		$primary_terms = ( new PrimaryTermMigrator( $this->dry_run ) )->migrate();
 		$redirects     = ( new RedirectsMigrator( $this->dry_run ) )->migrate();
 		$warnings      = ( new WarningCollector() )->collect();
+
+		if ( ! $this->dry_run ) {
+			SlugCollisionDetector::invalidate();
+			flush_rewrite_rules( false );
+		}
 
 		return [
 			'dry_run'          => $this->dry_run,

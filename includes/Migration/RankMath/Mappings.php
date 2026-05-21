@@ -112,15 +112,18 @@ final class Mappings {
 	 * RankMath general options → LW SEO options mapping.
 	 */
 	public const GENERAL_OPTIONS_MAP = [
-		'knowledgegraph_type'  => 'knowledge_type',
-		'knowledgegraph_name'  => 'knowledge_name',
-		'knowledgegraph_logo'  => 'knowledge_logo',
-		'social_url_facebook'  => 'social_facebook',
-		'twitter_author_names' => 'social_twitter',
-		'social_url_instagram' => 'social_instagram',
-		'social_url_linkedin'  => 'social_linkedin',
-		'social_url_youtube'   => 'social_youtube',
-		'breadcrumbs'          => 'breadcrumbs_enabled',
+		'knowledgegraph_type'             => 'knowledge_type',
+		'knowledgegraph_name'             => 'knowledge_name',
+		'knowledgegraph_logo'             => 'knowledge_logo',
+		'social_url_facebook'             => 'social_facebook',
+		'twitter_author_names'            => 'social_twitter',
+		'social_url_instagram'            => 'social_instagram',
+		'social_url_linkedin'             => 'social_linkedin',
+		'social_url_youtube'              => 'social_youtube',
+		'breadcrumbs'                     => 'breadcrumbs_enabled',
+		'wc_remove_category_base'         => 'wc_remove_category_base',
+		'wc_remove_category_parent_slugs' => 'wc_remove_category_parent_slugs',
+		'wc_remove_product_base'          => 'wc_remove_product_base',
 	];
 
 	/**

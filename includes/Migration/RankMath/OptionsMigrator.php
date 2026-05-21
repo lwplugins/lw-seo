@@ -149,7 +149,13 @@ final class OptionsMigrator {
 	 * @return mixed
 	 */
 	private function convert_general_value( string $rm_key, mixed $value ): mixed {
-		if ( 'breadcrumbs' === $rm_key ) {
+		$bool_keys = [
+			'breadcrumbs',
+			'wc_remove_category_base',
+			'wc_remove_category_parent_slugs',
+			'wc_remove_product_base',
+		];
+		if ( in_array( $rm_key, $bool_keys, true ) ) {
 			return ( 'on' === $value || true === $value || '1' === $value );
 		}
 

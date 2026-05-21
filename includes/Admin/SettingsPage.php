@@ -22,6 +22,7 @@ use LightweightPlugins\SEO\Admin\Settings\TabRedirects;
 use LightweightPlugins\SEO\Admin\Settings\Tab404;
 use LightweightPlugins\SEO\Admin\Settings\TabMigration;
 use LightweightPlugins\SEO\WooCommerce\WooCommerce;
+use LightweightPlugins\SEO\WooCommerce\SlugCollisionDetector;
 use LightweightPlugins\SEO\Options;
 
 /**
@@ -55,6 +56,28 @@ final class SettingsPage {
 		add_action( 'admin_menu', [ $this, 'add_menu_page' ] );
 		add_action( 'admin_init', [ $this, 'register_settings' ] );
 		add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_assets' ] );
+		add_action( 'update_option_' . Options::OPTION_NAME, [ $this, 'flush_on_permalink_change' ], 10, 2 );
+	}
+
+	/**
+	 * Soft-flush rewrites and clear the slug-blocker cache when any of the
+	 * three WooCommerce permalink flags changed.
+	 *
+	 * @param mixed $old_value Previous option value.
+	 * @param mixed $new_value New option value.
+	 * @return void
+	 */
+	public function flush_on_permalink_change( $old_value, $new_value ): void {
+		$keys = [ 'wc_remove_category_base', 'wc_remove_category_parent_slugs', 'wc_remove_product_base' ];
+		foreach ( $keys as $key ) {
+			$old = is_array( $old_value ) ? ! empty( $old_value[ $key ] ) : false;
+			$new = is_array( $new_value ) ? ! empty( $new_value[ $key ] ) : false;
+			if ( $old !== $new ) {
+				SlugCollisionDetector::invalidate();
+				flush_rewrite_rules( false );
+				return;
+			}
+		}
 	}
 
 	/**

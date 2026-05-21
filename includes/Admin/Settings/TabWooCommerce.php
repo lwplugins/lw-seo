@@ -9,6 +9,8 @@ declare(strict_types=1);
 
 namespace LightweightPlugins\SEO\Admin\Settings;
 
+use LightweightPlugins\SEO\WooCommerce\PermalinkWatcher;
+
 /**
  * Handles the WooCommerce settings tab.
  */
@@ -58,8 +60,78 @@ final class TabWooCommerce implements TabInterface {
 
 		<?php
 		$this->render_general_section();
+		$this->render_permalink_section();
 		$this->render_schema_section();
 		$this->render_sitemap_section();
+	}
+
+	/**
+	 * Render the slug-only permalink section.
+	 *
+	 * @return void
+	 */
+	private function render_permalink_section(): void {
+		?>
+		<h3><?php esc_html_e( 'Permalinks', 'lw-seo' ); ?></h3>
+		<p class="description">
+			<?php esc_html_e( 'Slug-only WooCommerce permalinks (RankMath-compatible). Categories whose root slug collides with a page, reserved slug, or another taxonomy/CPT base are automatically skipped to avoid breaking existing URLs.', 'lw-seo' ); ?>
+		</p>
+		<table class="form-table">
+			<tr>
+				<th scope="row"><?php esc_html_e( 'Category base', 'lw-seo' ); ?></th>
+				<td>
+					<?php
+					$this->render_checkbox_field(
+						[
+							'name'  => 'wc_remove_category_base',
+							'label' => __( 'Remove /product-category/ from product category URLs', 'lw-seo' ),
+						]
+					);
+					?>
+				</td>
+			</tr>
+			<tr>
+				<th scope="row"><?php esc_html_e( 'Parent slugs', 'lw-seo' ); ?></th>
+				<td>
+					<?php
+					$this->render_checkbox_field(
+						[
+							'name'  => 'wc_remove_category_parent_slugs',
+							'label' => __( 'Remove parent category slugs (expose leaf-only URLs)', 'lw-seo' ),
+						]
+					);
+					?>
+				</td>
+			</tr>
+			<tr>
+				<th scope="row"><?php esc_html_e( 'Product base', 'lw-seo' ); ?></th>
+				<td>
+					<?php
+					$this->render_checkbox_field(
+						[
+							'name'  => 'wc_remove_product_base',
+							'label' => __( 'Remove /product/ from product URLs', 'lw-seo' ),
+						]
+					);
+					?>
+				</td>
+			</tr>
+		</table>
+		<?php
+		$skipped = PermalinkWatcher::get_skipped();
+		if ( ! empty( $skipped ) ) :
+			?>
+			<div class="notice notice-warning inline" style="margin: 12px 0;">
+				<p>
+					<strong><?php esc_html_e( 'Skipped categories (slug collision)', 'lw-seo' ); ?>:</strong>
+					<?php echo esc_html( implode( ', ', $skipped ) ); ?>
+				</p>
+				<p class="description">
+					<?php esc_html_e( 'These category slugs already belong to a page, reserved WordPress slug, or another taxonomy/CPT base. They keep their default WooCommerce URL to avoid shadowing the existing content. Rename either the category or the conflicting slug to convert.', 'lw-seo' ); ?>
+				</p>
+			</div>
+			<?php
+		endif;
 	}
 
 	/**
