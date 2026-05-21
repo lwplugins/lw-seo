@@ -3,7 +3,7 @@ Contributors: lwplugins
 Tags: seo, sitemap, schema, opengraph, breadcrumbs
 Requires at least: 6.0
 Tested up to: 6.7
-Stable tag: 1.3.11
+Stable tag: 1.3.12
 Requires PHP: 8.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -133,6 +133,15 @@ Your sitemap is available at `yoursite.com/sitemap.xml`
 6. Settings page - Advanced tab
 
 == Changelog ==
+
+= 1.3.12 =
+* New: RankMath migrator now imports primary terms (`rank_math_primary_category`, `rank_math_primary_product_cat`, `rank_math_primary_product_brand`)
+* New: RankMath redirects DB table (`{prefix}rank_math_redirections`) is migrated to the LW SEO Redirects module, including exact/regex/contains/start/end comparison modes
+* New: Twitter card overrides (`rank_math_twitter_*`) and `rank_math_og_content_image` are migrated as OpenGraph fallbacks
+* New: Migration UI warns about active RankMath WooCommerce permalink rewrites (`wc_remove_category_base`, parent slugs, `wc_remove_product_base`) so users can prepare redirects before disabling RankMath
+* New: Migration UI reports `rank_math_schema_*` and other non-migratable keys with honest counts
+* Change: Migration result splits "skipped" into "already present" and "no data" so default robots arrays (`["index","follow"]`) no longer inflate the skipped count
+* Change: `MetaMigrator` refactored into `PostMetaMigrator`, `TermMetaMigrator`, `UserMetaMigrator`, `PrimaryTermMigrator`, `RedirectsMigrator`, `RobotsMigrator`, `WarningCollector` (atomic classes, easier to extend)
 
 = 1.3.11 =
 * Fix: Open Graph and Twitter title on the homepage now uses the Homepage Title setting when a static page is configured as the front page (previously the page title was used)

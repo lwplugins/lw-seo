@@ -11,19 +11,76 @@ namespace LightweightPlugins\SEO\Migration\RankMath;
 
 /**
  * Mapping constants for RankMath to LW SEO migration.
+ *
+ * Map iteration order matters: PostMetaMigrator/TermMetaMigrator copy from
+ * the first non-empty source whose target slot is still empty, so primary
+ * keys (rank_math_facebook_*) must precede fallbacks (rank_math_twitter_*).
  */
 final class Mappings {
 
 	/**
 	 * RankMath post meta key → LW SEO meta field name (without prefix).
+	 *
+	 * Twitter and og_content_image map to og_* targets because LW SEO renders
+	 * Twitter Cards from the OpenGraph values (see RestApi::get_twitter_*).
 	 */
 	public const POST_META_MAP = [
+		// Primary single-source mappings.
 		'rank_math_title'                => 'title',
 		'rank_math_description'          => 'description',
 		'rank_math_canonical_url'        => 'canonical',
 		'rank_math_facebook_title'       => 'og_title',
 		'rank_math_facebook_description' => 'og_description',
 		'rank_math_facebook_image'       => 'og_image',
+
+		// Fallbacks: only applied if the LW SEO target is still empty
+		// after the primary keys above were processed.
+		'rank_math_og_content_image'     => 'og_image',
+		'rank_math_twitter_title'        => 'og_title',
+		'rank_math_twitter_description'  => 'og_description',
+		'rank_math_twitter_image'        => 'og_image',
+	];
+
+	/**
+	 * Primary term map: RankMath meta key → LW SEO meta key (without prefix).
+	 *
+	 * RankMath stores the primary term ID per taxonomy. Target meta is
+	 * '_lw_seo_primary_{taxonomy}' — consumed by future Schema/breadcrumb code.
+	 */
+	public const PRIMARY_TERM_MAP = [
+		'rank_math_primary_category'      => 'primary_category',
+		'rank_math_primary_product_cat'   => 'primary_product_cat',
+		'rank_math_primary_product_brand' => 'primary_product_brand',
+	];
+
+	/**
+	 * RankMath meta keys that have no LW SEO equivalent.
+	 *
+	 * Counted and reported so users know data was inspected but not moved.
+	 * Internal/score/analytic keys are intentionally NOT listed — they are
+	 * vendor-specific runtime caches with no migration value.
+	 */
+	public const NON_MIGRATABLE_META = [
+		'rank_math_advanced_robots',
+		'rank_math_breadcrumb_title',
+		'rank_math_focus_keyword',
+		'rank_math_news_sitemap_robots',
+		'rank_math_pillar_content',
+		'rank_math_lock_modified_date',
+	];
+
+	/**
+	 * Comparison type → LW SEO redirect regex flag.
+	 *
+	 * Used by RedirectsMigrator to translate RankMath's source comparison
+	 * modes into LW SEO's regex/non-regex storage.
+	 */
+	public const REDIRECT_COMPARISON_MAP = [
+		'exact'    => false,
+		'regex'    => true,
+		'contains' => true,
+		'start'    => true,
+		'end'      => true,
 	];
 
 	/**

@@ -159,6 +159,33 @@
 	}
 
 	/**
+	 * Render a list of warnings as notices.
+	 *
+	 * @param {Array}       warnings  Warning entries: {code, severity, message}.
+	 * @param {HTMLElement} container Target container.
+	 */
+	function renderWarnings( warnings, container ) {
+		if ( ! Array.isArray( warnings ) || warnings.length === 0 ) {
+			return;
+		}
+		const heading       = document.createElement( 'h4' );
+		heading.textContent = lwSeoMigrationL10n.warnings;
+		container.appendChild( heading );
+
+		warnings.forEach(
+			function ( warning ) {
+				const severity = warning.severity === 'error' ? 'error' : ( warning.severity === 'warning' ? 'warning' : 'info' );
+				const div      = document.createElement( 'div' );
+				div.className  = 'notice notice-' + severity + ' inline';
+				const p        = document.createElement( 'p' );
+				p.textContent  = warning.message;
+				div.appendChild( p );
+				container.appendChild( div );
+			}
+		);
+	}
+
+	/**
 	 * Render detection results.
 	 *
 	 * @param {Object} data Detection data.
@@ -172,10 +199,12 @@
 		tbody.appendChild( createTableRow( lwSeoMigrationL10n.posts, data.post_count.toString() ) );
 		tbody.appendChild( createTableRow( lwSeoMigrationL10n.terms, data.term_count.toString() ) );
 		tbody.appendChild( createTableRow( lwSeoMigrationL10n.users, data.user_count.toString() ) );
+		tbody.appendChild( createTableRow( lwSeoMigrationL10n.redirects, ( data.redirects_count || 0 ).toString() ) );
 
 		table.appendChild( tbody );
 		clearElement( detectResults );
 		detectResults.appendChild( table );
+		renderWarnings( data.warnings, detectResults );
 	}
 
 	/**
@@ -191,13 +220,24 @@
 		const table     = document.createElement( 'table' );
 		table.className = 'widefat striped lw-seo-migration-results-table';
 
+		const posts     = data.posts || { migrated: 0, skipped_already_present: 0, skipped_no_data: 0 };
+		const terms     = data.terms || { migrated: 0, skipped_already_present: 0, skipped_no_data: 0 };
+		const users     = data.users || { migrated: 0 };
+		const primary   = data.primary_terms || { migrated: 0 };
+		const redirects = data.redirects || { migrated: 0, skipped: 0 };
+
 		const tbody = document.createElement( 'tbody' );
 		tbody.appendChild( createTableRow( lwSeoMigrationL10n.optionsMigrated, data.options_migrated.toString() ) );
-		tbody.appendChild( createTableRow( lwSeoMigrationL10n.postsMigrated, data.posts_migrated.toString() ) );
-		tbody.appendChild( createTableRow( lwSeoMigrationL10n.postsSkipped, data.posts_skipped.toString() ) );
-		tbody.appendChild( createTableRow( lwSeoMigrationL10n.termsMigrated, data.terms_migrated.toString() ) );
-		tbody.appendChild( createTableRow( lwSeoMigrationL10n.termsSkipped, data.terms_skipped.toString() ) );
-		tbody.appendChild( createTableRow( lwSeoMigrationL10n.usersMigrated, data.users_migrated.toString() ) );
+		tbody.appendChild( createTableRow( lwSeoMigrationL10n.postsMigrated, posts.migrated.toString() ) );
+		tbody.appendChild( createTableRow( lwSeoMigrationL10n.postsAlreadyFull, posts.skipped_already_present.toString() ) );
+		tbody.appendChild( createTableRow( lwSeoMigrationL10n.postsNoData, posts.skipped_no_data.toString() ) );
+		tbody.appendChild( createTableRow( lwSeoMigrationL10n.termsMigrated, terms.migrated.toString() ) );
+		tbody.appendChild( createTableRow( lwSeoMigrationL10n.termsAlreadyFull, terms.skipped_already_present.toString() ) );
+		tbody.appendChild( createTableRow( lwSeoMigrationL10n.termsNoData, terms.skipped_no_data.toString() ) );
+		tbody.appendChild( createTableRow( lwSeoMigrationL10n.usersMigrated, users.migrated.toString() ) );
+		tbody.appendChild( createTableRow( lwSeoMigrationL10n.primaryTermsMigrated, primary.migrated.toString() ) );
+		tbody.appendChild( createTableRow( lwSeoMigrationL10n.redirectsMigrated, redirects.migrated.toString() ) );
+		tbody.appendChild( createTableRow( lwSeoMigrationL10n.redirectsSkipped, redirects.skipped.toString() ) );
 
 		table.appendChild( tbody );
 
@@ -213,6 +253,7 @@
 		}
 
 		runResults.appendChild( table );
+		renderWarnings( data.warnings, runResults );
 	}
 
 	/**

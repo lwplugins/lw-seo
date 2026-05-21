@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.3.12] - 2026-05-21
+
+### Added
+- RankMath migrator imports primary terms (`rank_math_primary_category`, `rank_math_primary_product_cat`, `rank_math_primary_product_brand`) into `_lw_seo_primary_{taxonomy}` post meta
+- RankMath redirects DB table (`{prefix}rank_math_redirections`) is migrated into the LW SEO Redirects module; `sources` arrays are unserialized and each source becomes a separate LW SEO redirect entry, with `comparison` modes (`exact`, `regex`, `contains`, `start`, `end`) translated to LW SEO's regex flag
+- RankMath Twitter overrides (`rank_math_twitter_title`/`_description`/`_image`) and `rank_math_og_content_image` are now migrated as OpenGraph fallbacks (LW SEO renders Twitter Cards from OG values)
+- Migration UI warns when RankMath's WooCommerce permalink rewrites are active (`wc_remove_category_base`, `wc_remove_category_parent_slugs`, `wc_remove_product_base`) — disabling RankMath without preparing redirects 404s the affected URLs (LW SEO has no parity feature yet)
+- Migration UI counts `rank_math_schema_*` post meta and other non-migratable keys (`rank_math_advanced_robots`, `rank_math_breadcrumb_title`, `rank_math_focus_keyword`, `rank_math_news_sitemap_robots`, `rank_math_pillar_content`, `rank_math_lock_modified_date`) so users see what was inspected but not moved
+
+### Changed
+- Post/term migration results split `skipped` into `skipped_already_present` (LW SEO target was filled) and `skipped_no_data` (no actionable RankMath data, e.g. default robots `["index","follow"]`); fixes the misleading "0 migrated, 730 skipped" reporting on real RankMath installs
+- `MetaMigrator` split into atomic sub-migrators: `PostMetaMigrator`, `TermMetaMigrator`, `UserMetaMigrator`, `PrimaryTermMigrator`, `RedirectsMigrator`, `RobotsMigrator`, and `WarningCollector`
+
 ## [1.3.11] - 2026-05-08
 
 ### Fixed
