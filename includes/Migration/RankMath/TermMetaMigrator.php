@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace LightweightPlugins\SEO\Migration\RankMath;
 
+use LightweightPlugins\SEO\Helpers\MetaCoerce;
 use LightweightPlugins\SEO\Migration\VariableConverter;
 use LightweightPlugins\SEO\Options;
 
@@ -116,6 +117,17 @@ final class TermMetaMigrator {
 			$value = get_term_meta( $term_id, $rm_key, true );
 			if ( '' === $value || false === $value ) {
 				continue;
+			}
+
+			if ( ! MetaCoerce::is_writable_string( $value, $lw_field ) ) {
+				continue;
+			}
+
+			if ( 'og_image' === $lw_field ) {
+				$value = MetaCoerce::as_url( $value );
+				if ( '' === $value ) {
+					continue;
+				}
 			}
 
 			$lw_key   = Options::META_PREFIX . $lw_field;

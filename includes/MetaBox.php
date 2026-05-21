@@ -9,6 +9,8 @@ declare(strict_types=1);
 
 namespace LightweightPlugins\SEO;
 
+use LightweightPlugins\SEO\Helpers\MetaCoerce;
+
 /**
  * Handles the SEO meta box in post editor.
  */
@@ -141,7 +143,7 @@ final class MetaBox {
 		$canonical      = Options::get_post_meta( $post->ID, 'canonical' );
 		$og_title       = Options::get_post_meta( $post->ID, 'og_title' );
 		$og_description = Options::get_post_meta( $post->ID, 'og_description' );
-		$og_image       = Options::get_post_meta( $post->ID, 'og_image' );
+		$og_image       = MetaCoerce::as_url( Options::get_post_meta( $post->ID, 'og_image' ) );
 
 		?>
 		<div class="lw-seo-meta-box">

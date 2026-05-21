@@ -3,7 +3,7 @@ Contributors: lwplugins
 Tags: seo, sitemap, schema, opengraph, breadcrumbs
 Requires at least: 6.0
 Tested up to: 6.7
-Stable tag: 1.3.13
+Stable tag: 1.3.14
 Requires PHP: 8.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -133,6 +133,11 @@ Your sitemap is available at `yoursite.com/sitemap.xml`
 6. Settings page - Advanced tab
 
 == Changelog ==
+
+= 1.3.14 =
+* Fix: Fatal TypeError on every frontend singular page after a 1.3.13 RankMath migration — `Plugin::get_og_image(): string` was receiving the `rank_math_og_content_image` cache array (`['check' => md5, 'images' => [...]]`) verbatim. `rank_math_og_content_image` is removed from the migration map (it was never a URL) and all OG-image read paths now coerce array values via `MetaCoerce::as_url()`.
+* Fix: One-time cleanup pass scans `_lw_seo_og_image` post/term meta written by 1.3.13 and either normalizes the array to a single URL or deletes the row when no URL can be extracted (idempotent — guarded by `lw_seo_cleanup_v1314_done`).
+* Change: RankMath post/term migration now skips non-scalar values for string-typed targets so future cache-shaped meta keys cannot break the frontend.
 
 = 1.3.13 =
 * New: WooCommerce slug-only permalinks (RankMath parity) — three options on the WooCommerce tab: remove `/product-category/`, remove parent category slugs, remove `/product/`

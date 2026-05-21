@@ -19,8 +19,10 @@ use LightweightPlugins\SEO\Local\Shortcodes as LocalShortcodes;
 use LightweightPlugins\SEO\Redirects\Handler as RedirectHandler;
 use LightweightPlugins\SEO\Redirects\Ajax as RedirectAjax;
 use LightweightPlugins\SEO\Migration\Ajax as MigrationAjax;
+use LightweightPlugins\SEO\Migration\CleanupV1314;
 use LightweightPlugins\SEO\NotFoundHandler;
 use LightweightPlugins\SEO\Markdown\Endpoint as MarkdownEndpoint;
+use LightweightPlugins\SEO\Helpers\MetaCoerce;
 
 /**
  * Main plugin class.
@@ -122,6 +124,9 @@ final class Plugin {
 
 		// 404 handler.
 		new NotFoundHandler();
+
+		// One-time v1.3.13 og_image cleanup.
+		( new CleanupV1314() )->register();
 
 		// REST API for headless support.
 		$rest_api = new RestApi();
@@ -367,8 +372,8 @@ final class Plugin {
 		$og_title = ! empty( $og_title ) ? $og_title : $title;
 		$og_desc  = Options::get_term_meta( $term->term_id, 'og_description' );
 		$og_desc  = ! empty( $og_desc ) ? $og_desc : $description;
-		$og_image = Options::get_term_meta( $term->term_id, 'og_image' );
-		if ( empty( $og_image ) ) {
+		$og_image = MetaCoerce::as_url( Options::get_term_meta( $term->term_id, 'og_image' ) );
+		if ( '' === $og_image ) {
 			$og_image = (string) Options::get( 'default_og_image' );
 		}
 
@@ -438,9 +443,9 @@ final class Plugin {
 	 * @return string Image URL.
 	 */
 	private function get_og_image( \WP_Post $post ): string {
-		$og_image = Options::get_post_meta( $post->ID, 'og_image' );
+		$og_image = MetaCoerce::as_url( Options::get_post_meta( $post->ID, 'og_image' ) );
 
-		if ( ! empty( $og_image ) ) {
+		if ( '' !== $og_image ) {
 			return $og_image;
 		}
 
@@ -453,7 +458,7 @@ final class Plugin {
 
 		// Fallback to default OG image.
 		$default_image = Options::get( 'default_og_image' );
-		if ( ! empty( $default_image ) ) {
+		if ( is_string( $default_image ) && '' !== $default_image ) {
 			return $default_image;
 		}
 

@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.3.14] - 2026-05-21
+
+### Fixed
+- **Fatal `TypeError` on every frontend singular page after a 1.3.13 RankMath migration.** `Plugin::get_og_image(): string` was receiving the `rank_math_og_content_image` cache array (`['check' => md5, 'images' => [...]]`) verbatim from `_lw_seo_og_image`. Root cause: 1.3.13's `Mappings::POST_META_MAP` included `'rank_math_og_content_image' => 'og_image'` based on the user-reported field count in #5, without checking that RankMath stores this key as a content-scan cache, not a user-selected URL.
+- All OG-image read paths (`Plugin::get_og_image`, `Plugin::output_taxonomy_meta`, `RestApi::get_post_og`, `RestApi::get_post_twitter`, `MetaBox::render_meta_box`, `Admin\TermFields::render_social_section`) now coerce array values via `MetaCoerce::as_url()` — defensive against any already-bad row written by 1.3.13.
+- One-time `CleanupV1314` pass on `init` (priority 99) scans `_lw_seo_og_image` post/term meta whose `meta_value` starts with `a:` (serialized array) and either normalizes it to a single URL or deletes the row. Guarded by `lw_seo_cleanup_v1314_done` option so it runs at most once.
+
+### Changed
+- `PostMetaMigrator` and `TermMetaMigrator` now call `MetaCoerce::is_writable_string()` before copying; for `og_image` they additionally extract a URL via `MetaCoerce::as_url()` and skip when none is found. Future RankMath cache shapes cannot land in string-typed `_lw_seo_*` slots.
+- Removed `rank_math_og_content_image` from the migration map entirely.
+
 ## [1.3.13] - 2026-05-21
 
 ### Added

@@ -16,6 +16,7 @@ use WP_Error;
 use WP_Post;
 use WP_Term;
 use WP_User;
+use LightweightPlugins\SEO\Helpers\MetaCoerce;
 
 /**
  * REST API class for headless SEO data.
@@ -480,7 +481,7 @@ class RestApi {
 		// Check for custom OG data.
 		$og_title = Options::get_post_meta( $post->ID, 'og_title' );
 		$og_desc  = Options::get_post_meta( $post->ID, 'og_description' );
-		$og_image = Options::get_post_meta( $post->ID, 'og_image' );
+		$og_image = MetaCoerce::as_url( Options::get_post_meta( $post->ID, 'og_image' ) );
 
 		// Fallback to SEO title/description.
 		if ( empty( $og_title ) ) {
@@ -491,7 +492,7 @@ class RestApi {
 		}
 
 		// Get image.
-		if ( empty( $og_image ) ) {
+		if ( '' === $og_image ) {
 			if ( has_post_thumbnail( $post->ID ) ) {
 				$og_image = get_the_post_thumbnail_url( $post->ID, 'large' );
 			} else {
@@ -537,7 +538,7 @@ class RestApi {
 		// Check for custom OG data (Twitter falls back to OG).
 		$tw_title = Options::get_post_meta( $post->ID, 'og_title' );
 		$tw_desc  = Options::get_post_meta( $post->ID, 'og_description' );
-		$tw_image = Options::get_post_meta( $post->ID, 'og_image' );
+		$tw_image = MetaCoerce::as_url( Options::get_post_meta( $post->ID, 'og_image' ) );
 
 		if ( empty( $tw_title ) ) {
 			$tw_title = $title;
@@ -545,7 +546,7 @@ class RestApi {
 		if ( empty( $tw_desc ) ) {
 			$tw_desc = $description;
 		}
-		if ( empty( $tw_image ) ) {
+		if ( '' === $tw_image ) {
 			if ( has_post_thumbnail( $post->ID ) ) {
 				$tw_image = get_the_post_thumbnail_url( $post->ID, 'large' );
 			} else {

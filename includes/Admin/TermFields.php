@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace LightweightPlugins\SEO\Admin;
 
 use LightweightPlugins\SEO\Options;
+use LightweightPlugins\SEO\Helpers\MetaCoerce;
 
 /**
  * Renders SEO fields on taxonomy term edit screens.
@@ -81,7 +82,7 @@ final class TermFields {
 	private static function render_social_section( \WP_Term $term ): void {
 		$og_title       = Options::get_term_meta( $term->term_id, 'og_title' );
 		$og_description = Options::get_term_meta( $term->term_id, 'og_description' );
-		$og_image       = Options::get_term_meta( $term->term_id, 'og_image' );
+		$og_image       = MetaCoerce::as_url( Options::get_term_meta( $term->term_id, 'og_image' ) );
 		?>
 		<tr class="form-field">
 			<th scope="row"><label for="lw_seo_og_title"><?php esc_html_e( 'Social Title', 'lw-seo' ); ?></label></th>

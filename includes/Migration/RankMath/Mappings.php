@@ -35,7 +35,10 @@ final class Mappings {
 
 		// Fallbacks: only applied if the LW SEO target is still empty
 		// after the primary keys above were processed.
-		'rank_math_og_content_image'     => 'og_image',
+		// NB: rank_math_og_content_image is NOT mapped — RankMath stores it
+		// as a content-scan cache array (['check' => md5, 'images' => [...]])
+		// not a URL, and migrating it into _lw_seo_og_image broke
+		// Plugin::get_og_image(): string in v1.3.13.
 		'rank_math_twitter_title'        => 'og_title',
 		'rank_math_twitter_description'  => 'og_description',
 		'rank_math_twitter_image'        => 'og_image',
