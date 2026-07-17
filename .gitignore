@@ -30,3 +30,7 @@ Thumbs.db
 # Environment
 .env
 .env.local
+
+# Local-only audit output and Superpowers planning docs
+/AUDIT-RESULT.md
+/docs/superpowers/
