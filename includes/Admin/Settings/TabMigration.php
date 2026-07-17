@@ -54,36 +54,59 @@ final class TabMigration implements TabInterface {
 			<p><?php esc_html_e( 'Import SEO data from other SEO plugins. Existing LW SEO data will not be overwritten.', 'lw-seo' ); ?></p>
 		</div>
 
-		<h3><?php esc_html_e( 'RankMath SEO', 'lw-seo' ); ?></h3>
+		<?php
+		$this->render_provider_block(
+			'rankmath',
+			__( 'RankMath SEO', 'lw-seo' ),
+			__( 'Detect RankMath SEO data in your database for migration.', 'lw-seo' )
+		);
+		$this->render_provider_block(
+			'yoast',
+			__( 'Yoast SEO', 'lw-seo' ),
+			__( 'Detect Yoast SEO data in your database for migration.', 'lw-seo' )
+		);
+	}
 
-		<div id="lw-migration-detect-area">
-			<p class="description">
-				<?php esc_html_e( 'Detect RankMath SEO data in your database for migration.', 'lw-seo' ); ?>
-			</p>
-			<p>
-				<button type="button" id="lw-migration-detect" class="button">
-					<?php esc_html_e( 'Detect Data', 'lw-seo' ); ?>
-				</button>
-				<span id="lw-migration-detect-spinner" class="spinner"></span>
-			</p>
-		</div>
+	/**
+	 * Render one detect/migrate block for a given provider.
+	 *
+	 * @param string $provider    Provider slug (rankmath|yoast).
+	 * @param string $heading     Provider heading.
+	 * @param string $detect_desc Detect description text.
+	 * @return void
+	 */
+	private function render_provider_block( string $provider, string $heading, string $detect_desc ): void {
+		?>
+		<div class="lw-migration-provider" data-provider="<?php echo esc_attr( $provider ); ?>">
+			<h3><?php echo esc_html( $heading ); ?></h3>
 
-		<div id="lw-migration-results" style="display:none;">
-			<div id="lw-migration-detect-results" class="lw-seo-migration-results"></div>
-
-			<div id="lw-migration-actions" style="display:none;">
+			<div class="lw-migration-detect-area">
+				<p class="description"><?php echo esc_html( $detect_desc ); ?></p>
 				<p>
-					<button type="button" id="lw-migration-preview" class="button">
-						<?php esc_html_e( 'Preview Migration', 'lw-seo' ); ?>
+					<button type="button" class="button lw-migration-detect">
+						<?php esc_html_e( 'Detect Data', 'lw-seo' ); ?>
 					</button>
-					<button type="button" id="lw-migration-run" class="button button-primary">
-						<?php esc_html_e( 'Run Migration', 'lw-seo' ); ?>
-					</button>
-					<span id="lw-migration-run-spinner" class="spinner"></span>
+					<span class="spinner lw-migration-detect-spinner"></span>
 				</p>
 			</div>
 
-			<div id="lw-migration-run-results" style="display:none;"></div>
+			<div class="lw-migration-results" style="display:none;">
+				<div class="lw-migration-detect-results lw-seo-migration-results"></div>
+
+				<div class="lw-migration-actions" style="display:none;">
+					<p>
+						<button type="button" class="button lw-migration-preview">
+							<?php esc_html_e( 'Preview Migration', 'lw-seo' ); ?>
+						</button>
+						<button type="button" class="button button-primary lw-migration-run">
+							<?php esc_html_e( 'Run Migration', 'lw-seo' ); ?>
+						</button>
+						<span class="spinner lw-migration-run-spinner"></span>
+					</p>
+				</div>
+
+				<div class="lw-migration-run-results" style="display:none;"></div>
+			</div>
 		</div>
 		<?php
 	}

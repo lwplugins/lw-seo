@@ -9,7 +9,8 @@ declare(strict_types=1);
 
 namespace LightweightPlugins\SEO\Migration;
 
-use LightweightPlugins\SEO\Migration\RankMath\Migrator;
+use LightweightPlugins\SEO\Migration\RankMath\Migrator as RankMathMigrator;
+use LightweightPlugins\SEO\Migration\Yoast\Migrator as YoastMigrator;
 
 /**
  * Handles AJAX requests for SEO data migration.
@@ -22,11 +23,30 @@ final class Ajax {
 	private const NONCE_ACTION = 'lw_seo_migration';
 
 	/**
+	 * Provider slug → Migrator class map.
+	 */
+	private const PROVIDERS = [
+		'rankmath' => RankMathMigrator::class,
+		'yoast'    => YoastMigrator::class,
+	];
+
+	/**
 	 * Constructor.
 	 */
 	public function __construct() {
 		add_action( 'wp_ajax_lw_seo_migration_detect', [ $this, 'detect' ] );
 		add_action( 'wp_ajax_lw_seo_migration_run', [ $this, 'run' ] );
+	}
+
+	/**
+	 * Resolve the requested provider slug, defaulting to RankMath.
+	 *
+	 * @return string A key of self::PROVIDERS.
+	 */
+	private function resolve_provider(): string {
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing -- Nonce verified in verify_request().
+		$provider = isset( $_POST['provider'] ) ? sanitize_key( wp_unslash( $_POST['provider'] ) ) : 'rankmath';
+		return isset( self::PROVIDERS[ $provider ] ) ? $provider : 'rankmath';
 	}
 
 	/**
@@ -58,7 +78,8 @@ final class Ajax {
 			return;
 		}
 
-		$migrator = new Migrator();
+		$class    = self::PROVIDERS[ $this->resolve_provider() ];
+		$migrator = new $class();
 		$result   = $migrator->detect();
 
 		wp_send_json_success( $result );
@@ -76,7 +97,8 @@ final class Ajax {
 
 		// phpcs:ignore WordPress.Security.NonceVerification.Missing -- Nonce verified in verify_request().
 		$dry_run  = isset( $_POST['dry_run'] ) && 'true' === $_POST['dry_run'];
-		$migrator = new Migrator( $dry_run );
+		$class    = self::PROVIDERS[ $this->resolve_provider() ];
+		$migrator = new $class( $dry_run );
 		$result   = $migrator->run();
 
 		wp_send_json_success( $result );

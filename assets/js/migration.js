@@ -1,26 +1,14 @@
 /**
  * LW SEO Migration JavaScript
  *
+ * Provider-aware: each `.lw-migration-provider` block (RankMath, Yoast) binds
+ * its own detect/preview/run buttons and sends its `provider` slug to AJAX.
+ *
  * @package LightweightPlugins\SEO
  */
 
 (function () {
 	'use strict';
-
-	// Elements.
-	const detectButton  = document.getElementById( 'lw-migration-detect' );
-	const detectSpinner = document.getElementById( 'lw-migration-detect-spinner' );
-	const resultsArea   = document.getElementById( 'lw-migration-results' );
-	const detectResults = document.getElementById( 'lw-migration-detect-results' );
-	const actionsArea   = document.getElementById( 'lw-migration-actions' );
-	const previewButton = document.getElementById( 'lw-migration-preview' );
-	const runButton     = document.getElementById( 'lw-migration-run' );
-	const runSpinner    = document.getElementById( 'lw-migration-run-spinner' );
-	const runResults    = document.getElementById( 'lw-migration-run-results' );
-
-	if ( ! detectButton ) {
-		return;
-	}
 
 	/**
 	 * Remove all child nodes from an element.
@@ -34,13 +22,14 @@
 	}
 
 	/**
-	 * Make AJAX request.
+	 * Make an AJAX request.
 	 *
-	 * @param {string}   action   AJAX action name.
-	 * @param {Object}   data     Additional POST data.
-	 * @param {Function} callback Success callback.
+	 * @param {string}      action    AJAX action name.
+	 * @param {Object}      data      Additional POST data.
+	 * @param {Function}    callback  Success callback.
+	 * @param {HTMLElement} errorNode Container for error notices.
 	 */
-	function ajaxRequest( action, data, callback ) {
+	function ajaxRequest( action, data, callback, errorNode ) {
 		const formData = new FormData();
 		formData.append( 'action', action );
 		formData.append( 'nonce', lwSeoMigrationL10n.nonce );
@@ -67,15 +56,15 @@
 		.then(
 			function ( result ) {
 				if ( result.success ) {
-						callback( result.data );
+					callback( result.data );
 				} else {
-					showNotice( result.data.message || 'An error occurred.', 'error' );
+					showNotice( ( result.data && result.data.message ) || 'An error occurred.', 'error', errorNode );
 				}
 			}
 		)
 		.catch(
 			function () {
-				showNotice( 'Network error occurred.', 'error' );
+				showNotice( 'Network error occurred.', 'error', errorNode );
 			}
 		);
 	}
@@ -85,18 +74,17 @@
 	 *
 	 * @param {string}      text      Notice text.
 	 * @param {string}      type      Notice type: 'success', 'error', 'info'.
-	 * @param {HTMLElement} container Target container (defaults to runResults).
+	 * @param {HTMLElement} container Target container.
 	 */
 	function showNotice( text, type, container ) {
-		const target  = container || runResults;
 		const div     = document.createElement( 'div' );
 		div.className = 'notice notice-' + type;
 		const p       = document.createElement( 'p' );
 		p.textContent = text;
 		div.appendChild( p );
-		clearElement( target );
-		target.style.display = 'block';
-		target.appendChild( div );
+		clearElement( container );
+		container.style.display = 'block';
+		container.appendChild( div );
 	}
 
 	/**
@@ -132,33 +120,6 @@
 	}
 
 	/**
-	 * Handle detect button click.
-	 */
-	function handleDetect() {
-		setSpinner( detectSpinner, true );
-		detectButton.disabled = true;
-
-		ajaxRequest(
-			'lw_seo_migration_detect',
-			{},
-			function ( data ) {
-				setSpinner( detectSpinner, false );
-				detectButton.disabled     = false;
-				resultsArea.style.display = 'block';
-
-				if ( ! data.found ) {
-					showNotice( lwSeoMigrationL10n.noData, 'info', detectResults );
-					actionsArea.style.display = 'none';
-					return;
-				}
-
-				renderDetectResults( data );
-				actionsArea.style.display = 'block';
-			}
-		);
-	}
-
-	/**
 	 * Render a list of warnings as notices.
 	 *
 	 * @param {Array}       warnings  Warning entries: {code, severity, message}.
@@ -188,9 +149,10 @@
 	/**
 	 * Render detection results.
 	 *
-	 * @param {Object} data Detection data.
+	 * @param {Object}      data      Detection data.
+	 * @param {HTMLElement} container Detect results container.
 	 */
-	function renderDetectResults( data ) {
+	function renderDetectResults( data, container ) {
 		const table     = document.createElement( 'table' );
 		table.className = 'widefat striped lw-seo-migration-detect-table';
 
@@ -198,22 +160,23 @@
 		tbody.appendChild( createTableRow( lwSeoMigrationL10n.options, data.has_options ? lwSeoMigrationL10n.found : lwSeoMigrationL10n.notFound ) );
 		tbody.appendChild( createTableRow( lwSeoMigrationL10n.posts, data.post_count.toString() ) );
 		tbody.appendChild( createTableRow( lwSeoMigrationL10n.terms, data.term_count.toString() ) );
-		tbody.appendChild( createTableRow( lwSeoMigrationL10n.users, data.user_count.toString() ) );
+		tbody.appendChild( createTableRow( lwSeoMigrationL10n.users, ( data.user_count || 0 ).toString() ) );
 		tbody.appendChild( createTableRow( lwSeoMigrationL10n.redirects, ( data.redirects_count || 0 ).toString() ) );
 
 		table.appendChild( tbody );
-		clearElement( detectResults );
-		detectResults.appendChild( table );
-		renderWarnings( data.warnings, detectResults );
+		clearElement( container );
+		container.appendChild( table );
+		renderWarnings( data.warnings, container );
 	}
 
 	/**
 	 * Render migration results.
 	 *
-	 * @param {Object}  data   Migration result data.
-	 * @param {boolean} dryRun Whether this was a dry run.
+	 * @param {Object}      data      Migration result data.
+	 * @param {boolean}     dryRun    Whether this was a dry run.
+	 * @param {HTMLElement} container Run results container.
 	 */
-	function renderRunResults( data, dryRun ) {
+	function renderRunResults( data, dryRun, container ) {
 		const heading       = document.createElement( 'h4' );
 		heading.textContent = dryRun ? lwSeoMigrationL10n.previewTitle : lwSeoMigrationL10n.resultTitle;
 
@@ -241,78 +204,108 @@
 
 		table.appendChild( tbody );
 
-		clearElement( runResults );
-		runResults.style.display = 'block';
-		runResults.appendChild( heading );
+		clearElement( container );
+		container.style.display = 'block';
+		container.appendChild( heading );
 
 		if ( dryRun ) {
 			const notice       = document.createElement( 'p' );
 			notice.className   = 'description';
 			notice.textContent = lwSeoMigrationL10n.dryRunNotice;
-			runResults.appendChild( notice );
+			container.appendChild( notice );
 		}
 
-		runResults.appendChild( table );
-		renderWarnings( data.warnings, runResults );
+		container.appendChild( table );
+		renderWarnings( data.warnings, container );
 	}
 
 	/**
-	 * Handle preview (dry run) button click.
+	 * Wire up a single provider block.
+	 *
+	 * @param {HTMLElement} block The .lw-migration-provider element.
 	 */
-	function handlePreview() {
-		setSpinner( runSpinner, true );
-		previewButton.disabled = true;
-		runButton.disabled     = true;
+	function initBlock( block ) {
+		const provider      = block.dataset.provider;
+		const detectButton  = block.querySelector( '.lw-migration-detect' );
+		const detectSpinner = block.querySelector( '.lw-migration-detect-spinner' );
+		const resultsArea   = block.querySelector( '.lw-migration-results' );
+		const detectResults = block.querySelector( '.lw-migration-detect-results' );
+		const actionsArea   = block.querySelector( '.lw-migration-actions' );
+		const previewButton = block.querySelector( '.lw-migration-preview' );
+		const runButton     = block.querySelector( '.lw-migration-run' );
+		const runSpinner    = block.querySelector( '.lw-migration-run-spinner' );
+		const runResults    = block.querySelector( '.lw-migration-run-results' );
 
-		ajaxRequest(
-			'lw_seo_migration_run',
-			{ dry_run: 'true' },
-			function ( data ) {
-				setSpinner( runSpinner, false );
-				previewButton.disabled = false;
-				runButton.disabled     = false;
-				renderRunResults( data, true );
-			}
-		);
-	}
-
-	/**
-	 * Handle run migration button click.
-	 */
-	function handleRun() {
-		if ( ! confirm( lwSeoMigrationL10n.confirmRun ) ) {
+		if ( ! detectButton ) {
 			return;
 		}
 
-		setSpinner( runSpinner, true );
-		previewButton.disabled = true;
-		runButton.disabled     = true;
+		function handleDetect() {
+			setSpinner( detectSpinner, true );
+			detectButton.disabled = true;
 
-		ajaxRequest(
-			'lw_seo_migration_run',
-			{ dry_run: 'false' },
-			function ( data ) {
-				setSpinner( runSpinner, false );
-				previewButton.disabled = false;
-				runButton.disabled     = false;
-				renderRunResults( data, false );
-			}
-		);
-	}
+			ajaxRequest(
+				'lw_seo_migration_detect',
+				{ provider: provider },
+				function ( data ) {
+					setSpinner( detectSpinner, false );
+					detectButton.disabled     = false;
+					resultsArea.style.display = 'block';
 
-	/**
-	 * Initialize event listeners.
-	 */
-	function init() {
+					if ( ! data.found ) {
+						showNotice( lwSeoMigrationL10n.noData, 'info', detectResults );
+						actionsArea.style.display = 'none';
+						return;
+					}
+
+					renderDetectResults( data, detectResults );
+					actionsArea.style.display = 'block';
+				},
+				detectResults
+			);
+		}
+
+		function handleRun( dryRun ) {
+			setSpinner( runSpinner, true );
+			previewButton.disabled = true;
+			runButton.disabled     = true;
+
+			ajaxRequest(
+				'lw_seo_migration_run',
+				{ provider: provider, dry_run: dryRun ? 'true' : 'false' },
+				function ( data ) {
+					setSpinner( runSpinner, false );
+					previewButton.disabled = false;
+					runButton.disabled     = false;
+					renderRunResults( data, dryRun, runResults );
+				},
+				runResults
+			);
+		}
+
 		detectButton.addEventListener( 'click', handleDetect );
 
 		if ( previewButton ) {
-			previewButton.addEventListener( 'click', handlePreview );
+			previewButton.addEventListener( 'click', function () {
+				handleRun( true );
+			} );
 		}
 
 		if ( runButton ) {
-			runButton.addEventListener( 'click', handleRun );
+			runButton.addEventListener( 'click', function () {
+				if ( confirm( lwSeoMigrationL10n.confirmRun ) ) {
+					handleRun( false );
+				}
+			} );
 		}
+	}
+
+	/**
+	 * Initialize all provider blocks.
+	 */
+	function init() {
+		const blocks = document.querySelectorAll( '.lw-migration-provider' );
+		blocks.forEach( initBlock );
 	}
 
 	// Run on DOM ready.
