@@ -63,7 +63,12 @@ function lw_seo(): Plugin {
 }
 
 // Initialize the plugin.
-add_action( 'plugins_loaded', __NAMESPACE__ . '\\lw_seo' );
+add_action(
+	'plugins_loaded',
+	static function (): void {
+		lw_seo();
+	}
+);
 
 // Flush rewrite rules on activation (for llms.txt and /md endpoints).
 register_activation_hook(

@@ -37,7 +37,7 @@ final class RedirectCommand {
 				'destination' => $redirect['destination'],
 				'type'        => (string) $redirect['type'],
 				'regex'       => ! empty( $redirect['regex'] ) ? 'yes' : 'no',
-				'hits'        => (string) ( $redirect['hits'] ?? 0 ),
+				'hits'        => (string) $redirect['hits'],
 			];
 		}
 		$format = $assoc_args['format'] ?? 'table';

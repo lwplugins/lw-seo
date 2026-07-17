@@ -74,7 +74,7 @@ final class TaxonomyRenderer implements RendererInterface {
 		$body = '# ' . $this->term->name . "\n\n";
 
 		// Term description.
-		$description = term_description( $this->term );
+		$description = term_description( $this->term->term_id );
 		if ( ! empty( $description ) ) {
 			$body .= HtmlToMarkdown::convert( $description ) . "\n";
 		}

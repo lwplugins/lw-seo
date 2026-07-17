@@ -268,7 +268,7 @@ final class Schema {
 		];
 
 		// Author.
-		$author = get_userdata( $post->post_author );
+		$author = get_userdata( (int) $post->post_author );
 		if ( $author ) {
 			$schema['author'] = [
 				'@type' => 'Person',
@@ -443,7 +443,7 @@ final class Schema {
 		];
 
 		// Author.
-		$author = get_userdata( $post->post_author );
+		$author = get_userdata( (int) $post->post_author );
 		if ( $author ) {
 			$schema['author'] = [
 				'@type' => 'Person',

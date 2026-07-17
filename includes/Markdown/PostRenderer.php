@@ -44,7 +44,7 @@ final class PostRenderer implements RendererInterface {
 			'url'      => get_permalink( $this->post ),
 			'date'     => get_the_date( 'Y-m-d', $this->post ),
 			'modified' => get_the_modified_date( 'Y-m-d', $this->post ),
-			'author'   => get_the_author_meta( 'display_name', $this->post->post_author ),
+			'author'   => get_the_author_meta( 'display_name', (int) $this->post->post_author ),
 			'language' => get_locale(),
 		];
 

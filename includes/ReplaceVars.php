@@ -200,7 +200,7 @@ final class ReplaceVars {
 		}
 
 		if ( self::$post instanceof \WP_Post ) {
-			return get_the_author_meta( 'display_name', self::$post->post_author );
+			return get_the_author_meta( 'display_name', (int) self::$post->post_author );
 		}
 
 		return '';
@@ -278,7 +278,7 @@ final class ReplaceVars {
 	 */
 	private static function get_term_description(): string {
 		if ( self::$term instanceof \WP_Term ) {
-			return wp_strip_all_tags( term_description( self::$term ) );
+			return wp_strip_all_tags( term_description( self::$term->term_id ) );
 		}
 
 		return '';

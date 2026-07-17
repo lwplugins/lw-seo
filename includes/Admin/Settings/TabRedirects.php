@@ -123,7 +123,7 @@ final class TabRedirects implements TabInterface {
 					<td>
 						<select id="lw-redirect-type">
 							<?php foreach ( Manager::TYPES as $code => $label ) : ?>
-								<option value="<?php echo esc_attr( $code ); ?>">
+								<option value="<?php echo esc_attr( (string) $code ); ?>">
 									<?php echo esc_html( $code . ' - ' . $label ); ?>
 								</option>
 							<?php endforeach; ?>

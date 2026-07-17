@@ -152,7 +152,7 @@ final class Schema {
 		$images = [];
 
 		// Main image.
-		$main_image = wp_get_attachment_image_url( $product->get_image_id(), 'large' );
+		$main_image = wp_get_attachment_image_url( (int) $product->get_image_id(), 'large' );
 		if ( $main_image ) {
 			$images[] = $main_image;
 		}
@@ -239,7 +239,7 @@ final class Schema {
 		);
 
 		foreach ( $comments as $comment ) {
-			$rating = get_comment_meta( $comment->comment_ID, 'rating', true );
+			$rating = get_comment_meta( (int) $comment->comment_ID, 'rating', true );
 
 			if ( empty( $rating ) ) {
 				continue;

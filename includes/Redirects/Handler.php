@@ -220,7 +220,7 @@ final class Handler {
 		</head>
 		<body>
 			<div class="error-container">
-				<h1><?php echo esc_html( $code ); ?></h1>
+				<h1><?php echo esc_html( (string) $code ); ?></h1>
 				<h2><?php echo esc_html( $title ); ?></h2>
 				<p><?php echo esc_html( $message ); ?></p>
 				<p><a href="<?php echo esc_url( home_url( '/' ) ); ?>"><?php esc_html_e( 'Return to homepage', 'lw-seo' ); ?></a></p>

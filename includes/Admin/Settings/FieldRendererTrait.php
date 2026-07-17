@@ -88,7 +88,7 @@ trait FieldRendererTrait {
 	 */
 	protected function render_checkbox_field( array $args ): void {
 		$name  = $args['name'];
-		$label = $args['label'] ?? '';
+		$label = $args['label'];
 		$value = Options::get( $name );
 
 		printf(
@@ -108,7 +108,7 @@ trait FieldRendererTrait {
 	 */
 	protected function render_select_field( array $args ): void {
 		$name    = $args['name'];
-		$options = $args['options'] ?? [];
+		$options = $args['options'];
 		$value   = Options::get( $name );
 
 		printf(

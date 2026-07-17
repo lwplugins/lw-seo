@@ -134,7 +134,7 @@ final class PermalinkRuleBuilder {
 	 * @return string
 	 */
 	private function full_path( array $category, array $categories ): string {
-		$parent = (int) ( $category['parent'] ?? 0 );
+		$parent = $category['parent'];
 		if ( $parent > 0 && isset( $categories[ $parent ] ) ) {
 			return $this->full_path( $categories[ $parent ], $categories ) . '/' . $category['slug'];
 		}
