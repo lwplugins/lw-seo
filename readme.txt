@@ -3,7 +3,7 @@ Contributors: lwplugins
 Tags: seo, sitemap, schema, opengraph, breadcrumbs
 Requires at least: 6.0
 Tested up to: 6.7
-Stable tag: 1.3.14
+Stable tag: 1.4.0
 Requires PHP: 8.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -133,6 +133,11 @@ Your sitemap is available at `yoursite.com/sitemap.xml`
 6. Settings page - Advanced tab
 
 == Changelog ==
+
+= 1.4.0 =
+* New: WP-CLI commands — `wp lw-seo migrate` (rankmath|yoast), `redirect` (list/add/delete/import/export), `sitemap` (info/flush), `option` (get/set/list/reset).
+* New: Yoast SEO importer — options (titles/social/knowledge graph), post & term meta, primary category, and Yoast Premium redirects. Available in the Import tab alongside RankMath, and via `wp lw-seo migrate yoast`.
+* New: Shared `Migration\MigratorInterface`; the Import tab and AJAX handler are now provider-aware.
 
 = 1.3.14 =
 * Fix: Fatal TypeError on every frontend singular page after a 1.3.13 RankMath migration — `Plugin::get_og_image(): string` was receiving the `rank_math_og_content_image` cache array (`['check' => md5, 'images' => [...]]`) verbatim. `rank_math_og_content_image` is removed from the migration map (it was never a URL) and all OG-image read paths now coerce array values via `MetaCoerce::as_url()`.

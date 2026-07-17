@@ -1,5 +1,21 @@
 # Changelog
 
+## [1.4.0] - 2026-07-17
+
+### Added
+- WP-CLI command surface under `wp lw-seo`:
+  - `migrate rankmath|yoast` (`--dry-run`, `--yes`) — run an importer from the command line.
+  - `redirect list|add|delete|import|export` — manage redirects (CSV round-trip).
+  - `sitemap info|flush` — show the sitemap index URL / re-flush rewrite rules.
+  - `option get|set|list|reset` — read and write LW SEO options.
+- Yoast SEO migrator (`Migration\Yoast`) at parity with the RankMath importer:
+  - Options from `wpseo_titles` / `wpseo_social` (titles, meta descriptions, per-type noindex, separator, social profiles, default OG image) and the knowledge-graph identity (`company_or_person` → `knowledge_type`, name, logo).
+  - Post meta (`_yoast_wpseo_*`): title, description, canonical, OpenGraph/Twitter, robots (`meta-robots-noindex` `1` = noindex), primary category.
+  - Term SEO read from the `wpseo_taxonomy_meta` option (`[taxonomy][term_id][field]`), including the string `wpseo_noindex` (`'noindex'`).
+  - Yoast Premium redirects (`wpseo-premium-redirects-base`) when present.
+  - Yoast `%%var%%` templates normalized to LW SEO variables; separator tokens (`sc-mdash`, …) mapped to characters.
+- `Migration\MigratorInterface` shared by both migrators; the Import tab and AJAX handler are now provider-aware and render a Yoast block alongside RankMath.
+
 ## [1.3.14] - 2026-05-21
 
 ### Fixed
