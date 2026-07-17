@@ -286,17 +286,23 @@
 		detectButton.addEventListener( 'click', handleDetect );
 
 		if ( previewButton ) {
-			previewButton.addEventListener( 'click', function () {
-				handleRun( true );
-			} );
+			previewButton.addEventListener(
+				'click',
+				function () {
+					handleRun( true );
+				}
+			);
 		}
 
 		if ( runButton ) {
-			runButton.addEventListener( 'click', function () {
-				if ( confirm( lwSeoMigrationL10n.confirmRun ) ) {
-					handleRun( false );
+			runButton.addEventListener(
+				'click',
+				function () {
+					if ( confirm( lwSeoMigrationL10n.confirmRun ) ) {
+						handleRun( false );
+					}
 				}
-			} );
+			);
 		}
 	}
 

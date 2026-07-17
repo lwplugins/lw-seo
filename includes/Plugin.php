@@ -131,6 +131,11 @@ final class Plugin {
 		// REST API for headless support.
 		$rest_api = new RestApi();
 		$rest_api->init();
+
+		// WP-CLI commands.
+		if ( defined( 'WP_CLI' ) && \WP_CLI ) {
+			CLI\Bootstrap::register();
+		}
 	}
 
 	/**

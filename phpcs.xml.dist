@@ -33,6 +33,12 @@
         <severity>0</severity>
     </rule>
 
+    <!-- WP-CLI subcommand methods must accept ( $args, $assoc_args ) even when
+         a given subcommand ignores one of them. -->
+    <rule ref="Generic.CodeAnalysis.UnusedFunctionParameter">
+        <exclude-pattern>/includes/CLI/*</exclude-pattern>
+    </rule>
+
     <!-- PHP Compatibility -->
     <rule ref="PHPCompatibilityWP"/>
     <config name="testVersion" value="8.2-"/>
