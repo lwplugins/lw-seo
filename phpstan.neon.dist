@@ -1,0 +1,30 @@
+includes:
+	- phpstan-baseline.neon
+	- vendor/szepeviktor/phpstan-wordpress/extension.neon
+
+parameters:
+	level: 5
+
+	paths:
+		- lw-seo.php
+		- includes/
+
+	excludePaths:
+		- tests/
+		- vendor/
+
+	# Declare the plugin's runtime-defined constants for static analysis.
+	bootstrapFiles:
+		- phpstan-bootstrap.php
+
+	# Third-party APIs the plugin optionally integrates with. WordPress core
+	# stubs come from the szepeviktor/phpstan-wordpress extension above.
+	scanFiles:
+		- vendor/php-stubs/woocommerce-stubs/woocommerce-stubs.php
+		- vendor/php-stubs/wp-cli-stubs/wp-cli-stubs.php
+
+	# The WooCommerce/WordPress stubs are large: each worker loads the full
+	# symbol table, so a single worker keeps peak memory deterministic
+	# (within the per-process limit set by the `analyse` script).
+	parallel:
+		maximumNumberOfProcesses: 1
