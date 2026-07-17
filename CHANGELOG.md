@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.4.1] - 2026-07-17
+
+### Added
+- PHPStan level 5 static analysis (`composer analyse`) with WordPress, WooCommerce, and WP-CLI stubs, plus a CI job that enforces it.
+
+### Fixed
+- Type-safety corrections flagged by static analysis: integer types for WordPress API parameters (author/user/comment/attachment ids), plus removal of redundant null-coalesce and dead code. All behaviour-preserving — no functional changes.
+
 ## [1.4.0] - 2026-07-17
 
 ### Added

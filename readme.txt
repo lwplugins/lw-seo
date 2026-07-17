@@ -3,7 +3,7 @@ Contributors: lwplugins
 Tags: seo, sitemap, schema, opengraph, breadcrumbs
 Requires at least: 6.0
 Tested up to: 6.7
-Stable tag: 1.4.0
+Stable tag: 1.4.1
 Requires PHP: 8.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -133,6 +133,10 @@ Your sitemap is available at `yoursite.com/sitemap.xml`
 6. Settings page - Advanced tab
 
 == Changelog ==
+
+= 1.4.1 =
+* Dev: Added PHPStan level 5 static analysis (`composer analyse`) with WordPress/WooCommerce/WP-CLI stubs and a CI job.
+* Fix: Type-safety corrections flagged by static analysis (integer types for WordPress API calls, redundant/dead code removed) — no functional changes.
 
 = 1.4.0 =
 * New: WP-CLI commands — `wp lw-seo migrate` (rankmath|yoast), `redirect` (list/add/delete/import/export), `sitemap` (info/flush), `option` (get/set/list/reset).
