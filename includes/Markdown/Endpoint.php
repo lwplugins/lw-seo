@@ -298,11 +298,14 @@ final class Endpoint {
 		$token_count = (int) ( mb_strlen( $output ) / 4 );
 
 		header( 'Content-Type: text/markdown; charset=UTF-8' );
+		// Prevent MIME-sniffing: $output is user-controlled post content echoed
+		// unescaped, so a sniffing browser must not reinterpret it as text/html.
+		header( 'X-Content-Type-Options: nosniff' );
 		header( 'X-Robots-Tag: noindex' );
 		header( 'X-Content-Signals: ' . ContentSignals::format_header( $signals ) );
 		header( 'X-Markdown-Tokens: ' . $token_count );
 
-		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Markdown content is pre-built.
+		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Plain-text Markdown body served as text/markdown (non-HTML context) with X-Content-Type-Options: nosniff; HTML-escaping would corrupt the Markdown.
 		echo $output;
 		exit;
 	}
