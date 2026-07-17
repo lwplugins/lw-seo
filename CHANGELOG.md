@@ -16,6 +16,9 @@
   - Yoast `%%var%%` templates normalized to LW SEO variables; separator tokens (`sc-mdash`, …) mapped to characters.
 - `Migration\MigratorInterface` shared by both migrators; the Import tab and AJAX handler are now provider-aware and render a Yoast block alongside RankMath.
 
+### Security
+- Markdown endpoint (`/md`, `/markdown`) now sends `X-Content-Type-Options: nosniff` on the response, preventing browsers from MIME-sniffing the plain-text Markdown body (which contains unescaped post content) as HTML.
+
 ## [1.3.14] - 2026-05-21
 
 ### Fixed
