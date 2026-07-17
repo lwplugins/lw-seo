@@ -9,13 +9,14 @@ declare(strict_types=1);
 
 namespace LightweightPlugins\SEO\Migration\RankMath;
 
+use LightweightPlugins\SEO\Migration\MigratorInterface;
 use LightweightPlugins\SEO\WooCommerce\SlugCollisionDetector;
 
 /**
  * Wires together all the per-area RankMath sub-migrators and surfaces
  * detection counts + warnings for the migration UI.
  */
-final class Migrator {
+final class Migrator implements MigratorInterface {
 
 	/**
 	 * Whether this is a dry run.
