@@ -13,7 +13,7 @@
 
 declare(strict_types=1);
 
-define( 'LW_SEO_VERSION', '1.4.1' );
+define( 'LW_SEO_VERSION', '1.4.2' );
 define( 'LW_SEO_FILE', __DIR__ . '/lw-seo.php' );
 define( 'LW_SEO_PATH', __DIR__ . '/' );
 define( 'LW_SEO_URL', 'https://example.test/wp-content/plugins/lw-seo/' );

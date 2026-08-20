@@ -102,6 +102,11 @@ final class Plugin {
 		// Markdown endpoint.
 		new MarkdownEndpoint();
 
+		// Keep redirect_canonical away from the virtual endpoints above, and
+		// re-flush rewrites (next request) when one of them is toggled.
+		new CanonicalGuard();
+		new RewriteFlusher();
+
 		// LW Site Manager integration (no-op if Site Manager is not active).
 		SiteManager\Integration::init();
 

@@ -182,15 +182,4 @@ final class LlmsTxt {
 
 		return implode( "\n", $lines );
 	}
-
-	/**
-	 * Flush rewrite rules on activation.
-	 *
-	 * @return void
-	 */
-	public static function activate(): void {
-		$llms = new self();
-		$llms->add_rewrite_rules();
-		flush_rewrite_rules();
-	}
 }

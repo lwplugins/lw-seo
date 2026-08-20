@@ -3,7 +3,7 @@
  * Plugin Name:       LW SEO
  * Plugin URI:        https://github.com/lwplugins/lw-seo
  * Description:       Lightweight SEO — minimal footprint, maximum impact.
- * Version:           1.4.1
+ * Version:           1.4.2
  * Requires at least: 6.0
  * Requires PHP:      8.2
  * Author:            LW Plugins
@@ -26,7 +26,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Plugin constants.
-define( 'LW_SEO_VERSION', '1.4.1' );
+define( 'LW_SEO_VERSION', '1.4.2' );
 define( 'LW_SEO_FILE', __FILE__ );
 define( 'LW_SEO_PATH', plugin_dir_path( __FILE__ ) );
 define( 'LW_SEO_URL', plugin_dir_url( __FILE__ ) );
@@ -70,14 +70,23 @@ add_action(
 	}
 );
 
-// Flush rewrite rules on activation (for llms.txt and /md endpoints).
+// Register every enabled virtual endpoint's rewrite rules and flush once.
 register_activation_hook(
 	__FILE__,
 	static function (): void {
-		if ( ! class_exists( LlmsTxt::class ) ) {
+		if ( ! class_exists( Activator::class ) ) {
 			return;
 		}
-		LlmsTxt::activate();
-		Markdown\Endpoint::activate();
+		Activator::activate();
+	}
+);
+
+register_deactivation_hook(
+	__FILE__,
+	static function (): void {
+		if ( ! class_exists( Activator::class ) ) {
+			return;
+		}
+		Activator::deactivate();
 	}
 );

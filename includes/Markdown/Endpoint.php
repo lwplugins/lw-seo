@@ -309,16 +309,4 @@ final class Endpoint {
 		echo $output;
 		exit;
 	}
-
-	/**
-	 * Flush rewrite rules on activation.
-	 *
-	 * @return void
-	 */
-	public static function activate(): void {
-		// EP_ALL covers posts, pages, categories, tags, and custom taxonomies (product_cat, etc.).
-		add_rewrite_endpoint( 'md', EP_ALL );
-		add_rewrite_endpoint( 'markdown', EP_ALL );
-		flush_rewrite_rules();
-	}
 }

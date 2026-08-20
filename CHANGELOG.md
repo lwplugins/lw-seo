@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.4.2] - 2026-08-20
+
+### Fixed
+- Activation now registers the sitemap, robots.txt and llms.txt rewrite rules before flushing (`Activator`), so `/sitemap.xml` no longer 404s until the next permalink save. Covered by `ActivatorTest`.
+- Virtual endpoints (`/sitemap.xml`, `/sitemap-*.xml`, `/llms.txt`, `/{post}/md`) were 301-redirected by `redirect_canonical` to a trailing-slash variant before the handler ran; `CanonicalGuard` now disables the canonical redirect for them. Covered by `CanonicalGuardTest`.
+
+### Added
+- `RewriteFlusher`: toggling sitemap / robots.txt / llms.txt schedules a rewrite flush for the next request (the current one cannot see the newly enabled rules). Rewrites are also flushed on deactivation. Covered by `RewriteFlusherTest`.
+
+### Changed
+- Tested up to WordPress 7.1.
+
 ## [1.4.1] - 2026-07-17
 
 ### Added

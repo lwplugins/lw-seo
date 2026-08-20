@@ -2,8 +2,8 @@
 Contributors: lwplugins
 Tags: seo, sitemap, schema, opengraph, breadcrumbs
 Requires at least: 6.0
-Tested up to: 6.7
-Stable tag: 1.4.1
+Tested up to: 7.1
+Stable tag: 1.4.2
 Requires PHP: 8.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -133,6 +133,12 @@ Your sitemap is available at `yoursite.com/sitemap.xml`
 6. Settings page - Advanced tab
 
 == Changelog ==
+
+= 1.4.2 =
+* Fix: Activating the plugin now registers the sitemap, robots.txt and llms.txt rewrite rules before flushing — /sitemap.xml no longer 404s until the next permalink save.
+* Fix: /sitemap.xml, /sitemap-*.xml, /llms.txt and /{post}/md are served directly instead of via a 301 to the trailing-slash variant.
+* New: Rewrite rules are re-flushed (on the next request) when the sitemap, robots.txt or llms.txt feature is toggled, and dropped on deactivation.
+* Update: Tested up to WordPress 7.1.
 
 = 1.4.1 =
 * Dev: Added PHPStan level 5 static analysis (`composer analyse`) with WordPress/WooCommerce/WP-CLI stubs and a CI job.
