@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.5.0] - 2026-08-24
+
+### Added
+- Canonical URL on post type archives (including the WooCommerce shop page); without it every filter/sort parameter became a separate indexable URL.
+- Self-referencing canonical on paged post type archives and on the paged posts page.
+
+### Fixed
+- The blog posts page (`is_home()` with a static front page) received the front page's canonical, `og:url` and title. It now uses its own page meta.
+
+### Changed
+- Head meta output and document title filtering extracted from `Plugin` into `Meta\HeadMeta`, `Meta\SingularMeta`, `Meta\ArchiveMeta`, `Meta\TagRenderer`, `Meta\ArchiveContext` and `Meta\TitleFilter`.
+- PHPStan baseline reduced 7 -> 5 entries.
+
 ## [1.4.2] - 2026-08-20
 
 ### Fixed

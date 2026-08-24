@@ -3,7 +3,7 @@ Contributors: lwplugins
 Tags: seo, sitemap, schema, opengraph, breadcrumbs
 Requires at least: 6.0
 Tested up to: 7.1
-Stable tag: 1.4.2
+Stable tag: 1.5.0
 Requires PHP: 8.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -133,6 +133,12 @@ Your sitemap is available at `yoursite.com/sitemap.xml`
 6. Settings page - Advanced tab
 
 == Changelog ==
+
+= 1.5.0 =
+* New: Canonical URL on post type archives (including the WooCommerce shop page) - filter and sort parameters no longer create separate indexable URLs.
+* Fix: The blog posts page now gets its own canonical, og:url and title instead of the front page ones.
+* New: Paged archives point their canonical at themselves instead of page one.
+* Change: Head meta and title handling moved out of the main plugin class into dedicated Meta classes.
 
 = 1.4.2 =
 * Fix: Activating the plugin now registers the sitemap, robots.txt and llms.txt rewrite rules before flushing — /sitemap.xml no longer 404s until the next permalink save.

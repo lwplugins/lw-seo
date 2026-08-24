@@ -67,3 +67,21 @@ if ( ! class_exists( 'WP_Post_Type' ) ) {
 		}
 	}
 }
+
+if ( ! class_exists( 'WP_Rewrite' ) ) {
+	#[AllowDynamicProperties]
+	class WP_Rewrite {
+		public string $pagination_base = 'page';
+
+		private bool $permalinks;
+
+		public function __construct( bool $permalinks = true, string $pagination_base = 'page' ) {
+			$this->permalinks      = $permalinks;
+			$this->pagination_base = $pagination_base;
+		}
+
+		public function using_permalinks(): bool {
+			return $this->permalinks;
+		}
+	}
+}

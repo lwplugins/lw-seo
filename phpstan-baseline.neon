@@ -13,18 +13,6 @@ parameters:
 			path: includes/Migration/Ajax.php
 
 		-
-			message: '#^Parameter \#1 \$term of function term_description expects int, WP_Term given\.$#'
-			identifier: argument.type
-			count: 1
-			path: includes/Plugin.php
-
-		-
-			message: '#^Property WP_Term\:\:\$taxonomy \(string\) on left side of \?\? is not nullable\.$#'
-			identifier: nullCoalesce.property
-			count: 1
-			path: includes/Plugin.php
-
-		-
 			message: '#^Unreachable statement \- code above always terminates\.$#'
 			identifier: deadCode.unreachable
 			count: 14
