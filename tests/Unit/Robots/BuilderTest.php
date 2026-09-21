@@ -83,4 +83,40 @@ final class BuilderTest extends MonkeyTestCase {
 			Builder::add_signal( '', 'ai-train=no' )
 		);
 	}
+
+	public function test_build_normalizes_crlf_before_inserting_signal_into_the_original_group(): void {
+		$crlf_core = "User-agent: *\r\nDisallow: /wp-admin/\r\nAllow: /wp-admin/admin-ajax.php\r\n";
+
+		$result = Builder::build( $crlf_core, self::context( [ 'signal' => 'ai-train=no' ] ) );
+
+		$this->assertSame( 1, substr_count( $result, 'User-agent: *' ), 'a second, synthesized star group must not appear' );
+		$this->assertStringContainsString( "User-agent: *\nContent-Signal: ai-train=no\nDisallow: /wp-admin/\n", $result );
+	}
+
+	/**
+	 * @dataProvider provide_crlf_star_groups
+	 */
+	public function test_signal_matches_the_star_group_regardless_of_line_ending_or_spacing( string $output, string $expected ): void {
+		$this->assertSame( $expected, Builder::add_signal( $output, 'ai-train=no' ) );
+	}
+
+	/**
+	 * @return array<string, array{0: string, 1: string}>
+	 */
+	public static function provide_crlf_star_groups(): array {
+		return [
+			'CRLF, standard spacing' => [
+				"User-agent: *\r\nDisallow: /wp-admin/\r\n",
+				"User-agent: *\nContent-Signal: ai-train=no\nDisallow: /wp-admin/\n",
+			],
+			'CRLF, no space after colon' => [
+				"User-agent:*\r\nDisallow: /wp-admin/\r\n",
+				"User-agent:*\nContent-Signal: ai-train=no\nDisallow: /wp-admin/\n",
+			],
+			'CRLF, mixed case'      => [
+				"User-Agent: *\r\nDisallow: /wp-admin/\r\n",
+				"User-Agent: *\nContent-Signal: ai-train=no\nDisallow: /wp-admin/\n",
+			],
+		];
+	}
 }

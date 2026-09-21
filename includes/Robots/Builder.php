@@ -39,6 +39,8 @@ final class Builder {
 	 * @return string
 	 */
 	public static function build( string $output, array $context ): string {
+		$output = str_replace( [ "\r\n", "\r" ], "\n", $output );
+
 		if ( '' !== $context['signal'] ) {
 			$output = implode( "\n", self::POLICY_COMMENT ) . "\n\n" . self::add_signal( $output, $context['signal'] );
 		}
@@ -72,6 +74,7 @@ final class Builder {
 	 * @return string
 	 */
 	public static function add_signal( string $output, string $signal ): string {
+		$output = str_replace( [ "\r\n", "\r" ], "\n", $output );
 		$line   = 'Content-Signal: ' . $signal;
 		$count  = 0;
 		$result = preg_replace( '/^(User-agent:[ \t]*\*[ \t]*)$/mi', '$1' . "\n" . $line, $output, 1, $count );
