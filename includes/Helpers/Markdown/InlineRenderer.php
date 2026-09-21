@@ -133,16 +133,25 @@ final class InlineRenderer {
 	}
 
 	/**
-	 * Emphasis-style wrapper.
+	 * Emphasis-style wrapper. Leading/trailing whitespace stays outside the
+	 * markers so it doesn't glue the emphasis to adjacent text (CommonMark
+	 * ignores emphasis markers with whitespace immediately inside them).
 	 *
 	 * @param string      $marker Marker.
 	 * @param \DOMElement $node   Element.
 	 * @return string
 	 */
 	private static function wrap( string $marker, \DOMElement $node ): string {
-		$inner = trim( self::content( $node ) );
+		$text  = self::content( $node );
+		$inner = trim( $text );
+		if ( '' === $inner ) {
+			return '';
+		}
 
-		return '' === $inner ? '' : $marker . $inner . $marker;
+		$leading  = substr( $text, 0, strlen( $text ) - strlen( ltrim( $text ) ) );
+		$trailing = substr( $text, strlen( rtrim( $text ) ) );
+
+		return $leading . $marker . $inner . $marker . $trailing;
 	}
 
 	/**

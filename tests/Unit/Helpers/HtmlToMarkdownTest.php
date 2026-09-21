@@ -110,6 +110,14 @@ final class HtmlToMarkdownTest extends MonkeyTestCase {
 				'<p><img src="https://x.test/a.jpg" alt="A\\<b>C"></p>',
 				"![AbC](https://x.test/a.jpg)\n",
 			],
+			'whitespace inside strong stays outside the markers' => [
+				'<p><strong>Note: </strong>text</p>',
+				"**Note:** text\n",
+			],
+			'whitespace inside em stays outside the markers' => [
+				'<p>a<em> b </em>c</p>',
+				"a *b* c\n",
+			],
 		];
 	}
 
