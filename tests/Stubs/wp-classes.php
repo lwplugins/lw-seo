@@ -85,3 +85,26 @@ if ( ! class_exists( 'WP_Rewrite' ) ) {
 		}
 	}
 }
+
+if ( ! class_exists( 'WP_Error' ) ) {
+	class WP_Error {
+		/**
+		 * @param string|int $code    Error code.
+		 * @param string     $message Error message.
+		 * @param mixed      $data    Error data.
+		 */
+		public function __construct( private string|int $code = '', private string $message = '', private mixed $data = '' ) {}
+
+		public function get_error_code(): string|int {
+			return $this->code;
+		}
+
+		public function get_error_message(): string {
+			return $this->message;
+		}
+
+		public function get_error_data(): mixed {
+			return $this->data;
+		}
+	}
+}

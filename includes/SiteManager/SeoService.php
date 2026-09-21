@@ -186,6 +186,10 @@ final class SeoService {
 			return new \WP_Error( 'not_found', __( 'Post not found.', 'lw-seo' ), [ 'status' => 404 ] );
 		}
 
+		if ( ! current_user_can( 'edit_post', $post_id ) ) {
+			return new \WP_Error( 'forbidden', __( 'You are not allowed to edit this post.', 'lw-seo' ), [ 'status' => 403 ] );
+		}
+
 		$updated = [];
 		foreach ( $meta as $key => $value ) {
 			if ( in_array( $key, self::META_FIELDS, true ) && MarkdownOverrideField::may_set( $key ) ) {
@@ -216,6 +220,10 @@ final class SeoService {
 		$term = get_term( $term_id );
 		if ( ! $term || is_wp_error( $term ) ) {
 			return new \WP_Error( 'not_found', __( 'Term not found.', 'lw-seo' ), [ 'status' => 404 ] );
+		}
+
+		if ( ! current_user_can( 'edit_term', $term_id ) ) {
+			return new \WP_Error( 'forbidden', __( 'You are not allowed to edit this term.', 'lw-seo' ), [ 'status' => 403 ] );
 		}
 
 		$updated = [];
