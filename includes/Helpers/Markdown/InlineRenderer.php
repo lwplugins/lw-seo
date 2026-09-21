@@ -22,7 +22,13 @@ final class InlineRenderer {
 	private const UNSAFE_SCHEMES = [ 'javascript:', 'vbscript:', 'data:' ];
 
 	/**
-	 * Render all children of a node inline.
+	 * Render all children of a node inline. A backtick left at the end of
+	 * one piece (an escaped trailing backtick in text, or a raw code-span
+	 * fence) is separated with a space from a backtick starting the next
+	 * piece (a raw code-span fence), so the two can never read as one
+	 * longer run of backticks — which would merge a closing fence with the
+	 * next span's opening fence, or make an escaped backtick look like
+	 * part of a fence.
 	 *
 	 * @param \DOMNode $node Parent node.
 	 * @return string
@@ -31,7 +37,11 @@ final class InlineRenderer {
 		$output = '';
 
 		foreach ( $node->childNodes as $child ) {
-			$output .= self::node( $child );
+			$piece = self::node( $child );
+			if ( str_ends_with( $output, '`' ) && str_starts_with( $piece, '`' ) ) {
+				$output .= ' ';
+			}
+			$output .= $piece;
 		}
 
 		return $output;
@@ -113,16 +123,20 @@ final class InlineRenderer {
 
 	/**
 	 * Escape characters that could otherwise start Markdown link/image
-	 * syntax or be read as raw HTML (an autolink or a tag) by a downstream
-	 * CommonMark renderer. Code spans and fenced code blocks bypass this
-	 * (they render their textContent raw) and must stay unescaped.
+	 * syntax, be read as raw HTML (an autolink or a tag), or fuse with an
+	 * adjacent code span's fence, by a downstream CommonMark renderer. A
+	 * backtick left next to a real code span's fence can join it, so the
+	 * span never opens/closes where intended and its raw content (e.g. a
+	 * decoded `<img onerror>` payload) is read as live HTML instead. Code
+	 * spans and fenced code blocks bypass this (they render their
+	 * textContent raw) and must stay unescaped.
 	 *
 	 * @param string $text Text to escape.
 	 * @return string
 	 */
 	public static function escape( string $text ): string {
 		return (string) preg_replace_callback(
-			'/[\x5C\x5B\x5D<>]/',
+			'/[\x5C\x5B\x5D<>`]/',
 			static fn( array $matches ): string => '\\' . $matches[0],
 			$text
 		);
@@ -170,10 +184,11 @@ final class InlineRenderer {
 	/**
 	 * Inline code span, safe for embedded backticks: the fence is one
 	 * backtick longer than the longest run inside the text, so an internal
-	 * run (e.g. a double backtick) can never close the span early. A space
-	 * is added on a side whose content starts/ends with a backtick, per
-	 * the CommonMark rule, to keep that backtick from reading as part of
-	 * the fence.
+	 * run (e.g. a double backtick) can never close the span early. When the
+	 * content starts or ends with a backtick, a space is added on BOTH
+	 * sides — CommonMark only strips that padding when it's present on
+	 * both sides, so padding just the affected side would leave a stray
+	 * space in the rendered output.
 	 *
 	 * @param string $text Code text.
 	 * @return string

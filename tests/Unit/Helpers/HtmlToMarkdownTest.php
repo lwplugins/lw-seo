@@ -146,6 +146,22 @@ final class HtmlToMarkdownTest extends MonkeyTestCase {
 				'<pre>[a]&lt;b&gt;\c</pre>',
 				"```\n[a]<b>\\c\n```\n",
 			],
+			'text backtick before a code span is escaped and separated' => [
+				'<p>see `<code>&lt;img src=x onerror=alert(1)&gt;</code> here</p>',
+				"see \\` `<img src=x onerror=alert(1)>` here\n",
+			],
+			'text backtick after a code span is escaped' => [
+				'<p><code>&lt;img src=x onerror=alert(1)&gt;</code>` see</p>',
+				"`<img src=x onerror=alert(1)>`\\` see\n",
+			],
+			'adjacent code spans stay separated' => [
+				'<p><code>``</code><code>&lt;img src=x onerror=alert(1)&gt;</code></p>',
+				"``` `` ``` `<img src=x onerror=alert(1)>`\n",
+			],
+			'plain prose backtick is escaped' => [
+				'<p>a ` b</p>',
+				"a \\` b\n",
+			],
 		];
 	}
 
