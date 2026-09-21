@@ -2,21 +2,22 @@
 # This file is distributed under the GPL-2.0-or-later.
 msgid ""
 msgstr ""
-"Project-Id-Version: LW SEO 1.3.1\n"
+"Project-Id-Version: LW SEO 1.6.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/lw-seo\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-03-21T19:10:52+00:00\n"
+"POT-Creation-Date: 2026-09-21T19:36:47+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: lw-seo\n"
 
 #. Plugin Name of the plugin
 #: lw-seo.php
-#: includes/MetaBox.php:52
+#: includes/Admin/TermFields.php:47
+#: includes/MetaBox.php:55
 #: assets/js/blocks/faq.js:279
 msgid "LW SEO"
 msgstr ""
@@ -491,7 +492,7 @@ msgstr ""
 
 #: includes/Admin/Data/BusinessTypes.php:137
 #: includes/Admin/Settings/TabGeneral.php:34
-#: includes/Admin/Settings/TabWooCommerce.php:72
+#: includes/Admin/Settings/TabWooCommerce.php:144
 msgid "General"
 msgstr ""
 
@@ -523,6 +524,32 @@ msgstr ""
 msgid "Lodging"
 msgstr ""
 
+#: includes/Admin/MarkdownOverrideField.php:48
+#: includes/Admin/MarkdownOverrideField.php:83
+msgid "Markdown Content"
+msgstr ""
+
+#: includes/Admin/MarkdownOverrideField.php:53
+msgid "Custom Markdown"
+msgstr ""
+
+#: includes/Admin/MarkdownOverrideField.php:61
+#: includes/Admin/MarkdownOverrideField.php:87
+msgid "# Title..."
+msgstr ""
+
+#: includes/Admin/MarkdownOverrideField.php:65
+msgid "If filled, this markdown is served at the /md endpoint instead of the auto-generated content. Ideal for Elementor, Divi, or other page builder pages."
+msgstr ""
+
+#: includes/Admin/MarkdownOverrideField.php:91
+msgid "If filled, this markdown is served at the /md endpoint instead of the auto-generated content."
+msgstr ""
+
+#: includes/Admin/MarkdownOverrideField.php:113
+msgid "Only users allowed to post unfiltered HTML can edit the Markdown override."
+msgstr ""
+
 #: includes/Admin/ParentPage.php:129
 msgid "Lightweight plugins for WordPress - minimal footprint, maximum impact."
 msgstr ""
@@ -539,9 +566,136 @@ msgstr ""
 msgid "Get Plugin"
 msgstr ""
 
+#: includes/Admin/Settings/CrawlerSection.php:29
+msgid "AI Crawler Access"
+msgstr ""
+
+#: includes/Admin/Settings/CrawlerSection.php:31
+msgid "Blocked crawlers get a \"Disallow: /\" rule in robots.txt. Checked = Blocked."
+msgstr ""
+
+#: includes/Admin/Settings/CrawlerSection.php:35
+msgid "Block by purpose"
+msgstr ""
+
+#: includes/Admin/Settings/CrawlerSection.php:48
+msgid "Covers every crawler with that purpose, including ones added in future updates."
+msgstr ""
+
+#: includes/Admin/Settings/CrawlerSection.php:57
+msgid "robots.txt is a request, not an enforcement. OpenAI, Perplexity, Meta and Amazon state that their user-triggered fetchers may ignore it."
+msgstr ""
+
+#: includes/Admin/Settings/CrawlerSection.php:117
+msgid "Block all AI training crawlers"
+msgstr ""
+
+#: includes/Admin/Settings/CrawlerSection.php:118
+msgid "Training crawlers"
+msgstr ""
+
+#: includes/Admin/Settings/CrawlerSection.php:121
+msgid "Block all AI search crawlers"
+msgstr ""
+
+#: includes/Admin/Settings/CrawlerSection.php:122
+msgid "AI search crawlers"
+msgstr ""
+
+#: includes/Admin/Settings/CrawlerSection.php:125
+msgid "Block all user-triggered AI fetchers"
+msgstr ""
+
+#: includes/Admin/Settings/CrawlerSection.php:126
+msgid "User-triggered fetchers"
+msgstr ""
+
 #: includes/Admin/Settings/FieldRendererTrait.php:153
-#: includes/MetaBox.php:258
+#: includes/MetaBox.php:261
 msgid "Select Image"
+msgstr ""
+
+#: includes/Admin/Settings/LlmsSection.php:31
+msgid "llms.txt File"
+msgstr ""
+
+#: includes/Admin/Settings/LlmsSection.php:52
+msgid "llms.txt"
+msgstr ""
+
+#: includes/Admin/Settings/LlmsSection.php:58
+msgid "Enable llms.txt for AI crawlers"
+msgstr ""
+
+#. translators: %1$s: llms.txt URL, %2$s: llmstxt.org link
+#: includes/Admin/Settings/LlmsSection.php:66
+#, php-format
+msgid "Your llms.txt: %1$s — %2$s"
+msgstr ""
+
+#: includes/Admin/Settings/LlmsSection.php:68
+msgid "Learn more"
+msgstr ""
+
+#: includes/Admin/Settings/LlmsSection.php:85
+#: includes/Admin/Settings/TabSocial.php:110
+msgid "Summary"
+msgstr ""
+
+#: includes/Admin/Settings/LlmsSection.php:91
+msgid "One sentence shown as the summary line. Empty = the site tagline."
+msgstr ""
+
+#: includes/Admin/Settings/LlmsSection.php:98
+msgid "Introduction"
+msgstr ""
+
+#: includes/Admin/Settings/LlmsSection.php:104
+msgid "Optional Markdown text shown before the page lists. Do not use headings."
+msgstr ""
+
+#: includes/Admin/Settings/LlmsSection.php:121
+msgid "Content types"
+msgstr ""
+
+#: includes/Admin/Settings/LlmsSection.php:124
+msgid "Each type becomes its own section. Noindex content and content with AI Input set to \"No\" are left out."
+msgstr ""
+
+#: includes/Admin/Settings/LlmsSection.php:128
+msgid "Items per section"
+msgstr ""
+
+#: includes/Admin/Settings/LlmsSection.php:137
+msgid "Pages are listed in menu order, other types newest first."
+msgstr ""
+
+#: includes/Admin/Settings/LlmsSection.php:141
+msgid "Markdown links"
+msgstr ""
+
+#: includes/Admin/Settings/LlmsSection.php:147
+msgid "Link to the Markdown version of each page (/md) instead of the HTML page"
+msgstr ""
+
+#: includes/Admin/Settings/LlmsSection.php:164
+msgid "Extra links"
+msgstr ""
+
+#: includes/Admin/Settings/LlmsSection.php:170
+msgid "One per line: Title | https://url | optional description. Listed under \"Optional\"."
+msgstr ""
+
+#: includes/Admin/Settings/LlmsSection.php:177
+msgid "llms-full.txt"
+msgstr ""
+
+#: includes/Admin/Settings/LlmsSection.php:183
+msgid "Also serve /llms-full.txt with the full Markdown content (max 1 MB)"
+msgstr ""
+
+#: includes/Admin/Settings/LlmsSection.php:187
+msgid "Built as a logged-out visitor. Content-restriction plugins that only protect the main page query may not apply here; use the lw_seo_post_is_eligible filter to leave restricted posts out."
 msgstr ""
 
 #: includes/Admin/Settings/Tab404.php:34
@@ -568,162 +722,139 @@ msgstr ""
 msgid "When enabled, visitors who land on a non-existent page will be redirected to your homepage with a 302 (temporary) redirect."
 msgstr ""
 
-#: includes/Admin/Settings/TabAdvanced.php:34
-#: includes/MetaBox.php:278
+#: includes/Admin/Settings/TabAdvanced.php:36
+#: includes/MetaBox.php:281
 msgid "Advanced"
 msgstr ""
 
-#: includes/Admin/Settings/TabAdvanced.php:53
+#: includes/Admin/Settings/TabAdvanced.php:55
 msgid "Advanced Settings"
 msgstr ""
 
-#: includes/Admin/Settings/TabAdvanced.php:56
+#: includes/Admin/Settings/TabAdvanced.php:58
 msgid "Advanced settings and cleanup options."
 msgstr ""
 
-#: includes/Admin/Settings/TabAdvanced.php:72
+#: includes/Admin/Settings/TabAdvanced.php:74
 msgid "Features"
 msgstr ""
 
-#: includes/Admin/Settings/TabAdvanced.php:75
+#: includes/Admin/Settings/TabAdvanced.php:77
 msgid "Breadcrumbs"
 msgstr ""
 
-#: includes/Admin/Settings/TabAdvanced.php:81
+#: includes/Admin/Settings/TabAdvanced.php:83
 msgid "Enable breadcrumbs"
 msgstr ""
 
-#: includes/Admin/Settings/TabAdvanced.php:86
+#: includes/Admin/Settings/TabAdvanced.php:88
 msgid "Use shortcode [lw_breadcrumbs] or function lw_seo_breadcrumbs()"
 msgstr ""
 
-#: includes/Admin/Settings/TabAdvanced.php:91
-#: includes/Admin/Settings/TabWooCommerce.php:131
+#: includes/Admin/Settings/TabAdvanced.php:93
+#: includes/Admin/Settings/TabWooCommerce.php:203
 msgid "Schema.org"
 msgstr ""
 
-#: includes/Admin/Settings/TabAdvanced.php:97
+#: includes/Admin/Settings/TabAdvanced.php:99
 msgid "Enable Schema.org JSON-LD output"
 msgstr ""
 
-#: includes/Admin/Settings/TabAdvanced.php:104
+#: includes/Admin/Settings/TabAdvanced.php:106
 msgid "robots.txt"
 msgstr ""
 
-#: includes/Admin/Settings/TabAdvanced.php:110
+#: includes/Admin/Settings/TabAdvanced.php:112
 msgid "Add sitemap URL and AI rules to robots.txt"
 msgstr ""
 
-#: includes/Admin/Settings/TabAdvanced.php:118
+#: includes/Admin/Settings/TabAdvanced.php:120
 msgid "Your robots.txt"
 msgstr ""
 
-#: includes/Admin/Settings/TabAdvanced.php:137
+#. translators: %s: path of the robots.txt file
+#: includes/Admin/Settings/TabAdvanced.php:144
+#, php-format
+msgid "A physical robots.txt file exists (%s). The web server serves it directly, so these settings have no effect. Delete the file to let LW SEO manage robots.txt."
+msgstr ""
+
+#: includes/Admin/Settings/TabAdvanced.php:152
+msgid "Preview"
+msgstr ""
+
+#: includes/Admin/Settings/TabAdvanced.php:165
 msgid "Head Cleanup"
 msgstr ""
 
-#: includes/Admin/Settings/TabAdvanced.php:140
+#: includes/Admin/Settings/TabAdvanced.php:168
 msgid "Shortlinks"
 msgstr ""
 
-#: includes/Admin/Settings/TabAdvanced.php:146
+#: includes/Admin/Settings/TabAdvanced.php:174
 msgid "Remove shortlinks from head"
 msgstr ""
 
-#: includes/Admin/Settings/TabAdvanced.php:153
+#: includes/Admin/Settings/TabAdvanced.php:181
 msgid "RSD Link"
 msgstr ""
 
-#: includes/Admin/Settings/TabAdvanced.php:159
+#: includes/Admin/Settings/TabAdvanced.php:187
 msgid "Remove RSD link from head"
 msgstr ""
 
-#: includes/Admin/Settings/TabAdvanced.php:166
+#: includes/Admin/Settings/TabAdvanced.php:194
 msgid "WLW Manifest"
 msgstr ""
 
-#: includes/Admin/Settings/TabAdvanced.php:172
+#: includes/Admin/Settings/TabAdvanced.php:200
 msgid "Remove Windows Live Writer link"
 msgstr ""
 
-#: includes/Admin/Settings/TabAi.php:37
+#: includes/Admin/Settings/TabAi.php:34
 msgid "AI / LLM"
 msgstr ""
 
-#: includes/Admin/Settings/TabAi.php:56
+#: includes/Admin/Settings/TabAi.php:53
 msgid "AI / LLM Settings"
 msgstr ""
 
-#: includes/Admin/Settings/TabAi.php:59
+#: includes/Admin/Settings/TabAi.php:56
 msgid "Control how AI crawlers interact with your site."
 msgstr ""
 
-#: includes/Admin/Settings/TabAi.php:75
-msgid "Content Signals"
+#: includes/Admin/Settings/TabAi.php:72
+#: includes/Admin/Settings/TabLocal.php:174
+msgid "Not specified"
+msgstr ""
+
+#: includes/Admin/Settings/TabAi.php:73
+msgid "Allow"
+msgstr ""
+
+#: includes/Admin/Settings/TabAi.php:74
+msgid "Disallow"
 msgstr ""
 
 #: includes/Admin/Settings/TabAi.php:77
-msgid "Tell AI agents how they may use your content. These signals are sent as HTTP headers and meta tags."
-msgstr ""
-
-#: includes/Admin/Settings/TabAi.php:81
-#: includes/MetaBox.php:319
-msgid "AI Training"
-msgstr ""
-
-#: includes/Admin/Settings/TabAi.php:87
-msgid "Allow AI systems to use content for training"
-msgstr ""
-
-#: includes/Admin/Settings/TabAi.php:94
-#: includes/MetaBox.php:331
-msgid "AI Input (RAG)"
-msgstr ""
-
-#: includes/Admin/Settings/TabAi.php:100
-msgid "Allow AI systems to use content for responses"
-msgstr ""
-
-#: includes/Admin/Settings/TabAi.php:107
 msgid "Search"
 msgstr ""
 
-#: includes/Admin/Settings/TabAi.php:113
-msgid "Allow content to appear in AI search results"
+#: includes/Admin/Settings/TabAi.php:78
+msgid "AI Input (RAG, grounding)"
 msgstr ""
 
-#: includes/Admin/Settings/TabAi.php:131
-msgid "llms.txt File"
+#: includes/Admin/Settings/TabAi.php:79
+#: includes/Admin/TermFields.php:129
+#: includes/MetaBox.php:322
+msgid "AI Training"
 msgstr ""
 
-#: includes/Admin/Settings/TabAi.php:134
-msgid "llms.txt"
+#: includes/Admin/Settings/TabAi.php:82
+msgid "Content Signals"
 msgstr ""
 
-#: includes/Admin/Settings/TabAi.php:140
-msgid "Enable llms.txt for AI crawlers"
-msgstr ""
-
-#. translators: %1$s: llms.txt URL, %2$s: llmstxt.org link
-#: includes/Admin/Settings/TabAi.php:148
-#, php-format
-msgid "Your llms.txt: %1$s — %2$s"
-msgstr ""
-
-#: includes/Admin/Settings/TabAi.php:150
-msgid "Learn more"
-msgstr ""
-
-#: includes/Admin/Settings/TabAi.php:167
-msgid "AI Crawler Access"
-msgstr ""
-
-#: includes/Admin/Settings/TabAi.php:169
-msgid "Block specific AI crawlers from accessing your site via robots.txt. Checked = Blocked."
-msgstr ""
-
-#: includes/Admin/Settings/TabAi.php:198
-msgid "Blocking crawlers adds Disallow rules to your robots.txt. Note: AI companies may not always respect these rules."
+#: includes/Admin/Settings/TabAi.php:84
+msgid "Tell AI systems how they may use your content. Sent as a Content-Signal HTTP header, a meta tag and a robots.txt line. \"Not specified\" neither grants nor restricts that use."
 msgstr ""
 
 #: includes/Admin/Settings/TabContent.php:34
@@ -931,10 +1062,6 @@ msgstr ""
 msgid "Price Range"
 msgstr ""
 
-#: includes/Admin/Settings/TabLocal.php:174
-msgid "Not specified"
-msgstr ""
-
 #: includes/Admin/Settings/TabLocal.php:220
 msgid "Address"
 msgstr ""
@@ -1036,7 +1163,7 @@ msgstr ""
 msgid "Import SEO data from other SEO plugins. Existing LW SEO data will not be overwritten."
 msgstr ""
 
-#: includes/Admin/Settings/TabMigration.php:57
+#: includes/Admin/Settings/TabMigration.php:60
 msgid "RankMath SEO"
 msgstr ""
 
@@ -1045,14 +1172,22 @@ msgid "Detect RankMath SEO data in your database for migration."
 msgstr ""
 
 #: includes/Admin/Settings/TabMigration.php:65
+msgid "Yoast SEO"
+msgstr ""
+
+#: includes/Admin/Settings/TabMigration.php:66
+msgid "Detect Yoast SEO data in your database for migration."
+msgstr ""
+
+#: includes/Admin/Settings/TabMigration.php:87
 msgid "Detect Data"
 msgstr ""
 
-#: includes/Admin/Settings/TabMigration.php:77
+#: includes/Admin/Settings/TabMigration.php:99
 msgid "Preview Migration"
 msgstr ""
 
-#: includes/Admin/Settings/TabMigration.php:80
+#: includes/Admin/Settings/TabMigration.php:102
 msgid "Run Migration"
 msgstr ""
 
@@ -1102,7 +1237,7 @@ msgstr ""
 
 #: includes/Admin/Settings/TabRedirects.php:134
 #: includes/Admin/Settings/TabRedirects.php:186
-#: includes/Admin/SettingsPage.php:162
+#: includes/Admin/SettingsPage.php:186
 msgid "Regex"
 msgstr ""
 
@@ -1115,7 +1250,7 @@ msgid "Advanced: Use regex patterns like ^/category/(.*)$ with $1 in destination
 msgstr ""
 
 #: includes/Admin/Settings/TabRedirects.php:149
-#: includes/Admin/SettingsPage.php:152
+#: includes/Admin/SettingsPage.php:176
 msgid "Add Redirect"
 msgstr ""
 
@@ -1152,17 +1287,17 @@ msgid "Actions"
 msgstr ""
 
 #: includes/Admin/Settings/TabRedirects.php:191
-#: includes/Admin/SettingsPage.php:161
+#: includes/Admin/SettingsPage.php:185
 msgid "N/A"
 msgstr ""
 
 #: includes/Admin/Settings/TabRedirects.php:210
-#: includes/Admin/SettingsPage.php:154
+#: includes/Admin/SettingsPage.php:178
 msgid "Edit"
 msgstr ""
 
 #: includes/Admin/Settings/TabRedirects.php:213
-#: includes/Admin/SettingsPage.php:155
+#: includes/Admin/SettingsPage.php:179
 msgid "Delete"
 msgstr ""
 
@@ -1190,50 +1325,74 @@ msgstr ""
 msgid "Import redirects from a CSV file. Format: source,destination,type,regex"
 msgstr ""
 
-#: includes/Admin/Settings/TabSitemap.php:34
-#: includes/Admin/Settings/TabWooCommerce.php:175
+#: includes/Admin/Settings/TabSitemap.php:38
+#: includes/Admin/Settings/TabWooCommerce.php:247
 msgid "Sitemap"
 msgstr ""
 
-#: includes/Admin/Settings/TabSitemap.php:54
-#: includes/Admin/Settings/TabSitemap.php:65
+#: includes/Admin/Settings/TabSitemap.php:58
+#: includes/Admin/Settings/TabSitemap.php:69
 msgid "XML Sitemap"
 msgstr ""
 
-#: includes/Admin/Settings/TabSitemap.php:58
+#: includes/Admin/Settings/TabSitemap.php:62
 msgid "Your sitemap:"
 msgstr ""
 
-#: includes/Admin/Settings/TabSitemap.php:71
+#: includes/Admin/Settings/TabSitemap.php:69
 msgid "Enable XML sitemap"
 msgstr ""
 
-#: includes/Admin/Settings/TabSitemap.php:78
+#: includes/Admin/Settings/TabSitemap.php:83
 msgid "Include Posts"
 msgstr ""
 
-#: includes/Admin/Settings/TabSitemap.php:84
+#: includes/Admin/Settings/TabSitemap.php:83
 msgid "Include posts in sitemap"
 msgstr ""
 
-#: includes/Admin/Settings/TabSitemap.php:91
+#: includes/Admin/Settings/TabSitemap.php:84
 msgid "Include Pages"
 msgstr ""
 
-#: includes/Admin/Settings/TabSitemap.php:97
+#: includes/Admin/Settings/TabSitemap.php:84
 msgid "Include pages in sitemap"
 msgstr ""
 
-#: includes/Admin/Settings/TabSitemap.php:104
+#: includes/Admin/Settings/TabSitemap.php:92
+msgid "Custom Post Types"
+msgstr ""
+
+#: includes/Admin/Settings/TabSitemap.php:95
+msgid "New custom post types are included automatically. Content set to noindex is always left out."
+msgstr ""
+
+#: includes/Admin/Settings/TabSitemap.php:107
 msgid "Include Categories"
 msgstr ""
 
-#: includes/Admin/Settings/TabSitemap.php:110
+#: includes/Admin/Settings/TabSitemap.php:107
 msgid "Include categories in sitemap"
 msgstr ""
 
+#: includes/Admin/Settings/TabSitemap.php:108
+msgid "Include Tags"
+msgstr ""
+
+#: includes/Admin/Settings/TabSitemap.php:108
+msgid "Include tags in sitemap"
+msgstr ""
+
+#: includes/Admin/Settings/TabSitemap.php:116
+msgid "Custom Taxonomies"
+msgstr ""
+
+#: includes/Admin/Settings/TabSitemap.php:119
+msgid "Custom taxonomy archives are only listed when switched on here."
+msgstr ""
+
 #: includes/Admin/Settings/TabSocial.php:34
-#: includes/MetaBox.php:213
+#: includes/MetaBox.php:216
 msgid "Social"
 msgstr ""
 
@@ -1273,10 +1432,6 @@ msgstr ""
 msgid "Summary with large image"
 msgstr ""
 
-#: includes/Admin/Settings/TabSocial.php:110
-msgid "Summary"
-msgstr ""
-
 #: includes/Admin/Settings/TabSocial.php:119
 msgid "Default Social Image"
 msgstr ""
@@ -1309,187 +1464,333 @@ msgstr ""
 msgid "Social Profiles"
 msgstr ""
 
-#: includes/Admin/Settings/TabWooCommerce.php:34
+#: includes/Admin/Settings/TabWooCommerce.php:36
 msgid "WooCommerce"
 msgstr ""
 
-#: includes/Admin/Settings/TabWooCommerce.php:53
-#: includes/Admin/Settings/TabWooCommerce.php:75
+#: includes/Admin/Settings/TabWooCommerce.php:55
+#: includes/Admin/Settings/TabWooCommerce.php:147
 msgid "WooCommerce SEO"
 msgstr ""
 
-#: includes/Admin/Settings/TabWooCommerce.php:56
+#: includes/Admin/Settings/TabWooCommerce.php:58
 msgid "Optimize your WooCommerce products for search engines and social media."
 msgstr ""
 
+#: includes/Admin/Settings/TabWooCommerce.php:75
+msgid "Permalinks"
+msgstr ""
+
+#: includes/Admin/Settings/TabWooCommerce.php:77
+msgid "Slug-only WooCommerce permalinks (RankMath-compatible). Categories whose root slug collides with a page, reserved slug, or another taxonomy/CPT base are automatically skipped to avoid breaking existing URLs."
+msgstr ""
+
 #: includes/Admin/Settings/TabWooCommerce.php:81
-msgid "Enable WooCommerce SEO features"
+msgid "Category base"
 msgstr ""
 
 #: includes/Admin/Settings/TabWooCommerce.php:87
+msgid "Remove /product-category/ from product category URLs"
+msgstr ""
+
+#: includes/Admin/Settings/TabWooCommerce.php:94
+msgid "Parent slugs"
+msgstr ""
+
+#: includes/Admin/Settings/TabWooCommerce.php:100
+msgid "Remove parent category slugs (expose leaf-only URLs)"
+msgstr ""
+
+#: includes/Admin/Settings/TabWooCommerce.php:107
+msgid "Product base"
+msgstr ""
+
+#: includes/Admin/Settings/TabWooCommerce.php:113
+msgid "Remove /product/ from product URLs"
+msgstr ""
+
+#: includes/Admin/Settings/TabWooCommerce.php:126
+msgid "Skipped categories (slug collision)"
+msgstr ""
+
+#: includes/Admin/Settings/TabWooCommerce.php:130
+msgid "These category slugs already belong to a page, reserved WordPress slug, or another taxonomy/CPT base. They keep their default WooCommerce URL to avoid shadowing the existing content. Rename either the category or the conflicting slug to convert."
+msgstr ""
+
+#: includes/Admin/Settings/TabWooCommerce.php:153
+msgid "Enable WooCommerce SEO features"
+msgstr ""
+
+#: includes/Admin/Settings/TabWooCommerce.php:159
 msgid "Adds product-specific OpenGraph tags, Schema.org Product markup, and more."
 msgstr ""
 
-#: includes/Admin/Settings/TabWooCommerce.php:93
+#: includes/Admin/Settings/TabWooCommerce.php:165
 msgid "Product Title"
 msgstr ""
 
-#: includes/Admin/Settings/TabWooCommerce.php:108
+#: includes/Admin/Settings/TabWooCommerce.php:180
 msgid "Noindex Products"
 msgstr ""
 
-#: includes/Admin/Settings/TabWooCommerce.php:114
+#: includes/Admin/Settings/TabWooCommerce.php:186
 msgid "Add noindex to product pages"
 msgstr ""
 
-#: includes/Admin/Settings/TabWooCommerce.php:134
+#: includes/Admin/Settings/TabWooCommerce.php:206
 msgid "Product Schema"
 msgstr ""
 
-#: includes/Admin/Settings/TabWooCommerce.php:140
+#: includes/Admin/Settings/TabWooCommerce.php:212
 msgid "Enable Product Schema.org markup"
 msgstr ""
 
-#: includes/Admin/Settings/TabWooCommerce.php:146
+#: includes/Admin/Settings/TabWooCommerce.php:218
 msgid "Adds structured data for products including price, availability, and reviews."
 msgstr ""
 
-#: includes/Admin/Settings/TabWooCommerce.php:151
+#: includes/Admin/Settings/TabWooCommerce.php:223
 msgid "Include Reviews"
 msgstr ""
 
-#: includes/Admin/Settings/TabWooCommerce.php:157
+#: includes/Admin/Settings/TabWooCommerce.php:229
 msgid "Include product reviews in Schema"
 msgstr ""
 
-#: includes/Admin/Settings/TabWooCommerce.php:178
+#: includes/Admin/Settings/TabWooCommerce.php:250
 msgid "Products in Sitemap"
 msgstr ""
 
-#: includes/Admin/Settings/TabWooCommerce.php:184
+#: includes/Admin/Settings/TabWooCommerce.php:256
 msgid "Include products in XML sitemap"
 msgstr ""
 
-#: includes/Admin/Settings/TabWooCommerce.php:192
+#: includes/Admin/Settings/TabWooCommerce.php:264
 msgid "Product Categories"
 msgstr ""
 
-#: includes/Admin/Settings/TabWooCommerce.php:198
+#: includes/Admin/Settings/TabWooCommerce.php:270
 msgid "Include product categories in XML sitemap"
 msgstr ""
 
-#: includes/Admin/Settings/TabWooCommerce.php:206
+#: includes/Admin/Settings/TabWooCommerce.php:278
 msgid "Product Tags"
 msgstr ""
 
-#: includes/Admin/Settings/TabWooCommerce.php:212
+#: includes/Admin/Settings/TabWooCommerce.php:284
 msgid "Include product tags in XML sitemap"
 msgstr ""
 
-#: includes/Admin/SettingsPage.php:96
+#: includes/Admin/SettingsPage.php:120
 msgid "SEO Settings"
 msgstr ""
 
-#: includes/Admin/SettingsPage.php:97
+#: includes/Admin/SettingsPage.php:121
+#: includes/SiteManager/Integration.php:38
 msgid "SEO"
 msgstr ""
 
-#: includes/Admin/SettingsPage.php:153
+#: includes/Admin/SettingsPage.php:177
 msgid "Update Redirect"
 msgstr ""
 
-#: includes/Admin/SettingsPage.php:156
+#: includes/Admin/SettingsPage.php:180
 msgid "Are you sure you want to delete this redirect?"
 msgstr ""
 
-#: includes/Admin/SettingsPage.php:157
+#: includes/Admin/SettingsPage.php:181
 #: includes/Redirects/Ajax.php:68
 #: includes/Redirects/Ajax.php:122
 msgid "Source URL is required."
 msgstr ""
 
-#: includes/Admin/SettingsPage.php:158
+#: includes/Admin/SettingsPage.php:182
 msgid "Please select a CSV file."
 msgstr ""
 
-#: includes/Admin/SettingsPage.php:159
+#: includes/Admin/SettingsPage.php:183
 msgid "Some rows could not be imported:"
 msgstr ""
 
-#: includes/Admin/SettingsPage.php:160
+#: includes/Admin/SettingsPage.php:184
 msgid "Not required for this type"
 msgstr ""
 
-#: includes/Admin/SettingsPage.php:180
-msgid "No RankMath SEO data found in the database."
+#: includes/Admin/SettingsPage.php:204
+msgid "No data found in the database for this plugin."
 msgstr ""
 
-#: includes/Admin/SettingsPage.php:181
+#: includes/Admin/SettingsPage.php:205
 msgid "Global Options"
 msgstr ""
 
-#: includes/Admin/SettingsPage.php:182
+#: includes/Admin/SettingsPage.php:206
 msgid "Posts with SEO meta"
 msgstr ""
 
-#: includes/Admin/SettingsPage.php:183
+#: includes/Admin/SettingsPage.php:207
 msgid "Terms with SEO meta"
 msgstr ""
 
-#: includes/Admin/SettingsPage.php:184
+#: includes/Admin/SettingsPage.php:208
 msgid "Users with SEO meta"
 msgstr ""
 
-#: includes/Admin/SettingsPage.php:185
+#: includes/Admin/SettingsPage.php:209
+msgid "Redirects (DB table)"
+msgstr ""
+
+#: includes/Admin/SettingsPage.php:210
 msgid "Found"
 msgstr ""
 
-#: includes/Admin/SettingsPage.php:186
+#: includes/Admin/SettingsPage.php:211
 msgid "Not found"
 msgstr ""
 
-#: includes/Admin/SettingsPage.php:187
+#: includes/Admin/SettingsPage.php:212
 msgid "Preview Results (Dry Run)"
 msgstr ""
 
-#: includes/Admin/SettingsPage.php:188
+#: includes/Admin/SettingsPage.php:213
 msgid "Migration Results"
 msgstr ""
 
-#: includes/Admin/SettingsPage.php:189
+#: includes/Admin/SettingsPage.php:214
 msgid "Options migrated"
 msgstr ""
 
-#: includes/Admin/SettingsPage.php:190
+#: includes/Admin/SettingsPage.php:215
 msgid "Posts migrated"
 msgstr ""
 
-#: includes/Admin/SettingsPage.php:191
-msgid "Posts skipped"
+#: includes/Admin/SettingsPage.php:216
+msgid "Posts skipped (LW SEO data already present)"
 msgstr ""
 
-#: includes/Admin/SettingsPage.php:192
+#: includes/Admin/SettingsPage.php:217
+msgid "Posts skipped (no actionable data)"
+msgstr ""
+
+#: includes/Admin/SettingsPage.php:218
 msgid "Terms migrated"
 msgstr ""
 
-#: includes/Admin/SettingsPage.php:193
-msgid "Terms skipped"
+#: includes/Admin/SettingsPage.php:219
+msgid "Terms skipped (LW SEO data already present)"
 msgstr ""
 
-#: includes/Admin/SettingsPage.php:194
+#: includes/Admin/SettingsPage.php:220
+msgid "Terms skipped (no actionable data)"
+msgstr ""
+
+#: includes/Admin/SettingsPage.php:221
 msgid "Users migrated"
 msgstr ""
 
-#: includes/Admin/SettingsPage.php:195
+#: includes/Admin/SettingsPage.php:222
+msgid "Primary terms migrated"
+msgstr ""
+
+#: includes/Admin/SettingsPage.php:223
+msgid "Redirects migrated"
+msgstr ""
+
+#: includes/Admin/SettingsPage.php:224
+msgid "Redirects skipped"
+msgstr ""
+
+#: includes/Admin/SettingsPage.php:225
+msgid "Warnings"
+msgstr ""
+
+#: includes/Admin/SettingsPage.php:226
 msgid "This was a preview. No data was modified."
 msgstr ""
 
-#: includes/Admin/SettingsPage.php:196
+#: includes/Admin/SettingsPage.php:227
 msgid "Are you sure you want to run the migration? Existing LW SEO data will not be overwritten."
 msgstr ""
 
-#: includes/Admin/SettingsPage.php:274
+#: includes/Admin/SettingsPage.php:273
 msgid "Lightweight SEO"
+msgstr ""
+
+#: includes/Admin/SettingsPage.php:279
+msgid "Another SEO plugin (Yoast SEO, Rank Math or All in One SEO) is active. LW SEO skips its meta tags to avoid duplicates. Deactivate the other plugin to use LW SEO fully."
+msgstr ""
+
+#: includes/Admin/TermFields.php:52
+#: includes/MetaBox.php:155
+msgid "SEO Title"
+msgstr ""
+
+#: includes/Admin/TermFields.php:55
+#: includes/MetaBox.php:170
+msgid "Leave empty to use the default title template."
+msgstr ""
+
+#: includes/Admin/TermFields.php:59
+#: includes/MetaBox.php:176
+msgid "Meta Description"
+msgstr ""
+
+#: includes/Admin/TermFields.php:65
+msgid "Robots"
+msgstr ""
+
+#: includes/Admin/TermFields.php:69
+msgid "noindex this archive"
+msgstr ""
+
+#: includes/Admin/TermFields.php:88
+#: includes/MetaBox.php:221
+msgid "Social Title"
+msgstr ""
+
+#: includes/Admin/TermFields.php:91
+#: includes/MetaBox.php:229
+msgid "Defaults to SEO title"
+msgstr ""
+
+#: includes/Admin/TermFields.php:95
+#: includes/MetaBox.php:235
+msgid "Social Description"
+msgstr ""
+
+#: includes/Admin/TermFields.php:98
+#: includes/MetaBox.php:242
+msgid "Defaults to meta description"
+msgstr ""
+
+#: includes/Admin/TermFields.php:102
+#: includes/MetaBox.php:248
+msgid "Social Image"
+msgstr ""
+
+#: includes/Admin/TermFields.php:123
+#: includes/MetaBox.php:315
+msgid "Default (use global setting)"
+msgstr ""
+
+#: includes/Admin/TermFields.php:124
+#: includes/MetaBox.php:316
+msgid "Yes"
+msgstr ""
+
+#: includes/Admin/TermFields.php:125
+#: includes/MetaBox.php:317
+msgid "No"
+msgstr ""
+
+#: includes/Admin/TermFields.php:130
+#: includes/MetaBox.php:334
+msgid "AI Input (RAG)"
+msgstr ""
+
+#: includes/Admin/TermFields.php:131
+#: includes/MetaBox.php:346
+msgid "AI Search"
 msgstr ""
 
 #: includes/Breadcrumbs.php:45
@@ -1513,111 +1814,93 @@ msgstr ""
 msgid "Breadcrumb"
 msgstr ""
 
-#: includes/MetaBox.php:121
+#: includes/MetaBox.php:124
 msgid "characters remaining"
 msgstr ""
 
-#: includes/MetaBox.php:122
+#: includes/MetaBox.php:125
 msgid "Too long!"
 msgstr ""
 
-#: includes/MetaBox.php:152
-msgid "SEO Title"
-msgstr ""
-
-#: includes/MetaBox.php:167
-msgid "Leave empty to use the default title template."
-msgstr ""
-
-#: includes/MetaBox.php:173
-msgid "Meta Description"
-msgstr ""
-
-#: includes/MetaBox.php:181
+#: includes/MetaBox.php:184
 msgid "Enter a meta description..."
 msgstr ""
 
-#: includes/MetaBox.php:196
+#: includes/MetaBox.php:199
 msgid "noindex"
 msgstr ""
 
-#: includes/MetaBox.php:205
+#: includes/MetaBox.php:208
 msgid "nofollow"
 msgstr ""
 
-#: includes/MetaBox.php:218
-msgid "Social Title"
-msgstr ""
-
-#: includes/MetaBox.php:226
-msgid "Defaults to SEO title"
-msgstr ""
-
-#: includes/MetaBox.php:232
-msgid "Social Description"
-msgstr ""
-
-#: includes/MetaBox.php:239
-msgid "Defaults to meta description"
-msgstr ""
-
-#: includes/MetaBox.php:245
-msgid "Social Image"
-msgstr ""
-
-#: includes/MetaBox.php:255
+#: includes/MetaBox.php:258
 msgid "Image URL"
 msgstr ""
 
-#: includes/MetaBox.php:261
+#: includes/MetaBox.php:264
 #: assets/js/blocks/faq.js:84
 msgid "Remove"
 msgstr ""
 
-#: includes/MetaBox.php:269
+#: includes/MetaBox.php:272
 msgid "Priority: Social Image → Featured Image → Default Image."
 msgstr ""
 
-#: includes/MetaBox.php:283
+#: includes/MetaBox.php:286
 msgid "Canonical URL"
 msgstr ""
 
-#: includes/MetaBox.php:294
+#: includes/MetaBox.php:297
 msgid "Leave empty to use the default permalink."
 msgstr ""
 
-#: includes/MetaBox.php:303
+#: includes/MetaBox.php:306
 msgid "AI Content Signals"
 msgstr ""
 
-#: includes/MetaBox.php:312
-msgid "Default (use global setting)"
-msgstr ""
-
-#: includes/MetaBox.php:313
-msgid "Yes"
-msgstr ""
-
-#: includes/MetaBox.php:314
-msgid "No"
-msgstr ""
-
-#: includes/MetaBox.php:343
-msgid "AI Search"
-msgstr ""
-
-#: includes/MetaBox.php:354
+#: includes/MetaBox.php:357
 msgid "Override the global Content Signals settings for this content."
 msgstr ""
 
-#: includes/Migration/Ajax.php:39
+#: includes/Migration/Ajax.php:59
 #: includes/Redirects/Ajax.php:36
 msgid "Security check failed."
 msgstr ""
 
-#: includes/Migration/Ajax.php:44
+#: includes/Migration/Ajax.php:64
 #: includes/Redirects/Ajax.php:41
 msgid "Permission denied."
+msgstr ""
+
+#. translators: %s: comma-separated list of RankMath WooCommerce permalink features without an LW SEO equivalent enabled.
+#: includes/Migration/RankMath/WarningCollector.php:77
+#, php-format
+msgid "RankMath has active WooCommerce permalink rewrites that LW SEO is not (yet) mirroring (%s). The migrator will copy these flags into LW SEO; running the migration applies the equivalent slug-only rules. Categories whose root slug collides with a page/reserved slug are auto-skipped to avoid 404s."
+msgstr ""
+
+#. translators: %d: number of posts with custom RankMath schema markup.
+#: includes/Migration/RankMath/WarningCollector.php:106
+#, php-format
+msgid "%d post(s) have custom RankMath Schema markup (rank_math_schema_*). LW SEO generates schema automatically and does not import per-post schema overrides — you will need to re-create any custom schema in the LW SEO Schema module."
+msgstr ""
+
+#. translators: %s: comma-separated list of RankMath meta keys with no LW SEO equivalent.
+#: includes/Migration/RankMath/WarningCollector.php:139
+#, php-format
+msgid "The following RankMath meta keys have no LW SEO equivalent and will not be migrated: %s"
+msgstr ""
+
+#. translators: %d: number of posts with custom Yoast schema settings.
+#: includes/Migration/Yoast/WarningCollector.php:55
+#, php-format
+msgid "%d post(s) have custom Yoast schema settings (page/article type). LW SEO generates schema automatically and does not import per-post schema overrides — you will need to re-create any custom schema in the LW SEO Schema module."
+msgstr ""
+
+#. translators: %s: comma-separated list of Yoast meta keys with no LW SEO equivalent.
+#: includes/Migration/Yoast/WarningCollector.php:87
+#, php-format
+msgid "The following Yoast meta keys have no LW SEO equivalent and will not be migrated: %s"
 msgstr ""
 
 #: includes/Redirects/Ajax.php:77
@@ -1767,42 +2050,131 @@ msgstr ""
 msgid "Page X of Y"
 msgstr ""
 
-#: includes/RestApi.php:60
-#: includes/RestApi.php:123
-#: includes/RestApi.php:142
+#: includes/RestApi.php:61
+#: includes/RestApi.php:124
+#: includes/RestApi.php:143
 msgid "Post ID"
 msgstr ""
 
-#: includes/RestApi.php:79
+#: includes/RestApi.php:80
 msgid "Term ID"
 msgstr ""
 
-#: includes/RestApi.php:85
+#: includes/RestApi.php:86
 msgid "Taxonomy name"
 msgstr ""
 
-#: includes/RestApi.php:104
+#: includes/RestApi.php:105
 msgid "Author ID"
 msgstr ""
 
-#: includes/RestApi.php:162
-#: includes/RestApi.php:241
-#: includes/RestApi.php:273
+#: includes/RestApi.php:163
+#: includes/RestApi.php:242
+#: includes/RestApi.php:274
+#: includes/SiteManager/SeoService.php:146
+#: includes/SiteManager/SeoService.php:207
 msgid "Post not found."
 msgstr ""
 
-#: includes/RestApi.php:171
-#: includes/RestApi.php:249
-#: includes/RestApi.php:281
+#: includes/RestApi.php:172
+#: includes/RestApi.php:250
+#: includes/RestApi.php:282
 msgid "Post is not accessible."
 msgstr ""
 
-#: includes/RestApi.php:195
+#: includes/RestApi.php:196
+#: includes/SiteManager/SeoService.php:176
+#: includes/SiteManager/SeoService.php:227
 msgid "Term not found."
 msgstr ""
 
-#: includes/RestApi.php:218
+#: includes/RestApi.php:219
 msgid "Author not found."
+msgstr ""
+
+#: includes/SiteManager/Integration.php:39
+msgid "Search engine optimization abilities"
+msgstr ""
+
+#: includes/SiteManager/SeoAbilities.php:40
+msgid "Get SEO Meta"
+msgstr ""
+
+#: includes/SiteManager/SeoAbilities.php:41
+msgid "Get SEO metadata for a post or term (title, description, social, signals)."
+msgstr ""
+
+#: includes/SiteManager/SeoAbilities.php:51
+#: includes/SiteManager/SeoAbilities.php:84
+msgid "Post ID. Provide post_id or term_id."
+msgstr ""
+
+#: includes/SiteManager/SeoAbilities.php:55
+#: includes/SiteManager/SeoAbilities.php:88
+msgid "Term ID. Provide post_id or term_id."
+msgstr ""
+
+#: includes/SiteManager/SeoAbilities.php:73
+msgid "Set SEO Meta"
+msgstr ""
+
+#: includes/SiteManager/SeoAbilities.php:74
+msgid "Set SEO metadata for a post or term."
+msgstr ""
+
+#: includes/SiteManager/SeoAbilities.php:92
+msgid "SEO fields: title, description, noindex, og_title, og_description, og_image, ai_train, ai_input, search, markdown_content. markdown_content requires the unfiltered_html capability; without it the field is left unchanged and listed in \"skipped\"."
+msgstr ""
+
+#: includes/SiteManager/SeoAbilities.php:126
+msgid "Get Content Signals"
+msgstr ""
+
+#: includes/SiteManager/SeoAbilities.php:127
+msgid "Get resolved AI content signals for a post or term."
+msgstr ""
+
+#: includes/SiteManager/SeoAbilities.php:161
+msgid "Get Markdown"
+msgstr ""
+
+#: includes/SiteManager/SeoAbilities.php:162
+msgid "Get the markdown representation of a post, product, or term."
+msgstr ""
+
+#: includes/SiteManager/SeoAbilities.php:197
+msgid "Get SEO Options"
+msgstr ""
+
+#: includes/SiteManager/SeoAbilities.php:198
+msgid "Get global LW SEO settings."
+msgstr ""
+
+#: includes/SiteManager/SeoService.php:54
+#: includes/SiteManager/SeoService.php:74
+msgid "Provide post_id or term_id."
+msgstr ""
+
+#: includes/SiteManager/SeoService.php:107
+msgid "Post or term not found."
+msgstr ""
+
+#: includes/SiteManager/SeoService.php:211
+msgid "You are not allowed to edit this post."
+msgstr ""
+
+#: includes/SiteManager/SeoService.php:231
+msgid "You are not allowed to edit this term."
+msgstr ""
+
+#. translators: %d: number of fields updated
+#: includes/SiteManager/SeoService.php:275
+#, php-format
+msgid "%d SEO fields updated."
+msgstr ""
+
+#: includes/SiteManager/SeoService.php:303
+msgid "You are not allowed to read this post or term."
 msgstr ""
 
 #: lw-seo.php:43
