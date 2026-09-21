@@ -146,9 +146,9 @@ final class HtmlToMarkdownTest extends MonkeyTestCase {
 				'<pre>[a]&lt;b&gt;\c</pre>',
 				"```\n[a]<b>\\c\n```\n",
 			],
-			'text backtick before a code span is escaped and separated' => [
+			'text backtick before a code span is escaped' => [
 				'<p>see `<code>&lt;img src=x onerror=alert(1)&gt;</code> here</p>',
-				"see \\` `<img src=x onerror=alert(1)>` here\n",
+				"see \\``<img src=x onerror=alert(1)>` here\n",
 			],
 			'text backtick after a code span is escaped' => [
 				'<p><code>&lt;img src=x onerror=alert(1)&gt;</code>` see</p>',
@@ -161,6 +161,62 @@ final class HtmlToMarkdownTest extends MonkeyTestCase {
 			'plain prose backtick is escaped' => [
 				'<p>a ` b</p>',
 				"a \\` b\n",
+			],
+			'adjacent code spans stay separated at body level' => [
+				'<code>``</code><code>&lt;img src=x onerror=alert(1)&gt;</code>',
+				"``` `` ``` `<img src=x onerror=alert(1)>`\n",
+			],
+			'adjacent code spans stay separated in a div' => [
+				'<div><code>``</code><code>&lt;img src=x onerror=alert(1)&gt;</code></div>',
+				"``` `` ``` `<img src=x onerror=alert(1)>`\n",
+			],
+			'adjacent code spans stay separated in a blockquote' => [
+				'<blockquote><code>``</code><code>&lt;img src=x onerror=alert(1)&gt;</code></blockquote>',
+				"> ``` `` ``` `<img src=x onerror=alert(1)>`\n",
+			],
+			'adjacent code spans stay separated in a figure' => [
+				'<figure><code>``</code><code>&lt;img src=x onerror=alert(1)&gt;</code></figure>',
+				"``` `` ``` `<img src=x onerror=alert(1)>`\n",
+			],
+			'adjacent code spans stay separated in a list item' => [
+				'<ul><li><code>``</code><code>&lt;img src=x onerror=alert(1)&gt;</code></li></ul>',
+				"- ``` `` ``` `<img src=x onerror=alert(1)>`\n",
+			],
+			'code spans separated by a removed comment stay separated' => [
+				'<code>``</code><!-- c --><code>&lt;img src=x onerror=alert(1)&gt;</code>',
+				"``` `` ``` `<img src=x onerror=alert(1)>`\n",
+			],
+			'code span wrapped in a span stays separated' => [
+				'<code>``</code><span><code>&lt;img src=x onerror=alert(1)&gt;</code></span>',
+				"``` `` ``` `<img src=x onerror=alert(1)>`\n",
+			],
+			'image alt backtick cannot open a code span' => [
+				'<p><img alt="`" src="https://x.test/a.jpg"><code>&lt;img src=x onerror=alert(1)&gt;</code></p>',
+				"![](https://x.test/a.jpg)`<img src=x onerror=alert(1)>`\n",
+			],
+			'image alt backtick cannot open a code span at body level' => [
+				'<img alt="`" src="https://x.test/a.jpg"><code>&lt;img src=x onerror=alert(1)&gt;</code>',
+				"![](https://x.test/a.jpg)`<img src=x onerror=alert(1)>`\n",
+			],
+			'escaped text backtick before a code span gets no extra space' => [
+				'<p>see `<code>x</code></p>',
+				"see \\``x`\n",
+			],
+			'code ending in a backslash cannot fuse with the next fence' => [
+				'<code>\\</code><code>a`&lt;img src=x onerror=alert(1)&gt;</code>',
+				"` \\ ` ``a`<img src=x onerror=alert(1)>``\n",
+			],
+			'code ending in a backslash cannot fuse with the next fence in a paragraph' => [
+				'<p><code>\\</code><code>a`&lt;img src=x onerror=alert(1)&gt;</code></p>',
+				"` \\ ` ``a`<img src=x onerror=alert(1)>``\n",
+			],
+			'backslash left by a trimmed link break cannot escape the next text' => [
+				'<p><a>a<br></a>&lt;img src=x onerror=alert(1)//&gt;</p>',
+				"a\\ \\<img src=x onerror=alert(1)//\\>\n",
+			],
+			'backslash left by a trimmed link break cannot escape the next fence' => [
+				'<a href="#x">a<br></a><code>&lt;img src=x onerror=alert(1)&gt;</code>',
+				"a\\ `<img src=x onerror=alert(1)>`\n",
 			],
 		];
 	}

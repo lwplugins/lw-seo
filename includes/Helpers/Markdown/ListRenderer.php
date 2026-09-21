@@ -63,7 +63,7 @@ final class ListRenderer {
 				continue;
 			}
 			$separator = $child instanceof \DOMElement && BlockRenderer::is_block( $child ) ? ' ' : '';
-			$text     .= $separator . InlineRenderer::node( $child );
+			$text      = InlineRenderer::append( $text . $separator, InlineRenderer::node( $child ) );
 		}
 
 		$text = trim( (string) preg_replace( '/\s+/u', ' ', str_replace( "\\\n", ' ', $text ) ) );

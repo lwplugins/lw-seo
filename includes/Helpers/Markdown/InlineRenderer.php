@@ -22,13 +22,7 @@ final class InlineRenderer {
 	private const UNSAFE_SCHEMES = [ 'javascript:', 'vbscript:', 'data:' ];
 
 	/**
-	 * Render all children of a node inline. A backtick left at the end of
-	 * one piece (an escaped trailing backtick in text, or a raw code-span
-	 * fence) is separated with a space from a backtick starting the next
-	 * piece (a raw code-span fence), so the two can never read as one
-	 * longer run of backticks — which would merge a closing fence with the
-	 * next span's opening fence, or make an escaped backtick look like
-	 * part of a fence.
+	 * Render all children of a node inline.
 	 *
 	 * @param \DOMNode $node Parent node.
 	 * @return string
@@ -37,14 +31,54 @@ final class InlineRenderer {
 		$output = '';
 
 		foreach ( $node->childNodes as $child ) {
-			$piece = self::node( $child );
-			if ( str_ends_with( $output, '`' ) && str_starts_with( $piece, '`' ) ) {
-				$output .= ' ';
-			}
-			$output .= $piece;
+			$output = self::append( $output, self::node( $child ) );
 		}
 
 		return $output;
+	}
+
+	/**
+	 * Join two rendered inline fragments so the boundary can't change how
+	 * either one parses. Every place that concatenates rendered inline
+	 * pieces must go through here. A space is added in two cases only:
+	 * - $left ends with an unescaped backtick (a code-span fence) and
+	 *   $right starts with one: the two would fuse into one longer run, so
+	 *   neither span closes/opens where intended and raw code content
+	 *   (e.g. a decoded `<img onerror>`) is read as live HTML.
+	 * - $left ends with an unpaired backslash: it would escape $right's
+	 *   first character (a fence's first backtick, or the backslash of an
+	 *   escaped `\<`, which would make the `<` live again).
+	 * An escaped text backtick (odd backslash run before it) can't join a
+	 * run, so it gets no space. code() never ends a span with a backslash
+	 * directly before its closing fence, which keeps that test exact.
+	 *
+	 * @param string $left  Markdown rendered so far.
+	 * @param string $right Next rendered piece.
+	 * @return string
+	 */
+	public static function append( string $left, string $right ): string {
+		if ( '' === $left || '' === $right ) {
+			return $left . $right;
+		}
+
+		$unpaired_backslash = 1 === self::trailing_backslashes( $left ) % 2;
+		$live_backtick      = str_ends_with( $left, '`' ) && 0 === self::trailing_backslashes( substr( $left, 0, -1 ) ) % 2;
+
+		if ( $unpaired_backslash || ( $live_backtick && str_starts_with( $right, '`' ) ) ) {
+			return $left . ' ' . $right;
+		}
+
+		return $left . $right;
+	}
+
+	/**
+	 * Number of consecutive backslashes at the end of a string.
+	 *
+	 * @param string $text Text.
+	 * @return int
+	 */
+	private static function trailing_backslashes( string $text ): int {
+		return strlen( $text ) - strlen( rtrim( $text, '\\' ) );
 	}
 
 	/**
@@ -185,10 +219,12 @@ final class InlineRenderer {
 	 * Inline code span, safe for embedded backticks: the fence is one
 	 * backtick longer than the longest run inside the text, so an internal
 	 * run (e.g. a double backtick) can never close the span early. When the
-	 * content starts or ends with a backtick, a space is added on BOTH
-	 * sides — CommonMark only strips that padding when it's present on
-	 * both sides, so padding just the affected side would leave a stray
-	 * space in the rendered output.
+	 * content starts or ends with a backtick, or ends with a backslash, a
+	 * space is added on BOTH sides — CommonMark only strips that padding
+	 * when it's present on both sides, so padding just the affected side
+	 * would leave a stray space in the rendered output. The trailing
+	 * backslash case keeps the closing fence from looking like an escaped
+	 * text backtick to append().
 	 *
 	 * @param string $text Code text.
 	 * @return string
@@ -200,7 +236,7 @@ final class InlineRenderer {
 		}
 
 		$fence = str_repeat( '`', self::longest_backtick_run( $text ) + 1 );
-		$pad   = ( str_starts_with( $text, '`' ) || str_ends_with( $text, '`' ) ) ? ' ' : '';
+		$pad   = ( str_starts_with( $text, '`' ) || str_ends_with( $text, '`' ) || str_ends_with( $text, '\\' ) ) ? ' ' : '';
 
 		return $fence . $pad . $text . $pad . $fence;
 	}
@@ -220,13 +256,16 @@ final class InlineRenderer {
 	}
 
 	/**
-	 * Image; lazy-load attributes win over placeholder data: URIs.
+	 * Image; lazy-load attributes win over placeholder data: URIs. Alt text
+	 * loses the characters that could end the brackets early, start an
+	 * escape or raw HTML, or open a code span that runs past `](…)` into
+	 * the next piece and leaves that piece's code content as live HTML.
 	 *
 	 * @param \DOMElement $node Img element.
 	 * @return string
 	 */
 	private static function image( \DOMElement $node ): string {
-		$alt = str_replace( [ '[', ']', '\\', '<', '>' ], '', trim( $node->getAttribute( 'alt' ) ) );
+		$alt = str_replace( [ '[', ']', '\\', '<', '>', '`' ], '', trim( $node->getAttribute( 'alt' ) ) );
 
 		foreach ( [ 'data-src', 'data-lazy-src', 'src' ] as $attribute ) {
 			$src = self::url( $node->getAttribute( $attribute ) );

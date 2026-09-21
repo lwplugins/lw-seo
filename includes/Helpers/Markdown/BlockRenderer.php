@@ -43,7 +43,7 @@ final class BlockRenderer {
 				$inline   = '';
 				continue;
 			}
-			$inline .= InlineRenderer::node( $node );
+			$inline = InlineRenderer::append( $inline, InlineRenderer::node( $node ) );
 		}
 
 		$blocks[] = self::finish_inline( $inline );
