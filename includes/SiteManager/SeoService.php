@@ -257,10 +257,13 @@ final class SeoService {
 				continue;
 			}
 
-			// Whitelist signal fields to yes/no only; sanitize_text_field for others.
-			$sanitized = in_array( $key, [ 'ai_train', 'ai_input', 'search' ], true )
-				? SignalValue::sanitize( $value )
-				: sanitize_text_field( (string) $value );
+			// Signal fields are whitelisted to yes/no; the multi-line Markdown
+			// override keeps its newlines (as in the meta box); the rest is one line.
+			$sanitized = match ( true ) {
+				in_array( $key, [ 'ai_train', 'ai_input', 'search' ], true ) => SignalValue::sanitize( $value ),
+				MarkdownOverrideField::KEY === $key                          => sanitize_textarea_field( (string) $value ),
+				default                                                      => sanitize_text_field( (string) $value ),
+			};
 			$write( $key, $sanitized );
 			$updated[] = $key;
 		}

@@ -25,6 +25,7 @@
 - YAML frontmatter stays parseable when a value contains C1 control characters or invalid UTF-8.
 - `<strong>Note: </strong>text` no longer loses the space after the bold text in Markdown.
 - llms.txt: two post types with the same label, or a type labelled "Optional", no longer lose a section; the post type name is appended to such headings.
+- LW Site Manager `set-meta` collapsed the Markdown override onto one line; it now keeps its newlines, like the meta box.
 - llms.txt cache: rebuilt when a listed post is published, unpublished or trashed (including scheduled posts going live), when an LW SEO post field changes, when the site address changes, after a plugin update, and after settings are saved while llms.txt is off; saving revisions, autosaves, drafts and unlisted post types no longer clears it.
 
 ### Security

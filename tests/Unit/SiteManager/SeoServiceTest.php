@@ -47,7 +47,7 @@ final class SeoServiceTest extends MonkeyTestCase {
 		Functions\stubTranslationFunctions();
 		Functions\when( 'get_post' )->justReturn( new \WP_Post( [ 'ID' => 7 ] ) );
 		Functions\when( 'current_user_can' )->justReturn( true );
-		Functions\when( 'sanitize_text_field' )->returnArg();
+		Functions\when( 'sanitize_textarea_field' )->returnArg();
 		Functions\expect( 'update_post_meta' )->once()->with( 7, '_lw_seo_markdown_content', '# Custom' )->andReturn( true );
 
 		$result = SeoService::set_meta(
@@ -58,6 +58,36 @@ final class SeoServiceTest extends MonkeyTestCase {
 		);
 
 		$this->assertSame( [ [ 'markdown_content' ], [] ], [ $result['updated'], $result['skipped'] ] );
+	}
+
+	/**
+	 * The override is multi-line Markdown: it is sanitized as a textarea
+	 * (like the meta box does), not collapsed to one line. The stubs follow
+	 * core: sanitize_text_field() folds newlines, the textarea variant
+	 * keeps them.
+	 */
+	public function test_set_meta_keeps_newlines_in_the_markdown_override(): void {
+		Functions\stubTranslationFunctions();
+		Functions\when( 'get_post' )->justReturn( new \WP_Post( [ 'ID' => 7 ] ) );
+		Functions\when( 'current_user_can' )->justReturn( true );
+		Functions\when( 'sanitize_text_field' )->alias( static fn( string $s ): string => trim( (string) preg_replace( '/[\r\n\t ]+/', ' ', $s ) ) );
+		Functions\when( 'sanitize_textarea_field' )->alias( static fn( string $s ): string => trim( $s ) );
+		$written = [];
+		Functions\when( 'update_post_meta' )->alias(
+			static function ( int $post_id, string $key, string $value ) use ( &$written ): bool {
+				$written[ $key ] = $value;
+				return true;
+			}
+		);
+
+		SeoService::set_meta(
+			[
+				'post_id' => 7,
+				'meta'    => [ 'markdown_content' => "# Custom\n\nFirst paragraph.\n\n- item" ],
+			]
+		);
+
+		$this->assertSame( "# Custom\n\nFirst paragraph.\n\n- item", $written['_lw_seo_markdown_content'] ?? null );
 	}
 
 	/**
@@ -89,7 +119,7 @@ final class SeoServiceTest extends MonkeyTestCase {
 		Functions\when( 'get_term' )->justReturn( new \WP_Term( [ 'term_id' => 3 ] ) );
 		Functions\when( 'is_wp_error' )->justReturn( false );
 		Functions\when( 'current_user_can' )->justReturn( true );
-		Functions\when( 'sanitize_text_field' )->returnArg();
+		Functions\when( 'sanitize_textarea_field' )->returnArg();
 		Functions\expect( 'update_term_meta' )->once()->with( 3, '_lw_seo_markdown_content', '# Custom' )->andReturn( true );
 
 		$result = SeoService::set_meta(

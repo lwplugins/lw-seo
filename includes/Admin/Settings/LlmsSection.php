@@ -31,6 +31,7 @@ final class LlmsSection {
 		<h3><?php esc_html_e( 'llms.txt File', 'lw-seo' ); ?></h3>
 		<table class="form-table">
 			<?php
+			$this->render_enable_row();
 			$this->render_general_rows();
 			$this->render_content_rows();
 			$this->render_extra_rows();
@@ -40,11 +41,11 @@ final class LlmsSection {
 	}
 
 	/**
-	 * Enable, summary and intro rows.
+	 * Enable row with the llms.txt link.
 	 *
 	 * @return void
 	 */
-	private function render_general_rows(): void {
+	private function render_enable_row(): void {
 		$llms_url = home_url( '/llms.txt' );
 		?>
 		<tr>
@@ -70,6 +71,16 @@ final class LlmsSection {
 				</p>
 			</td>
 		</tr>
+		<?php
+	}
+
+	/**
+	 * Summary and intro rows.
+	 *
+	 * @return void
+	 */
+	private function render_general_rows(): void {
+		?>
 		<tr>
 			<th scope="row"><label for="llms_txt_summary"><?php esc_html_e( 'Summary', 'lw-seo' ); ?></label></th>
 			<td>
