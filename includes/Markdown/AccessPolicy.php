@@ -42,10 +42,10 @@ final class AccessPolicy {
 	/**
 	 * Status for a taxonomy term.
 	 *
-	 * @param array{public: bool, noindex: bool} $facts Term facts.
+	 * @param array{public: bool, noindex: bool, ai_input_allowed: bool} $facts Term facts.
 	 * @return int
 	 */
 	public static function term_status( array $facts ): int {
-		return $facts['public'] && ! $facts['noindex'] ? 200 : 404;
+		return $facts['public'] && ! $facts['noindex'] && $facts['ai_input_allowed'] ? 200 : 404;
 	}
 }

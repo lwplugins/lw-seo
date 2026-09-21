@@ -93,7 +93,7 @@ final class CanonicalGuardTest extends MonkeyTestCase {
 	}
 
 	protected function tearDown(): void {
-		unset( $GLOBALS['wp_query'] );
+		unset( $GLOBALS['wp_query'], $_SERVER['REQUEST_URI'] );
 		parent::tearDown();
 	}
 }

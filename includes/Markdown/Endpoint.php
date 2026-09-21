@@ -214,8 +214,9 @@ final class Endpoint {
 
 			return AccessPolicy::term_status(
 				[
-					'public'  => $taxonomy instanceof \WP_Taxonomy && $taxonomy->public,
-					'noindex' => (bool) Options::get_term_meta( (int) $object->term_id, 'noindex' ) || (bool) Options::get( 'noindex_' . $object->taxonomy ),
+					'public'           => $taxonomy instanceof \WP_Taxonomy && $taxonomy->public,
+					'noindex'          => (bool) Options::get_term_meta( (int) $object->term_id, 'noindex' ) || (bool) Options::get( 'noindex_' . $object->taxonomy ),
+					'ai_input_allowed' => 'no' !== ( ContentSignals::resolve( $object )['ai-input'] ?? '' ),
 				]
 			);
 		}

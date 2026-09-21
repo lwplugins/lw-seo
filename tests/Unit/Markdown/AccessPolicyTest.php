@@ -26,12 +26,13 @@ final class AccessPolicyTest extends MonkeyTestCase {
 		];
 
 		return [
-			'public post'                => [ $base, 200 ],
-			'noindex or ai-input=no'     => [ array_merge( $base, [ 'visible' => false ] ), 404 ],
-			'draft'                      => [ array_merge( $base, [ 'status' => 'draft' ] ), 404 ],
-			'password protected'         => [ array_merge( $base, [ 'password_required' => true ] ), 403 ],
-			'private, no capability'     => [ array_merge( $base, [ 'status' => 'private' ] ), 404 ],
-			'private, can read'          => [ array_merge( $base, [ 'status' => 'private', 'can_read_private' => true ] ), 200 ],
+			'public post'                                  => [ $base, 200 ],
+			'noindex or ai-input=no'                        => [ array_merge( $base, [ 'visible' => false ] ), 404 ],
+			'draft'                                         => [ array_merge( $base, [ 'status' => 'draft' ] ), 404 ],
+			'password protected'                            => [ array_merge( $base, [ 'password_required' => true ] ), 403 ],
+			'private, no capability'                        => [ array_merge( $base, [ 'status' => 'private' ] ), 404 ],
+			'private, can read'                             => [ array_merge( $base, [ 'status' => 'private', 'can_read_private' => true ] ), 200 ],
+			'private, can read, ignores ai visibility'      => [ array_merge( $base, [ 'status' => 'private', 'can_read_private' => true, 'visible' => false ] ), 200 ],
 		];
 	}
 
@@ -45,9 +46,31 @@ final class AccessPolicyTest extends MonkeyTestCase {
 		$this->assertSame( $expected, AccessPolicy::post_status( $facts ) );
 	}
 
-	public function test_term_status_hides_noindex_and_private_taxonomies(): void {
-		$this->assertSame( 200, AccessPolicy::term_status( [ 'public' => true, 'noindex' => false ] ) );
-		$this->assertSame( 404, AccessPolicy::term_status( [ 'public' => true, 'noindex' => true ] ) );
-		$this->assertSame( 404, AccessPolicy::term_status( [ 'public' => false, 'noindex' => false ] ) );
+	/**
+	 * @return array<string, array{0: array{public: bool, noindex: bool, ai_input_allowed: bool}, 1: int}>
+	 */
+	public static function term_provider(): array {
+		$base = [
+			'public'           => true,
+			'noindex'          => false,
+			'ai_input_allowed' => true,
+		];
+
+		return [
+			'public, indexable, ai visible' => [ $base, 200 ],
+			'noindex term'                  => [ array_merge( $base, [ 'noindex' => true ] ), 404 ],
+			'private taxonomy'              => [ array_merge( $base, [ 'public' => false ] ), 404 ],
+			'ai-input=no'                   => [ array_merge( $base, [ 'ai_input_allowed' => false ] ), 404 ],
+		];
+	}
+
+	/**
+	 * @dataProvider term_provider
+	 *
+	 * @param array{public: bool, noindex: bool, ai_input_allowed: bool} $facts    Facts.
+	 * @param int                                                        $expected Status.
+	 */
+	public function test_term_status( array $facts, int $expected ): void {
+		$this->assertSame( $expected, AccessPolicy::term_status( $facts ) );
 	}
 }

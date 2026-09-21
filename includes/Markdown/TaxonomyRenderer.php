@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace LightweightPlugins\SEO\Markdown;
 
+use LightweightPlugins\SEO\Content\Eligibility;
 use LightweightPlugins\SEO\Helpers\HtmlToMarkdown;
 use LightweightPlugins\SEO\Options;
 
@@ -79,12 +80,15 @@ final class TaxonomyRenderer implements RendererInterface {
 			$body .= HtmlToMarkdown::convert( $description ) . "\n";
 		}
 
-		// Recent posts in this term.
+		// Recent posts in this term. Eligibility::is_ai_visible() filters out
+		// noindex, ai-input=no and (via has_password) password-protected posts
+		// so their titles/URLs don't leak into the term's Markdown.
 		$posts = get_posts(
 			[
-				'numberposts' => 20,
-				'post_status' => 'publish',
-				'tax_query'   => [ // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query
+				'numberposts'  => 20,
+				'post_status'  => 'publish',
+				'has_password' => false,
+				'tax_query'    => [ // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query
 					[
 						'taxonomy' => $this->term->taxonomy,
 						'field'    => 'term_id',
@@ -93,6 +97,7 @@ final class TaxonomyRenderer implements RendererInterface {
 				],
 			]
 		);
+		$posts = array_filter( $posts, [ Eligibility::class, 'is_ai_visible' ] );
 
 		if ( ! empty( $posts ) ) {
 			$body .= "## Posts\n\n";
