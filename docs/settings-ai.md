@@ -70,8 +70,11 @@ an optional summary blockquote, optional free-text introduction, and one
 `##` section per content type listing its pages as Markdown links.
 
 When enabled, available at `https://yoursite.com/llms.txt`. The document
-is cached (one day) and rebuilt whenever content, terms, the site name/
-tagline, the permalink structure, or the plugin settings change.
+is cached (one day) and rebuilt after a published post of a listed type
+is saved, a listed post is published, unpublished or trashed, a post is
+deleted, an LW SEO field on a post changes, a term is edited, the site
+name/tagline, site address or permalink structure changes, the plugin
+settings change (also while llms.txt is off), or the plugin is updated.
 
 ### Fields
 
@@ -80,7 +83,7 @@ tagline, the permalink structure, or the plugin settings change.
 | **llms.txt** | Master toggle. Also enables the rewrite rule. |
 | **Summary** | One sentence rendered as the `>` blockquote under the title. Empty falls back to the site tagline. |
 | **Introduction** | Optional Markdown free text shown after the summary, before the first section. Do not use headings — the generator adds its own `##` section headings. |
-| **Content types** | Which public post types get their own `##` section (e.g. `## Pages`, `## Posts`, `## Products`). Every public post type is listed and on by default; untick to leave a type out. Can also be filtered with `lw_seo_llms_txt_post_types`. |
+| **Content types** | Which public post types get their own `##` section (e.g. `## Pages`, `## Posts`, `## Products`), headed by the type's plural label. Every public post type is listed and on by default; untick to leave a type out. Can also be filtered with `lw_seo_llms_txt_post_types`. When two listed types share a label, or a type is labelled "Optional", the post type name is appended to its heading (`## Events (tribe_events)`), so every type keeps its own section and none merges into `## Optional`. |
 | **Items per section** | Max entries per section, 1–500 (default 100). Pages are listed in menu order; every other type newest first. |
 | **Markdown links** | When enabled, each entry links to the page's `/md` Markdown version instead of its normal HTML URL. |
 | **Extra links** | Freeform links listed under a final `## Optional` section, one per line: `Title | https://url | optional description`. Lines that don't parse (missing title, or a URL not starting with `http(s)://`) are skipped. |

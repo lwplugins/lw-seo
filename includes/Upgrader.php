@@ -54,6 +54,9 @@ final class Upgrader {
 
 		update_option( self::VERSION_OPTION, LW_SEO_VERSION );
 
+		// A new version can build llms.txt / llms-full.txt differently.
+		LlmsTxt\Cache::flush();
+
 		// Rewrite rules can change between versions; RewriteFlusher rebuilds
 		// them on wp_loaded, after every init callback registered its rules.
 		set_transient( RewriteFlusher::FLAG, 1, HOUR_IN_SECONDS );

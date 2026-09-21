@@ -22,6 +22,8 @@ final class Endpoint {
 	 * Constructor.
 	 */
 	public function __construct() {
+		Invalidation::register_settings();
+
 		if ( ! Options::get( 'llms_txt_enabled' ) ) {
 			return;
 		}
@@ -30,7 +32,7 @@ final class Endpoint {
 		add_action( 'template_redirect', [ $this, 'handle_request' ] );
 		add_filter( 'query_vars', [ $this, 'add_query_vars' ] );
 
-		Cache::register_invalidation();
+		Invalidation::register();
 	}
 
 	/**

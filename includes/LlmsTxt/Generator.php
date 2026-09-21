@@ -42,14 +42,15 @@ final class Generator {
 		$markdown = (bool) Options::get( 'llms_txt_markdown_links' );
 		$sections = [];
 
-		foreach ( $this->collector->posts() as $heading => $posts ) {
-			$sections[ $heading ] = array_map(
-				static fn( \WP_Post $post ): array => SectionCollector::link( $post, $markdown ),
-				$posts
-			);
+		foreach ( $this->collector->posts() as $section ) {
+			$sections[] = [
+				'heading' => $section['heading'],
+				'links'   => array_map(
+					static fn( \WP_Post $post ): array => SectionCollector::link( $post, $markdown ),
+					$section['posts']
+				),
+			];
 		}
-
-		$sections[ Document::OPTIONAL ] = $this->optional_links();
 
 		return Document::render(
 			[
@@ -57,6 +58,7 @@ final class Generator {
 				'summary'  => $this->summary(),
 				'intro'    => (string) Options::get( 'llms_txt_intro' ),
 				'sections' => $sections,
+				'optional' => $this->optional_links(),
 			]
 		);
 	}
@@ -76,8 +78,8 @@ final class Generator {
 	 * @return \Generator<int, string>
 	 */
 	private function chunks(): \Generator {
-		foreach ( $this->collector->posts() as $posts ) {
-			foreach ( $posts as $post ) {
+		foreach ( $this->collector->posts() as $section ) {
+			foreach ( $section['posts'] as $post ) {
 				yield FullText::chunk( $post );
 			}
 		}

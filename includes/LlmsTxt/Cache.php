@@ -9,10 +9,9 @@ declare(strict_types=1);
 
 namespace LightweightPlugins\SEO\LlmsTxt;
 
-use LightweightPlugins\SEO\Options;
-
 /**
- * Transient cache for the generated files, cleared on content changes.
+ * Transient cache for the generated files. Invalidation decides when it is
+ * dropped.
  */
 final class Cache {
 
@@ -30,21 +29,6 @@ final class Cache {
 	 * Cached documents.
 	 */
 	private const KEYS = [ 'index', 'full' ];
-
-	/**
-	 * Hooks after which the documents are rebuilt.
-	 */
-	private const INVALIDATING_HOOKS = [
-		'save_post',
-		'deleted_post',
-		'trashed_post',
-		'untrashed_post',
-		'edited_term',
-		'update_option_blogname',
-		'update_option_blogdescription',
-		'update_option_permalink_structure',
-		'update_option_' . Options::OPTION_NAME,
-	];
 
 	/**
 	 * Get a cached document or build and store it.
@@ -94,17 +78,6 @@ final class Cache {
 	public static function flush(): void {
 		foreach ( self::KEYS as $key ) {
 			delete_transient( self::PREFIX . $key );
-		}
-	}
-
-	/**
-	 * Flush the cache whenever listed content may have changed.
-	 *
-	 * @return void
-	 */
-	public static function register_invalidation(): void {
-		foreach ( self::INVALIDATING_HOOKS as $hook ) {
-			add_action( $hook, [ self::class, 'flush' ] );
 		}
 	}
 }

@@ -52,12 +52,30 @@ final class UpgraderTest extends MonkeyTestCase {
 
 	public function test_records_version_and_schedules_rewrite_flush_on_change(): void {
 		$this->stub_stored( '1.5.1' );
+		Functions\when( 'delete_transient' )->justReturn( true );
 		Functions\expect( 'update_option' )->once()->with( Upgrader::VERSION_OPTION, LW_SEO_VERSION );
 		Functions\expect( 'set_transient' )->once()->with( RewriteFlusher::FLAG, 1, 3600 );
 
 		( new Upgrader() )->maybe_upgrade();
 
 		$this->addToAssertionCount( 1 );
+	}
+
+	public function test_drops_the_cached_llms_txt_documents_on_version_change(): void {
+		$this->stub_stored( '1.5.1' );
+		Functions\when( 'update_option' )->justReturn( true );
+		Functions\when( 'set_transient' )->justReturn( true );
+		$deleted = [];
+		Functions\when( 'delete_transient' )->alias(
+			static function ( string $key ) use ( &$deleted ): bool {
+				$deleted[] = $key;
+				return true;
+			}
+		);
+
+		( new Upgrader() )->maybe_upgrade();
+
+		$this->assertSame( [ 'lw_seo_llms_index', 'lw_seo_llms_full' ], $deleted );
 	}
 
 	public function test_migrate_options_leaves_current_data_untouched(): void {

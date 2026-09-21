@@ -44,10 +44,62 @@ MD;
 				'summary'  => 'Kézműves pékség Budapesten',
 				'intro'    => 'Rendelés online.',
 				'sections' => [
-					'Optional' => [ [ 'title' => 'XML Sitemap', 'url' => 'https://x.test/sitemap.xml' ] ],
-					'Pages'    => [ [ 'title' => 'Rólunk', 'url' => 'https://x.test/rolunk/', 'description' => 'Kik vagyunk' ] ],
-					'Empty'    => [],
+					[
+						'heading' => 'Pages',
+						'links'   => [ [ 'title' => 'Rólunk', 'url' => 'https://x.test/rolunk/', 'description' => 'Kik vagyunk' ] ],
+					],
+					[
+						'heading' => 'Empty',
+						'links'   => [],
+					],
 				],
+				'optional' => [ [ 'title' => 'XML Sitemap', 'url' => 'https://x.test/sitemap.xml' ] ],
+			]
+		);
+
+		$this->assertSame( $expected, $result );
+	}
+
+	public function test_content_sections_never_merge_with_each_other_or_the_optional_links(): void {
+		$expected = <<<'MD'
+# S
+
+## Events
+
+- [A](https://x.test/a/)
+
+## Events
+
+- [B](https://x.test/b/)
+
+## Optional
+
+- [C](https://x.test/c/)
+
+## Optional
+
+- [D](https://x.test/d/)
+
+MD;
+
+		$result = Document::render(
+			[
+				'title'    => 'S',
+				'sections' => [
+					[
+						'heading' => 'Events',
+						'links'   => [ [ 'title' => 'A', 'url' => 'https://x.test/a/' ] ],
+					],
+					[
+						'heading' => 'Events',
+						'links'   => [ [ 'title' => 'B', 'url' => 'https://x.test/b/' ] ],
+					],
+					[
+						'heading' => 'Optional',
+						'links'   => [ [ 'title' => 'C', 'url' => 'https://x.test/c/' ] ],
+					],
+				],
+				'optional' => [ [ 'title' => 'D', 'url' => 'https://x.test/d/' ] ],
 			]
 		);
 
@@ -62,7 +114,12 @@ MD;
 		$result = Document::render(
 			[
 				'title'    => 'S',
-				'sections' => [ 'Posts' => [ [ 'title' => 'Draft [v2] &#8211; beta', 'url' => 'https://x.test/a (b)/' ] ] ],
+				'sections' => [
+					[
+						'heading' => 'Posts',
+						'links'   => [ [ 'title' => 'Draft [v2] &#8211; beta', 'url' => 'https://x.test/a (b)/' ] ],
+					],
+				],
 			]
 		);
 
@@ -102,7 +159,12 @@ MD;
 		$result = Document::render(
 			[
 				'title'    => 'S',
-				'sections' => [ 'Posts' => [ $link ] ],
+				'sections' => [
+					[
+						'heading' => 'Posts',
+						'links'   => [ $link ],
+					],
+				],
 			]
 		);
 
@@ -125,7 +187,12 @@ MD;
 			[
 				'title'    => '&lt;img src=x onerror=alert(1)&gt; `x`',
 				'summary'  => 'See [x](javascript:alert(1)) &lt;javascript:alert(1)&gt;',
-				'sections' => [ '&lt;b&gt;Events&lt;/b&gt; [x]' => [ [ 'title' => 'T', 'url' => 'https://x.test/p/' ] ] ],
+				'sections' => [
+					[
+						'heading' => '&lt;b&gt;Events&lt;/b&gt; [x]',
+						'links'   => [ [ 'title' => 'T', 'url' => 'https://x.test/p/' ] ],
+					],
+				],
 			]
 		);
 

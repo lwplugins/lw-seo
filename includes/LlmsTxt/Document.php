@@ -30,9 +30,11 @@ final class Document {
 	public const OPTIONAL = 'Optional';
 
 	/**
-	 * Render the document.
+	 * Render the document. Content sections are a list, so two with the
+	 * same heading stay separate, and the Optional links are passed on
+	 * their own, so no content section can replace or absorb them.
 	 *
-	 * @param array{title: string, summary?: string, intro?: string, sections?: array<string, array<int, array{title: string, url: string, description?: string}>>} $doc Document parts.
+	 * @param array{title: string, summary?: string, intro?: string, sections?: array<int, array{heading: string, links: array<int, array{title: string, url: string, description?: string}>}>, optional?: array<int, array{title: string, url: string, description?: string}>} $doc Document parts.
 	 * @return string
 	 */
 	public static function render( array $doc ): string {
@@ -48,12 +50,18 @@ final class Document {
 			array_push( $lines, $intro, '' );
 		}
 
-		foreach ( self::ordered( $doc['sections'] ?? [] ) as $heading => $links ) {
-			if ( [] === $links ) {
+		$sections   = $doc['sections'] ?? [];
+		$sections[] = [
+			'heading' => self::OPTIONAL,
+			'links'   => $doc['optional'] ?? [],
+		];
+
+		foreach ( $sections as $section ) {
+			if ( [] === $section['links'] ) {
 				continue;
 			}
-			array_push( $lines, '## ' . HtmlToMarkdown::plain_text( (string) $heading ), '' );
-			foreach ( $links as $link ) {
+			array_push( $lines, '## ' . HtmlToMarkdown::plain_text( $section['heading'] ), '' );
+			foreach ( $section['links'] as $link ) {
 				$lines[] = self::link_line( $link );
 			}
 			$lines[] = '';
@@ -76,21 +84,5 @@ final class Document {
 		$description = HtmlToMarkdown::plain_text( $link['description'] ?? '' );
 
 		return '' === $description ? $line : $line . ': ' . $description;
-	}
-
-	/**
-	 * Move the Optional section to the end.
-	 *
-	 * @param array<string, array<int, array{title: string, url: string, description?: string}>> $sections Sections.
-	 * @return array<string, array<int, array{title: string, url: string, description?: string}>>
-	 */
-	private static function ordered( array $sections ): array {
-		if ( isset( $sections[ self::OPTIONAL ] ) ) {
-			$optional = $sections[ self::OPTIONAL ];
-			unset( $sections[ self::OPTIONAL ] );
-			$sections[ self::OPTIONAL ] = $optional;
-		}
-
-		return $sections;
 	}
 }

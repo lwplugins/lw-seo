@@ -30,9 +30,9 @@ final class SectionCollector {
 	private const MAX_LIMIT = 500;
 
 	/**
-	 * AI-visible posts grouped by section heading.
+	 * AI-visible posts, one section per post type that has any.
 	 *
-	 * @return array<string, array<int, \WP_Post>>
+	 * @return array<string, array{heading: string, posts: array<int, \WP_Post>}> Keyed by post type name.
 	 */
 	public function posts(): array {
 		$limit    = self::limit( Options::get( 'llms_txt_max_items' ) );
@@ -41,7 +41,32 @@ final class SectionCollector {
 		foreach ( self::post_types() as $post_type => $heading ) {
 			$posts = array_values( array_filter( $this->query( (string) $post_type, $limit ), [ Eligibility::class, 'is_ai_visible' ] ) );
 			if ( [] !== $posts ) {
-				$sections[ (string) $heading ] = $posts;
+				$sections[ (string) $post_type ] = [
+					'heading' => (string) $heading,
+					'posts'   => $posts,
+				];
+			}
+		}
+
+		return self::distinct_headings( $sections );
+	}
+
+	/**
+	 * Give every section a heading of its own. Post types often share a
+	 * plural label (two "Events" plugins), and a type labelled "Optional"
+	 * would read as the llmstxt.org section agents may skip, so those
+	 * headings get the post type name appended.
+	 *
+	 * @param array<string, array{heading: string, posts: array<int, \WP_Post>}> $sections Sections by post type.
+	 * @return array<string, array{heading: string, posts: array<int, \WP_Post>}>
+	 */
+	private static function distinct_headings( array $sections ): array {
+		$counts = array_count_values( array_column( $sections, 'heading' ) );
+
+		foreach ( $sections as $post_type => $section ) {
+			$heading = $section['heading'];
+			if ( $counts[ $heading ] > 1 || 0 === strcasecmp( trim( $heading ), Document::OPTIONAL ) ) {
+				$sections[ $post_type ]['heading'] = $heading . ' (' . $post_type . ')';
 			}
 		}
 
