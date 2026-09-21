@@ -59,10 +59,31 @@ final class Cache {
 			return $cached;
 		}
 
-		$content = (string) $build();
+		$content = self::build_as_visitor( $build );
 		set_transient( self::PREFIX . $key, $content, self::TTL );
 
 		return $content;
+	}
+
+	/**
+	 * Run the builder as a logged-out visitor. The result is cached and
+	 * served to everyone, so it must never carry what the_content,
+	 * shortcodes or membership plugins show the requesting user (often an
+	 * admin opening the link from the settings page). The requester is
+	 * restored even when the builder throws.
+	 *
+	 * @param callable $build Builder returning the document.
+	 * @return string
+	 */
+	private static function build_as_visitor( callable $build ): string {
+		$user_id = get_current_user_id();
+		wp_set_current_user( 0 );
+
+		try {
+			return (string) $build();
+		} finally {
+			wp_set_current_user( $user_id );
+		}
 	}
 
 	/**

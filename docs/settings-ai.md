@@ -84,7 +84,7 @@ tagline, the permalink structure, or the plugin settings change.
 | **Items per section** | Max entries per section, 1–500 (default 100). Pages are listed in menu order; every other type newest first. |
 | **Markdown links** | When enabled, each entry links to the page's `/md` Markdown version instead of its normal HTML URL. |
 | **Extra links** | Freeform links listed under a final `## Optional` section, one per line: `Title | https://url | optional description`. Lines that don't parse (missing title, or a URL not starting with `http(s)://`) are skipped. |
-| **llms-full.txt** | Opt-in. When enabled, `/llms-full.txt` serves the full Markdown content of every listed page concatenated together, capped at 1 MB — output is truncated with a notice once the cap is reached. Also adds a link to it under `## Optional` in `/llms.txt`. |
+| **llms-full.txt** | Opt-in. When enabled, `/llms-full.txt` serves the full Markdown content of every listed page concatenated together, capped at 1 MB — output is truncated with a notice once the cap is reached. Also adds a link to it under `## Optional` in `/llms.txt`. See [Restricted Content](#restricted-content) below. |
 
 The `## Optional` section always also includes the XML sitemap link (when
 the sitemap is enabled) and the llms-full.txt link (when enabled), in
@@ -103,6 +103,20 @@ when it is:
 This is the same eligibility gate the sitemap and Markdown endpoint use;
 see `lw_seo_post_is_eligible` in `docs/developers.md` to further restrict
 it.
+
+### Restricted Content
+
+Both files are built as a logged-out visitor, whoever triggers the
+rebuild, and the cached copy is served to every visitor and AI crawler.
+Content that WordPress, shortcodes or a membership plugin show only to
+logged-in users is therefore rendered the way an anonymous visitor
+sees it.
+
+Content-restriction plugins that only act on singular pages or the main
+query may still not apply to `/llms-full.txt`, because it renders each
+post's content outside the main query. Exclude restricted posts with the
+`lw_seo_post_is_eligible` filter (see `docs/developers.md`); this also
+removes them from `/llms.txt`, the sitemap and the Markdown endpoint.
 
 ## AI Crawler Control
 

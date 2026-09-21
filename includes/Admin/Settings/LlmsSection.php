@@ -173,6 +173,7 @@ final class LlmsSection {
 					]
 				);
 				?>
+				<p class="description"><?php esc_html_e( 'Built as a logged-out visitor. Content-restriction plugins that only protect the main page query may not apply here; use the lw_seo_post_is_eligible filter to leave restricted posts out.', 'lw-seo' ); ?></p>
 			</td>
 		</tr>
 		<?php
