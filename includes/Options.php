@@ -9,6 +9,8 @@ declare(strict_types=1);
 
 namespace LightweightPlugins\SEO;
 
+use LightweightPlugins\SEO\Crawlers\Registry;
+
 /**
  * Handles plugin options and settings.
  */
@@ -105,14 +107,6 @@ final class Options {
 			'llms_txt_post_types'             => [],
 			'llms_txt_markdown_links'         => false,
 			'llms_full_txt_enabled'           => false,
-			'block_gptbot'                    => false,
-			'block_chatgpt_user'              => false,
-			'block_claude_web'                => false,
-			'block_google_extended'           => false,
-			'block_bytespider'                => false,
-			'block_ccbot'                     => false,
-			'block_perplexitybot'             => false,
-			'block_cohere_ai'                 => false,
 
 			// Content Signals.
 			'content_signals_ai_train'        => true,
@@ -157,7 +151,7 @@ final class Options {
 
 			// 404.
 			'redirect_404_to_home'            => false,
-		];
+		] + Registry::option_defaults();
 	}
 
 	/**

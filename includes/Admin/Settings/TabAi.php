@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace LightweightPlugins\SEO\Admin\Settings;
 
-use LightweightPlugins\SEO\Admin\Data\AiCrawlers;
+use LightweightPlugins\SEO\Crawlers\Registry;
 use LightweightPlugins\SEO\Options;
 
 /**
@@ -134,7 +134,7 @@ final class TabAi implements TabInterface {
 
 		<div class="lw-seo-crawler-grid">
 			<?php
-			$crawlers = AiCrawlers::get_all();
+			$crawlers = Registry::builtin();
 			foreach ( $crawlers as $key => $crawler ) :
 				$is_blocked = Options::get( 'block_' . $key );
 				?>

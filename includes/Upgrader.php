@@ -81,6 +81,14 @@ final class Upgrader {
 	 * @return array<string, mixed>
 	 */
 	private static function to_160( array $options ): array {
+		// Anthropic retired Claude-Web; ClaudeBot is the crawler to block.
+		if ( ! empty( $options['block_claude_web'] ) ) {
+			$options['block_claudebot'] = true;
+		}
+
+		// Neither token is documented by its vendor any more.
+		unset( $options['block_claude_web'], $options['block_cohere_ai'] );
+
 		return $options;
 	}
 }

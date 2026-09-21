@@ -9,6 +9,8 @@ declare(strict_types=1);
 
 namespace LightweightPlugins\SEO;
 
+use LightweightPlugins\SEO\Crawlers\Policy;
+use LightweightPlugins\SEO\Crawlers\Registry;
 use LightweightPlugins\SEO\Sitemap\Sitemap;
 
 /**
@@ -124,26 +126,7 @@ final class RobotsTxt {
 	 * @return array<string>
 	 */
 	private function get_ai_crawler_blocks(): array {
-		$blocked = [];
-
-		$crawlers = [
-			'gptbot'          => 'GPTBot',
-			'chatgpt_user'    => 'ChatGPT-User',
-			'claude_web'      => 'Claude-Web',
-			'google_extended' => 'Google-Extended',
-			'bytespider'      => 'Bytespider',
-			'ccbot'           => 'CCBot',
-			'perplexitybot'   => 'PerplexityBot',
-			'cohere_ai'       => 'cohere-ai',
-		];
-
-		foreach ( $crawlers as $key => $agent ) {
-			if ( Options::get( 'block_' . $key ) ) {
-				$blocked[] = $agent;
-			}
-		}
-
-		return $blocked;
+		return Policy::blocked_agents( Registry::all(), Options::get_all() );
 	}
 
 	/**
