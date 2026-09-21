@@ -25,10 +25,12 @@ Lightweight SEO plugin for WordPress - minimal footprint, maximum impact.
 - **Custom OG Images** - Per-post social images
 
 ### XML Sitemap
-- **Auto-generated** - Posts, pages, categories, tags
-- **Search Engine Ping** - Automatic sitemap submission
-- **Configurable** - Enable/disable per content type
-- Available at `yoursite.com/sitemap.xml`
+- **Auto-generated** - Posts, pages, categories, tags and WooCommerce products
+- **Custom Post Types** - Every public CPT (ACF, CPT UI, …) is included automatically, with a per-type toggle
+- **Custom Taxonomies** - Opt-in, per taxonomy
+- **Clean** - noindex types/taxonomies, noindex and password-protected posts are left out
+- **Developer filters** - `lw_seo_sitemap_post_types`, `lw_seo_sitemap_exclude_post`, `lw_seo_sitemap_urls`
+- Available at `yoursite.com/sitemap.xml` (per-type files: `sitemap-{type}.xml`)
 
 ### Schema.org / JSON-LD
 - **WebSite Schema** - Site-wide structured data
@@ -38,21 +40,19 @@ Lightweight SEO plugin for WordPress - minimal footprint, maximum impact.
 
 ### Breadcrumbs
 - **Shortcode** - `[lw_breadcrumbs]`
-- **PHP Function** - `lw_seo_breadcrumbs()`
+- **PHP Function** - `\LightweightPlugins\SEO\lw_seo_breadcrumbs()`
 - **Microdata** - Built-in structured data
 
-### AI & Crawlers
-- **robots.txt** - Auto sitemap reference
-- **llms.txt** - AI crawler information file ([llmstxt.org](https://llmstxt.org/))
-- **AI Crawler Control** - Block/allow individual crawlers:
-  - GPTBot (OpenAI)
-  - ChatGPT-User
-  - Claude-Web (Anthropic)
-  - Google-Extended
-  - Bytespider (ByteDance)
-  - CCBot (Common Crawl)
-  - PerplexityBot
-  - Cohere-AI
+### FAQ Block
+- **Gutenberg block** - `lw-seo/faq` with FAQPage schema
+
+### AI & LLM
+- **llms.txt** - Spec-compliant ([llmstxt.org](https://llmstxt.org/)) file listing every page and custom post type in its own section, with SEO descriptions, custom summary/intro, an Optional links section and a per-section limit; cached and built as an anonymous visitor
+- **llms-full.txt** - Optional full-content Markdown dump (1 MiB cap)
+- **Markdown endpoint** - Every post, page, product and term as Markdown at `/md` or `/markdown` (or `?format=md`, or `Accept: text/markdown`), with YAML frontmatter, `Vary: Accept` on negotiated responses and discovery links (`rel="alternate"` / `rel="describedby"`)
+- **Content Signals** - Three-state `search` / `ai-input` / `ai-train` signals ([Cloudflare Content Signals Policy](https://blog.cloudflare.com/content-signals-policy/)) sent as a `Content-Signal` header, meta tag and robots.txt line; per-post and per-term overrides
+- **AI Crawler Control** - 22 verified crawlers grouped by purpose, blockable one by one or per purpose (training / AI search / user-triggered): OpenAI (GPTBot, OAI-SearchBot, ChatGPT-User), Anthropic (ClaudeBot, Claude-SearchBot, Claude-User), Google-Extended, Applebot-Extended, Perplexity, Meta, Amazon, Mistral AI, Common Crawl, AI2, ByteDance
+- **robots.txt** - Adds the sitemap, AI crawler rules and Content-Signal line through WordPress's `robots_txt` filter (compatible with other plugins); preview and physical-file warning in the admin
 
 ### WooCommerce Integration
 - **Auto-Detection** - Automatically enables when WooCommerce is active
@@ -70,6 +70,13 @@ Lightweight SEO plugin for WordPress - minimal footprint, maximum impact.
 - **Geo Coordinates** - Latitude/longitude for location
 - **Shortcodes** - `[lw_address]`, `[lw_phone]`, `[lw_email]`, `[lw_hours]`, `[lw_map]`
 
+### Redirects & 404
+- **Redirect Manager** - 301, 302, 307, 410 and 451 redirects, with CSV import/export
+- **404 to homepage** - Optional redirect of 404s to the homepage
+
+### Migration
+- **Import from Rank Math and Yoast SEO** - Options, post and term meta, primary categories and redirects (admin Import tab or `wp lw-seo migrate`)
+
 ### Cleanup
 - Remove shortlinks
 - Remove RSD links
@@ -79,6 +86,13 @@ Lightweight SEO plugin for WordPress - minimal footprint, maximum impact.
 - Unified **LW Plugins** menu
 - Modern tabbed settings interface
 - WordPress media library integration
+- Translations: Hungarian (hu_HU) included
+
+### Developer & Automation
+- **WP-CLI** - `wp lw-seo option|sitemap|llms|robots|crawlers|redirect|migrate …` — every setting can be read and set (validated) from the command line, see [docs/cli.md](docs/cli.md)
+- **REST API** - Read-only `lw-seo/v1` endpoints for headless setups, see [docs/rest-api.md](docs/rest-api.md)
+- **LW Site Manager abilities** - `lw-seo/get-meta`, `set-meta`, `get-content-signals`, `get-markdown`, `get-options` (per-object permission checks), see [docs/site-manager-abilities.md](docs/site-manager-abilities.md)
+- **Hooks** - see [docs/developers.md](docs/developers.md)
 
 ## Installation
 
@@ -107,10 +121,19 @@ Use these in title templates:
 | `%%sep%%` | Separator character |
 | `%%excerpt%%` | Post excerpt |
 | `%%author%%` | Author name |
+| `%%date%%` | Publish date |
+| `%%modified%%` | Last modified date |
 | `%%category%%` | Primary category |
+| `%%tag%%` | Tags |
 | `%%term_title%%` | Taxonomy term name |
+| `%%term_description%%` | Taxonomy term description |
 | `%%currentdate%%` | Current date |
+| `%%currentmonth%%` | Current month |
+| `%%currentyear%%` | Current year |
+| `%%page%%` / `%%pagenumber%%` | Page number |
 | `%%searchphrase%%` | Search query |
+
+Full reference: [docs/template-variables.md](docs/template-variables.md)
 
 ## Requirements
 
@@ -119,7 +142,7 @@ Use these in title templates:
 
 ## Conflict Detection
 
-LW SEO automatically disables its output when detecting:
+LW SEO skips its head meta output (and shows a notice on its settings page) when detecting:
 - Yoast SEO
 - Rank Math
 - All in One SEO
@@ -136,9 +159,14 @@ composer phpcs
 # Fix coding standards
 composer phpcbf
 
+# Static analysis (PHPStan level 5)
+composer analyse
+
 # Run tests
 composer test
 ```
+
+Full documentation: [docs/](docs/README.md) · Changelog: [CHANGELOG.md](CHANGELOG.md)
 
 ## License
 
