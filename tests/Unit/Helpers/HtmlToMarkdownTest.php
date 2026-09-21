@@ -79,6 +79,13 @@ final class HtmlToMarkdownTest extends MonkeyTestCase {
 			'javascript link dropped'   => [ '<p><a href="javascript:alert(1)">click</a></p>', "click\n" ],
 			'obfuscated scheme dropped' => [ "<p><a href=\"java\tscript:alert(1)\">x</a></p>", "x\n" ],
 			'data uri iframe dropped'   => [ '<iframe src="data:text/html;base64,AAA"></iframe>', '' ],
+			'angle-wrapped scheme dropped'       => [ '<p><a href="<javascript:alert(1)>">click</a></p>', "click\n" ],
+			'numeric-entity-encoded scheme dropped' => [ '<p><a href="javascript&amp;#58;alert(1)">click</a></p>', "click\n" ],
+			'named-entity-encoded scheme dropped' => [ '<p><a href="javascript&amp;colon;alert(1)">click</a></p>', "click\n" ],
+			'backslash-escaped scheme dropped'   => [ '<p><a href="javascript\:alert(1)">click</a></p>', "click\n" ],
+			'encoded data uri image dropped'     => [ '<p><img src="data&amp;#58;text/html;base64,AAA" alt="X"></p>', '' ],
+			'mixed-case vbscript href dropped'   => [ '<p><a href="VBScript:alert(1)">y</a></p>', "y\n" ],
+			'control-char prefixed scheme dropped' => [ "<p><a href=\"\x01javascript:alert(1)\">z</a></p>", "z\n" ],
 		];
 	}
 

@@ -68,12 +68,26 @@ final class InlineRenderer {
 	/**
 	 * Clean a URL for a Markdown destination.
 	 *
+	 * CommonMark renderers decode entities/backslash escapes and strip a
+	 * wrapping `<…>` from link targets before applying scheme rules, so the
+	 * scheme probe has to undo the same tricks or an encoded/wrapped
+	 * javascript:/data: URL slips through as a live link.
+	 *
 	 * @param string $url Raw URL.
 	 * @return string '' when unusable.
 	 */
 	public static function url( string $url ): string {
-		$url   = trim( $url );
-		$probe = strtolower( (string) preg_replace( '/[\x00-\x20]+/', '', $url ) );
+		$url = trim( $url );
+
+		$probe = $url;
+		for ( $pass = 0; $pass < 5; $pass++ ) {
+			$decoded = html_entity_decode( $probe, ENT_QUOTES | ENT_HTML5, 'UTF-8' );
+			if ( $decoded === $probe ) {
+				break;
+			}
+			$probe = $decoded;
+		}
+		$probe = strtolower( (string) preg_replace( '/[\x00-\x20<>\\\\]+/u', '', $probe ) );
 
 		foreach ( self::UNSAFE_SCHEMES as $scheme ) {
 			if ( str_starts_with( $probe, $scheme ) ) {
@@ -81,7 +95,7 @@ final class InlineRenderer {
 			}
 		}
 
-		return str_replace( [ ' ', '(', ')' ], [ '%20', '%28', '%29' ], $url );
+		return str_replace( [ ' ', '(', ')', '<', '>' ], [ '%20', '%28', '%29', '%3C', '%3E' ], $url );
 	}
 
 	/**
