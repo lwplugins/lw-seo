@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace LightweightPlugins\SEO\Markdown;
 
 use LightweightPlugins\SEO\Helpers\HtmlToMarkdown;
+use LightweightPlugins\SEO\Helpers\Markdown\InlineRenderer;
 use LightweightPlugins\SEO\Options;
 
 /**
@@ -110,7 +111,7 @@ final class ProductRenderer implements RendererInterface {
 			// Add to cart link (using permalink, not current URL which may contain /md/).
 			$cart_url = add_query_arg( 'add-to-cart', $product->get_id(), get_permalink( $this->post ) );
 			if ( $product->is_purchasable() && $product->is_in_stock() ) {
-				$body .= '**[' . $product->add_to_cart_text() . '](' . $cart_url . ")**\n\n";
+				$body .= self::cart_link( $product->add_to_cart_text(), $cart_url );
 			}
 		}
 
@@ -143,13 +144,39 @@ final class ProductRenderer implements RendererInterface {
 					$attribute->get_name(),
 					[ 'fields' => 'names' ]
 				);
-				$value  = implode( ', ', $values );
 			} else {
-				$value = implode( ', ', $attribute->get_options() );
+				$values = $attribute->get_options();
 			}
-			$output .= '| ' . $name . ' | ' . $value . " |\n";
+			$output .= self::attribute_row( $name, $values );
 		}
 
 		return $output . "\n";
+	}
+
+	/**
+	 * One attribute table row. Labels, option values and term names are
+	 * shop-manager text (stored entity-decoded, without unfiltered_html), so
+	 * each becomes inert Markdown text and cannot add a cell.
+	 *
+	 * @param string            $label  Attribute label.
+	 * @param array<int, mixed> $values Option values or term names.
+	 * @return string
+	 */
+	public static function attribute_row( string $label, array $values ): string {
+		$cell = static fn( mixed $text ): string => str_replace( '|', '\\|', HtmlToMarkdown::plain_text( (string) $text ) );
+
+		return '| ' . $cell( $label ) . ' | ' . implode( ', ', array_map( $cell, $values ) ) . " |\n";
+	}
+
+	/**
+	 * Bold add-to-cart link; the button text is plain text and the URL a
+	 * filtered Markdown destination.
+	 *
+	 * @param string $text Button text.
+	 * @param string $url  Add-to-cart URL.
+	 * @return string
+	 */
+	public static function cart_link( string $text, string $url ): string {
+		return '**[' . HtmlToMarkdown::plain_text( $text ) . '](' . InlineRenderer::url( $url ) . ")**\n\n";
 	}
 }

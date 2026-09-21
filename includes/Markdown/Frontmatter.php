@@ -33,6 +33,23 @@ final class Frontmatter {
 	}
 
 	/**
+	 * YAML escapes for a double-quoted scalar. `<` `>` `[` `]` and backtick
+	 * use \u escapes (the parsed YAML value is unchanged): a CommonMark
+	 * renderer without a frontmatter extension reads the block as a
+	 * thematic break plus a setext heading and parses the values as inline
+	 * Markdown, where they would otherwise become raw HTML, links or code.
+	 */
+	private const ESCAPES = [
+		'\\' => '\\\\',
+		'"'  => '\\"',
+		'<'  => '\\u003C',
+		'>'  => '\\u003E',
+		'['  => '\\u005B',
+		']'  => '\\u005D',
+		'`'  => '\\u0060',
+	];
+
+	/**
 	 * YAML double-quoted scalar.
 	 *
 	 * @param string $value Raw value (may contain HTML entities).
@@ -40,7 +57,7 @@ final class Frontmatter {
 	 */
 	public static function quote( string $value ): string {
 		$value = html_entity_decode( $value, ENT_QUOTES | ENT_HTML5, 'UTF-8' );
-		$value = str_replace( [ '\\', '"' ], [ '\\\\', '\\"' ], $value );
+		$value = strtr( $value, self::ESCAPES );
 		$value = (string) preg_replace( '/[\x00-\x1F\x7F]+/u', ' ', $value );
 
 		return '"' . trim( $value ) . '"';

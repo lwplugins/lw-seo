@@ -24,6 +24,12 @@ final class FrontmatterTest extends MonkeyTestCase {
 			'backslash escaped'        => [ 'C:\path', '"C:\\\\path"' ],
 			'entity decoded'           => [ 'It&#8217;s &amp; more', '"It’s & more"' ],
 			'newline collapsed'        => [ "a\nb", '"a b"' ],
+			'decoded tag cannot become raw html' => [ '&lt;img src=x onerror=alert(1)&gt;', '"\u003Cimg src=x onerror=alert(1)\u003E"' ],
+			'raw tag cannot become raw html'     => [ '<img src=x onerror=alert(1)>', '"\u003Cimg src=x onerror=alert(1)\u003E"' ],
+			'link syntax cannot become a link'   => [ '[x](javascript:alert(1))', '"\u005Bx\u005D(javascript:alert(1))"' ],
+			'autolink cannot become a link'      => [ '<javascript:alert(1)>', '"\u003Cjavascript:alert(1)\u003E"' ],
+			'backtick cannot open a code span'   => [ 'a`b', '"a\u0060b"' ],
+			'escapes combine with yaml escapes'  => [ '<a> \\ "q"', '"\u003Ca\u003E \\\\ \\"q\\""' ],
 		];
 	}
 
@@ -49,5 +55,15 @@ final class FrontmatterTest extends MonkeyTestCase {
 		);
 
 		$this->assertSame( "---\ntitle: \"Hello\"\ncount: 3\ndraft: false\ntags: [\"a\", \"b'c\"]\nnone: null\n---\n", $yaml );
+	}
+
+	/**
+	 * List items are quoted the same way, so a hostile tag or category
+	 * can't turn the flow sequence's brackets or its items into Markdown.
+	 */
+	public function test_build_escapes_markdown_in_list_items(): void {
+		$yaml = Frontmatter::build( [ 'tags' => [ '[t](javascript:alert(1))', '<b>' ] ] );
+
+		$this->assertSame( "---\ntags: [\"\\u005Bt\\u005D(javascript:alert(1))\", \"\\u003Cb\\u003E\"]\n---\n", $yaml );
 	}
 }
