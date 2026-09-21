@@ -24,7 +24,7 @@ final class RewriteFlusher {
 	/**
 	 * Option keys whose change adds or removes rewrite rules.
 	 */
-	private const WATCHED_KEYS = [ 'sitemap_enabled', 'robots_txt_enabled', 'llms_txt_enabled' ];
+	private const WATCHED_KEYS = [ 'sitemap_enabled', 'robots_txt_enabled', 'llms_txt_enabled', 'llms_full_txt_enabled' ];
 
 	/**
 	 * Constructor.

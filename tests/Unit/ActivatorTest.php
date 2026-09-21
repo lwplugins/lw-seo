@@ -64,6 +64,7 @@ final class ActivatorTest extends MonkeyTestCase {
 		$this->assertContains( '^sitemap-([a-z0-9_-]+?)-(\d+)\.xml$', $this->rules, 'paged sitemap rule missing' );
 		$this->assertContains( '^robots\.txt$', $this->rules, 'robots.txt rule missing' );
 		$this->assertContains( '^llms\.txt$', $this->rules, 'llms.txt rule missing' );
+		$this->assertNotContains( '^llms-full\.txt$', $this->rules, 'llms-full.txt is opt-in' );
 		$this->assertSame( [ 'md', 'markdown' ], $this->endpoints );
 		$this->assertSame( 1, $this->flushes, 'rewrite rules must be flushed exactly once' );
 	}

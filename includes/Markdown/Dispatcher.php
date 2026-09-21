@@ -41,6 +41,18 @@ final class Dispatcher {
 	}
 
 	/**
+	 * Markdown body of an object, without frontmatter.
+	 *
+	 * @param \WP_Post|\WP_Term $object Post or term.
+	 * @return string
+	 */
+	public static function body( \WP_Post|\WP_Term $object ): string {
+		$renderer = self::get_renderer( $object );
+
+		return null === $renderer ? '' : $renderer->body();
+	}
+
+	/**
 	 * Get the appropriate renderer for an object.
 	 *
 	 * @param \WP_Post|\WP_Term $object Queried object.

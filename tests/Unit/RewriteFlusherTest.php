@@ -30,6 +30,7 @@ final class RewriteFlusherTest extends MonkeyTestCase {
 			'sitemap turned on'       => [ [ 'sitemap_enabled' => false ], [ 'sitemap_enabled' => true ], true ],
 			'robots turned off'       => [ [ 'robots_txt_enabled' => true ], [ 'robots_txt_enabled' => false ], true ],
 			'llms turned on'          => [ [], [ 'llms_txt_enabled' => true ], true ],
+			'llms full turned on'     => [ [], [ 'llms_full_txt_enabled' => true ], true ],
 			'llms unchanged (absent)' => [ [], [], false ],
 			'truthiness unchanged'    => [ [ 'sitemap_enabled' => 1 ], [ 'sitemap_enabled' => true ], false ],
 			'unrelated key changed'   => [ [ 'separator' => '-' ], [ 'separator' => '|' ], false ],

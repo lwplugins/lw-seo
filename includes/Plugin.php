@@ -21,6 +21,7 @@ use LightweightPlugins\SEO\Redirects\Ajax as RedirectAjax;
 use LightweightPlugins\SEO\Migration\Ajax as MigrationAjax;
 use LightweightPlugins\SEO\Migration\CleanupV1314;
 use LightweightPlugins\SEO\NotFoundHandler;
+use LightweightPlugins\SEO\LlmsTxt\Endpoint as LlmsTxtEndpoint;
 use LightweightPlugins\SEO\Markdown\Endpoint as MarkdownEndpoint;
 use LightweightPlugins\SEO\Meta\HeadMeta;
 use LightweightPlugins\SEO\Meta\TitleFilter;
@@ -97,7 +98,7 @@ final class Plugin {
 		new Schema();
 		new Breadcrumbs();
 		new RobotsTxt();
-		new LlmsTxt();
+		new LlmsTxtEndpoint();
 
 		// Content Signals.
 		new ContentSignals();
