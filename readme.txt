@@ -137,42 +137,55 @@ Your sitemap is available at `yoursite.com/sitemap.xml`
 == Changelog ==
 
 = 1.6.0 =
-* New: Sitemap includes custom post types automatically (per-type toggles on the Sitemap tab); custom taxonomies are opt-in; tags toggle.
-* New: llms.txt lists every page and custom post type in its own section, with SEO descriptions, a custom summary and intro, extra links, per-section limits and optional Markdown links.
-* New: Opt-in /llms-full.txt with the full Markdown content (1 MB cap).
-* New: Markdown and llms.txt discovery: rel="alternate" type="text/markdown" and rel="describedby" links and Link headers (llms.txt v2).
-* New: AI crawler list refreshed from vendor documentation (ClaudeBot, Claude-SearchBot, Claude-User, OAI-SearchBot, Applebot-Extended, Perplexity-User, Meta, Amazon, Mistral, AI2) and grouped by purpose, with "block all training / search / user-triggered" toggles.
-* New: Content-Signal line and the Content Signals Policy text in robots.txt.
-* New: robots.txt preview and physical-file warning on the Advanced tab; notice when another SEO plugin is active.
-* New: Filters lw_seo_post_is_eligible, lw_seo_llms_txt_post_types, lw_seo_ai_crawlers, and the previously documented lw_seo_sitemap_post_types, lw_seo_sitemap_exclude_post, lw_seo_sitemap_urls.
+* New: Sitemap — every public custom post type is included automatically, with a per-type off switch on the Sitemap tab; custom taxonomies are opt-in; tags get their own toggle alongside categories.
+* New: Sitemap — post/taxonomy providers are built lazily, so a type registered later on init (ACF, CPT UI, etc.) is still picked up; per-type sitemap URLs accept hyphens and digits (sitemap-case-study.xml, sitemap-top-10.xml).
+* New: Sitemap — noindex post types/taxonomies and individually noindexed or password-protected posts are left out; the documented filters lw_seo_sitemap_post_types, lw_seo_sitemap_exclude_post and lw_seo_sitemap_urls are now actually implemented.
+* New: llms.txt — rewritten to the llmstxt.org v2 structure: one section per post type (pages in menu order, others newest first), with the post type name appended to a heading when two types share a label or one is literally named "Optional".
+* New: llms.txt — admin-configurable summary and free-text introduction, per-section item limit (default 100, max 500), descriptions from the SEO description or excerpt.
+* New: llms.txt — optional "Extra links" textarea (Title | URL | optional description per line, always last under "Optional"), optional Markdown links (section links point at /md instead of the HTML URL), opt-in /llms-full.txt (1 MiB cap), and the new lw_seo_llms_txt_post_types filter.
+* New: Markdown endpoint — Accept-header negotiation now honours q-values, subdirectory-aware request handling, the front page's Markdown is served at /md/.
+* New: Markdown endpoint — llms.txt v2 discovery links (rel="alternate" type="text/markdown", rel="describedby") in <head> and as Link headers; the Markdown response itself sends a rel="canonical" Link header back.
+* New: Markdown endpoint — HTML-to-Markdown converter rewritten: Gutenberg images/tables/captions, nested/ordered lists, blockquotes, hr/br, language-tagged and self-sizing code fences, lazy-loaded images; navigation/form noise stripped.
+* New: AI crawlers — registry refreshed from vendor documentation, 22 tokens (GPTBot/OAI-SearchBot/ChatGPT-User, ClaudeBot/Claude-SearchBot/Claude-User, Google-Extended, Applebot-Extended, PerplexityBot/Perplexity-User, meta-externalagent/meta-webindexer/meta-externalfetcher, Amazonbot/Amzn-SearchBot/Amzn-User, MistralAI-Training/MistralAI-Index/MistralAI-User, CCBot, AI2Bot, Bytespider), grouped by purpose with "block all training / search / user-triggered" toggles on top of the per-crawler toggle; new lw_seo_ai_crawlers filter.
+* New: Content Signals — three-state values (not specified / allow / disallow) and a standard Content-Signal HTTP header, alongside the existing ai-content-signals meta tag.
+* New: robots.txt — Content-Signal line and the Content Signals Policy text inside the User-agent: * group whenever a signal is set; live preview and physical-file warning on the Advanced tab and via wp lw-seo robots preview.
+* New: Admin UI — notice when another SEO plugin (Yoast SEO, Rank Math, All in One SEO) is active; Sitemap tab per-type/tags/taxonomy toggles; AI/LLM tab restructured into Content Signals, llms.txt and crawler-group blocks.
+* New: WP-CLI — wp lw-seo llms preview|flush|info, wp lw-seo robots preview, wp lw-seo crawlers list, extended wp lw-seo sitemap info, and wp lw-seo option set validated the same way the settings form is (typed bool/int, JSON map values with a key.subkey dot-path, choice-list validation); new docs/cli.md.
+* New: Internals — Content\PostTypes and Content\Eligibility shared gates (backing the new lw_seo_post_is_eligible restrict-only filter), Admin\SettingsSanitizer extracted with int/map/textarea/choice support, Upgrader for per-version option migrations and rewrite flushes (new lw_seo_version option).
 * Fix: Blocking "Claude-Web" did not block Anthropic's crawler; the setting now migrates to ClaudeBot.
 * Fix: llms.txt linked the draft Privacy Policy page, listed the static front page twice, included noindex and password-protected posts, and showed HTML entities.
 * Fix: Markdown on the HTML URL (Accept negotiation) had no Vary: Accept, so page caches could serve Markdown to browsers; q-values are honoured.
 * Fix: Markdown frontmatter was invalid YAML for titles with apostrophes.
-* Fix: HTML to Markdown lost Gutenberg images and tables, duplicated nested lists, flattened quotes and dropped rules and line breaks.
+* Fix: HTML to Markdown lost Gutenberg images and tables, duplicated nested lists, flattened blockquotes and dropped hr/br.
+* Fix: <strong>Note: </strong>text no longer loses the space after the bold text in Markdown (CommonMark ignores emphasis markers with inner whitespace).
 * Fix: robots.txt was generated outside the robots_txt filter, dropping other plugins' rules and hard-coding /wp-admin/.
 * Fix: Noindex post types and taxonomies were still listed in the sitemap.
 * Fix: llms-full.txt generation no longer leaves the global $post changed.
-* Fix: robots.txt Content-Signal insertion handles CRLF line endings.
-* Fix: YAML frontmatter stays parseable when a value contains C1 control characters or invalid UTF-8.
-* Fix: <strong>Note: </strong>text no longer loses the space after the bold text in Markdown.
-* Fix: llms.txt: two post types with the same label, or a type labelled "Optional", no longer lose a section; the post type name is appended to such headings.
-* Fix: LW Site Manager set-meta collapsed the Markdown override onto one line; it now keeps its newlines, like the meta box.
-* Fix: llms.txt cache: rebuilt when a listed post is published, unpublished or trashed (including scheduled posts going live), when an LW SEO post field changes, when the site address changes, after a plugin update, and after settings are saved while llms.txt is off; saving revisions, autosaves, drafts and unlisted post types no longer clears it.
-* Fix: The Markdown endpoint no longer serves noindex content or content with AI Input set to "No"; private posts use the read_post capability.
-* Fix: javascript:, vbscript: and data: URLs are dropped from Markdown output, including entity-encoded, angle-bracket-wrapped and backslash-escaped variants.
-* Fix: Per-post and per-term content signal values are whitelisted.
-* Fix: llms.txt and llms-full.txt are built as a logged-out visitor, so the shared cached copy no longer contains what the_content, shortcodes or membership plugins showed the user (often an admin) who triggered the rebuild.
-* Fix: llms.txt escapes Markdown syntax in the site title, summary, section headings, link titles and descriptions (SEO description or excerpt), and filters and percent-encodes link URLs, so titles and excerpts can no longer inject links or raw HTML.
-* Fix: Markdown output escapes Markdown syntax in text, headings/titles, term post lists, product attributes and YAML frontmatter values, so post content can no longer inject links, autolinks or raw HTML for downstream Markdown renderers; link/image URLs are percent-encoded (control characters, backtick, backslash, angle brackets) and inline code fences are sized to their content.
-* Fix: Category/tag Markdown honours AI Input = No; a term's post list only includes eligible posts.
-* Fix: The custom Markdown override (post and term) can only be set by users with the unfiltered_html capability; for other users the field is read-only and existing overrides are kept. Admins should review overrides saved by other roles before 1.6.0.
-* Fix: LW Site Manager abilities: set-meta requires edit_post / edit_term on the target object and reports skipped fields; get-meta, get-content-signals and get-markdown require access to non-public objects (drafts, private, password-protected posts, private taxonomies).
-* Change: Content Signals are three-state (not specified / allow / disallow); new installs default to "not specified". Existing settings keep their values.
-* Change: Sites that never saved the Content Signals settings (or last saved before they existed) previously sent ai-train=yes, ai-input=yes, search=yes by default; they now send no signal until one is configured.
+* Fix: robots.txt Content-Signal insertion normalizes CRLF line endings before matching the User-agent: * group.
+* Fix: YAML frontmatter stays parseable when a value contains C1 control characters, the U+FFFE/U+FFFF noncharacters, or invalid UTF-8.
+* Fix: llms.txt — two post types with the same label, or a type labelled "Optional", no longer lose a section; the post type name is appended to such headings.
+* Fix: LW Site Manager set-meta collapsed the Markdown override onto one line; it now uses sanitize_textarea_field, like the meta box, and keeps its newlines.
+* Fix: llms.txt cache invalidation is far more precise — rebuilt only for a published post of a listed type (including scheduled posts going live, unpublish, trash), for the plugin's own post meta keys, for a term edit, for a site address/title/permalink change, after a plugin update, and after settings are saved even while llms.txt is off; revisions, autosaves, drafts and unlisted post types no longer clear it.
+* Security: The Markdown endpoint no longer serves noindex content or content with AI Input set to "No"; private posts use the read_post capability and answer 404 instead of 403.
+* Security: Category/tag Markdown honours AI Input = No site-wide or per term; a term's post list only includes posts eligible under the same gate as the sitemap and llms.txt.
+* Security: javascript:, vbscript: and data: URLs are dropped from Markdown link/image/iframe destinations, including entity-encoded, angle-bracket-wrapped and backslash-obfuscated scheme variants.
+* Security: Markdown URLs percent-encode control characters, backtick and backslash; inline code fences are sized to their content, and every point that joins rendered Markdown pieces guards against fusing two backtick fences or leaving a trailing backslash — closing off ways decoded HTML could be read as live markup by a downstream CommonMark renderer.
+* Security: Text nodes, image alt text, and heading/list-item titles (post titles, WooCommerce product attribute labels/values, term names) are Markdown-escaped so post content can no longer inject a live link, emphasis, autolink or raw HTML tag.
+* Security: YAML frontmatter values are \u-escaped for < > [ ] and backtick, so a hostile title, author name, category/tag, excerpt or price can't be read as a heading, link or raw HTML by a CommonMark renderer without a frontmatter extension.
+* Security: llms.txt and llms-full.txt are built as a logged-out visitor (restored afterwards even if building throws), so the shared cached copy no longer contains what the_content, a shortcode or a membership/LMS plugin showed the user — often an admin — who triggered the rebuild.
+* Security: llms.txt escapes Markdown syntax in the site title, summary, section headings, link titles and descriptions, and filters and percent-encodes link URLs through the same scheme filter as the Markdown endpoint.
+* Security: Per-post and per-term content signal values are whitelisted to yes/no; any other value deletes the meta row instead of being stored.
+* Security: The custom Markdown override (post and term) can only be set by users with the unfiltered_html capability — it is served unescaped at /md. Other users see the field read-only and their existing value is preserved unchanged, in the meta box, the term screen, and the LW Site Manager set-meta ability alike. Admins should review overrides saved by other roles before relying on them.
+* Security: LW Site Manager set-meta now requires edit_post / edit_term on the specific target object (not just the generic edit_posts capability) and reports fields it left unchanged as "skipped" in the response.
+* Security: LW Site Manager get-meta, get-content-signals and get-markdown now require the target object to be publicly readable or the caller to have edit_post / edit_term on it — previously any caller with the generic permission could read another user's drafts, private posts, password-protected posts or terms of a non-public taxonomy.
+* Change: Content Signals are three-state (not specified / allow / disallow); new installs default to "not specified". Existing settings keep their values (stored booleans migrate to yes/no).
+* Change: Sites that never saved the Content Signals settings previously sent ai-train=yes, ai-input=yes, search=yes by default; they now send no signal until one is configured.
 * Change: The lw_seo_content_signals filter now receives only the signals that are set; callbacks must read keys with isset() / ??.
 * Change: The HTTP header is now Content-Signal; X-Content-Signals is still sent and will be removed in a later release.
-* Change: Markdown endpoint: private posts answer 404 (not 403) to users without access; password-protected posts 403; posts whose password was entered via cookie are not served at /md either.
+* Change: Markdown endpoint — private posts answer 404 (not 403) to users without access; password-protected posts 403; posts whose password was entered via cookie are still never served at /md.
+* Change: robots.txt is now built entirely through the core robots_txt filter instead of a separate rewrite rule that bypassed it.
+* Change: Docs — docs/developers.md drops 13 hook sections for hooks nothing in includes/ ever fired; docs/settings-sitemap.md, settings-ai.md, settings-advanced.md, markdown-endpoint.md and site-manager-abilities.md rewritten for 1.6.0; new docs/cli.md.
+* Change: Translations — lw-seo.pot regenerated (531 strings); Hungarian (hu_HU) updated to 100% (92 new strings).
 * Change: cohere-ai removed from the crawler list (not documented by Cohere).
 
 = 1.5.1 =
@@ -409,6 +422,9 @@ Your sitemap is available at `yoursite.com/sitemap.xml`
 * llms.txt generation
 
 == Upgrade Notice ==
+
+= 1.6.0 =
+Content Signals now default to "not specified"; robots.txt is filter-only (a physical robots.txt file now overrides it); "Claude-Web" blocking migrates to ClaudeBot; the Markdown override requires unfiltered_html — review overrides saved by other roles.
 
 = 1.1.8 =
 FAQ Gutenberg block with FAQPage schema, plugin registry update.
