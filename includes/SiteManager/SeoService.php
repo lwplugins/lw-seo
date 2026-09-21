@@ -102,10 +102,6 @@ final class SeoService {
 
 		$output = Dispatcher::dispatch( $object );
 
-		if ( null === $output ) {
-			return new \WP_Error( 'not_supported', __( 'Markdown not available for this content.', 'lw-seo' ), [ 'status' => 400 ] );
-		}
-
 		return [
 			'success'  => true,
 			'markdown' => $output,

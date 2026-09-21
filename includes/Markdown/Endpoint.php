@@ -86,12 +86,7 @@ final class Endpoint {
 			return;
 		}
 
-		$output = Dispatcher::dispatch( $object );
-		if ( null === $output ) {
-			return;
-		}
-
-		$this->send_response( $output, $object );
+		$this->send_response( Dispatcher::dispatch( $object ), $object );
 	}
 
 	/**

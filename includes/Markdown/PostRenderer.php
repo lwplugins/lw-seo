@@ -66,10 +66,14 @@ final class PostRenderer implements RendererInterface {
 			$data['featured_image'] = $thumbnail;
 		}
 
-		// Excerpt.
-		$excerpt = get_the_excerpt( $this->post );
-		if ( ! empty( $excerpt ) ) {
-			$data['excerpt'] = $excerpt;
+		// Manual excerpt or SEO description only: get_the_excerpt() would run
+		// the_content a second time to auto-generate one.
+		$excerpt = (string) $this->post->post_excerpt;
+		if ( '' === $excerpt ) {
+			$excerpt = (string) Options::get_post_meta( (int) $this->post->ID, 'description' );
+		}
+		if ( '' !== $excerpt ) {
+			$data['excerpt'] = wp_strip_all_tags( $excerpt );
 		}
 
 		/**
