@@ -303,6 +303,33 @@ final class SeoServiceTest extends MonkeyTestCase {
 	}
 
 	/**
+	 * Signal values are whitelisted to yes/no/empty; invalid values are
+	 * sanitized to empty string (which deletes the meta row).
+	 */
+	public function test_set_meta_sanitizes_signal_values_to_whitelist(): void {
+		Functions\stubTranslationFunctions();
+		Functions\when( 'get_post' )->justReturn( new \WP_Post( [ 'ID' => 7 ] ) );
+		Functions\when( 'current_user_can' )->justReturn( true );
+		Functions\when( 'sanitize_text_field' )->returnArg();
+		Functions\expect( 'update_post_meta' )->once()->with( 7, '_lw_seo_ai_train', 'yes' )->andReturn( true );
+		Functions\expect( 'delete_post_meta' )->once()->with( 7, '_lw_seo_ai_input' )->andReturn( true );
+		Functions\expect( 'delete_post_meta' )->once()->with( 7, '_lw_seo_search' )->andReturn( true );
+
+		$result = SeoService::set_meta(
+			[
+				'post_id' => 7,
+				'meta'    => [
+					'ai_train' => 'yes',
+					'ai_input' => 'invalid',
+					'search'   => 'default',
+				],
+			]
+		);
+
+		$this->assertSame( [ 'ai_train', 'ai_input', 'search' ], $result['updated'] );
+	}
+
+	/**
 	 * Post fixture.
 	 *
 	 * @param string $status    Post status.

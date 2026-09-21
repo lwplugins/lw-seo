@@ -405,9 +405,9 @@ final class MetaBox {
 			'og_title'         => 'sanitize_text_field',
 			'og_description'   => 'sanitize_textarea_field',
 			'og_image'         => 'esc_url_raw',
-			'ai_train'         => 'sanitize_text_field',
-			'ai_input'         => 'sanitize_text_field',
-			'search'           => 'sanitize_text_field',
+			'ai_train'         => [ SignalValue::class, 'sanitize' ],
+			'ai_input'         => [ SignalValue::class, 'sanitize' ],
+			'search'           => [ SignalValue::class, 'sanitize' ],
 			'markdown_content' => 'sanitize_textarea_field',
 		];
 

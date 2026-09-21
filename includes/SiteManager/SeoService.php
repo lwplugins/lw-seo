@@ -13,6 +13,7 @@ use LightweightPlugins\SEO\Admin\MarkdownOverrideField;
 use LightweightPlugins\SEO\ContentSignals;
 use LightweightPlugins\SEO\Markdown\Dispatcher;
 use LightweightPlugins\SEO\Options;
+use LightweightPlugins\SEO\SignalValue;
 
 /**
  * Executes SEO abilities for the Site Manager.
@@ -256,7 +257,11 @@ final class SeoService {
 				continue;
 			}
 
-			$write( $key, sanitize_text_field( (string) $value ) );
+			// Whitelist signal fields to yes/no only; sanitize_text_field for others.
+			$sanitized = in_array( $key, [ 'ai_train', 'ai_input', 'search' ], true )
+				? SignalValue::sanitize( $value )
+				: sanitize_text_field( (string) $value );
+			$write( $key, $sanitized );
 			$updated[] = $key;
 		}
 
