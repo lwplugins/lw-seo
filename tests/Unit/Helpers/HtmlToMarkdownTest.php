@@ -50,7 +50,7 @@ final class HtmlToMarkdownTest extends MonkeyTestCase {
 			],
 			'inline code containing a backtick' => [
 				'<p>Use <code>a`b</code> here</p>',
-				"Use `` a`b `` here\n",
+				"Use ``a`b`` here\n",
 			],
 			'hard break and rule' => [
 				'<p>Line 1<br>Line 2</p><hr><p>After</p>',
@@ -117,6 +117,34 @@ final class HtmlToMarkdownTest extends MonkeyTestCase {
 			'whitespace inside em stays outside the markers' => [
 				'<p>a<em> b </em>c</p>',
 				"a *b* c\n",
+			],
+			'newline-injected reference definition dropped from anchor href' => [
+				'<p><a href="https://x.test/&#10;&#10;[x]&#10;&#10;[x]:javascript:alert%281%29&#10;.">click</a></p>',
+				"[click](https://x.test/%0A%0A[x]%0A%0A[x]:javascript:alert%281%29%0A.)\n",
+			],
+			'newline-injected reference definition dropped from img src' => [
+				'<p><img src="https://x.test/&#10;&#10;[x]&#10;&#10;[x]:javascript:alert%281%29&#10;." alt="X"></p>',
+				"![X](https://x.test/%0A%0A[x]%0A%0A[x]:javascript:alert%281%29%0A.)\n",
+			],
+			'newline-injected reference definition dropped from iframe src' => [
+				'<iframe src="https://x.test/&#10;&#10;[x]&#10;&#10;[x]:javascript:alert%281%29&#10;." title="Y"></iframe>',
+				"[Y](https://x.test/%0A%0A[x]%0A%0A[x]:javascript:alert%281%29%0A.)\n",
+			],
+			'double backtick inside inline code stays contained' => [
+				'<p><code>a`` &lt;img src=x onerror=alert(1)&gt; ``b</code></p>',
+				"```a`` <img src=x onerror=alert(1)> ``b```\n",
+			],
+			'double backtick with no surrounding spaces stays contained' => [
+				'<p><code>a``b</code></p>',
+				"```a``b```\n",
+			],
+			'inline code special characters stay unescaped' => [
+				'<p><code>[a]&lt;b&gt;\c</code></p>',
+				"`[a]<b>\\c`\n",
+			],
+			'fenced code block special characters stay unescaped' => [
+				'<pre>[a]&lt;b&gt;\c</pre>',
+				"```\n[a]<b>\\c\n```\n",
 			],
 		];
 	}

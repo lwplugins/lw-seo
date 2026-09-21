@@ -118,11 +118,8 @@ final class BlockRenderer {
 	 * @return string
 	 */
 	private static function code_block( \DOMElement $pre ): string {
-		$code = rtrim( $pre->textContent, "\n" );
-
-		preg_match_all( '/`+/', $code, $runs );
-		$longest = [] === $runs[0] ? 0 : max( array_map( 'strlen', $runs[0] ) );
-		$fence   = str_repeat( '`', max( 3, $longest + 1 ) );
+		$code  = rtrim( $pre->textContent, "\n" );
+		$fence = str_repeat( '`', max( 3, InlineRenderer::longest_backtick_run( $code ) + 1 ) );
 
 		return $fence . self::language( $pre ) . "\n" . $code . "\n" . $fence;
 	}

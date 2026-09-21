@@ -71,7 +71,14 @@ final class InlineRenderer {
 	 * CommonMark renderers decode entities/backslash escapes and strip a
 	 * wrapping `<…>` from link targets before applying scheme rules, so the
 	 * scheme probe has to undo the same tricks or an encoded/wrapped
-	 * javascript:/data: URL slips through as a live link.
+	 * javascript:/data: URL slips through as a live link. The probe class is
+	 * ASCII-only, so it intentionally runs without the /u modifier: on
+	 * invalid UTF-8, a /u regex fails closed to null, which cast to ''
+	 * would skip the scheme check entirely and let the raw URL through.
+	 * Raw control bytes in the *returned* URL are just as dangerous: a
+	 * literal newline in a link destination ends it early and lets the
+	 * rest of the text be parsed as a Markdown reference definition, so
+	 * every \x00-\x1F/\x7F byte is percent-encoded before the URL is used.
 	 *
 	 * @param string $url Raw URL.
 	 * @return string '' when unusable.
@@ -87,13 +94,19 @@ final class InlineRenderer {
 			}
 			$probe = $decoded;
 		}
-		$probe = strtolower( (string) preg_replace( '/[\x00-\x20<>\\\\]+/u', '', $probe ) );
+		$probe = strtolower( (string) preg_replace( '/[\x00-\x20<>\\\\]+/', '', $probe ) );
 
 		foreach ( self::UNSAFE_SCHEMES as $scheme ) {
 			if ( str_starts_with( $probe, $scheme ) ) {
 				return '';
 			}
 		}
+
+		$url = (string) preg_replace_callback(
+			'/[\x00-\x1F\x7F]/',
+			static fn( array $matches ): string => '%' . strtoupper( bin2hex( $matches[0] ) ),
+			$url
+		);
 
 		return str_replace( [ ' ', '(', ')', '<', '>' ], [ '%20', '%28', '%29', '%3C', '%3E' ], $url );
 	}
@@ -155,7 +168,12 @@ final class InlineRenderer {
 	}
 
 	/**
-	 * Inline code span, safe for embedded backticks.
+	 * Inline code span, safe for embedded backticks: the fence is one
+	 * backtick longer than the longest run inside the text, so an internal
+	 * run (e.g. a double backtick) can never close the span early. A space
+	 * is added on a side whose content starts/ends with a backtick, per
+	 * the CommonMark rule, to keep that backtick from reading as part of
+	 * the fence.
 	 *
 	 * @param string $text Code text.
 	 * @return string
@@ -166,7 +184,24 @@ final class InlineRenderer {
 			return '';
 		}
 
-		return str_contains( $text, '`' ) ? '`` ' . $text . ' ``' : '`' . $text . '`';
+		$fence = str_repeat( '`', self::longest_backtick_run( $text ) + 1 );
+		$pad   = ( str_starts_with( $text, '`' ) || str_ends_with( $text, '`' ) ) ? ' ' : '';
+
+		return $fence . $pad . $text . $pad . $fence;
+	}
+
+	/**
+	 * Length of the longest run of consecutive backticks in a string, used
+	 * to size a fence that can't be closed early by a shorter run inside
+	 * the text. Shared with BlockRenderer's fenced code blocks.
+	 *
+	 * @param string $text Text.
+	 * @return int
+	 */
+	public static function longest_backtick_run( string $text ): int {
+		preg_match_all( '/`+/', $text, $runs );
+
+		return [] === $runs[0] ? 0 : max( array_map( 'strlen', $runs[0] ) );
 	}
 
 	/**
