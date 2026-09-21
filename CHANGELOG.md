@@ -29,7 +29,7 @@
 - Optional "Extra links" textarea (`llms_txt_optional_links`, one `Title | URL | optional description` per line), always rendered last under its own "Optional" heading — it can never merge with a content section.
 - Optional Markdown links (`llms_txt_markdown_links`): section links point at each post's `/md` Markdown URL instead of its HTML permalink.
 - Opt-in `/llms-full.txt` (`llms_full_txt_enabled`), concatenating the Markdown of every listed post, capped at 1 MiB with a truncation notice.
-- Both documents are cached in a transient (see Changed for the invalidation rules).
+- Both documents are cached in a transient (see Fixed for the invalidation rules).
 - New filter `lw_seo_llms_txt_post_types` to add or remove post types from the section list.
 
 **Markdown endpoint**
