@@ -23,6 +23,7 @@ use LightweightPlugins\SEO\Admin\Settings\Tab404;
 use LightweightPlugins\SEO\Admin\Settings\TabMigration;
 use LightweightPlugins\SEO\WooCommerce\WooCommerce;
 use LightweightPlugins\SEO\WooCommerce\SlugCollisionDetector;
+use LightweightPlugins\SEO\Meta\HeadMeta;
 use LightweightPlugins\SEO\Options;
 
 /**
@@ -272,6 +273,12 @@ final class SettingsPage {
 				<?php esc_html_e( 'Lightweight SEO', 'lw-seo' ); ?>
 				<span style="font-size: 13px; font-weight: 400; color: #888;">(<?php echo esc_html( LW_SEO_VERSION ); ?>)</span>
 			</h1>
+
+			<?php if ( HeadMeta::is_conflicting_plugin_active() ) : ?>
+				<div class="notice notice-warning inline">
+					<p><?php esc_html_e( 'Another SEO plugin (Yoast SEO, Rank Math or All in One SEO) is active. LW SEO skips its meta tags to avoid duplicates. Deactivate the other plugin to use LW SEO fully.', 'lw-seo' ); ?></p>
+				</div>
+			<?php endif; ?>
 
 			<form method="post" action="options.php">
 				<?php settings_fields( self::SETTINGS_GROUP ); ?>

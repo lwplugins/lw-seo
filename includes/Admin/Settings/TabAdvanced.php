@@ -9,6 +9,8 @@ declare(strict_types=1);
 
 namespace LightweightPlugins\SEO\Admin\Settings;
 
+use LightweightPlugins\SEO\RobotsTxt;
+
 /**
  * Handles the Advanced settings tab.
  */
@@ -121,9 +123,35 @@ final class TabAdvanced implements TabInterface {
 						);
 						?>
 					</p>
+					<?php $this->render_robots_status(); ?>
 				</td>
 			</tr>
 		</table>
+		<?php
+	}
+
+	/**
+	 * Physical-file warning or a preview of the served robots.txt.
+	 *
+	 * @return void
+	 */
+	private function render_robots_status(): void {
+		$physical = RobotsTxt::physical_file();
+
+		if ( '' !== $physical ) {
+			$message = sprintf(
+				/* translators: %s: path of the robots.txt file */
+				__( 'A physical robots.txt file exists (%s). The web server serves it directly, so these settings have no effect. Delete the file to let LW SEO manage robots.txt.', 'lw-seo' ),
+				$physical
+			);
+			printf( '<div class="notice notice-warning inline"><p>%s</p></div>', esc_html( $message ) );
+			return;
+		}
+		?>
+		<details style="margin-top: 8px;">
+			<summary><?php esc_html_e( 'Preview', 'lw-seo' ); ?></summary>
+			<pre class="lw-seo-robots-preview"><?php echo esc_html( RobotsTxt::preview() ); ?></pre>
+		</details>
 		<?php
 	}
 

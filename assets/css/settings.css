@@ -481,3 +481,12 @@ h3 .count {
 		padding: 20px;
 	}
 }
+
+.lw-seo-robots-preview {
+	max-height: 320px;
+	overflow: auto;
+	padding: 12px;
+	background: #f6f7f7;
+	border: 1px solid #dcdcde;
+	white-space: pre-wrap;
+}
