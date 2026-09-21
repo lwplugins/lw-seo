@@ -62,7 +62,6 @@ final class ActivatorTest extends MonkeyTestCase {
 		$this->assertContains( '^sitemap\.xml$', $this->rules, 'sitemap index rule missing' );
 		$this->assertContains( '^sitemap-([a-z0-9_-]+)\.xml$', $this->rules, 'sitemap sub-rule missing' );
 		$this->assertContains( '^sitemap-([a-z0-9_-]+?)-(\d+)\.xml$', $this->rules, 'paged sitemap rule missing' );
-		$this->assertContains( '^robots\.txt$', $this->rules, 'robots.txt rule missing' );
 		$this->assertContains( '^llms\.txt$', $this->rules, 'llms.txt rule missing' );
 		$this->assertNotContains( '^llms-full\.txt$', $this->rules, 'llms-full.txt is opt-in' );
 		$this->assertSame( [ 'md', 'markdown' ], $this->endpoints );
@@ -72,8 +71,7 @@ final class ActivatorTest extends MonkeyTestCase {
 	public function test_activate_skips_rules_of_disabled_features(): void {
 		Functions\when( 'get_option' )->justReturn(
 			[
-				'sitemap_enabled'    => false,
-				'robots_txt_enabled' => false,
+				'sitemap_enabled' => false,
 			]
 		);
 		Options::clear_cache();
@@ -81,7 +79,6 @@ final class ActivatorTest extends MonkeyTestCase {
 		Activator::activate();
 
 		$this->assertNotContains( '^sitemap\.xml$', $this->rules );
-		$this->assertNotContains( '^robots\.txt$', $this->rules );
 		$this->assertContains( '^llms\.txt$', $this->rules );
 		$this->assertSame( 1, $this->flushes );
 	}

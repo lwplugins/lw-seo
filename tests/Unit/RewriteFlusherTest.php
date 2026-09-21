@@ -27,15 +27,15 @@ final class RewriteFlusherTest extends MonkeyTestCase {
 	 */
 	public static function option_change_provider(): array {
 		return [
-			'sitemap turned on'       => [ [ 'sitemap_enabled' => false ], [ 'sitemap_enabled' => true ], true ],
-			'robots turned off'       => [ [ 'robots_txt_enabled' => true ], [ 'robots_txt_enabled' => false ], true ],
-			'llms turned on'          => [ [], [ 'llms_txt_enabled' => true ], true ],
-			'llms full turned on'     => [ [], [ 'llms_full_txt_enabled' => true ], true ],
-			'llms unchanged (absent)' => [ [], [], false ],
-			'truthiness unchanged'    => [ [ 'sitemap_enabled' => 1 ], [ 'sitemap_enabled' => true ], false ],
-			'unrelated key changed'   => [ [ 'separator' => '-' ], [ 'separator' => '|' ], false ],
-			'old value not an array'  => [ false, [ 'sitemap_enabled' => true ], true ],
-			'new value not an array'  => [ [ 'sitemap_enabled' => true ], false, true ],
+			'sitemap turned on'                    => [ [ 'sitemap_enabled' => false ], [ 'sitemap_enabled' => true ], true ],
+			'robots toggle adds no rewrite rules'  => [ [ 'robots_txt_enabled' => true ], [ 'robots_txt_enabled' => false ], false ],
+			'llms turned on'                       => [ [], [ 'llms_txt_enabled' => true ], true ],
+			'llms full turned on'                  => [ [], [ 'llms_full_txt_enabled' => true ], true ],
+			'llms unchanged (absent)'               => [ [], [], false ],
+			'truthiness unchanged'                  => [ [ 'sitemap_enabled' => 1 ], [ 'sitemap_enabled' => true ], false ],
+			'unrelated key changed'                 => [ [ 'separator' => '-' ], [ 'separator' => '|' ], false ],
+			'old value not an array'                => [ false, [ 'sitemap_enabled' => true ], true ],
+			'new value not an array'                => [ [ 'sitemap_enabled' => true ], false, true ],
 		];
 	}
 

@@ -18,7 +18,7 @@ use LightweightPlugins\SEO\Sitemap\Sitemap;
  *
  * Activation runs after `init`, so the plugin's own `init` callbacks never
  * fired in that request — the rules must be added explicitly before flushing,
- * otherwise /sitemap.xml, /robots.txt and /llms.txt 404 until the next flush.
+ * otherwise /sitemap.xml and /llms.txt 404 until the next flush.
  */
 final class Activator {
 
@@ -26,9 +26,8 @@ final class Activator {
 	 * Option key → rewrite provider class, for option-gated endpoints.
 	 */
 	private const GATED_PROVIDERS = [
-		'sitemap_enabled'    => Sitemap::class,
-		'robots_txt_enabled' => RobotsTxt::class,
-		'llms_txt_enabled'   => LlmsTxtEndpoint::class,
+		'sitemap_enabled'  => Sitemap::class,
+		'llms_txt_enabled' => LlmsTxtEndpoint::class,
 	];
 
 	/**

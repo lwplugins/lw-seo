@@ -11,7 +11,7 @@ namespace LightweightPlugins\SEO;
 
 /**
  * Stops WordPress from 301-redirecting the plugin's virtual endpoints
- * (/sitemap.xml, /llms.txt, /robots.txt, /{post}/md) to a trailing-slash
+ * (/sitemap.xml, /llms.txt, /{post}/md) to a trailing-slash
  * variant before the endpoint handler on `template_redirect` can answer.
  */
 final class CanonicalGuard {
@@ -19,7 +19,7 @@ final class CanonicalGuard {
 	/**
 	 * Query vars that must be non-empty to mark a virtual request.
 	 */
-	private const VALUE_VARS = [ 'lw_sitemap', 'lw_llms_txt', 'lw_robots_txt' ];
+	private const VALUE_VARS = [ 'lw_sitemap', 'lw_llms_txt' ];
 
 	/**
 	 * Rewrite endpoints: present (possibly as empty string) when matched.
