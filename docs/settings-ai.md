@@ -46,11 +46,14 @@ setting.
 
 ### Resolution Order
 
-1. Per-post/term meta value, if set to Allow or Disallow.
-2. The `lw_seo_content_signals` filter (see `docs/developers.md`).
-3. The global setting from this tab. If that is also "Not specified",
-   the signal is left out of the header, meta tag and robots.txt line
-   entirely.
+1. The global setting from this tab is the starting value.
+2. A per-post/term value set to Allow or Disallow overrides it.
+3. The `lw_seo_content_signals` filter (see `docs/developers.md`) runs
+   last on the result and can change any value.
+
+A signal that is "Not specified" at both levels (and not added by the
+filter) is left out of the header, meta tag and robots.txt line
+entirely.
 
 ## Markdown Endpoint (/md)
 

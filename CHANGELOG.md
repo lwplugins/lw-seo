@@ -24,11 +24,15 @@
 - robots.txt Content-Signal insertion handles CRLF line endings.
 - YAML frontmatter stays parseable when a value contains C1 control characters or invalid UTF-8.
 - `<strong>Note: </strong>text` no longer loses the space after the bold text in Markdown.
+- llms.txt: two post types with the same label, or a type labelled "Optional", no longer lose a section; the post type name is appended to such headings.
+- llms.txt cache: rebuilt when a listed post is published, unpublished or trashed (including scheduled posts going live), when an LW SEO post field changes, when the site address changes, after a plugin update, and after settings are saved while llms.txt is off; saving revisions, autosaves, drafts and unlisted post types no longer clears it.
 
 ### Security
 - The Markdown endpoint no longer serves noindex content or content with AI Input set to "No"; private posts use the `read_post` capability.
 - `javascript:`, `vbscript:` and `data:` URLs are dropped from Markdown output, including entity-encoded, `<…>`-wrapped and backslash-escaped variants.
 - Per-post and per-term content signal values are whitelisted.
+- llms.txt and llms-full.txt are built as a logged-out visitor, so the shared cached copy no longer contains what the_content, shortcodes or membership plugins showed the user (often an admin) who triggered the rebuild.
+- llms.txt escapes Markdown syntax in the site title, summary, section headings, link titles and descriptions (SEO description or excerpt), and filters and percent-encodes link URLs, so titles and excerpts can no longer inject links or raw HTML.
 - Markdown output escapes Markdown syntax in text, headings/titles, term post lists, product attributes and YAML frontmatter values, so post content can no longer inject links, autolinks or raw HTML for downstream Markdown renderers; link/image URLs are percent-encoded (control characters, backtick, backslash, angle brackets) and inline code fences are sized to their content.
 - Category/tag Markdown honours AI Input = No; a term's post list only includes eligible posts.
 - The custom Markdown override (post and term) can only be set by users with the `unfiltered_html` capability; for other users the field is read-only and existing overrides are kept. Admins should review overrides saved by other roles before 1.6.0.
@@ -36,9 +40,13 @@
 
 ### Changed
 - Content Signals are three-state (not specified / allow / disallow); new installs default to "not specified". Existing settings keep their values.
+- Sites that never saved the Content Signals settings (or last saved before they existed) previously sent `ai-train=yes, ai-input=yes, search=yes` by default; they now send no signal until one is configured.
+- The `lw_seo_content_signals` filter now receives only the signals that are set; callbacks must read keys with `isset()` / `??`.
 - The HTTP header is now `Content-Signal`; `X-Content-Signals` is still sent and will be removed in a later release.
-- `cohere-ai` removed from the crawler list (not documented by Cohere).
 - Markdown endpoint: private posts answer 404 (not 403) to users without access; password-protected posts 403; posts whose password was entered via cookie are not served at /md either.
+
+### Removed
+- `cohere-ai` removed from the crawler list (not documented by Cohere).
 
 ## [1.5.1] - 2026-09-06
 

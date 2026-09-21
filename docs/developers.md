@@ -16,82 +16,6 @@ namespace LightweightPlugins\SEO;
 
 ## Hooks & Filters
 
-### Title Filters
-
-```php
-/**
- * Filter the generated title.
- *
- * @param string $title The generated title.
- * @param int    $post_id Post ID (0 for non-singular pages).
- */
-$title = apply_filters( 'lw_seo_title', $title, $post_id );
-
-/**
- * Filter the title separator.
- *
- * @param string $separator The separator character.
- */
-$separator = apply_filters( 'lw_seo_title_separator', $separator );
-```
-
-### Meta Description Filters
-
-```php
-/**
- * Filter the meta description.
- *
- * @param string $description The meta description.
- * @param int    $post_id Post ID.
- */
-$description = apply_filters( 'lw_seo_meta_description', $description, $post_id );
-
-/**
- * Filter auto-generated description length.
- *
- * @param int $length Maximum characters.
- */
-$length = apply_filters( 'lw_seo_description_length', 155 );
-```
-
-### Open Graph Filters
-
-```php
-/**
- * Filter Open Graph meta tags.
- *
- * @param array $og_tags Array of OG tags.
- * @param int   $post_id Post ID.
- */
-$og_tags = apply_filters( 'lw_seo_og_tags', $og_tags, $post_id );
-
-/**
- * Filter the default social image URL.
- *
- * @param string $image_url Image URL.
- */
-$image_url = apply_filters( 'lw_seo_default_social_image', $image_url );
-```
-
-### Schema Filters
-
-```php
-/**
- * Filter JSON-LD schema output.
- *
- * @param array $schema Schema data array.
- * @param string $type Schema type (Organization, LocalBusiness, etc).
- */
-$schema = apply_filters( 'lw_seo_schema', $schema, $type );
-
-/**
- * Filter LocalBusiness schema.
- *
- * @param array $schema LocalBusiness schema array.
- */
-$schema = apply_filters( 'lw_seo_local_schema', $schema );
-```
-
 ### Sitemap Filters
 
 ```php
@@ -151,15 +75,23 @@ $types = apply_filters( 'lw_seo_llms_txt_post_types', $types );
 $crawlers = apply_filters( 'lw_seo_ai_crawlers', $crawlers );
 
 /**
- * Content Signals for a post, term, or null (global values). Only set
- * the keys you want to change ('search', 'ai-input', 'ai-train'); unset
- * keys keep their resolved value.
+ * Content Signals for a post, term, or null (global values). Runs last,
+ * after the per-post/term overrides were applied to the global values.
+ * $signals holds only the signals that are set: a signal left "Not
+ * specified" is absent, so read keys with isset() / ??. Set a key
+ * ('search', 'ai-input', 'ai-train') to 'yes' or 'no' to change it, or
+ * unset() it to send no value for that signal.
  *
  * @param array<string, string>  $signals Signal key => 'yes'|'no'.
  * @param WP_Post|WP_Term|null   $object  Current object.
  */
 $signals = apply_filters( 'lw_seo_content_signals', $signals, $object );
 ```
+
+The Markdown endpoint filters (`lw_seo_markdown_is_supported`,
+`lw_seo_markdown_frontmatter`, `lw_seo_markdown_body`,
+`lw_seo_markdown_output`) are documented in
+[markdown-endpoint.md](markdown-endpoint.md).
 
 Examples:
 
@@ -190,46 +122,6 @@ add_filter( 'lw_seo_llms_txt_post_types', function ( array $types ): array {
 	unset( $types['attachment_gallery'] );
 	return $types;
 } );
-```
-
-### Breadcrumb Filters
-
-```php
-/**
- * Filter breadcrumb items.
- *
- * @param array $items Breadcrumb items array.
- */
-$items = apply_filters( 'lw_seo_breadcrumb_items', $items );
-
-/**
- * Filter breadcrumb separator.
- *
- * @param string $separator Separator HTML.
- */
-$separator = apply_filters( 'lw_seo_breadcrumb_separator', '»' );
-```
-
-### Action Hooks
-
-```php
-/**
- * Fires before SEO meta tags are output.
- */
-do_action( 'lw_seo_before_meta' );
-
-/**
- * Fires after SEO meta tags are output.
- */
-do_action( 'lw_seo_after_meta' );
-
-/**
- * Fires when plugin settings are saved.
- *
- * @param array $old_options Previous options.
- * @param array $new_options New options.
- */
-do_action( 'lw_seo_settings_saved', $old_options, $new_options );
 ```
 
 ## Options API
@@ -340,33 +232,6 @@ lw_seo_breadcrumbs( [
 
 ## Extending the Plugin
 
-### Add Custom Schema Type
-
-```php
-add_filter( 'lw_seo_schema', function( $schema, $type ) {
-    if ( is_singular( 'product' ) ) {
-        $schema['@type'] = 'Product';
-        $schema['name'] = get_the_title();
-        $schema['description'] = get_the_excerpt();
-        // Add more product properties...
-    }
-    return $schema;
-}, 10, 2 );
-```
-
-### Add Custom Template Variable
-
-```php
-add_filter( 'lw_seo_title', function( $title, $post_id ) {
-    // Replace custom variable
-    if ( strpos( $title, '%%custom%%' ) !== false ) {
-        $custom_value = 'My Custom Value';
-        $title = str_replace( '%%custom%%', $custom_value, $title );
-    }
-    return $title;
-}, 10, 2 );
-```
-
 ### Modify Sitemap Output
 
 ```php
@@ -380,18 +245,6 @@ add_filter( 'lw_seo_sitemap_urls', function( $urls ) {
     ];
     return $urls;
 } );
-```
-
-### Conditionally Disable Output
-
-```php
-add_filter( 'lw_seo_title', function( $title, $post_id ) {
-    // Disable on specific pages
-    if ( $post_id === 42 ) {
-        return ''; // Return empty to use default WP title
-    }
-    return $title;
-}, 10, 2 );
 ```
 
 ## WooCommerce Integration

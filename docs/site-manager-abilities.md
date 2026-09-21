@@ -164,7 +164,11 @@ caller lacks the capability to set them (currently only
 
 ## lw-seo/get-content-signals
 
-Get the resolved Content Signals for a post or term. Resolution order: per-post/term meta > `lw_seo_content_signals` filter > global setting.
+Get the resolved Content Signals for a post or term: the global settings,
+overridden by the post's or term's own values, then passed through the
+`lw_seo_content_signals` filter, which runs last and can change any
+value. Signals that are "Not specified" at both levels are omitted from
+`signals`.
 
 **Method:** GET
 
@@ -173,12 +177,11 @@ curl -u "user:app-password" \
   "https://example.com/wp-json/wp-abilities/v1/abilities/lw-seo/get-content-signals/run?input[post_id]=123"
 ```
 
-**Response:**
+**Response** (AI Training not specified anywhere, so `ai-train` is absent):
 ```json
 {
   "success": true,
   "signals": {
-    "ai-train": "yes",
     "ai-input": "no",
     "search": "yes"
   }
