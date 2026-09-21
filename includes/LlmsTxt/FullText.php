@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace LightweightPlugins\SEO\LlmsTxt;
 
+use LightweightPlugins\SEO\Helpers\HtmlToMarkdown;
 use LightweightPlugins\SEO\Markdown\Dispatcher;
 
 /**
@@ -35,7 +36,7 @@ final class FullText {
 	 * @return string
 	 */
 	public static function assemble( string $title, iterable $chunks, int $max_bytes = self::MAX_BYTES ): string {
-		$output = '# ' . Document::text( $title ) . "\n";
+		$output = '# ' . HtmlToMarkdown::plain_text( $title ) . "\n";
 
 		foreach ( $chunks as $chunk ) {
 			$piece = "\n" . $chunk;

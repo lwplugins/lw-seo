@@ -29,6 +29,12 @@ final class FullTextTest extends MonkeyTestCase {
 		$this->assertSame( "# Site\n\naaa\nbbb", FullText::assemble( 'Site', [ 'aaa', 'bbb' ] ) );
 	}
 
+	public function test_title_line_leaves_no_live_markup(): void {
+		$result = FullText::assemble( '&lt;img src=x onerror=alert(1)&gt; [x](javascript:alert(1)) `y`', [] );
+
+		$this->assertSame( "# \\<img src=x onerror=alert(1)\\> \\[x\\](javascript:alert(1)) \\`y\\`\n", $result );
+	}
+
 	public function test_stops_at_the_size_limit_and_never_renders_further_chunks(): void {
 		$rendered = [];
 		$chunks   = ( static function () use ( &$rendered ): \Generator {

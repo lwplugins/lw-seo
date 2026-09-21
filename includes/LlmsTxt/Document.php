@@ -9,9 +9,18 @@ declare(strict_types=1);
 
 namespace LightweightPlugins\SEO\LlmsTxt;
 
+use LightweightPlugins\SEO\Helpers\HtmlToMarkdown;
+use LightweightPlugins\SEO\Helpers\Markdown\InlineRenderer;
+
 /**
  * Formats LLMS.txt per llmstxt.org: H1, optional blockquote summary,
  * optional free text, then H2 sections of "- [name](url): notes" lists.
+ *
+ * Titles, descriptions (SEO description or excerpt, author-controlled),
+ * the summary and section headings become inert Markdown text, and URLs
+ * go through the same scheme filter as the Markdown endpoint, so nothing
+ * in them can turn into a live link, image or raw HTML downstream. Only
+ * the admin-authored intro is emitted as raw Markdown.
  */
 final class Document {
 
@@ -27,9 +36,9 @@ final class Document {
 	 * @return string
 	 */
 	public static function render( array $doc ): string {
-		$lines = [ '# ' . self::text( $doc['title'] ), '' ];
+		$lines = [ '# ' . HtmlToMarkdown::plain_text( $doc['title'] ), '' ];
 
-		$summary = self::text( $doc['summary'] ?? '' );
+		$summary = HtmlToMarkdown::plain_text( $doc['summary'] ?? '' );
 		if ( '' !== $summary ) {
 			array_push( $lines, '> ' . $summary, '' );
 		}
@@ -43,7 +52,7 @@ final class Document {
 			if ( [] === $links ) {
 				continue;
 			}
-			array_push( $lines, '## ' . self::text( (string) $heading ), '' );
+			array_push( $lines, '## ' . HtmlToMarkdown::plain_text( (string) $heading ), '' );
 			foreach ( $links as $link ) {
 				$lines[] = self::link_line( $link );
 			}
@@ -54,38 +63,19 @@ final class Document {
 	}
 
 	/**
-	 * Plain one-line text: tags stripped, entities decoded, whitespace collapsed.
-	 *
-	 * @param string $value Raw value.
-	 * @return string
-	 */
-	public static function text( string $value ): string {
-		$value = html_entity_decode( wp_strip_all_tags( $value ), ENT_QUOTES | ENT_HTML5, 'UTF-8' );
-
-		return trim( (string) preg_replace( '/\s+/u', ' ', $value ) );
-	}
-
-	/**
-	 * One list item.
+	 * One list item. A URL the scheme filter rejects (javascript:, data:,
+	 * vbscript:, however encoded) leaves the title as plain text.
 	 *
 	 * @param array{title: string, url: string, description?: string} $link Link.
 	 * @return string
 	 */
 	private static function link_line( array $link ): string {
-		$line        = '- [' . addcslashes( self::text( $link['title'] ), '[]' ) . '](' . self::url( $link['url'] ) . ')';
-		$description = self::text( $link['description'] ?? '' );
+		$title       = HtmlToMarkdown::plain_text( $link['title'] );
+		$url         = InlineRenderer::url( $link['url'] );
+		$line        = '' === $url ? '- ' . $title : '- [' . $title . '](' . $url . ')';
+		$description = HtmlToMarkdown::plain_text( $link['description'] ?? '' );
 
 		return '' === $description ? $line : $line . ': ' . $description;
-	}
-
-	/**
-	 * Encode characters that would end a Markdown link destination.
-	 *
-	 * @param string $url URL.
-	 * @return string
-	 */
-	private static function url( string $url ): string {
-		return str_replace( [ ' ', '(', ')' ], [ '%20', '%28', '%29' ], trim( $url ) );
 	}
 
 	/**
