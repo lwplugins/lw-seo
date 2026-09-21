@@ -109,9 +109,9 @@ final class Options {
 			'llms_full_txt_enabled'           => false,
 
 			// Content Signals.
-			'content_signals_ai_train'        => true,
-			'content_signals_ai_input'        => true,
-			'content_signals_search'          => true,
+			'content_signals_ai_train'        => '',
+			'content_signals_ai_input'        => '',
+			'content_signals_search'          => '',
 
 			// WooCommerce.
 			'woo_enabled'                     => true,

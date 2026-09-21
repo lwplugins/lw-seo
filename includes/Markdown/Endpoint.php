@@ -267,7 +267,9 @@ final class Endpoint {
 		if ( is_string( $canonical ) ) {
 			header( 'Link: <' . esc_url_raw( $canonical ) . '>; rel="canonical"' );
 		}
-		header( 'X-Content-Signals: ' . ContentSignals::format_header( ContentSignals::resolve( $object ) ) );
+		foreach ( ContentSignals::headers( ContentSignals::resolve( $object ) ) as $name => $value ) {
+			header( $name . ': ' . $value );
+		}
 		header( 'X-Markdown-Tokens: ' . (int) ( mb_strlen( $output ) / 4 ) );
 
 		if ( $negotiated ) {

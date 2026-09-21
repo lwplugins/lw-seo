@@ -5,7 +5,7 @@
  * Outputs AI content signal HTTP headers and meta tags.
  *
  * @package LightweightPlugins\SEO
- * @see https://blog.cloudflare.com/markdown-for-agents/
+ * @see https://blog.cloudflare.com/content-signals-policy/
  */
 
 declare(strict_types=1);
@@ -18,6 +18,20 @@ namespace LightweightPlugins\SEO;
 final class ContentSignals {
 
 	/**
+	 * Signal => post/term meta key.
+	 */
+	private const META_KEYS = [
+		'search'   => 'search',
+		'ai-input' => 'ai_input',
+		'ai-train' => 'ai_train',
+	];
+
+	/**
+	 * Pre-1.6.0 header name, still sent alongside Content-Signal.
+	 */
+	private const LEGACY_HEADER = 'X-Content-Signals';
+
+	/**
 	 * Constructor.
 	 */
 	public function __construct() {
@@ -26,41 +40,42 @@ final class ContentSignals {
 	}
 
 	/**
-	 * Get resolved signals for the current context.
+	 * Site-wide signals that are set.
 	 *
-	 * @param \WP_Post|\WP_Term|null $object Optional object to resolve for.
-	 * @return array<string, string> Signal key-value pairs.
+	 * @return array<string, string>
 	 */
-	public static function resolve( \WP_Post|\WP_Term|null $object = null ): array {
-		$signals = [
-			'ai-train' => Options::get( 'content_signals_ai_train' ) ? 'yes' : 'no',
-			'ai-input' => Options::get( 'content_signals_ai_input' ) ? 'yes' : 'no',
-			'search'   => Options::get( 'content_signals_search' ) ? 'yes' : 'no',
-		];
+	public static function global_signals(): array {
+		$signals = [];
 
-		$meta_keys = [
-			'ai-train' => 'ai_train',
-			'ai-input' => 'ai_input',
-			'search'   => 'search',
-		];
-
-		// Per-post override.
-		if ( $object instanceof \WP_Post ) {
-			foreach ( $meta_keys as $signal_key => $meta_key ) {
-				$meta_value = Options::get_post_meta( $object->ID, $meta_key );
-				if ( '' !== $meta_value && 'default' !== $meta_value ) {
-					$signals[ $signal_key ] = $meta_value;
-				}
+		foreach ( SignalValue::KEYS as $signal => $option ) {
+			$value = SignalValue::sanitize( Options::get( $option ) );
+			if ( '' !== $value ) {
+				$signals[ $signal ] = $value;
 			}
 		}
 
-		// Per-term override.
-		if ( $object instanceof \WP_Term ) {
-			foreach ( $meta_keys as $signal_key => $meta_key ) {
-				$meta_value = Options::get_term_meta( $object->term_id, $meta_key );
-				if ( '' !== $meta_value && 'default' !== $meta_value ) {
-					$signals[ $signal_key ] = $meta_value;
-				}
+		return $signals;
+	}
+
+	/**
+	 * Signals for an object: global values overridden per post/term.
+	 *
+	 * @param \WP_Post|\WP_Term|null $object Optional object to resolve for.
+	 * @return array<string, string> Only signals that are set.
+	 */
+	public static function resolve( \WP_Post|\WP_Term|null $object = null ): array {
+		$signals = self::global_signals();
+
+		foreach ( self::META_KEYS as $signal => $meta_key ) {
+			$override = '';
+			if ( $object instanceof \WP_Post ) {
+				$override = SignalValue::sanitize( Options::get_post_meta( (int) $object->ID, $meta_key ) );
+			} elseif ( $object instanceof \WP_Term ) {
+				$override = SignalValue::sanitize( Options::get_term_meta( (int) $object->term_id, $meta_key ) );
+			}
+
+			if ( '' !== $override ) {
+				$signals[ $signal ] = $override;
 			}
 		}
 
@@ -70,67 +85,83 @@ final class ContentSignals {
 		 * @param array<string, string>  $signals Signal key-value pairs.
 		 * @param \WP_Post|\WP_Term|null $object  Current object.
 		 */
-		return apply_filters( 'lw_seo_content_signals', $signals, $object );
+		return (array) apply_filters( 'lw_seo_content_signals', $signals, $object );
 	}
 
 	/**
-	 * Format signals as header string.
+	 * Header / directive value in canonical order.
 	 *
-	 * @param array<string, string> $signals Signal array.
-	 * @return string Formatted header value.
+	 * @param array<string, string> $signals Signals.
+	 * @return string '' when no signal is set.
 	 */
 	public static function format_header( array $signals ): string {
 		$parts = [];
-		foreach ( $signals as $key => $value ) {
-			$parts[] = $key . '=' . $value;
+
+		foreach ( array_keys( SignalValue::KEYS ) as $key ) {
+			if ( isset( $signals[ $key ] ) && '' !== $signals[ $key ] ) {
+				$parts[] = $key . '=' . $signals[ $key ];
+			}
 		}
+
 		return implode( ', ', $parts );
 	}
 
 	/**
-	 * Add Content Signals HTTP header to all responses.
+	 * HTTP headers for the given signals.
+	 *
+	 * @param array<string, string> $signals Signals.
+	 * @return array<string, string> Header name => value.
+	 */
+	public static function headers( array $signals ): array {
+		$value = self::format_header( $signals );
+
+		if ( '' === $value ) {
+			return [];
+		}
+
+		return [
+			'Content-Signal'    => $value,
+			self::LEGACY_HEADER => $value,
+		];
+	}
+
+	/**
+	 * Add the headers to front-end responses.
 	 *
 	 * @param array<string, string> $headers WordPress headers.
 	 * @return array<string, string>
 	 */
 	public function add_signal_headers( array $headers ): array {
-		$object = null;
-
-		if ( is_singular() ) {
-			$object = get_queried_object();
-			$object = $object instanceof \WP_Post ? $object : null;
-		} elseif ( is_category() || is_tag() || is_tax() ) {
-			$object = get_queried_object();
-			$object = $object instanceof \WP_Term ? $object : null;
-		}
-
-		$signals                      = self::resolve( $object );
-		$headers['X-Content-Signals'] = self::format_header( $signals );
-
-		return $headers;
+		return array_merge( $headers, self::headers( self::resolve( self::current_object() ) ) );
 	}
 
 	/**
-	 * Output Content Signals meta tag in head.
+	 * Output the meta tag.
 	 *
 	 * @return void
 	 */
 	public function output_meta_tag(): void {
-		$object = null;
+		$value = self::format_header( self::resolve( self::current_object() ) );
 
-		if ( is_singular() ) {
-			$object = get_queried_object();
-			$object = $object instanceof \WP_Post ? $object : null;
-		} elseif ( is_category() || is_tag() || is_tax() ) {
-			$object = get_queried_object();
-			$object = $object instanceof \WP_Term ? $object : null;
+		if ( '' === $value ) {
+			return;
 		}
 
-		$signals = self::resolve( $object );
+		printf( '<meta name="ai-content-signals" content="%s" />' . "\n", esc_attr( $value ) );
+	}
 
-		printf(
-			'<meta name="ai-content-signals" content="%s" />' . "\n",
-			esc_attr( self::format_header( $signals ) )
-		);
+	/**
+	 * Queried post or term, if any.
+	 *
+	 * @return \WP_Post|\WP_Term|null
+	 */
+	private static function current_object(): \WP_Post|\WP_Term|null {
+		if ( ! is_singular() && ! is_category() && ! is_tag() && ! is_tax() ) {
+			return null;
+		}
+
+		$object = get_queried_object();
+
+		return $object instanceof \WP_Post || $object instanceof \WP_Term ? $object : null;
 	}
 }

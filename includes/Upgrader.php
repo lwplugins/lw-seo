@@ -89,6 +89,13 @@ final class Upgrader {
 		// Neither token is documented by its vendor any more.
 		unset( $options['block_claude_web'], $options['block_cohere_ai'] );
 
+		// Content signals became three-state: keep what existing sites emit.
+		foreach ( SignalValue::KEYS as $option ) {
+			if ( isset( $options[ $option ] ) && is_bool( $options[ $option ] ) ) {
+				$options[ $option ] = $options[ $option ] ? 'yes' : 'no';
+			}
+		}
+
 		return $options;
 	}
 }

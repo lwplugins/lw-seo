@@ -74,6 +74,7 @@ final class UpgraderTest extends MonkeyTestCase {
 			'claude-web block becomes claudebot' => [ [ 'block_claude_web' => true, 'block_cohere_ai' => true ], '1.5.1', [ 'block_claudebot' => true ] ],
 			'unticked claude-web is just removed' => [ [ 'block_claude_web' => false ], '1.5.1', [] ],
 			'already migrated data untouched'     => [ [ 'block_claudebot' => true ], '1.6.0', [ 'block_claudebot' => true ] ],
+			'boolean signals become yes/no'       => [ [ 'content_signals_ai_train' => false, 'content_signals_search' => true ], '1.5.1', [ 'content_signals_ai_train' => 'no', 'content_signals_search' => 'yes' ] ],
 		];
 	}
 
