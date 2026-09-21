@@ -1,0 +1,71 @@
+<?php
+/**
+ * llms.txt Document unit tests.
+ *
+ * @package LightweightPlugins\SEO
+ */
+
+declare(strict_types=1);
+
+namespace LightweightPlugins\SEO\Tests\Unit\LlmsTxt;
+
+use Brain\Monkey\Functions;
+use LightweightPlugins\SEO\LlmsTxt\Document;
+use LightweightPlugins\SEO\Tests\Unit\MonkeyTestCase;
+
+final class DocumentTest extends MonkeyTestCase {
+
+	protected function setUp(): void {
+		parent::setUp();
+		Functions\when( 'wp_strip_all_tags' )->alias( static fn( string $s ): string => trim( strip_tags( $s ) ) );
+	}
+
+	public function test_renders_spec_structure_with_optional_section_last(): void {
+		$expected = <<<'MD'
+# Példa & Társa
+
+> Kézműves pékség Budapesten
+
+Rendelés online.
+
+## Pages
+
+- [Rólunk](https://x.test/rolunk/): Kik vagyunk
+
+## Optional
+
+- [XML Sitemap](https://x.test/sitemap.xml)
+
+MD;
+
+		$result = Document::render(
+			[
+				'title'    => 'Példa &amp; Társa',
+				'summary'  => 'Kézműves pékség Budapesten',
+				'intro'    => 'Rendelés online.',
+				'sections' => [
+					'Optional' => [ [ 'title' => 'XML Sitemap', 'url' => 'https://x.test/sitemap.xml' ] ],
+					'Pages'    => [ [ 'title' => 'Rólunk', 'url' => 'https://x.test/rolunk/', 'description' => 'Kik vagyunk' ] ],
+					'Empty'    => [],
+				],
+			]
+		);
+
+		$this->assertSame( $expected, $result );
+	}
+
+	public function test_omits_blockquote_when_summary_is_empty(): void {
+		$this->assertSame( "# Site\n", Document::render( [ 'title' => 'Site', 'summary' => '' ] ) );
+	}
+
+	public function test_escapes_link_text_brackets_and_url_parentheses(): void {
+		$result = Document::render(
+			[
+				'title'    => 'S',
+				'sections' => [ 'Posts' => [ [ 'title' => 'Draft [v2] &#8211; beta', 'url' => 'https://x.test/a (b)/' ] ] ],
+			]
+		);
+
+		$this->assertStringContainsString( '- [Draft \[v2\] – beta](https://x.test/a%20%28b%29/)', $result );
+	}
+}
