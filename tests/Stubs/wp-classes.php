@@ -68,6 +68,20 @@ if ( ! class_exists( 'WP_Post_Type' ) ) {
 	}
 }
 
+if ( ! class_exists( 'WP_Taxonomy' ) ) {
+	#[AllowDynamicProperties]
+	class WP_Taxonomy {
+		/**
+		 * @param array<string, mixed> $props Properties to set.
+		 */
+		public function __construct( array $props = [] ) {
+			foreach ( $props as $key => $value ) {
+				$this->{$key} = $value;
+			}
+		}
+	}
+}
+
 if ( ! class_exists( 'WP_Rewrite' ) ) {
 	#[AllowDynamicProperties]
 	class WP_Rewrite {

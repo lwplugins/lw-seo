@@ -74,13 +74,18 @@ final class SeoService {
 	}
 
 	/**
-	 * Get resolved content signals for a post or term.
+	 * Get resolved content signals for a post or term (the global signals
+	 * when neither resolves).
 	 *
 	 * @param array<string, mixed> $input Input parameters.
-	 * @return array<string, mixed>
+	 * @return array<string, mixed>|\WP_Error
 	 */
-	public static function get_content_signals( array $input ): array {
+	public static function get_content_signals( array $input ): array|\WP_Error {
 		$object = self::resolve_object( $input );
+		$denied = null === $object ? null : self::access_error( $object );
+		if ( null !== $denied ) {
+			return $denied;
+		}
 
 		return [
 			'success' => true,
@@ -99,6 +104,11 @@ final class SeoService {
 
 		if ( null === $object ) {
 			return new \WP_Error( 'not_found', __( 'Post or term not found.', 'lw-seo' ), [ 'status' => 404 ] );
+		}
+
+		$denied = self::access_error( $object );
+		if ( null !== $denied ) {
+			return $denied;
 		}
 
 		$output = Dispatcher::dispatch( $object );
@@ -135,6 +145,11 @@ final class SeoService {
 			return new \WP_Error( 'not_found', __( 'Post not found.', 'lw-seo' ), [ 'status' => 404 ] );
 		}
 
+		$denied = self::access_error( $post );
+		if ( null !== $denied ) {
+			return $denied;
+		}
+
 		$meta = [];
 		foreach ( self::META_FIELDS as $field ) {
 			$meta[ $field ] = Options::get_post_meta( $post_id, $field );
@@ -158,6 +173,11 @@ final class SeoService {
 		$term = get_term( $term_id );
 		if ( ! $term || is_wp_error( $term ) ) {
 			return new \WP_Error( 'not_found', __( 'Term not found.', 'lw-seo' ), [ 'status' => 404 ] );
+		}
+
+		$denied = self::access_error( $term );
+		if ( null !== $denied ) {
+			return $denied;
 		}
 
 		$meta = [];
@@ -250,6 +270,29 @@ final class SeoService {
 			'updated' => $updated,
 			'skipped' => $skipped,
 		];
+	}
+
+	/**
+	 * Access check shared by the read abilities. The abilities themselves
+	 * only require edit_posts, so the target object is checked here:
+	 * - a post is readable when it is publicly readable anyway (published,
+	 *   no password, viewable post type) or the user can edit it;
+	 * - a term is readable when its taxonomy is public or the user can edit
+	 *   it.
+	 *
+	 * @param \WP_Post|\WP_Term $object Target object.
+	 * @return \WP_Error|null 403 error, or null when readable.
+	 */
+	private static function access_error( \WP_Post|\WP_Term $object ): ?\WP_Error {
+		if ( $object instanceof \WP_Term ) {
+			$taxonomy = get_taxonomy( $object->taxonomy );
+			$allowed  = ( $taxonomy instanceof \WP_Taxonomy && $taxonomy->public ) || current_user_can( 'edit_term', $object->term_id );
+		} else {
+			$public  = 'publish' === $object->post_status && '' === (string) $object->post_password && is_post_type_viewable( $object->post_type );
+			$allowed = $public || current_user_can( 'edit_post', $object->ID );
+		}
+
+		return $allowed ? null : new \WP_Error( 'forbidden', __( 'You are not allowed to read this post or term.', 'lw-seo' ), [ 'status' => 403 ] );
 	}
 
 	/**

@@ -167,4 +167,176 @@ final class SeoServiceTest extends MonkeyTestCase {
 		$this->assertInstanceOf( \WP_Error::class, $result );
 		$this->assertSame( [ 'forbidden', [ 'status' => 403 ] ], [ $result->get_error_code(), $result->get_error_data() ] );
 	}
+
+	/**
+	 * @return array<string, array{0: string}>
+	 */
+	public static function read_ability_provider(): array {
+		return [
+			'get_meta'            => [ 'get_meta' ],
+			'get_content_signals' => [ 'get_content_signals' ],
+			'get_markdown'        => [ 'get_markdown' ],
+		];
+	}
+
+	/**
+	 * A draft the user can't edit is not readable through any read ability,
+	 * and nothing about it is read or rendered.
+	 *
+	 * @dataProvider read_ability_provider
+	 *
+	 * @param string $method SeoService read method.
+	 */
+	public function test_read_rejects_draft_the_user_cannot_edit( string $method ): void {
+		Functions\stubTranslationFunctions();
+		Functions\when( 'get_post' )->justReturn( self::post( 'draft' ) );
+		Functions\when( 'is_post_type_viewable' )->justReturn( true );
+		Functions\expect( 'current_user_can' )->once()->with( 'edit_post', 7 )->andReturn( false );
+		Functions\expect( 'get_post_meta' )->never();
+
+		$this->assert_forbidden( SeoService::$method( [ 'post_id' => 7 ] ) );
+	}
+
+	/**
+	 * A term in a non-public taxonomy the user can't edit is not readable
+	 * through any read ability.
+	 *
+	 * @dataProvider read_ability_provider
+	 *
+	 * @param string $method SeoService read method.
+	 */
+	public function test_read_rejects_private_taxonomy_term_the_user_cannot_edit( string $method ): void {
+		Functions\stubTranslationFunctions();
+		Functions\when( 'get_term' )->justReturn( self::term() );
+		Functions\when( 'is_wp_error' )->justReturn( false );
+		Functions\when( 'get_taxonomy' )->justReturn( new \WP_Taxonomy( [ 'public' => false ] ) );
+		Functions\expect( 'current_user_can' )->once()->with( 'edit_term', 3 )->andReturn( false );
+		Functions\expect( 'get_term_meta' )->never();
+
+		$this->assert_forbidden( SeoService::$method( [ 'term_id' => 3 ] ) );
+	}
+
+	/**
+	 * A password-protected post is not public, so it needs edit_post.
+	 */
+	public function test_read_rejects_password_protected_post_the_user_cannot_edit(): void {
+		Functions\stubTranslationFunctions();
+		Functions\when( 'get_post' )->justReturn( self::post( 'publish', 'secret' ) );
+		Functions\when( 'is_post_type_viewable' )->justReturn( true );
+		Functions\when( 'current_user_can' )->justReturn( false );
+		Functions\expect( 'get_post_meta' )->never();
+
+		$this->assert_forbidden( SeoService::get_markdown( [ 'post_id' => 7 ] ) );
+	}
+
+	/**
+	 * A published post of a non-viewable post type (e.g. a WooCommerce
+	 * coupon, whose title is the code) is not public either.
+	 */
+	public function test_read_rejects_published_post_of_non_viewable_type_the_user_cannot_edit(): void {
+		Functions\stubTranslationFunctions();
+		Functions\when( 'get_post' )->justReturn( self::post( 'publish', '', 'shop_coupon' ) );
+		Functions\when( 'is_post_type_viewable' )->justReturn( false );
+		Functions\when( 'current_user_can' )->justReturn( false );
+		Functions\expect( 'get_post_meta' )->never();
+
+		$this->assert_forbidden( SeoService::get_markdown( [ 'post_id' => 7 ] ) );
+	}
+
+	/**
+	 * A published, public post is readable without edit_post: it is
+	 * publicly readable anyway.
+	 */
+	public function test_read_allows_published_public_post_without_edit_post(): void {
+		Functions\when( 'get_post' )->justReturn( self::post( 'publish' ) );
+		Functions\when( 'is_post_type_viewable' )->justReturn( true );
+		Functions\expect( 'current_user_can' )->never();
+		Functions\when( 'get_post_meta' )->justReturn( '' );
+
+		$result = SeoService::get_meta( [ 'post_id' => 7 ] );
+
+		$this->assertSame( [ true, 'post', 7 ], [ $result['success'], $result['type'], $result['id'] ] );
+	}
+
+	/**
+	 * A draft is readable by a user who can edit it.
+	 */
+	public function test_read_allows_draft_with_edit_post(): void {
+		Functions\when( 'get_post' )->justReturn( self::post( 'draft' ) );
+		Functions\when( 'is_post_type_viewable' )->justReturn( true );
+		Functions\expect( 'current_user_can' )->once()->with( 'edit_post', 7 )->andReturn( true );
+		Functions\when( 'get_post_meta' )->justReturn( '' );
+
+		$result = SeoService::get_meta( [ 'post_id' => 7 ] );
+
+		$this->assertSame( [ true, 'post', 7 ], [ $result['success'], $result['type'], $result['id'] ] );
+	}
+
+	/**
+	 * A term in a non-public taxonomy is readable with edit_term.
+	 */
+	public function test_read_allows_private_taxonomy_term_with_edit_term(): void {
+		Functions\when( 'get_term' )->justReturn( self::term() );
+		Functions\when( 'is_wp_error' )->justReturn( false );
+		Functions\when( 'get_taxonomy' )->justReturn( new \WP_Taxonomy( [ 'public' => false ] ) );
+		Functions\expect( 'current_user_can' )->once()->with( 'edit_term', 3 )->andReturn( true );
+		Functions\when( 'get_term_meta' )->justReturn( '' );
+
+		$result = SeoService::get_meta( [ 'term_id' => 3 ] );
+
+		$this->assertSame( [ true, 'term', 3 ], [ $result['success'], $result['type'], $result['id'] ] );
+	}
+
+	/**
+	 * A term in a public taxonomy is readable without edit_term.
+	 */
+	public function test_read_allows_public_taxonomy_term_without_edit_term(): void {
+		Functions\when( 'get_term' )->justReturn( self::term() );
+		Functions\when( 'is_wp_error' )->justReturn( false );
+		Functions\when( 'get_taxonomy' )->justReturn( new \WP_Taxonomy( [ 'public' => true ] ) );
+		Functions\expect( 'current_user_can' )->never();
+		Functions\when( 'get_term_meta' )->justReturn( '' );
+
+		$result = SeoService::get_meta( [ 'term_id' => 3 ] );
+
+		$this->assertSame( [ true, 'term', 3 ], [ $result['success'], $result['type'], $result['id'] ] );
+	}
+
+	/**
+	 * Post fixture.
+	 *
+	 * @param string $status    Post status.
+	 * @param string $password  Post password.
+	 * @param string $post_type Post type.
+	 */
+	private static function post( string $status, string $password = '', string $post_type = 'post' ): \WP_Post {
+		return new \WP_Post(
+			[
+				'ID'            => 7,
+				'post_status'   => $status,
+				'post_password' => $password,
+				'post_type'     => $post_type,
+			]
+		);
+	}
+
+	/**
+	 * Term fixture.
+	 */
+	private static function term(): \WP_Term {
+		return new \WP_Term(
+			[
+				'term_id'  => 3,
+				'taxonomy' => 'secret_tax',
+			]
+		);
+	}
+
+	/**
+	 * @param mixed $result Read ability result.
+	 */
+	private function assert_forbidden( mixed $result ): void {
+		$this->assertInstanceOf( \WP_Error::class, $result );
+		$this->assertSame( [ 'forbidden', [ 'status' => 403 ] ], [ $result->get_error_code(), $result->get_error_data() ] );
+	}
 }

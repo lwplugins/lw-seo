@@ -98,6 +98,14 @@ final class SeoAbilities {
 					'properties' => [
 						'success' => [ 'type' => 'boolean' ],
 						'message' => [ 'type' => 'string' ],
+						'updated' => [
+							'type'  => 'array',
+							'items' => [ 'type' => 'string' ],
+						],
+						'skipped' => [
+							'type'  => 'array',
+							'items' => [ 'type' => 'string' ],
+						],
 					],
 				],
 				'meta'                => self::write_meta(),
