@@ -23,6 +23,7 @@ use LightweightPlugins\SEO\Migration\CleanupV1314;
 use LightweightPlugins\SEO\NotFoundHandler;
 use LightweightPlugins\SEO\LlmsTxt\Endpoint as LlmsTxtEndpoint;
 use LightweightPlugins\SEO\Markdown\Endpoint as MarkdownEndpoint;
+use LightweightPlugins\SEO\Markdown\Discovery as MarkdownDiscovery;
 use LightweightPlugins\SEO\Meta\HeadMeta;
 use LightweightPlugins\SEO\Meta\TitleFilter;
 
@@ -105,6 +106,7 @@ final class Plugin {
 
 		// Markdown endpoint.
 		new MarkdownEndpoint();
+		new MarkdownDiscovery();
 
 		// Keep redirect_canonical away from the virtual endpoints above, and
 		// re-flush rewrites (next request) when one of them is toggled.
