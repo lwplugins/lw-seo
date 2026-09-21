@@ -1,172 +1,187 @@
 # AI/LLM Settings
 
-Navigate to **LW Plugins > SEO > AI/LLM** to control AI content signals, crawler access, and llms.txt generation.
+Navigate to **LW Plugins → SEO → AI/LLM** to control AI content signals,
+crawler access, and llms.txt generation.
 
 ## Content Signals
 
 ### What are Content Signals?
 
-Content Signals tell AI agents how they may use your content. They are sent as:
-- **HTTP header** (`X-Content-Signals`) on every response
-- **HTML meta tag** (`<meta name="ai-content-signals">`) in the `<head>`
+Content Signals tell AI agents how they may use your content: for search,
+for AI input (RAG/grounding), and for AI training. They follow
+Cloudflare's [Content Signals Policy](https://blog.cloudflare.com/content-signals-policy/)
+and are sent in three places:
 
-Inspired by [Cloudflare - Markdown for Agents](https://blog.cloudflare.com/markdown-for-agents/).
+- **HTTP header**: `Content-Signal` on every response (e.g.
+  `Content-Signal: search=yes, ai-input=no, ai-train=no`). The pre-1.6.0
+  header, `X-Content-Signals`, is still sent alongside it for backward
+  compatibility and will be removed in a later release.
+- **HTML meta tag**: `<meta name="ai-content-signals" content="...">` in
+  the `<head>`.
+- **robots.txt line**: a `Content-Signal:` line inside the `User-agent: *`
+  group, preceded by the Content Signals Policy comment block. See
+  `docs/settings-advanced.md` for the robots.txt layout.
 
-### Global Settings
+### Three States
 
-Three checkboxes, all enabled by default:
+Each signal (Search, AI Input, AI Training) has three states:
 
-| Setting | Header key | Description |
-|---------|-----------|-------------|
-| AI Training | `ai-train` | Allow AI systems to use content for model training |
-| AI Input (RAG) | `ai-input` | Allow AI systems to use content for generating responses |
-| Search | `search` | Allow content to appear in AI search results |
+| State | Meaning |
+|-------|---------|
+| Not specified (default) | Neither grants nor restricts the use. Nothing is sent for that signal. |
+| Allow | `yes` — the use is permitted. |
+| Disallow | `no` — the use is not permitted. |
+
+New installs default every signal to "Not specified". Sites upgrading
+from a pre-1.6.0 version keep their existing on/off values, mapped to
+"Allow"/"Disallow".
 
 ### Per-Content Override
 
-Each post/page has an **AI Content Signals** section in the LW SEO meta box (post editor). Three dropdowns:
-- **Default** - uses the global setting
-- **Yes** - explicitly allow
-- **No** - explicitly deny
-
-### Output Example
-
-HTTP header (every response):
-```
-X-Content-Signals: ai-train=yes, ai-input=yes, search=yes
-```
-
-HTML meta tag:
-```html
-<meta name="ai-content-signals" content="ai-train=yes, ai-input=no, search=yes" />
-```
+Each post, page and taxonomy term has its own Content Signals fields in
+the LW SEO meta box / term edit screen: Search, AI Input and AI Training,
+each with the same three states. A per-content value overrides the global
+one; "Not specified" at the content level falls through to the global
+setting.
 
 ### Resolution Order
 
-1. Per-post meta value (if not "default")
-2. `lw_seo_content_signals` filter (if applied)
-3. Global setting from AI/LLM tab
+1. Per-post/term meta value, if set to Allow or Disallow.
+2. The `lw_seo_content_signals` filter (see `docs/developers.md`).
+3. The global setting from this tab. If that is also "Not specified",
+   the signal is left out of the header, meta tag and robots.txt line
+   entirely.
 
 ## Markdown Endpoint (/md)
 
-### What is it?
-
-Every post, page, taxonomy, and WooCommerce product is available as clean markdown. AI agents can consume content without parsing HTML.
-
-### Three Ways to Access
-
-**1. URL suffix:**
-```
-https://yoursite.com/hello-world/md/
-https://yoursite.com/category/news/md/
-https://yoursite.com/product/shoes/md/
-```
-
-**2. Query parameter:**
-```
-https://yoursite.com/?p=123&format=md
-```
-
-**3. Accept header (singular pages only):**
-```bash
-curl -H "Accept: text/markdown" https://yoursite.com/hello-world/
-```
-
-### Response Format
-
-**Headers:**
-```
-Content-Type: text/markdown; charset=UTF-8
-X-Content-Signals: ai-train=yes, ai-input=yes, search=yes
-X-Markdown-Tokens: 1250
-```
-
-**Body - YAML frontmatter + markdown:**
-```markdown
----
-title: "Hello World"
-url: "https://yoursite.com/hello-world/"
-date: "2026-03-21"
-modified: "2026-03-21"
-author: "Admin"
-language: "hu_HU"
-categories: ["WordPress"]
-tags: ["example"]
-featured_image: "https://yoursite.com/image.jpg"
----
-
-# Hello World
-
-Your post content converted to markdown...
-```
-
-### Security
-
-- Only `publish` and `private` (with capability) posts are accessible
-- Password-protected posts return 403
-- Non-public taxonomies return 404
-- Draft, pending, future posts return 404
-
-### Flush Rewrite Rules
-
-After activating the plugin, go to **Settings > Permalinks > Save Changes** to flush rewrite rules. Without this, the `/md/` URLs won't work.
+Every post, page, taxonomy term and WooCommerce product is available as
+clean Markdown for AI agents. See `docs/markdown-endpoint.md` for the
+full behaviour: URL forms, `Accept` negotiation, discovery `Link`
+headers, and the access rules (noindex, AI Input = No, password
+protection, private content).
 
 ## llms.txt
 
-### What is llms.txt?
+### What is it?
 
-The `llms.txt` file provides structured information about your website to AI systems. Similar to robots.txt but designed for LLMs.
+The `llms.txt` file provides structured information about your website
+to AI systems, formatted per [llmstxt.org](https://llmstxt.org/): an H1,
+an optional summary blockquote, optional free-text introduction, and one
+`##` section per content type listing its pages as Markdown links.
 
-Learn more: [llmstxt.org](https://llmstxt.org/)
+When enabled, available at `https://yoursite.com/llms.txt`. The document
+is cached (one day) and rebuilt whenever content, terms, the site name/
+tagline, the permalink structure, or the plugin settings change.
 
-When enabled, available at: `https://yoursite.com/llms.txt`
+### Fields
 
-### Content
+| Field | Description |
+|-------|-------------|
+| **llms.txt** | Master toggle. Also enables the rewrite rule. |
+| **Summary** | One sentence rendered as the `>` blockquote under the title. Empty falls back to the site tagline. |
+| **Introduction** | Optional Markdown free text shown after the summary, before the first section. Do not use headings — the generator adds its own `##` section headings. |
+| **Content types** | Which public post types get their own `##` section (e.g. `## Pages`, `## Posts`, `## Products`). Every public post type is listed and on by default; untick to leave a type out. Can also be filtered with `lw_seo_llms_txt_post_types`. |
+| **Items per section** | Max entries per section, 1–500 (default 100). Pages are listed in menu order; every other type newest first. |
+| **Markdown links** | When enabled, each entry links to the page's `/md` Markdown version instead of its normal HTML URL. |
+| **Extra links** | Freeform links listed under a final `## Optional` section, one per line: `Title | https://url | optional description`. Lines that don't parse (missing title, or a URL not starting with `http(s)://`) are skipped. |
+| **llms-full.txt** | Opt-in. When enabled, `/llms-full.txt` serves the full Markdown content of every listed page concatenated together, capped at 1 MB — output is truncated with a notice once the cap is reached. Also adds a link to it under `## Optional` in `/llms.txt`. |
 
-The generated file includes:
-- Site name and description
-- Content summary (post/page/category counts)
-- Important pages
-- Recent posts
-- Sitemap reference
+The `## Optional` section always also includes the XML sitemap link (when
+the sitemap is enabled) and the llms-full.txt link (when enabled), in
+addition to any manually entered extra links.
+
+### Content Left Out
+
+A post is only listed in `/llms.txt` (and counted toward `llms-full.txt`)
+when it is:
+
+- Published, not password-protected, and its post type is publicly
+  viewable.
+- Not noindex — neither the post type nor the individual post/term.
+- Not opted out of AI input (`ai-input` content signal is not "No").
+
+This is the same eligibility gate the sitemap and Markdown endpoint use;
+see `lw_seo_post_is_eligible` in `docs/developers.md` to further restrict
+it.
 
 ## AI Crawler Control
 
-Block or allow specific AI crawlers via robots.txt rules.
+Block or allow AI crawlers via `robots.txt` rules, either by purpose or
+individually.
 
-### Available Crawlers
+### Block by Purpose
+
+Three toggles cover every crawler with that purpose, including crawlers
+added by the registry in future updates:
+
+| Toggle | Covers |
+|--------|--------|
+| Block all AI training crawlers | Crawlers that collect content to train models. |
+| Block all AI search crawlers | Crawlers that build an AI search index. |
+| Block all user-triggered AI fetchers | Crawlers that fetch a page on a user's explicit request (e.g. "summarize this page for me"). |
+
+### Built-in Crawlers
+
+Crawlers are grouped in the admin UI by their primary purpose. Checking
+an individual crawler's card blocks only that crawler; the purpose
+toggles above block every crawler in the group regardless of individual
+checkboxes.
 
 | Crawler | Company | Purpose |
 |---------|---------|---------|
-| GPTBot | OpenAI | ChatGPT training data |
-| ChatGPT-User | OpenAI | ChatGPT browsing |
-| Claude-Web | Anthropic | Claude training |
-| Google-Extended | Google | Gemini training |
-| Bytespider | ByteDance | TikTok AI training |
-| CCBot | Common Crawl | Open dataset |
-| PerplexityBot | Perplexity | AI search engine |
-| Cohere-AI | Cohere | AI training |
+| GPTBot | OpenAI | Training |
+| OAI-SearchBot | OpenAI | Search |
+| ChatGPT-User | OpenAI | User-triggered |
+| ClaudeBot | Anthropic | Training |
+| Claude-SearchBot | Anthropic | Search |
+| Claude-User | Anthropic | User-triggered |
+| Google-Extended | Google | Training |
+| Applebot-Extended | Apple | Training |
+| PerplexityBot | Perplexity | Search |
+| Perplexity-User | Perplexity | User-triggered |
+| meta-externalagent | Meta | Training |
+| meta-webindexer | Meta | Search |
+| meta-externalfetcher | Meta | User-triggered |
+| Amazonbot | Amazon | Training |
+| Amzn-SearchBot | Amazon | Search |
+| Amzn-User | Amazon | User-triggered |
+| MistralAI-Training | Mistral AI | Training |
+| MistralAI-Index | Mistral AI | Search |
+| MistralAI-User | Mistral AI | User-triggered |
+| CCBot | Common Crawl | Training |
+| AI2Bot | Allen Institute for AI | Training |
+| Bytespider | ByteDance | Search |
+
+The list can be extended (or entries adjusted) with the `lw_seo_ai_crawlers`
+filter — see `docs/developers.md`.
 
 ### Blocking
 
-Check "Block" to add a `Disallow` rule to robots.txt:
+Checking a crawler (or a purpose toggle) adds a `Disallow: /` group for
+every matching agent to `robots.txt`:
+
 ```
 User-agent: GPTBot
 Disallow: /
 ```
+
+### A Note on User-Triggered Fetchers
+
+`robots.txt` is a request, not an enforcement mechanism. OpenAI,
+Perplexity, Meta and Amazon each document that their user-triggered
+fetchers (`ChatGPT-User`, `Perplexity-User`, `meta-externalfetcher`,
+`Amzn-User`) may disregard `robots.txt` for a specific, user-initiated
+fetch — the same way a human clicking a link in their browser would not
+be stopped by it.
 
 ## Content Signals vs Crawler Blocking
 
 | Feature | Scope | Enforcement |
 |---------|-------|-------------|
 | Content Signals | Per-content | Advisory (agent decides) |
-| AI Crawler Blocking | Site-wide | Hard block (robots.txt) |
+| AI Crawler Blocking | Site-wide | Hard block (robots.txt, itself advisory) |
 
-Content Signals are advisory - the AI agent decides whether to respect them. Crawler blocking via robots.txt is a hard block (though also technically advisory).
-
-## Technical Notes
-
-- robots.txt blocking doesn't remove already-crawled content
-- Content Signals follow the emerging web standard for AI content permissions
-- The `/md` endpoint respects Content Signals but doesn't block content - it includes the signals in the response headers
-- `X-Markdown-Tokens` is an approximate token count (`mb_strlen / 4`)
+Content Signals are per-page/per-post permissions expressed in a
+standard, machine-readable way. Crawler blocking is a site-wide
+`robots.txt` rule per agent. Both are respected voluntarily by
+well-behaved crawlers; neither can force a bad actor to comply.

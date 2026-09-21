@@ -3,7 +3,7 @@ Contributors: lwplugins
 Tags: seo, sitemap, schema, opengraph, breadcrumbs
 Requires at least: 6.0
 Tested up to: 7.1
-Stable tag: 1.5.1
+Stable tag: 1.6.0
 Requires PHP: 8.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -33,9 +33,9 @@ LW SEO provides essential SEO features without the bloat. No upsells, no trackin
 
 **Technical SEO**
 
-* XML Sitemap generation
+* XML Sitemap generation - built-in and custom post types included automatically, custom taxonomies opt-in
 * Schema.org / JSON-LD structured data (Organization/Person)
-* robots.txt optimization
+* robots.txt optimization, with a live preview and physical-file conflict warning
 * Breadcrumbs with shortcode and PHP function
 * URL Redirect Manager (301, 302, 307, 410, 451)
 * Regex redirect support
@@ -44,8 +44,10 @@ LW SEO provides essential SEO features without the bloat. No upsells, no trackin
 
 **AI & LLM**
 
-* llms.txt generation for AI crawlers
-* Block/allow individual AI crawlers (GPTBot, ChatGPT-User, Claude-Web, Google-Extended, Bytespider, CCBot, PerplexityBot, Cohere-AI)
+* llms.txt with a section per content type (pages, posts, custom post types), custom summary/intro, extra links and optional Markdown links; opt-in llms-full.txt
+* Markdown endpoint (/md) for every post, page, term and product, with Accept-header negotiation and llms.txt v2 discovery links
+* Content Signals (search / AI input / AI training) as a Content-Signal HTTP header, meta tag and robots.txt line
+* AI crawler list grouped by purpose (training / search / user-triggered), with per-crawler and per-purpose blocking (GPTBot, ClaudeBot, Claude-SearchBot, Claude-User, OAI-SearchBot, ChatGPT-User, Google-Extended, Applebot-Extended, PerplexityBot, Perplexity-User, Meta, Amazon, Mistral AI, CCBot, AI2Bot, Bytespider)
 
 **Cleanup**
 
@@ -110,9 +112,9 @@ Go to **LW Plugins → SEO → AI/LLM** tab and enable blocking for the crawlers
 
 Go to **LW Plugins → SEO → Social** tab and upload a default image. This will be used for Open Graph and Twitter Cards when a post has no featured image.
 
-= How do I flush the sitemap? =
+= Do I need to flush permalinks for the sitemap to work? =
 
-Go to **Settings → Permalinks** and click Save. This regenerates the rewrite rules.
+No. Rewrite rules are flushed automatically on activation, whenever the sitemap is toggled, and on plugin update.
 
 = Where can I find the sitemap? =
 
@@ -133,6 +135,38 @@ Your sitemap is available at `yoursite.com/sitemap.xml`
 6. Settings page - Advanced tab
 
 == Changelog ==
+
+= 1.6.0 =
+* New: Sitemap includes custom post types automatically (per-type toggles on the Sitemap tab); custom taxonomies are opt-in; tags toggle.
+* New: llms.txt lists every page and custom post type in its own section, with SEO descriptions, a custom summary and intro, extra links, per-section limits and optional Markdown links.
+* New: Opt-in /llms-full.txt with the full Markdown content (1 MB cap).
+* New: Markdown and llms.txt discovery: rel="alternate" type="text/markdown" and rel="describedby" links and Link headers (llms.txt v2).
+* New: AI crawler list refreshed from vendor documentation (ClaudeBot, Claude-SearchBot, Claude-User, OAI-SearchBot, Applebot-Extended, Perplexity-User, Meta, Amazon, Mistral, AI2) and grouped by purpose, with "block all training / search / user-triggered" toggles.
+* New: Content-Signal line and the Content Signals Policy text in robots.txt.
+* New: robots.txt preview and physical-file warning on the Advanced tab; notice when another SEO plugin is active.
+* New: Filters lw_seo_post_is_eligible, lw_seo_llms_txt_post_types, lw_seo_ai_crawlers, and the previously documented lw_seo_sitemap_post_types, lw_seo_sitemap_exclude_post, lw_seo_sitemap_urls.
+* Fix: Blocking "Claude-Web" did not block Anthropic's crawler; the setting now migrates to ClaudeBot.
+* Fix: llms.txt linked the draft Privacy Policy page, listed the static front page twice, included noindex and password-protected posts, and showed HTML entities.
+* Fix: Markdown on the HTML URL (Accept negotiation) had no Vary: Accept, so page caches could serve Markdown to browsers; q-values are honoured.
+* Fix: Markdown frontmatter was invalid YAML for titles with apostrophes.
+* Fix: HTML to Markdown lost Gutenberg images and tables, duplicated nested lists, flattened quotes and dropped rules and line breaks.
+* Fix: robots.txt was generated outside the robots_txt filter, dropping other plugins' rules and hard-coding /wp-admin/.
+* Fix: Noindex post types and taxonomies were still listed in the sitemap.
+* Fix: llms-full.txt generation no longer leaves the global $post changed.
+* Fix: robots.txt Content-Signal insertion handles CRLF line endings.
+* Fix: YAML frontmatter stays parseable when a value contains C1 control characters or invalid UTF-8.
+* Fix: <strong>Note: </strong>text no longer loses the space after the bold text in Markdown.
+* Fix: The Markdown endpoint no longer serves noindex content or content with AI Input set to "No"; private posts use the read_post capability.
+* Fix: javascript:, vbscript: and data: URLs are dropped from Markdown output, including entity-encoded, wrapped and backslash-escaped variants.
+* Fix: Per-post and per-term content signal values are whitelisted.
+* Fix: Markdown output escapes Markdown syntax in text, headings/titles, term post lists, product attributes and YAML frontmatter values, so post content can no longer inject links, autolinks or raw HTML for downstream Markdown renderers; link/image URLs are percent-encoded and inline code fences are sized to their content.
+* Fix: Category/tag Markdown honours AI Input = No; a term's post list only includes eligible posts.
+* Fix: The custom Markdown override (post and term) can only be set by users with the unfiltered_html capability; for other users the field is read-only and existing overrides are kept.
+* Fix: LW Site Manager abilities: set-meta requires edit_post / edit_term on the target object and reports skipped fields; get-meta, get-content-signals and get-markdown require access to non-public objects (drafts, private, password-protected posts, private taxonomies).
+* Change: Content Signals are three-state (not specified / allow / disallow); new installs default to "not specified". Existing settings keep their values.
+* Change: The HTTP header is now Content-Signal; X-Content-Signals is still sent and will be removed in a later release.
+* Change: cohere-ai removed from the crawler list (not documented by Cohere).
+* Change: Markdown endpoint: private posts answer 404 (not 403) to users without access; password-protected posts 403; posts whose password was entered via cookie are not served at /md either.
 
 = 1.5.1 =
 * Fix: the release package and Composer dist no longer ship tests, docs or development configuration

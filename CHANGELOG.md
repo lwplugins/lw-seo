@@ -1,5 +1,45 @@
 # Changelog
 
+## [1.6.0] - 2026-09-21
+
+### Added
+- Sitemap includes custom post types automatically (per-type toggles on the Sitemap tab); custom taxonomies are opt-in; tags toggle.
+- llms.txt lists every page and custom post type in its own section, with SEO descriptions, a custom summary and intro, extra links, per-section limits and optional Markdown links.
+- Opt-in `/llms-full.txt` with the full Markdown content (1 MB cap).
+- Markdown and llms.txt discovery: `rel="alternate" type="text/markdown"` and `rel="describedby"` links and `Link` headers (llms.txt v2).
+- AI crawler list refreshed from vendor documentation (ClaudeBot, Claude-SearchBot, Claude-User, OAI-SearchBot, Applebot-Extended, Perplexity-User, Meta, Amazon, Mistral, AI2) and grouped by purpose, with "block all training / search / user-triggered" toggles.
+- `Content-Signal` line and the Content Signals Policy text in robots.txt.
+- robots.txt preview and physical-file warning on the Advanced tab; notice when another SEO plugin is active.
+- Filters: `lw_seo_post_is_eligible`, `lw_seo_llms_txt_post_types`, `lw_seo_ai_crawlers`, and the previously documented `lw_seo_sitemap_post_types`, `lw_seo_sitemap_exclude_post`, `lw_seo_sitemap_urls`.
+
+### Fixed
+- Blocking "Claude-Web" did not block Anthropic's crawler; the setting now migrates to ClaudeBot.
+- llms.txt linked the draft Privacy Policy page, listed the static front page twice, included noindex and password-protected posts, and showed HTML entities.
+- Markdown on the HTML URL (Accept negotiation) had no `Vary: Accept`, so page caches could serve Markdown to browsers; q-values are honoured.
+- Markdown frontmatter was invalid YAML for titles with apostrophes.
+- HTML to Markdown lost Gutenberg images and tables, duplicated nested lists, flattened quotes and dropped rules and line breaks.
+- robots.txt was generated outside the `robots_txt` filter, dropping other plugins' rules and hard-coding `/wp-admin/`.
+- Noindex post types and taxonomies were still listed in the sitemap.
+- llms-full.txt generation no longer leaves the global `$post` changed.
+- robots.txt Content-Signal insertion handles CRLF line endings.
+- YAML frontmatter stays parseable when a value contains C1 control characters or invalid UTF-8.
+- `<strong>Note: </strong>text` no longer loses the space after the bold text in Markdown.
+
+### Security
+- The Markdown endpoint no longer serves noindex content or content with AI Input set to "No"; private posts use the `read_post` capability.
+- `javascript:`, `vbscript:` and `data:` URLs are dropped from Markdown output, including entity-encoded, `<…>`-wrapped and backslash-escaped variants.
+- Per-post and per-term content signal values are whitelisted.
+- Markdown output escapes Markdown syntax in text, headings/titles, term post lists, product attributes and YAML frontmatter values, so post content can no longer inject links, autolinks or raw HTML for downstream Markdown renderers; link/image URLs are percent-encoded (control characters, backtick, backslash, angle brackets) and inline code fences are sized to their content.
+- Category/tag Markdown honours AI Input = No; a term's post list only includes eligible posts.
+- The custom Markdown override (post and term) can only be set by users with the `unfiltered_html` capability; for other users the field is read-only and existing overrides are kept. Admins should review overrides saved by other roles before 1.6.0.
+- LW Site Manager abilities: `set-meta` requires `edit_post` / `edit_term` on the target object and reports `skipped` fields; `get-meta`, `get-content-signals` and `get-markdown` require access to non-public objects (drafts, private, password-protected posts, private taxonomies).
+
+### Changed
+- Content Signals are three-state (not specified / allow / disallow); new installs default to "not specified". Existing settings keep their values.
+- The HTTP header is now `Content-Signal`; `X-Content-Signals` is still sent and will be removed in a later release.
+- `cohere-ai` removed from the crawler list (not documented by Cohere).
+- Markdown endpoint: private posts answer 404 (not 403) to users without access; password-protected posts 403; posts whose password was entered via cookie are not served at /md either.
+
 ## [1.5.1] - 2026-09-06
 
 ### Fixed

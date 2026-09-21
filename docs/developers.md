@@ -98,9 +98,11 @@ $schema = apply_filters( 'lw_seo_local_schema', $schema );
 /**
  * Filter sitemap URLs before output.
  *
- * @param array $urls Array of URL entries.
+ * @param array  $items Array of URL entries for this sitemap page.
+ * @param string $name  Sitemap name (post type or taxonomy).
+ * @param int    $page  Page number.
  */
-$urls = apply_filters( 'lw_seo_sitemap_urls', $urls );
+$items = apply_filters( 'lw_seo_sitemap_urls', $items, $name, $page );
 
 /**
  * Filter post types included in sitemap.
@@ -116,6 +118,78 @@ $post_types = apply_filters( 'lw_seo_sitemap_post_types', $post_types );
  * @param int  $post_id Post ID.
  */
 $exclude = apply_filters( 'lw_seo_sitemap_exclude_post', false, $post_id );
+```
+
+### Content & AI Filters
+
+```php
+/**
+ * Restrict-only: consulted after a post already passed the built-in
+ * eligibility checks (published, no password, indexable type, not
+ * noindex). Can remove a post from the sitemap, llms.txt and the
+ * Markdown endpoint, but can never add an otherwise-ineligible one.
+ *
+ * @param bool    $eligible Always true when this filter runs.
+ * @param WP_Post $post     The post.
+ */
+$eligible = apply_filters( 'lw_seo_post_is_eligible', true, $post );
+
+/**
+ * Post types listed in llms.txt, one section per entry.
+ *
+ * @param array<string, string> $types Post type name => section heading.
+ */
+$types = apply_filters( 'lw_seo_llms_txt_post_types', $types );
+
+/**
+ * The AI crawler registry: key => {name, company, agent, purposes}.
+ * `purposes` is a list of 'training' | 'search' | 'user'; the first
+ * entry is the crawler's primary purpose for grouping in the admin UI.
+ *
+ * @param array<string, array{name: string, company: string, agent: string, purposes: array<int, string>}> $crawlers Crawlers.
+ */
+$crawlers = apply_filters( 'lw_seo_ai_crawlers', $crawlers );
+
+/**
+ * Content Signals for a post, term, or null (global values). Only set
+ * the keys you want to change ('search', 'ai-input', 'ai-train'); unset
+ * keys keep their resolved value.
+ *
+ * @param array<string, string>  $signals Signal key => 'yes'|'no'.
+ * @param WP_Post|WP_Term|null   $object  Current object.
+ */
+$signals = apply_filters( 'lw_seo_content_signals', $signals, $object );
+```
+
+Examples:
+
+```php
+// Exclude an internal-only custom post type from the sitemap, llms.txt
+// and the Markdown endpoint in one place.
+add_filter( 'lw_seo_post_is_eligible', function ( bool $eligible, WP_Post $post ): bool {
+	return 'internal_doc' === $post->post_type ? false : $eligible;
+}, 10, 2 );
+
+// Add a crawler the built-in registry doesn't know about yet.
+add_filter( 'lw_seo_ai_crawlers', function ( array $crawlers ): array {
+	$crawlers['examplebot'] = [ 'name' => 'ExampleBot', 'company' => 'Example', 'agent' => 'ExampleBot', 'purposes' => [ 'training' ] ];
+	return $crawlers;
+} );
+
+// Deny AI training for anything tagged "premium", regardless of the
+// per-post setting.
+add_filter( 'lw_seo_content_signals', function ( array $signals, WP_Post|WP_Term|null $object ): array {
+	if ( $object instanceof WP_Post && has_tag( 'premium', $object ) ) {
+		$signals['ai-train'] = 'no';
+	}
+	return $signals;
+}, 10, 2 );
+
+// Drop a post type's section from llms.txt entirely.
+add_filter( 'lw_seo_llms_txt_post_types', function ( array $types ): array {
+	unset( $types['attachment_gallery'] );
+	return $types;
+} );
 ```
 
 ### Breadcrumb Filters

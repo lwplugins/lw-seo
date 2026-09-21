@@ -22,6 +22,24 @@ All requests require a WordPress Application Password:
 curl -u "user@example.com:XXXX XXXX XXXX XXXX XXXX XXXX" <URL>
 ```
 
+## Access Control
+
+Every ability has a base `permission_callback` (see the Permissions table
+below), and the read/write abilities additionally check the **target
+object**:
+
+- **`get-meta`, `get-content-signals`, `get-markdown`** (read): allowed
+  when the object is publicly readable anyway — a published,
+  non-password-protected post of a viewable post type, or a term in a
+  public taxonomy — **or** the requesting user can edit it
+  (`edit_post` / `edit_term`). Otherwise the ability returns a 403
+  `WP_Error`, so a caller who only has `edit_posts` still can't read a
+  draft, a private post, a password-protected post, or a term in a
+  private taxonomy that isn't theirs to edit.
+- **`set-meta`** (write): requires `edit_post` / `edit_term` on the
+  target object specifically, on top of the base `can_edit_posts`
+  permission.
+
 ## lw-seo/get-meta
 
 Retrieve SEO meta fields for a post or taxonomy term.
@@ -51,9 +69,9 @@ curl -u "user:app-password" \
     "og_title": "Social Title",
     "og_description": "Social description...",
     "og_image": "https://example.com/image.jpg",
-    "ai_train": "default",
+    "ai_train": "",
     "ai_input": "no",
-    "search": "default",
+    "search": "",
     "markdown_content": ""
   }
 }
@@ -69,14 +87,22 @@ curl -u "user:app-password" \
 | `og_title` | string | Open Graph title |
 | `og_description` | string | Open Graph description |
 | `og_image` | string | Open Graph image URL |
-| `ai_train` | string | AI training signal: "default" / "yes" / "no" |
-| `ai_input` | string | AI input signal: "default" / "yes" / "no" |
-| `search` | string | AI search signal: "default" / "yes" / "no" |
+| `ai_train` | string | AI training signal: "" (not specified) / "yes" / "no" |
+| `ai_input` | string | AI input signal: "" (not specified) / "yes" / "no" |
+| `search` | string | AI search signal: "" (not specified) / "yes" / "no" |
 | `markdown_content` | string | Custom markdown for the /md endpoint |
 
 ## lw-seo/set-meta
 
-Set SEO meta fields. Only the provided fields are updated, others remain unchanged.
+Set SEO meta fields. Only the provided fields are updated, others remain
+unchanged. The caller must be able to edit the target post/term
+(`edit_post` / `edit_term`), or the ability returns a 403 `WP_Error`.
+
+Fields the caller isn't allowed to set are silently left unchanged and
+listed under `skipped` in the response instead of `updated` — currently
+this applies to `markdown_content`, which requires the `unfiltered_html`
+capability because it is served unescaped at the `/md` endpoint (see
+`docs/markdown-endpoint.md`).
 
 **Method:** POST
 
@@ -119,7 +145,20 @@ curl -u "user:app-password" \
 {
   "success": true,
   "message": "5 SEO fields updated.",
-  "updated": ["title", "description", "og_title", "og_description", "ai_train"]
+  "updated": ["title", "description", "og_title", "og_description", "ai_train"],
+  "skipped": []
+}
+```
+
+`skipped` lists fields that were provided but left unchanged because the
+caller lacks the capability to set them (currently only
+`markdown_content` without `unfiltered_html`):
+```json
+{
+  "success": true,
+  "message": "1 SEO fields updated.",
+  "updated": ["title"],
+  "skipped": ["markdown_content"]
 }
 ```
 
@@ -146,7 +185,10 @@ curl -u "user:app-password" \
 }
 ```
 
-If neither `post_id` nor `term_id` is provided, returns the global values.
+If neither `post_id` nor `term_id` is provided, returns the global
+values. If the object is given but not publicly readable and the caller
+can't edit it (see Access Control above), the ability returns a 403
+`WP_Error` instead.
 
 ## lw-seo/get-markdown
 
@@ -173,7 +215,13 @@ curl -u "user:app-password" \
 }
 ```
 
-If the post/term has a custom `markdown_content` meta field, it takes precedence over the auto-generated conversion.
+If the post/term has a custom `markdown_content` meta field, it takes
+precedence over the auto-generated conversion.
+
+Either `post_id` or `term_id` is required — without one, the ability
+returns a 404 `WP_Error`. As with the other read abilities, an object
+that is not publicly readable and not editable by the caller returns a
+403 `WP_Error` (see Access Control above).
 
 ## lw-seo/get-options
 
@@ -195,9 +243,9 @@ curl -u "user:app-password" \
     "title_home": "%%sitename%% %%sep%% %%sitedesc%%",
     "sitemap_enabled": true,
     "llms_txt_enabled": true,
-    "content_signals_ai_train": true,
-    "content_signals_ai_input": true,
-    "content_signals_search": true,
+    "content_signals_ai_train": "",
+    "content_signals_ai_input": "",
+    "content_signals_search": "",
     "schema_enabled": true,
     "breadcrumbs_enabled": true
   }
@@ -235,10 +283,14 @@ done
 
 ## Permissions
 
+Base capability required to call the ability at all. The read/write
+abilities also check the specific target object — see Access Control
+above.
+
 | Ability | Required capability |
 |---------|-------------------|
-| `lw-seo/get-meta` | `edit_posts` |
-| `lw-seo/set-meta` | `edit_posts` |
-| `lw-seo/get-content-signals` | `edit_posts` |
-| `lw-seo/get-markdown` | `edit_posts` |
+| `lw-seo/get-meta` | `edit_posts`, and read access to the target object |
+| `lw-seo/set-meta` | `edit_posts`, and edit access to the target object |
+| `lw-seo/get-content-signals` | `edit_posts`, and read access to the target object |
+| `lw-seo/get-markdown` | `edit_posts`, and read access to the target object |
 | `lw-seo/get-options` | `manage_options` |

@@ -59,6 +59,38 @@ Removes the WordPress version meta tag:
 
 **Security note:** Hiding the WordPress version provides minimal security benefit but reduces information disclosure.
 
+## robots.txt
+
+LW SEO adds its lines to WordPress's own virtual `robots.txt` through the
+core `robots_txt` filter — it never writes a physical file, and other
+plugins hooked to the same filter still run. Toggle **"Add sitemap URL
+and AI rules to robots.txt"** under Features to enable it.
+
+When enabled, LW SEO appends (site permitting — `Sitemap:` is only added
+on a public site):
+
+- A `Sitemap:` line pointing at `/sitemap.xml`, when the sitemap is
+  enabled.
+- One `User-agent: … / Disallow: /` group per blocked AI crawler (see
+  **LW Plugins → SEO → AI/LLM**).
+- A `# llms.txt: …` comment pointing at `/llms.txt`, when it is enabled.
+- A `Content-Signal:` line inside the `User-agent: *` group (a new group
+  is added if none exists), preceded by the Cloudflare Content Signals
+  Policy comment block, whenever at least one global Content Signal is
+  set to Allow or Disallow on the AI/LLM tab.
+
+### Preview and Physical-File Warning
+
+Under the robots.txt toggle:
+
+- If a physical `robots.txt` file exists at the site root, the web
+  server serves it directly and WordPress's virtual robots.txt (and
+  therefore these settings) never runs. LW SEO shows a warning naming
+  the file's path; delete it to let LW SEO manage robots.txt again.
+- Otherwise, an expandable **Preview** shows exactly what
+  `https://yoursite.com/robots.txt` currently returns, built the same
+  way WordPress's `do_robots()` would build it.
+
 ## Verification Codes
 
 Add search engine verification meta tags without editing theme files.
