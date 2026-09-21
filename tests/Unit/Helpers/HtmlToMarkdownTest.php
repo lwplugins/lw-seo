@@ -1,0 +1,91 @@
+<?php
+/**
+ * HtmlToMarkdown unit tests.
+ *
+ * @package LightweightPlugins\SEO
+ */
+
+declare(strict_types=1);
+
+namespace LightweightPlugins\SEO\Tests\Unit\Helpers;
+
+use LightweightPlugins\SEO\Helpers\HtmlToMarkdown;
+use LightweightPlugins\SEO\Tests\Unit\MonkeyTestCase;
+
+final class HtmlToMarkdownTest extends MonkeyTestCase {
+
+	/**
+	 * @return array<string, array{0: string, 1: string}>
+	 */
+	public static function fixture_provider(): array {
+		return [
+			'empty' => [ '', '' ],
+			'heading with link, inline emphasis' => [
+				'<h2>Title <a href="https://x.test/">link</a></h2><p>Hello <strong>bold</strong> and <em>it</em>.</p>',
+				"## Title [link](https://x.test/)\n\nHello **bold** and *it*.\n",
+			],
+			'gutenberg image figure' => [
+				'<figure class="wp-block-image"><img src="https://x.test/a.jpg" alt="Alt"/><figcaption>Caption here</figcaption></figure>',
+				"![Alt](https://x.test/a.jpg)\n\n*Caption here*\n",
+			],
+			'gutenberg table figure' => [
+				'<figure class="wp-block-table"><table><thead><tr><th>A</th><th>B</th></tr></thead><tbody><tr><td>1</td><td>x|y</td></tr></tbody></table></figure>',
+				"| A | B |\n| --- | --- |\n| 1 | x\\|y |\n",
+			],
+			'nested list' => [
+				'<ul><li>One<ul><li>Nested A</li><li>Nested B</li></ul></li><li>Two</li></ul>',
+				"- One\n    - Nested A\n    - Nested B\n- Two\n",
+			],
+			'ordered list with start' => [
+				'<ol start="3"><li>a</li><li>b</li></ol>',
+				"3. a\n4. b\n",
+			],
+			'gutenberg quote' => [
+				'<blockquote class="wp-block-quote"><p>Quote p1</p><p>Quote p2</p><cite>Author</cite></blockquote>',
+				"> Quote p1\n>\n> Quote p2\n>\n> Author\n",
+			],
+			'code block with language and backticks' => [
+				'<pre class="wp-block-code"><code class="language-php">echo "```";</code></pre>',
+				"````php\necho \"```\";\n````\n",
+			],
+			'inline code containing a backtick' => [
+				'<p>Use <code>a`b</code> here</p>',
+				"Use `` a`b `` here\n",
+			],
+			'hard break and rule' => [
+				'<p>Line 1<br>Line 2</p><hr><p>After</p>',
+				"Line 1\\\nLine 2\n\n---\n\nAfter\n",
+			],
+			'trailing break dropped' => [
+				'<p>End<br></p>',
+				"End\n",
+			],
+			'noise removed' => [
+				'<nav>Menu</nav><p>Body</p><form><input type="email"><button>Send</button></form><script>x()</script><!-- note -->',
+				"Body\n",
+			],
+			'lazy-loaded image' => [
+				'<p><img src="data:image/gif;base64,AAA" data-src="https://x.test/real.jpg" alt="Lazy"></p>',
+				"![Lazy](https://x.test/real.jpg)\n",
+			],
+			'bare inline text' => [
+				'Plain <b>text</b>',
+				"Plain **text**\n",
+			],
+			'unicode preserved' => [
+				'<p>Árvíztűrő tükörfúrógép</p>',
+				"Árvíztűrő tükörfúrógép\n",
+			],
+		];
+	}
+
+	/**
+	 * @dataProvider fixture_provider
+	 *
+	 * @param string $html     Input HTML.
+	 * @param string $expected Expected Markdown.
+	 */
+	public function test_converts_html_to_markdown( string $html, string $expected ): void {
+		$this->assertSame( $expected, HtmlToMarkdown::convert( $html ) );
+	}
+}

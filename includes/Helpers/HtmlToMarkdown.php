@@ -9,49 +9,35 @@ declare(strict_types=1);
 
 namespace LightweightPlugins\SEO\Helpers;
 
+use LightweightPlugins\SEO\Helpers\Markdown\BlockRenderer;
+
+// phpcs:disable WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase -- DOM API properties (parentNode, ownerDocument) are camelCase.
+
 /**
- * Converts HTML content to Markdown using DOM parsing.
+ * Converts rendered post HTML to Markdown by walking the DOM.
  */
 final class HtmlToMarkdown {
 
 	/**
-	 * Node name to handler method mapping.
-	 *
-	 * @var array<string, string>
+	 * Elements dropped together with their content.
 	 */
-	private const NODE_MAP = [
-		'h1'         => 'heading',
-		'h2'         => 'heading',
-		'h3'         => 'heading',
-		'h4'         => 'heading',
-		'h5'         => 'heading',
-		'h6'         => 'heading',
-		'p'          => 'paragraph',
-		'pre'        => 'code_block',
-		'ul'         => 'unordered_list',
-		'ol'         => 'ordered_list',
-		'blockquote' => 'blockquote',
-		'table'      => 'table',
-		'img'        => 'image',
-	];
+	private const NOISE_TAGS = [ 'script', 'style', 'noscript', 'template', 'nav', 'aside', 'form', 'button', 'select', 'input', 'textarea', 'svg', 'canvas' ];
 
 	/**
-	 * Convert HTML string to Markdown.
+	 * Convert HTML to Markdown.
 	 *
 	 * @param string $html HTML content.
-	 * @return string Markdown content.
+	 * @return string Markdown ending with one newline, or '' for empty input.
 	 */
 	public static function convert( string $html ): string {
 		if ( '' === trim( $html ) ) {
 			return '';
 		}
 
-		$html = self::prepare_html( $html );
-
 		$doc = new \DOMDocument();
-		// phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged
+		// phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged -- libxml warns on HTML5 tags.
 		@$doc->loadHTML(
-			'<html><body>' . $html . '</body></html>',
+			'<html><body><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">' . $html . '</body></html>',
 			LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD
 		);
 
@@ -60,61 +46,30 @@ final class HtmlToMarkdown {
 			return wp_strip_all_tags( $html );
 		}
 
-		return self::process_children( $body );
+		self::remove_noise( $doc, $body );
+
+		$markdown = trim( BlockRenderer::children( $body ) );
+
+		return '' === $markdown ? '' : $markdown . "\n";
 	}
 
 	/**
-	 * Process child nodes of an element.
+	 * Remove comments and non-content elements.
 	 *
-	 * @param \DOMElement $parent Parent element.
-	 * @return string
+	 * @param \DOMDocument $doc  Document.
+	 * @param \DOMElement  $body Body element.
+	 * @return void
 	 */
-	private static function process_children( \DOMElement $parent ): string {
-		$output = '';
+	private static function remove_noise( \DOMDocument $doc, \DOMElement $body ): void {
+		$comments = ( new \DOMXPath( $doc ) )->query( '//comment()' );
+		$nodes    = false === $comments ? [] : iterator_to_array( $comments );
 
-		// phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
-		foreach ( $parent->childNodes as $node ) {
-			if ( $node instanceof \DOMText ) {
-				// phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
-				$text = trim( $node->textContent );
-				if ( '' !== $text ) {
-					$output .= $text . "\n\n";
-				}
-			} elseif ( $node instanceof \DOMElement ) {
-				// phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
-				$name = $node->nodeName;
-
-				if ( isset( self::NODE_MAP[ $name ] ) ) {
-					$method  = self::NODE_MAP[ $name ];
-					$output .= MarkdownNodes::$method( $node );
-				} elseif ( in_array( $name, [ 'div', 'section', 'article' ], true ) ) {
-					$output .= self::process_children( $node );
-				} else {
-					// phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
-					$text = trim( $node->textContent );
-					if ( '' !== $text ) {
-						$output .= $text . "\n\n";
-					}
-				}
-			}
+		foreach ( self::NOISE_TAGS as $tag ) {
+			$nodes = array_merge( $nodes, iterator_to_array( $body->getElementsByTagName( $tag ) ) );
 		}
 
-		return trim( $output ) . "\n";
-	}
-
-	/**
-	 * Prepare HTML for DOM parsing.
-	 *
-	 * @param string $html Raw HTML.
-	 * @return string Cleaned HTML.
-	 */
-	private static function prepare_html( string $html ): string {
-		// Remove script and style tags entirely.
-		$html = (string) preg_replace( '/<(script|style)\b[^>]*>.*?<\/\1>/is', '', $html );
-
-		// Ensure proper UTF-8 encoding for DOMDocument.
-		$html = '<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">' . $html;
-
-		return $html;
+		foreach ( $nodes as $node ) {
+			$node->parentNode?->removeChild( $node );
+		}
 	}
 }
