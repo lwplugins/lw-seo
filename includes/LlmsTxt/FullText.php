@@ -55,13 +55,23 @@ final class FullText {
 	 * @return string
 	 */
 	public static function chunk( \WP_Post $post ): string {
-		// the_content filters (shortcodes, blocks) read the global post.
-		$GLOBALS['post'] = $post; // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited -- Restored by wp_reset_postdata() below.
+		$previous = $GLOBALS['post'] ?? null;
+
+		// the_content filters (shortcodes, blocks) read the global post. On the
+		// virtual /llms-full.txt request $wp_query->post is empty, so
+		// wp_reset_postdata() would not restore $previous — restore it here
+		// explicitly instead.
+		$GLOBALS['post'] = $post; // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited -- Restored below.
 		setup_postdata( $post );
 
 		$body = Dispatcher::body( $post );
 
-		wp_reset_postdata();
+		if ( $previous instanceof \WP_Post ) {
+			$GLOBALS['post'] = $previous; // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited -- Restoring the caller's global post.
+			setup_postdata( $previous );
+		} else {
+			unset( $GLOBALS['post'] );
+		}
 
 		return "---\n\nURL: " . get_permalink( $post ) . "\n\n" . trim( $body ) . "\n";
 	}
