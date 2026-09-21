@@ -17,6 +17,11 @@ namespace LightweightPlugins\SEO\Helpers\Markdown;
 final class InlineRenderer {
 
 	/**
+	 * Schemes that must never become Markdown links.
+	 */
+	private const UNSAFE_SCHEMES = [ 'javascript:', 'vbscript:', 'data:' ];
+
+	/**
 	 * Render all children of a node inline.
 	 *
 	 * @param \DOMNode $node Parent node.
@@ -67,7 +72,14 @@ final class InlineRenderer {
 	 * @return string '' when unusable.
 	 */
 	public static function url( string $url ): string {
-		$url = trim( $url );
+		$url   = trim( $url );
+		$probe = strtolower( (string) preg_replace( '/[\x00-\x20]+/', '', $url ) );
+
+		foreach ( self::UNSAFE_SCHEMES as $scheme ) {
+			if ( str_starts_with( $probe, $scheme ) ) {
+				return '';
+			}
+		}
 
 		return str_replace( [ ' ', '(', ')' ], [ '%20', '%28', '%29' ], $url );
 	}
@@ -128,7 +140,7 @@ final class InlineRenderer {
 
 		foreach ( [ 'data-src', 'data-lazy-src', 'src' ] as $attribute ) {
 			$src = self::url( $node->getAttribute( $attribute ) );
-			if ( '' !== $src && ! str_starts_with( strtolower( $src ), 'data:' ) ) {
+			if ( '' !== $src ) {
 				return '![' . $alt . '](' . $src . ')';
 			}
 		}

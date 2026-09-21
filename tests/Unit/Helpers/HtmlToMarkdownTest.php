@@ -76,6 +76,9 @@ final class HtmlToMarkdownTest extends MonkeyTestCase {
 				'<p>Árvíztűrő tükörfúrógép</p>',
 				"Árvíztűrő tükörfúrógép\n",
 			],
+			'javascript link dropped'   => [ '<p><a href="javascript:alert(1)">click</a></p>', "click\n" ],
+			'obfuscated scheme dropped' => [ "<p><a href=\"java\tscript:alert(1)\">x</a></p>", "x\n" ],
+			'data uri iframe dropped'   => [ '<iframe src="data:text/html;base64,AAA"></iframe>', '' ],
 		];
 	}
 
