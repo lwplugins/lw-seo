@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace LightweightPlugins\SEO\Content;
 
+use LightweightPlugins\SEO\ContentSignals;
 use LightweightPlugins\SEO\Options;
 
 /**
@@ -53,6 +54,23 @@ final class Eligibility {
 		 * @param \WP_Post $post     The post.
 		 */
 		return (bool) apply_filters( 'lw_seo_post_is_eligible', true, $post );
+	}
+
+	/**
+	 * Whether a post may be handed to AI agents: eligible and not opted out
+	 * via the ai-input content signal.
+	 *
+	 * @param \WP_Post $post Post object.
+	 * @return bool
+	 */
+	public static function is_ai_visible( \WP_Post $post ): bool {
+		if ( ! self::is_post_eligible( $post ) ) {
+			return false;
+		}
+
+		$signals = ContentSignals::resolve( $post );
+
+		return 'no' !== ( $signals['ai-input'] ?? '' );
 	}
 
 	/**

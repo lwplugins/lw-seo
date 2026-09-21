@@ -99,4 +99,14 @@ final class EligibilityTest extends MonkeyTestCase {
 	public function test_custom_post_type_without_setting_is_indexable(): void {
 		$this->assertTrue( Eligibility::is_type_indexable( 'case_study' ) );
 	}
+
+	public function test_ai_visible_rejects_posts_with_ai_input_no(): void {
+		Functions\when( 'get_post_meta' )->alias( static fn( int $id, string $key ): string => '_lw_seo_ai_input' === $key ? 'no' : '' );
+
+		$this->assertFalse( Eligibility::is_ai_visible( $this->post() ) );
+	}
+
+	public function test_ai_visible_accepts_eligible_posts_without_override(): void {
+		$this->assertTrue( Eligibility::is_ai_visible( $this->post() ) );
+	}
 }

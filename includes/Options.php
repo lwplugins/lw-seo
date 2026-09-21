@@ -98,6 +98,13 @@ final class Options {
 
 			// AI/LLM Crawlers.
 			'llms_txt_enabled'                => true,
+			'llms_txt_summary'                => '',
+			'llms_txt_intro'                  => '',
+			'llms_txt_optional_links'         => '',
+			'llms_txt_max_items'              => 100,
+			'llms_txt_post_types'             => [],
+			'llms_txt_markdown_links'         => false,
+			'llms_full_txt_enabled'           => false,
 			'block_gptbot'                    => false,
 			'block_chatgpt_user'              => false,
 			'block_claude_web'                => false,
