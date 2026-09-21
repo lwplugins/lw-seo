@@ -61,7 +61,7 @@ final class TabAi implements TabInterface {
 
 		<?php
 		$this->render_content_signals_section();
-		$this->render_llms_section();
+		( new LlmsSection() )->render();
 		$this->render_crawlers_section();
 	}
 
@@ -114,43 +114,6 @@ final class TabAi implements TabInterface {
 						]
 					);
 					?>
-				</td>
-			</tr>
-		</table>
-		<?php
-	}
-
-	/**
-	 * Render llms.txt section.
-	 *
-	 * @return void
-	 */
-	private function render_llms_section(): void {
-		$llms_url = home_url( '/llms.txt' );
-		?>
-		<h3><?php esc_html_e( 'llms.txt File', 'lw-seo' ); ?></h3>
-		<table class="form-table">
-			<tr>
-				<th scope="row"><?php esc_html_e( 'llms.txt', 'lw-seo' ); ?></th>
-				<td>
-					<?php
-					$this->render_checkbox_field(
-						[
-							'name'  => 'llms_txt_enabled',
-							'label' => __( 'Enable llms.txt for AI crawlers', 'lw-seo' ),
-						]
-					);
-					?>
-					<p class="description">
-						<?php
-						printf(
-							/* translators: %1$s: llms.txt URL, %2$s: llmstxt.org link */
-							esc_html__( 'Your llms.txt: %1$s — %2$s', 'lw-seo' ),
-							'<a href="' . esc_url( $llms_url ) . '" target="_blank">' . esc_html( $llms_url ) . '</a>',
-							'<a href="https://llmstxt.org/" target="_blank" rel="noopener">' . esc_html__( 'Learn more', 'lw-seo' ) . '</a>'
-						);
-						?>
-					</p>
 				</td>
 			</tr>
 		</table>
