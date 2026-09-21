@@ -9,7 +9,9 @@ declare(strict_types=1);
 
 namespace LightweightPlugins\SEO\Markdown;
 
+use LightweightPlugins\SEO\Content\Eligibility;
 use LightweightPlugins\SEO\ContentSignals;
+use LightweightPlugins\SEO\Options;
 
 /**
  * Handles /md endpoint, Accept header, and query parameter routing.
@@ -201,7 +203,7 @@ final class Endpoint {
 	}
 
 	/**
-	 * HTTP status for serving an object (pre-1.6.0 access rules).
+	 * HTTP status for serving an object.
 	 *
 	 * @param \WP_Post|\WP_Term $object Object.
 	 * @return int
@@ -209,18 +211,23 @@ final class Endpoint {
 	private function status_for( \WP_Post|\WP_Term $object ): int {
 		if ( $object instanceof \WP_Term ) {
 			$taxonomy = get_taxonomy( $object->taxonomy );
-			return $taxonomy instanceof \WP_Taxonomy && $taxonomy->public ? 200 : 404;
+
+			return AccessPolicy::term_status(
+				[
+					'public'  => $taxonomy instanceof \WP_Taxonomy && $taxonomy->public,
+					'noindex' => (bool) Options::get_term_meta( (int) $object->term_id, 'noindex' ) || (bool) Options::get( 'noindex_' . $object->taxonomy ),
+				]
+			);
 		}
 
-		if ( 'private' === $object->post_status ) {
-			return current_user_can( 'read_private_posts' ) ? 200 : 403;
-		}
-
-		if ( 'publish' !== $object->post_status ) {
-			return 404;
-		}
-
-		return post_password_required( $object ) ? 403 : 200;
+		return AccessPolicy::post_status(
+			[
+				'status'            => (string) $object->post_status,
+				'can_read_private'  => current_user_can( 'read_post', $object->ID ),
+				'password_required' => post_password_required( $object ),
+				'visible'           => Eligibility::is_ai_visible( $object ),
+			]
+		);
 	}
 
 	/**
@@ -235,7 +242,7 @@ final class Endpoint {
 		header( 'Content-Type: text/markdown; charset=UTF-8' );
 		header( 'X-Content-Type-Options: nosniff' );
 
-		echo 403 === $status ? "# Forbidden\n" : "# 404 Not Found\n";
+		echo 403 === $status ? "# Password Protected\n\nThis content is password protected.\n" : "# 404 Not Found\n";
 		exit;
 	}
 
