@@ -45,7 +45,7 @@ final class InlineRenderer {
 	 */
 	public static function node( \DOMNode $node ): string {
 		if ( $node instanceof \DOMText ) {
-			return (string) preg_replace( '/\s+/u', ' ', $node->textContent );
+			return self::escape( (string) preg_replace( '/\s+/u', ' ', $node->textContent ) );
 		}
 
 		if ( ! $node instanceof \DOMElement ) {
@@ -96,6 +96,23 @@ final class InlineRenderer {
 		}
 
 		return str_replace( [ ' ', '(', ')', '<', '>' ], [ '%20', '%28', '%29', '%3C', '%3E' ], $url );
+	}
+
+	/**
+	 * Escape characters that could otherwise start Markdown link/image
+	 * syntax or be read as raw HTML (an autolink or a tag) by a downstream
+	 * CommonMark renderer. Code spans and fenced code blocks bypass this
+	 * (they render their textContent raw) and must stay unescaped.
+	 *
+	 * @param string $text Text to escape.
+	 * @return string
+	 */
+	public static function escape( string $text ): string {
+		return (string) preg_replace_callback(
+			'/[\x5C\x5B\x5D<>]/',
+			static fn( array $matches ): string => '\\' . $matches[0],
+			$text
+		);
 	}
 
 	/**
@@ -150,7 +167,7 @@ final class InlineRenderer {
 	 * @return string
 	 */
 	private static function image( \DOMElement $node ): string {
-		$alt = str_replace( [ '[', ']' ], '', trim( $node->getAttribute( 'alt' ) ) );
+		$alt = str_replace( [ '[', ']', '\\', '<', '>' ], '', trim( $node->getAttribute( 'alt' ) ) );
 
 		foreach ( [ 'data-src', 'data-lazy-src', 'src' ] as $attribute ) {
 			$src = self::url( $node->getAttribute( $attribute ) );

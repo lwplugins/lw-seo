@@ -86,6 +86,30 @@ final class HtmlToMarkdownTest extends MonkeyTestCase {
 			'encoded data uri image dropped'     => [ '<p><img src="data&amp;#58;text/html;base64,AAA" alt="X"></p>', '' ],
 			'mixed-case vbscript href dropped'   => [ '<p><a href="VBScript:alert(1)">y</a></p>', "y\n" ],
 			'control-char prefixed scheme dropped' => [ "<p><a href=\"\x01javascript:alert(1)\">z</a></p>", "z\n" ],
+			'text node fake link syntax escaped' => [
+				'<p>[click](javascript:alert(1))</p>',
+				"\\[click\\](javascript:alert(1))\n",
+			],
+			'anchor text cannot inject a second link' => [
+				'<p><a href="https://x.test/">a](javascript:alert(1))[b</a></p>',
+				"[a\\](javascript:alert(1))\\[b](https://x.test/)\n",
+			],
+			'iframe title cannot inject a second link' => [
+				'<iframe src="https://x.test/embed" title="a](javascript:alert(1))[b"></iframe>',
+				"[a\\](javascript:alert(1))\\[b](https://x.test/embed)\n",
+			],
+			'decoded angle brackets around a scheme are escaped' => [
+				'<p>&lt;javascript:alert(1)&gt;</p>',
+				"\\<javascript:alert(1)\\>\n",
+			],
+			'decoded angle-bracket html payload is escaped' => [
+				'<p>&lt;img src=x onerror=alert(1)&gt;</p>',
+				"\\<img src=x onerror=alert(1)\\>\n",
+			],
+			'image alt strips backslash and angle brackets' => [
+				'<p><img src="https://x.test/a.jpg" alt="A\\<b>C"></p>',
+				"![AbC](https://x.test/a.jpg)\n",
+			],
 		];
 	}
 

@@ -172,7 +172,7 @@ final class BlockRenderer {
 			return '';
 		}
 
-		$title = trim( $node->getAttribute( 'title' ) );
+		$title = InlineRenderer::escape( trim( $node->getAttribute( 'title' ) ) );
 
 		return '[' . ( '' === $title ? 'Embedded content' : $title ) . '](' . $src . ')';
 	}
