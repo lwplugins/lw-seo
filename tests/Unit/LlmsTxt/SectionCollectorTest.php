@@ -71,4 +71,70 @@ final class SectionCollectorTest extends MonkeyTestCase {
 
 		$this->assertSame( [ 'page' => 'Pages', 'case_study' => 'Case Studies' ], SectionCollector::post_types() );
 	}
+
+	/**
+	 * @param array<string, mixed> $props Overrides.
+	 */
+	private function post( array $props = [] ): \WP_Post {
+		return new \WP_Post(
+			array_merge(
+				[
+					'ID'           => 42,
+					'post_title'   => 'A post',
+					'post_excerpt' => 'Fallback excerpt',
+				],
+				$props
+			)
+		);
+	}
+
+	public function test_link_uses_description_meta_when_set(): void {
+		$this->stub_options();
+		Functions\when( 'get_the_title' )->justReturn( 'A post' );
+		Functions\when( 'get_permalink' )->justReturn( 'https://x.test/a/' );
+		Functions\when( 'wp_trim_words' )->returnArg( 1 );
+		Functions\when( 'get_post_meta' )->alias(
+			static fn( int $id, string $key ): string => '_lw_seo_description' === $key ? 'Meta description' : ''
+		);
+
+		$link = SectionCollector::link( $this->post(), false );
+
+		$this->assertSame( 'Meta description', $link['description'] );
+	}
+
+	public function test_link_falls_back_to_post_excerpt_when_description_meta_is_empty(): void {
+		$this->stub_options();
+		Functions\when( 'get_the_title' )->justReturn( 'A post' );
+		Functions\when( 'get_permalink' )->justReturn( 'https://x.test/a/' );
+		Functions\when( 'wp_trim_words' )->returnArg( 1 );
+		Functions\when( 'get_post_meta' )->justReturn( '' );
+
+		$link = SectionCollector::link( $this->post(), false );
+
+		$this->assertSame( 'Fallback excerpt', $link['description'] );
+	}
+
+	public function test_link_uses_markdown_url_when_requested(): void {
+		$this->stub_options( [], [ 'permalink_structure' => '/%postname%/' ] );
+		Functions\when( 'get_the_title' )->justReturn( 'A post' );
+		Functions\when( 'get_permalink' )->justReturn( 'https://x.test/a/' );
+		Functions\when( 'wp_trim_words' )->returnArg( 1 );
+		Functions\when( 'get_post_meta' )->justReturn( '' );
+
+		$link = SectionCollector::link( $this->post(), true );
+
+		$this->assertSame( 'https://x.test/a/md/', $link['url'] );
+	}
+
+	public function test_link_uses_plain_permalink_when_markdown_not_requested(): void {
+		$this->stub_options();
+		Functions\when( 'get_the_title' )->justReturn( 'A post' );
+		Functions\when( 'get_permalink' )->justReturn( 'https://x.test/a/' );
+		Functions\when( 'wp_trim_words' )->returnArg( 1 );
+		Functions\when( 'get_post_meta' )->justReturn( '' );
+
+		$link = SectionCollector::link( $this->post(), false );
+
+		$this->assertSame( 'https://x.test/a/', $link['url'] );
+	}
 }
