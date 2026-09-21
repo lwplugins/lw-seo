@@ -41,8 +41,9 @@ final class CanonicalGuard {
 	 */
 	public function filter( $redirect_url ) {
 		$query_vars = $GLOBALS['wp_query']->query_vars ?? null;
+		$path       = (string) wp_parse_url( sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ?? '' ) ), PHP_URL_PATH );
 
-		if ( is_array( $query_vars ) && self::is_virtual_request( $query_vars ) ) {
+		if ( ( is_array( $query_vars ) && self::is_virtual_request( $query_vars ) ) || Markdown\RequestPath::has_suffix( $path ) ) {
 			return false;
 		}
 

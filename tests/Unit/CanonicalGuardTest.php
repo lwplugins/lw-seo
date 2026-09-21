@@ -9,9 +9,25 @@ declare(strict_types=1);
 
 namespace LightweightPlugins\SEO\Tests\Unit;
 
+use Brain\Monkey\Functions;
 use LightweightPlugins\SEO\CanonicalGuard;
 
 final class CanonicalGuardTest extends MonkeyTestCase {
+
+	/**
+	 * Set up Brain Monkey stubs and default server state.
+	 *
+	 * @return void
+	 */
+	protected function setUp(): void {
+		parent::setUp();
+
+		$_SERVER['REQUEST_URI'] = '/';
+
+		Functions\when( 'wp_parse_url' )->alias( 'parse_url' );
+		Functions\when( 'sanitize_text_field' )->alias( static fn( $v ): string => (string) $v );
+		Functions\when( 'wp_unslash' )->alias( static fn( $v ) => $v );
+	}
 
 	/**
 	 * @return array<string, array{0: array<string, mixed>, 1: bool}>
@@ -63,6 +79,17 @@ final class CanonicalGuardTest extends MonkeyTestCase {
 		$guard = new CanonicalGuard();
 
 		$this->assertSame( 'https://example.com/x/', $guard->filter( 'https://example.com/x/', 'https://example.com/x' ) );
+	}
+
+	public function test_filter_returns_false_for_404_resolved_md_suffix_path(): void {
+		// A 404-resolved /md path has no 'md' query var, so is_virtual_request()
+		// alone would miss it; the request URI must be checked too.
+		$_SERVER['REQUEST_URI'] = '/hello-world/md/';
+		$GLOBALS['wp_query']    = (object) [ 'query_vars' => [] ];
+
+		$guard = new CanonicalGuard();
+
+		$this->assertFalse( $guard->filter( 'https://example.com/hello-world/md/', 'https://example.com/hello-world/md' ) );
 	}
 
 	protected function tearDown(): void {

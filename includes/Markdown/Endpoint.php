@@ -50,30 +50,21 @@ final class Endpoint {
 	/**
 	 * Handle markdown requests.
 	 *
+	 * Explicit requests (/md, /markdown, ?format=md) always get a Markdown
+	 * answer, errors included. Accept-negotiated requests fall back to the
+	 * regular HTML page whenever Markdown is not available.
+	 *
 	 * @return void
 	 */
 	public function handle_request(): void {
-		if ( ! $this->is_markdown_request() ) {
+		$explicit = $this->is_explicit_request();
+
+		if ( ! $explicit && ! $this->is_negotiated_request() ) {
 			return;
 		}
 
 		$object = $this->resolve_object();
-		if ( null === $object ) {
-			status_header( 404 );
-			header( 'Content-Type: text/markdown; charset=UTF-8' );
-			echo "# 404 Not Found\n";
-			exit;
-		}
-
-		// Security checks for posts.
-		if ( $object instanceof \WP_Post ) {
-			$this->check_post_access( $object );
-		}
-
-		// Security checks for taxonomy terms.
-		if ( $object instanceof \WP_Term ) {
-			$this->check_term_access( $object );
-		}
+		$status = null === $object ? 404 : $this->status_for( $object );
 
 		/**
 		 * Filter whether this request supports markdown output.
@@ -81,116 +72,91 @@ final class Endpoint {
 		 * @param bool      $supported Whether markdown is supported.
 		 * @param \WP_Query $query     Current query.
 		 */
-		$supported = apply_filters( 'lw_seo_markdown_is_supported', true, $GLOBALS['wp_query'] );
-		if ( ! $supported ) {
+		if ( 200 === $status && ! apply_filters( 'lw_seo_markdown_is_supported', true, $GLOBALS['wp_query'] ) ) {
+			$status = 404;
+		}
+
+		if ( null === $object || 200 !== $status ) {
+			if ( $explicit ) {
+				$this->send_error( $status );
+			}
 			return;
 		}
 
-		$this->send_response( Dispatcher::dispatch( $object ), $object );
+		$this->send_response( Dispatcher::dispatch( $object ), $object, ! $explicit );
 	}
 
 	/**
-	 * Check if this is a markdown request.
+	 * /md, /markdown or ?format=md.
 	 *
 	 * @return bool
 	 */
-	private function is_markdown_request(): bool {
-		// Endpoint query var: /hello-world/md/ (set by add_rewrite_endpoint).
-		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only query var check.
-		if ( isset( $GLOBALS['wp_query']->query_vars['md'] ) || isset( $GLOBALS['wp_query']->query_vars['markdown'] ) ) {
+	private function is_explicit_request(): bool {
+		$query_vars = $GLOBALS['wp_query']->query_vars ?? [];
+
+		if ( isset( $query_vars['md'] ) || isset( $query_vars['markdown'] ) ) {
 			return true;
 		}
 
-		// URL suffix detection for taxonomy archives where endpoint rewrite may not work.
-		$path = trim( wp_parse_url( sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ?? '' ) ), PHP_URL_PATH ) ?? '', '/' );
-		if ( str_ends_with( $path, '/md' ) || str_ends_with( $path, '/markdown' ) ) {
-			return true;
-		}
-
-		// Query parameter: ?format=md.
-		if ( 'md' === get_query_var( 'format' ) ) {
-			return true;
-		}
-
-		// Accept header: text/markdown (singular pages only).
-		if ( is_singular() && $this->accepts_markdown() ) {
-			return true;
-		}
-
-		return false;
+		return RequestPath::has_suffix( $this->request_path() ) || 'md' === get_query_var( 'format' );
 	}
 
 	/**
-	 * Check if the Accept header includes text/markdown.
+	 * Singular page whose Accept header prefers Markdown.
 	 *
 	 * @return bool
 	 */
-	private function accepts_markdown(): bool {
-		$accept = isset( $_SERVER['HTTP_ACCEPT'] )
-			? sanitize_text_field( wp_unslash( $_SERVER['HTTP_ACCEPT'] ) )
-			: '';
+	private function is_negotiated_request(): bool {
+		$accept = isset( $_SERVER['HTTP_ACCEPT'] ) ? sanitize_text_field( wp_unslash( $_SERVER['HTTP_ACCEPT'] ) ) : '';
 
-		if ( '' === $accept ) {
-			return false;
-		}
-
-		$types = array_map( 'trim', explode( ',', $accept ) );
-		$types = array_map(
-			fn( string $type ): string => explode( ';', $type )[0],
-			$types
-		);
-
-		return in_array( 'text/markdown', $types, true );
+		return is_singular() && AcceptNegotiator::prefers_markdown( $accept );
 	}
 
 	/**
-	 * Resolve the queried object for markdown output.
+	 * Request path relative to the site home.
+	 *
+	 * @return string
+	 */
+	private function request_path(): string {
+		$uri = sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ?? '' ) );
+
+		return RequestPath::relative( (string) wp_parse_url( $uri, PHP_URL_PATH ), (string) wp_parse_url( home_url(), PHP_URL_PATH ) );
+	}
+
+	/**
+	 * Resolve the object to render.
 	 *
 	 * @return \WP_Post|\WP_Term|null
 	 */
 	private function resolve_object(): \WP_Post|\WP_Term|null {
 		$object = get_queried_object();
 
-		if ( $object instanceof \WP_Post ) {
+		if ( $object instanceof \WP_Post || $object instanceof \WP_Term ) {
 			return $object;
 		}
 
-		if ( $object instanceof \WP_Term ) {
-			return $object;
-		}
-
-		// Fallback: resolve from URL path when endpoint rewrite doesn't set the queried object.
-		return $this->resolve_from_url();
+		return $this->resolve_from_path( RequestPath::strip( $this->request_path() ) );
 	}
 
 	/**
-	 * Try to resolve a WP_Post or WP_Term from the current URL path.
+	 * Resolve a post or term from a path ('' = the static front page).
 	 *
-	 * Strips the /md or /markdown suffix and queries WordPress for the base URL.
-	 *
+	 * @param string $path Relative path without the Markdown suffix.
 	 * @return \WP_Post|\WP_Term|null
 	 */
-	private function resolve_from_url(): \WP_Post|\WP_Term|null {
-		$path = trim( wp_parse_url( sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ?? '' ) ), PHP_URL_PATH ) ?? '', '/' );
-
-		// Strip /md or /markdown suffix.
-		if ( str_ends_with( $path, '/md' ) ) {
-			$path = substr( $path, 0, -3 );
-		} elseif ( str_ends_with( $path, '/markdown' ) ) {
-			$path = substr( $path, 0, -9 );
-		} else {
-			return null;
+	private function resolve_from_path( string $path ): \WP_Post|\WP_Term|null {
+		if ( '' === $path ) {
+			$front = (int) get_option( 'page_on_front' );
+			$post  = 'page' === get_option( 'show_on_front' ) && $front > 0 ? get_post( $front ) : null;
+			return $post instanceof \WP_Post ? $post : null;
 		}
 
-		$base_url = home_url( '/' . $path . '/' );
-		$post_id  = url_to_postid( $base_url );
-
+		$post_id = url_to_postid( home_url( '/' . $path . '/' ) );
 		if ( $post_id ) {
 			$post = get_post( $post_id );
 			return $post instanceof \WP_Post ? $post : null;
 		}
 
-		// Try to resolve as taxonomy term.
 		return $this->resolve_term_from_path( $path );
 	}
 
@@ -235,70 +201,75 @@ final class Endpoint {
 	}
 
 	/**
-	 * Check if a post is accessible for markdown output.
-	 * Exits with appropriate status code if not accessible.
+	 * HTTP status for serving an object (pre-1.6.0 access rules).
 	 *
-	 * @param \WP_Post $post Post object.
-	 * @return void
+	 * @param \WP_Post|\WP_Term $object Object.
+	 * @return int
 	 */
-	private function check_post_access( \WP_Post $post ): void {
-		if ( ! in_array( $post->post_status, [ 'publish', 'private' ], true ) ) {
-			status_header( 404 );
-			header( 'Content-Type: text/markdown; charset=UTF-8' );
-			echo "# 404 Not Found\n";
-			exit;
+	private function status_for( \WP_Post|\WP_Term $object ): int {
+		if ( $object instanceof \WP_Term ) {
+			$taxonomy = get_taxonomy( $object->taxonomy );
+			return $taxonomy instanceof \WP_Taxonomy && $taxonomy->public ? 200 : 404;
 		}
 
-		if ( 'private' === $post->post_status && ! current_user_can( 'read_private_posts' ) ) {
-			status_header( 403 );
-			header( 'Content-Type: text/markdown; charset=UTF-8' );
-			echo "# Forbidden\n";
-			exit;
+		if ( 'private' === $object->post_status ) {
+			return current_user_can( 'read_private_posts' ) ? 200 : 403;
 		}
 
-		if ( post_password_required( $post ) ) {
-			status_header( 403 );
-			header( 'Content-Type: text/markdown; charset=UTF-8' );
-			echo "# Password Protected\n\nThis content is password protected.\n";
-			exit;
+		if ( 'publish' !== $object->post_status ) {
+			return 404;
 		}
+
+		return post_password_required( $object ) ? 403 : 200;
 	}
 
 	/**
-	 * Check if a taxonomy term is accessible.
-	 * Exits with 404 if taxonomy is not public.
+	 * Send a Markdown error and stop.
 	 *
-	 * @param \WP_Term $term Term object.
+	 * @param int $status HTTP status.
 	 * @return void
 	 */
-	private function check_term_access( \WP_Term $term ): void {
-		$taxonomy = get_taxonomy( $term->taxonomy );
-		if ( ! $taxonomy || ! $taxonomy->public ) {
-			status_header( 404 );
-			header( 'Content-Type: text/markdown; charset=UTF-8' );
-			echo "# 404 Not Found\n";
-			exit;
-		}
+	private function send_error( int $status ): void {
+		status_header( $status );
+		nocache_headers();
+		header( 'Content-Type: text/markdown; charset=UTF-8' );
+		header( 'X-Content-Type-Options: nosniff' );
+
+		echo 403 === $status ? "# Forbidden\n" : "# 404 Not Found\n";
+		exit;
 	}
 
 	/**
-	 * Send the markdown response with proper headers.
+	 * Send the markdown response and stop.
 	 *
-	 * @param string            $output Markdown content.
-	 * @param \WP_Post|\WP_Term $object Queried object.
+	 * @param string            $output     Markdown content.
+	 * @param \WP_Post|\WP_Term $object     Rendered object.
+	 * @param bool              $negotiated Whether the HTML URL was answered via Accept.
 	 * @return void
 	 */
-	private function send_response( string $output, \WP_Post|\WP_Term $object ): void {
-		$signals     = ContentSignals::resolve( $object );
-		$token_count = (int) ( mb_strlen( $output ) / 4 );
+	private function send_response( string $output, \WP_Post|\WP_Term $object, bool $negotiated ): void {
+		$canonical = $object instanceof \WP_Post ? get_permalink( $object ) : get_term_link( $object );
 
+		status_header( 200 );
 		header( 'Content-Type: text/markdown; charset=UTF-8' );
 		// Prevent MIME-sniffing: $output is user-controlled post content echoed
 		// unescaped, so a sniffing browser must not reinterpret it as text/html.
 		header( 'X-Content-Type-Options: nosniff' );
 		header( 'X-Robots-Tag: noindex' );
-		header( 'X-Content-Signals: ' . ContentSignals::format_header( $signals ) );
-		header( 'X-Markdown-Tokens: ' . $token_count );
+		if ( is_string( $canonical ) ) {
+			header( 'Link: <' . esc_url_raw( $canonical ) . '>; rel="canonical"' );
+		}
+		header( 'X-Content-Signals: ' . ContentSignals::format_header( ContentSignals::resolve( $object ) ) );
+		header( 'X-Markdown-Tokens: ' . (int) ( mb_strlen( $output ) / 4 ) );
+
+		if ( $negotiated ) {
+			// The same URL serves HTML and Markdown: keep caches from mixing them up.
+			header( 'Vary: Accept' );
+			header( 'Cache-Control: private, no-store' );
+			if ( ! defined( 'DONOTCACHEPAGE' ) ) {
+				define( 'DONOTCACHEPAGE', true ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedConstantFound -- Page-cache plugin convention.
+			}
+		}
 
 		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Plain-text Markdown body served as text/markdown (non-HTML context) with X-Content-Type-Options: nosniff; HTML-escaping would corrupt the Markdown.
 		echo $output;
