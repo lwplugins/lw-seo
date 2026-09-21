@@ -60,6 +60,8 @@ final class Plugin {
 	private function init_hooks(): void {
 		add_action( 'init', [ $this, 'load_textdomain' ] );
 
+		( new Upgrader() )->register();
+
 		( new HeadMeta() )->register();
 		( new TitleFilter() )->register();
 
