@@ -24,6 +24,21 @@ final class InlineRendererTest extends MonkeyTestCase {
 	}
 
 	/**
+	 * A destination that fails to form a link is read as text, where a raw
+	 * backtick opens a code span and a trailing backslash escapes the `)`.
+	 */
+	public function test_url_encodes_backtick_and_backslash(): void {
+		$this->assertSame( 'https://x.test/a%60b%5Cc', InlineRenderer::url( 'https://x.test/a`b\\c' ) );
+	}
+
+	/**
+	 * Ordinary permalinks pass through unchanged.
+	 */
+	public function test_url_keeps_ordinary_permalink(): void {
+		$this->assertSame( 'https://x.test/2024/05/hello-world/?p=1&a=b#top', InlineRenderer::url( 'https://x.test/2024/05/hello-world/?p=1&a=b#top' ) );
+	}
+
+	/**
 	 * @return array<string, array{0: string, 1: string, 2: string}>
 	 */
 	public static function append_provider(): array {

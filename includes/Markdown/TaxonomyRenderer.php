@@ -11,6 +11,7 @@ namespace LightweightPlugins\SEO\Markdown;
 
 use LightweightPlugins\SEO\Content\Eligibility;
 use LightweightPlugins\SEO\Helpers\HtmlToMarkdown;
+use LightweightPlugins\SEO\Helpers\Markdown\InlineRenderer;
 use LightweightPlugins\SEO\Options;
 
 /**
@@ -72,7 +73,7 @@ final class TaxonomyRenderer implements RendererInterface {
 			return apply_filters( 'lw_seo_markdown_body', $custom_md, $this->term );
 		}
 
-		$body = '# ' . $this->term->name . "\n\n";
+		$body = '# ' . HtmlToMarkdown::plain_text( $this->term->name ) . "\n\n";
 
 		// Term description.
 		$description = term_description( $this->term->term_id );
@@ -103,7 +104,8 @@ final class TaxonomyRenderer implements RendererInterface {
 			$body .= "## Posts\n\n";
 			foreach ( $posts as $post ) {
 				$date  = get_the_date( 'Y-m-d', $post );
-				$body .= '- [' . get_the_title( $post ) . '](' . get_permalink( $post ) . ') - ' . $date . "\n";
+				$title = HtmlToMarkdown::plain_text( get_the_title( $post ) );
+				$body .= '- [' . $title . '](' . InlineRenderer::url( (string) get_permalink( $post ) ) . ') - ' . $date . "\n";
 			}
 			$body .= "\n";
 		}

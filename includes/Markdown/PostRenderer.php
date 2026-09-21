@@ -99,7 +99,7 @@ final class PostRenderer implements RendererInterface {
 		}
 
 		$content = apply_filters( 'the_content', $this->post->post_content ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Core WP filter.
-		$body    = '# ' . get_the_title( $this->post ) . "\n\n";
+		$body    = '# ' . HtmlToMarkdown::plain_text( get_the_title( $this->post ) ) . "\n\n";
 		$body   .= HtmlToMarkdown::convert( $content );
 
 		/**

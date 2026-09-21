@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace LightweightPlugins\SEO\Helpers;
 
 use LightweightPlugins\SEO\Helpers\Markdown\BlockRenderer;
+use LightweightPlugins\SEO\Helpers\Markdown\InlineRenderer;
 
 // phpcs:disable WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase -- DOM API properties (parentNode, ownerDocument) are camelCase.
 
@@ -51,6 +52,23 @@ final class HtmlToMarkdown {
 		$markdown = trim( BlockRenderer::children( $body ) );
 
 		return '' === $markdown ? '' : $markdown . "\n";
+	}
+
+	/**
+	 * Convert a WordPress plain-text string (a post title or term name,
+	 * which may carry entities and simple tags) to inert Markdown inline
+	 * text, so link syntax or an entity-encoded tag in it can't go live
+	 * downstream. Tags are stripped before entities are decoded: decoding
+	 * first would turn text like `&lt;3` into a tag start that
+	 * strip_tags() cuts to the end of the string.
+	 *
+	 * @param string $text Title as WordPress returns it.
+	 * @return string Escaped single-line Markdown text.
+	 */
+	public static function plain_text( string $text ): string {
+		$text = html_entity_decode( wp_strip_all_tags( $text ), ENT_QUOTES | ENT_HTML5, 'UTF-8' );
+
+		return InlineRenderer::escape( trim( (string) preg_replace( '/\s+/u', ' ', $text ) ) );
 	}
 
 	/**

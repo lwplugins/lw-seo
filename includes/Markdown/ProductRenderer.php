@@ -87,7 +87,7 @@ final class ProductRenderer implements RendererInterface {
 		}
 
 		$product = wc_get_product( $this->post->ID );
-		$body    = '# ' . get_the_title( $this->post ) . "\n\n";
+		$body    = '# ' . HtmlToMarkdown::plain_text( get_the_title( $this->post ) ) . "\n\n";
 
 		// Short description.
 		$short_desc = $this->post->post_excerpt;

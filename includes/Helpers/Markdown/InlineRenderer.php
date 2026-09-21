@@ -123,6 +123,10 @@ final class InlineRenderer {
 	 * literal newline in a link destination ends it early and lets the
 	 * rest of the text be parsed as a Markdown reference definition, so
 	 * every \x00-\x1F/\x7F byte is percent-encoded before the URL is used.
+	 * Backticks and backslashes are encoded too: when the brackets fail to
+	 * form a link the destination is read as text, where a backtick opens
+	 * a code span that swallows the next fence, and a trailing backslash
+	 * escapes the closing `)` so the destination runs into the next piece.
 	 *
 	 * @param string $url Raw URL.
 	 * @return string '' when unusable.
@@ -152,7 +156,23 @@ final class InlineRenderer {
 			$url
 		);
 
-		return str_replace( [ ' ', '(', ')', '<', '>' ], [ '%20', '%28', '%29', '%3C', '%3E' ], $url );
+		return str_replace(
+			[ ' ', '(', ')', '<', '>', '`', '\\' ],
+			[ '%20', '%28', '%29', '%3C', '%3E', '%60', '%5C' ],
+			$url
+		);
+	}
+
+	/**
+	 * Trim rendered inline Markdown and drop trailing hard breaks. Trimming
+	 * alone would cut a trailing break down to a bare backslash, which then
+	 * escapes whatever follows (a closing `]` or emphasis marker).
+	 *
+	 * @param string $inline Inline Markdown.
+	 * @return string
+	 */
+	public static function trim_inline( string $inline ): string {
+		return trim( (string) preg_replace( '/(?:\\\\\n|\s)+$/', '', $inline ) );
 	}
 
 	/**
@@ -177,13 +197,14 @@ final class InlineRenderer {
 	}
 
 	/**
-	 * Link.
+	 * Link. A trailing hard break is dropped from the text so it can't be
+	 * cut down to a backslash that escapes the closing `]`.
 	 *
 	 * @param \DOMElement $node Anchor.
 	 * @return string
 	 */
 	private static function link( \DOMElement $node ): string {
-		$text = trim( self::content( $node ) );
+		$text = self::trim_inline( self::content( $node ) );
 		$href = self::url( $node->getAttribute( 'href' ) );
 
 		if ( '' === $text || '' === $href || str_starts_with( $href, '#' ) ) {
@@ -196,7 +217,9 @@ final class InlineRenderer {
 	/**
 	 * Emphasis-style wrapper. Leading/trailing whitespace stays outside the
 	 * markers so it doesn't glue the emphasis to adjacent text (CommonMark
-	 * ignores emphasis markers with whitespace immediately inside them).
+	 * ignores emphasis markers with whitespace immediately inside them). A
+	 * trailing hard break is dropped rather than cut down to a backslash
+	 * that would escape the closing marker.
 	 *
 	 * @param string      $marker Marker.
 	 * @param \DOMElement $node   Element.
@@ -204,7 +227,7 @@ final class InlineRenderer {
 	 */
 	private static function wrap( string $marker, \DOMElement $node ): string {
 		$text  = self::content( $node );
-		$inner = trim( $text );
+		$inner = self::trim_inline( $text );
 		if ( '' === $inner ) {
 			return '';
 		}
@@ -260,12 +283,15 @@ final class InlineRenderer {
 	 * loses the characters that could end the brackets early, start an
 	 * escape or raw HTML, or open a code span that runs past `](…)` into
 	 * the next piece and leaves that piece's code content as live HTML.
+	 * Its whitespace collapses to single spaces: a blank line would end the
+	 * paragraph inside the brackets and leave `](…)` behind as plain text.
 	 *
 	 * @param \DOMElement $node Img element.
 	 * @return string
 	 */
 	private static function image( \DOMElement $node ): string {
-		$alt = str_replace( [ '[', ']', '\\', '<', '>', '`' ], '', trim( $node->getAttribute( 'alt' ) ) );
+		$alt = str_replace( [ '[', ']', '\\', '<', '>', '`' ], '', $node->getAttribute( 'alt' ) );
+		$alt = trim( (string) preg_replace( '/\s+/u', ' ', $alt ) );
 
 		foreach ( [ 'data-src', 'data-lazy-src', 'src' ] as $attribute ) {
 			$src = self::url( $node->getAttribute( $attribute ) );

@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace LightweightPlugins\SEO\Tests\Unit\Helpers;
 
+use Brain\Monkey\Functions;
 use LightweightPlugins\SEO\Helpers\HtmlToMarkdown;
 use LightweightPlugins\SEO\Tests\Unit\MonkeyTestCase;
 
@@ -210,15 +211,76 @@ final class HtmlToMarkdownTest extends MonkeyTestCase {
 				'<p><code>\\</code><code>a`&lt;img src=x onerror=alert(1)&gt;</code></p>',
 				"` \\ ` ``a`<img src=x onerror=alert(1)>``\n",
 			],
-			'backslash left by a trimmed link break cannot escape the next text' => [
+			'hard break trimmed from link text leaves no backslash before the next text' => [
 				'<p><a>a<br></a>&lt;img src=x onerror=alert(1)//&gt;</p>',
-				"a\\ \\<img src=x onerror=alert(1)//\\>\n",
+				"a\\<img src=x onerror=alert(1)//\\>\n",
 			],
-			'backslash left by a trimmed link break cannot escape the next fence' => [
+			'hard break trimmed from link text leaves no backslash before the next fence' => [
 				'<a href="#x">a<br></a><code>&lt;img src=x onerror=alert(1)&gt;</code>',
-				"a\\ `<img src=x onerror=alert(1)>`\n",
+				"a`<img src=x onerror=alert(1)>`\n",
+			],
+			'backtick and backslash in a link destination are encoded' => [
+				'<p><a href="https://x.test/`\\">a</a><code>&lt;img src=x onerror=alert(1)&gt;</code></p>',
+				"[a](https://x.test/%60%5C)`<img src=x onerror=alert(1)>`\n",
+			],
+			'trailing backslash in a link destination cannot escape its paren' => [
+				'<p><a href="https://x.test/\\">a</a><code>x)</code><code>&lt;img src=x onerror=alert(1)&gt;</code></p>',
+				"[a](https://x.test/%5C)`x)` `<img src=x onerror=alert(1)>`\n",
+			],
+			'hard break is stripped from link text' => [
+				'<p><a href="https://x.test/`">a<br></a><code>&lt;img src=x onerror=alert(1)&gt;</code></p>',
+				"[a](https://x.test/%60)`<img src=x onerror=alert(1)>`\n",
+			],
+			'image alt whitespace collapses and src backtick is encoded' => [
+				'<p><img alt="a&#10;&#10;b" src="https://x.test/`"><code>&lt;img src=x onerror=alert(1)&gt;</code></p>',
+				"![a b](https://x.test/%60)`<img src=x onerror=alert(1)>`\n",
+			],
+			'iframe src backtick is encoded' => [
+				'<iframe src="https://x.test/`" title="t"></iframe>',
+				"[t](https://x.test/%60)\n",
+			],
+			'hard break is stripped from strong text' => [
+				'<p><strong>a<br></strong>b</p>',
+				"**a**\nb\n",
+			],
+			'hard break is stripped from em text' => [
+				'<p><em>a<br> </em>b</p>',
+				"*a*\n b\n",
+			],
+			'hard break is stripped from a figcaption' => [
+				'<figure><figcaption>a<br></figcaption></figure>',
+				"*a*\n",
 			],
 		];
+	}
+
+	/**
+	 * @return array<string, array{0: string, 1: string}>
+	 */
+	public static function plain_text_provider(): array {
+		return [
+			'link syntax escaped'            => [ 'Hi [x](javascript:alert(1))', 'Hi \\[x\\](javascript:alert(1))' ],
+			'encoded tag stays escaped text' => [ '&lt;img src=x onerror=alert(1)&gt;', '\\<img src=x onerror=alert(1)\\>' ],
+			'simple tags stripped'           => [ '<b>Bold</b> <em>move</em>', 'Bold move' ],
+			'entities decoded'               => [ 'Tom &amp; Jerry&#8217;s', 'Tom & Jerry’s' ],
+			'whitespace collapsed'           => [ "a\n\n# b\t c", 'a # b c' ],
+			'backtick and backslash escaped' => [ 'a`b\\c', 'a\\`b\\\\c' ],
+			'encoded less-than keeps the rest' => [ 'x &lt;3 y', 'x \\<3 y' ],
+		];
+	}
+
+	/**
+	 * A WordPress title/term name becomes inert Markdown inline text.
+	 *
+	 * @dataProvider plain_text_provider
+	 *
+	 * @param string $text     Title as returned by WordPress.
+	 * @param string $expected Escaped Markdown text.
+	 */
+	public function test_plain_text_escapes_titles( string $text, string $expected ): void {
+		Functions\when( 'wp_strip_all_tags' )->alias( static fn( string $value ): string => trim( strip_tags( $value ) ) );
+
+		$this->assertSame( $expected, HtmlToMarkdown::plain_text( $text ) );
 	}
 
 	/**

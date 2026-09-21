@@ -96,7 +96,7 @@ final class BlockRenderer {
 	 * @return string
 	 */
 	private static function finish_inline( string $inline ): string {
-		return trim( (string) preg_replace( '/(?:\\\\\n|\s)+$/', '', $inline ) );
+		return InlineRenderer::trim_inline( $inline );
 	}
 
 	/**
