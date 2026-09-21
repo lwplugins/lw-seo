@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace LightweightPlugins\SEO;
 
+use LightweightPlugins\SEO\Admin\MarkdownOverrideField;
 use LightweightPlugins\SEO\Helpers\MetaCoerce;
 
 /**
@@ -358,30 +359,7 @@ final class MetaBox {
 				</div>
 			</details>
 
-			<!-- Markdown Content (Collapsible) -->
-			<details class="lw-seo-section lw-seo-section--markdown">
-				<summary class="lw-seo-section__title">
-					<?php esc_html_e( 'Markdown Content', 'lw-seo' ); ?>
-				</summary>
-				<div class="lw-seo-section__content">
-					<div class="lw-seo-field">
-						<label for="lw_seo_markdown_content" class="lw-seo-label">
-							<?php esc_html_e( 'Custom Markdown', 'lw-seo' ); ?>
-						</label>
-						<textarea
-							id="lw_seo_markdown_content"
-							name="lw_seo_markdown_content"
-							class="lw-seo-input"
-							rows="12"
-							style="font-family: monospace; font-size: 13px;"
-							placeholder="<?php esc_attr_e( '# Title...', 'lw-seo' ); ?>"
-						><?php echo esc_textarea( Options::get_post_meta( $post->ID, 'markdown_content' ) ); ?></textarea>
-						<p class="lw-seo-description">
-							<?php esc_html_e( 'If filled, this markdown is served at the /md endpoint instead of the auto-generated content. Ideal for Elementor, Divi, or other page builder pages.', 'lw-seo' ); ?>
-						</p>
-					</div>
-				</div>
-			</details>
+			<?php MarkdownOverrideField::render_post_section( (string) Options::get_post_meta( $post->ID, MarkdownOverrideField::KEY ) ); ?>
 		</div>
 		<?php
 	}
@@ -434,6 +412,10 @@ final class MetaBox {
 		];
 
 		foreach ( $fields as $field => $sanitize_callback ) {
+			if ( ! MarkdownOverrideField::may_set( $field ) ) {
+				continue;
+			}
+
 			$input_name = 'lw_seo_' . $field;
 			$value      = '';
 

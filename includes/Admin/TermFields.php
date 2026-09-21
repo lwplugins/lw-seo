@@ -156,20 +156,6 @@ final class TermFields {
 	 * @return void
 	 */
 	private static function render_markdown_section( \WP_Term $term ): void {
-		$markdown = Options::get_term_meta( $term->term_id, 'markdown_content' );
-		?>
-		<tr class="form-field">
-			<th scope="row"><label for="lw_seo_markdown_content"><?php esc_html_e( 'Markdown Content', 'lw-seo' ); ?></label></th>
-			<td>
-				<textarea id="lw_seo_markdown_content" name="lw_seo_markdown_content" rows="10" class="large-text"
-					style="font-family: monospace; font-size: 13px;"
-					placeholder="<?php esc_attr_e( '# Title...', 'lw-seo' ); ?>"
-				><?php echo esc_textarea( $markdown ); ?></textarea>
-				<p class="description">
-					<?php esc_html_e( 'If filled, this markdown is served at the /md endpoint instead of the auto-generated content.', 'lw-seo' ); ?>
-				</p>
-			</td>
-		</tr>
-		<?php
+		MarkdownOverrideField::render_term_row( (string) Options::get_term_meta( $term->term_id, MarkdownOverrideField::KEY ) );
 	}
 }

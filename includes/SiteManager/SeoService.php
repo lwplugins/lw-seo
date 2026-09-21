@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace LightweightPlugins\SEO\SiteManager;
 
+use LightweightPlugins\SEO\Admin\MarkdownOverrideField;
 use LightweightPlugins\SEO\ContentSignals;
 use LightweightPlugins\SEO\Markdown\Dispatcher;
 use LightweightPlugins\SEO\Options;
@@ -187,7 +188,7 @@ final class SeoService {
 
 		$updated = [];
 		foreach ( $meta as $key => $value ) {
-			if ( in_array( $key, self::META_FIELDS, true ) ) {
+			if ( in_array( $key, self::META_FIELDS, true ) && MarkdownOverrideField::may_set( $key ) ) {
 				Options::set_post_meta( $post_id, $key, sanitize_text_field( (string) $value ) );
 				$updated[] = $key;
 			}
@@ -219,7 +220,7 @@ final class SeoService {
 
 		$updated = [];
 		foreach ( $meta as $key => $value ) {
-			if ( in_array( $key, self::META_FIELDS, true ) ) {
+			if ( in_array( $key, self::META_FIELDS, true ) && MarkdownOverrideField::may_set( $key ) ) {
 				Options::set_term_meta( $term_id, $key, sanitize_text_field( (string) $value ) );
 				$updated[] = $key;
 			}

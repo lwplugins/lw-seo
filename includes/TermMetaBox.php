@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace LightweightPlugins\SEO;
 
+use LightweightPlugins\SEO\Admin\MarkdownOverrideField;
 use LightweightPlugins\SEO\Admin\TermFields;
 
 /**
@@ -96,6 +97,10 @@ final class TermMetaBox {
 		}
 
 		foreach ( self::FIELDS as $field => $sanitize_callback ) {
+			if ( ! MarkdownOverrideField::may_set( $field ) ) {
+				continue;
+			}
+
 			$input_name = 'lw_seo_' . $field;
 			$value      = '';
 
