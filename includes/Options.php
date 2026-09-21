@@ -85,6 +85,8 @@ final class Options {
 			'sitemap_pages'                   => true,
 			'sitemap_categories'              => true,
 			'sitemap_tags'                    => false,
+			'sitemap_post_types'              => [],
+			'sitemap_taxonomies'              => [],
 
 			// Advanced.
 			'breadcrumbs_enabled'             => true,

@@ -60,7 +60,8 @@ final class ActivatorTest extends MonkeyTestCase {
 		Activator::activate();
 
 		$this->assertContains( '^sitemap\.xml$', $this->rules, 'sitemap index rule missing' );
-		$this->assertContains( '^sitemap-([a-z_]+)\.xml$', $this->rules, 'sitemap sub-rule missing' );
+		$this->assertContains( '^sitemap-([a-z0-9_-]+)\.xml$', $this->rules, 'sitemap sub-rule missing' );
+		$this->assertContains( '^sitemap-([a-z0-9_-]+?)-(\d+)\.xml$', $this->rules, 'paged sitemap rule missing' );
 		$this->assertContains( '^robots\.txt$', $this->rules, 'robots.txt rule missing' );
 		$this->assertContains( '^llms\.txt$', $this->rules, 'llms.txt rule missing' );
 		$this->assertSame( [ 'md', 'markdown' ], $this->endpoints );

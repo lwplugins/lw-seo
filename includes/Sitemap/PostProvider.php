@@ -1,6 +1,6 @@
 <?php
 /**
- * Post Sitemap Provider.
+ * Post type sitemap provider.
  *
  * @package LightweightPlugins\SEO
  */
@@ -9,12 +9,12 @@ declare(strict_types=1);
 
 namespace LightweightPlugins\SEO\Sitemap;
 
-use LightweightPlugins\SEO\Options;
+use LightweightPlugins\SEO\Content\Eligibility;
 
 /**
- * Provides posts for sitemap.
+ * Provides the published, indexable posts of one post type.
  */
-class PostProvider implements ProviderInterface {
+final class PostProvider implements ProviderInterface {
 
 	/**
 	 * Items per page.
@@ -26,22 +26,24 @@ class PostProvider implements ProviderInterface {
 	 *
 	 * @var string
 	 */
-	protected string $post_type = 'post';
+	private string $post_type;
 
 	/**
-	 * Option key for enabled check.
+	 * Constructor.
 	 *
-	 * @var string
+	 * @param string $post_type Post type name.
 	 */
-	protected string $option_key = 'sitemap_posts';
+	public function __construct( string $post_type ) {
+		$this->post_type = $post_type;
+	}
 
 	/**
-	 * Check if enabled.
+	 * A post type set to noindex has no sitemap.
 	 *
 	 * @return bool
 	 */
 	public function is_enabled(): bool {
-		return (bool) Options::get( $this->option_key );
+		return Eligibility::is_type_indexable( $this->post_type );
 	}
 
 	/**
@@ -50,18 +52,9 @@ class PostProvider implements ProviderInterface {
 	 * @return int
 	 */
 	public function get_total_pages(): int {
-		$count = $this->get_total_items();
-		return (int) ceil( $count / self::PER_PAGE );
-	}
-
-	/**
-	 * Get total items count.
-	 *
-	 * @return int
-	 */
-	private function get_total_items(): int {
 		$counts = wp_count_posts( $this->post_type );
-		return (int) $counts->publish;
+
+		return (int) ceil( (int) ( $counts->publish ?? 0 ) / self::PER_PAGE );
 	}
 
 	/**
@@ -71,36 +64,39 @@ class PostProvider implements ProviderInterface {
 	 * @return array<array{loc: string, lastmod?: string, changefreq?: string, priority?: string}>
 	 */
 	public function get_items( int $page ): array {
-		$items = [];
-
 		$posts = get_posts(
 			[
 				'post_type'      => $this->post_type,
 				'post_status'    => 'publish',
+				'has_password'   => false,
 				'posts_per_page' => self::PER_PAGE,
 				'offset'         => ( $page - 1 ) * self::PER_PAGE,
 				'orderby'        => 'modified',
 				'order'          => 'DESC',
 				'no_found_rows'  => true,
-				'meta_query'     => [
-					'relation' => 'OR',
-					[
-						'key'     => Options::META_PREFIX . 'noindex',
-						'compare' => 'NOT EXISTS',
-					],
-					[
-						'key'     => Options::META_PREFIX . 'noindex',
-						'value'   => '1',
-						'compare' => '!=',
-					],
-				],
+				'meta_query'     => Eligibility::noindex_meta_query(),
 			]
 		);
 
+		$items = [];
 		foreach ( $posts as $post ) {
+			if ( ! Eligibility::is_post_eligible( $post ) ) {
+				continue;
+			}
+
+			/**
+			 * Exclude a specific post from the sitemap.
+			 *
+			 * @param bool $exclude Whether to exclude.
+			 * @param int  $post_id Post ID.
+			 */
+			if ( apply_filters( 'lw_seo_sitemap_exclude_post', false, $post->ID ) ) {
+				continue;
+			}
+
 			$items[] = [
-				'loc'        => get_permalink( $post ),
-				'lastmod'    => get_the_modified_date( 'c', $post ),
+				'loc'        => (string) get_permalink( $post ),
+				'lastmod'    => (string) get_the_modified_date( 'c', $post ),
 				'changefreq' => 'weekly',
 				'priority'   => '0.8',
 			];

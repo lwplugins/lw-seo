@@ -17,11 +17,11 @@ use LightweightPlugins\SEO\Options;
 final class Sitemap {
 
 	/**
-	 * Sitemap providers.
+	 * Providers keyed by sitemap name; built on first use.
 	 *
-	 * @var array<ProviderInterface>
+	 * @var array<string, ProviderInterface>|null
 	 */
-	private array $providers = [];
+	private ?array $providers = null;
 
 	/**
 	 * Constructor.
@@ -30,8 +30,6 @@ final class Sitemap {
 		if ( ! Options::get( 'sitemap_enabled' ) ) {
 			return;
 		}
-
-		$this->register_providers();
 
 		add_action( 'init', [ $this, 'add_rewrite_rules' ] );
 		add_action( 'template_redirect', [ $this, 'handle_sitemap_request' ] );
@@ -42,21 +40,19 @@ final class Sitemap {
 	}
 
 	/**
-	 * Register sitemap providers.
+	 * Providers for the current request.
 	 *
-	 * @return void
+	 * Built lazily: custom post types register on `init`, after this class
+	 * is constructed on `plugins_loaded`.
+	 *
+	 * @return array<string, ProviderInterface>
 	 */
-	private function register_providers(): void {
-		$this->providers['post']     = new PostProvider();
-		$this->providers['page']     = new PageProvider();
-		$this->providers['category'] = new TaxonomyProvider( 'category', 'sitemap_categories' );
-		$this->providers['post_tag'] = new TaxonomyProvider( 'post_tag', 'sitemap_tags' );
-
-		if ( Options::get( 'woo_enabled' ) ) {
-			$this->providers['product']     = new ProductProvider();
-			$this->providers['product_cat'] = new TaxonomyProvider( 'product_cat', 'sitemap_product_cat' );
-			$this->providers['product_tag'] = new TaxonomyProvider( 'product_tag', 'sitemap_product_tag' );
+	private function providers(): array {
+		if ( null === $this->providers ) {
+			$this->providers = ProviderRegistry::build();
 		}
+
+		return $this->providers;
 	}
 
 	/**
@@ -71,15 +67,16 @@ final class Sitemap {
 			'top'
 		);
 
+		// Paged rule first: its lazy name stops before a trailing "-<page>".
 		add_rewrite_rule(
-			'^sitemap-([a-z_]+)\.xml$',
-			'index.php?lw_sitemap=$matches[1]',
+			'^sitemap-([a-z0-9_-]+?)-(\d+)\.xml$',
+			'index.php?lw_sitemap=$matches[1]&lw_sitemap_page=$matches[2]',
 			'top'
 		);
 
 		add_rewrite_rule(
-			'^sitemap-([a-z_]+)-(\d+)\.xml$',
-			'index.php?lw_sitemap=$matches[1]&lw_sitemap_page=$matches[2]',
+			'^sitemap-([a-z0-9_-]+)\.xml$',
+			'index.php?lw_sitemap=$matches[1]',
 			'top'
 		);
 	}
@@ -102,9 +99,9 @@ final class Sitemap {
 	 * @return void
 	 */
 	public function handle_sitemap_request(): void {
-		$sitemap = get_query_var( 'lw_sitemap' );
+		$sitemap = (string) get_query_var( 'lw_sitemap' );
 
-		if ( empty( $sitemap ) ) {
+		if ( '' === $sitemap ) {
 			return;
 		}
 
@@ -112,15 +109,42 @@ final class Sitemap {
 
 		if ( 'index' === $sitemap ) {
 			$this->render_index();
-		} elseif ( isset( $this->providers[ $sitemap ] ) ) {
-			$page = (int) get_query_var( 'lw_sitemap_page', 1 );
-			$this->render_sitemap( $sitemap, max( 1, $page ) );
-		} else {
+			exit;
+		}
+
+		$target = self::resolve_target( $sitemap, (int) get_query_var( 'lw_sitemap_page' ), array_keys( $this->providers() ) );
+
+		if ( null === $target ) {
 			status_header( 404 );
 			exit;
 		}
 
+		$this->render_sitemap( $target[0], $target[1] );
 		exit;
+	}
+
+	/**
+	 * Map a matched sitemap name and page to a registered provider.
+	 *
+	 * A post type named like "top-10" is matched by the paged rule as
+	 * name "top", page 10 — fall back to the joined name.
+	 *
+	 * @param string             $name  Matched name.
+	 * @param int                $page  Matched page, 0 when the URL had none.
+	 * @param array<int, string> $known Registered provider names.
+	 * @return array{0: string, 1: int}|null
+	 */
+	public static function resolve_target( string $name, int $page, array $known ): ?array {
+		if ( in_array( $name, $known, true ) ) {
+			return [ $name, max( 1, $page ) ];
+		}
+
+		$joined = $name . '-' . $page;
+		if ( $page > 0 && in_array( $joined, $known, true ) ) {
+			return [ $joined, 1 ];
+		}
+
+		return null;
 	}
 
 	/**
@@ -142,7 +166,7 @@ final class Sitemap {
 		echo '<?xml version="1.0" encoding="UTF-8"?>' . "\n";
 		echo '<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' . "\n";
 
-		foreach ( $this->providers as $name => $provider ) {
+		foreach ( $this->providers() as $name => $provider ) {
 			if ( ! $provider->is_enabled() ) {
 				continue;
 			}
@@ -169,7 +193,7 @@ final class Sitemap {
 	 * @return void
 	 */
 	private function render_sitemap( string $name, int $page ): void {
-		$provider = $this->providers[ $name ];
+		$provider = $this->providers()[ $name ];
 
 		if ( ! $provider->is_enabled() ) {
 			status_header( 404 );
@@ -177,6 +201,15 @@ final class Sitemap {
 		}
 
 		$items = $provider->get_items( $page );
+
+		/**
+		 * Filter sitemap URLs before output.
+		 *
+		 * @param array<int, array{loc: string, lastmod?: string, changefreq?: string, priority?: string}> $items URL entries.
+		 * @param string $name Sitemap name (post type or taxonomy).
+		 * @param int    $page Page number.
+		 */
+		$items = (array) apply_filters( 'lw_seo_sitemap_urls', $items, $name, $page );
 
 		echo '<?xml version="1.0" encoding="UTF-8"?>' . "\n";
 		echo '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' . "\n";
