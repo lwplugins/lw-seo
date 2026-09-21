@@ -190,23 +190,7 @@ final class SeoService {
 			return new \WP_Error( 'forbidden', __( 'You are not allowed to edit this post.', 'lw-seo' ), [ 'status' => 403 ] );
 		}
 
-		$updated = [];
-		foreach ( $meta as $key => $value ) {
-			if ( in_array( $key, self::META_FIELDS, true ) && MarkdownOverrideField::may_set( $key ) ) {
-				Options::set_post_meta( $post_id, $key, sanitize_text_field( (string) $value ) );
-				$updated[] = $key;
-			}
-		}
-
-		return [
-			'success' => true,
-			'message' => sprintf(
-				/* translators: %d: number of fields updated */
-				__( '%d SEO fields updated.', 'lw-seo' ),
-				count( $updated )
-			),
-			'updated' => $updated,
-		];
+		return self::write_fields( $meta, static fn( string $key, string $value ): bool => Options::set_post_meta( $post_id, $key, $value ) );
 	}
 
 	/**
@@ -226,12 +210,34 @@ final class SeoService {
 			return new \WP_Error( 'forbidden', __( 'You are not allowed to edit this term.', 'lw-seo' ), [ 'status' => 403 ] );
 		}
 
+		return self::write_fields( $meta, static fn( string $key, string $value ): bool => Options::set_term_meta( $term_id, $key, $value ) );
+	}
+
+	/**
+	 * Write the known SEO fields in $meta and report what was updated and
+	 * what was skipped: the Markdown override without unfiltered_html is
+	 * left untouched and listed under "skipped".
+	 *
+	 * @param array<string, mixed>           $meta  Meta fields to set.
+	 * @param callable(string, string): bool $write Writes one sanitized field.
+	 * @return array<string, mixed>
+	 */
+	private static function write_fields( array $meta, callable $write ): array {
 		$updated = [];
+		$skipped = [];
+
 		foreach ( $meta as $key => $value ) {
-			if ( in_array( $key, self::META_FIELDS, true ) && MarkdownOverrideField::may_set( $key ) ) {
-				Options::set_term_meta( $term_id, $key, sanitize_text_field( (string) $value ) );
-				$updated[] = $key;
+			if ( ! in_array( $key, self::META_FIELDS, true ) ) {
+				continue;
 			}
+
+			if ( ! MarkdownOverrideField::may_set( $key ) ) {
+				$skipped[] = $key;
+				continue;
+			}
+
+			$write( $key, sanitize_text_field( (string) $value ) );
+			$updated[] = $key;
 		}
 
 		return [
@@ -242,6 +248,7 @@ final class SeoService {
 				count( $updated )
 			),
 			'updated' => $updated,
+			'skipped' => $skipped,
 		];
 	}
 

@@ -37,7 +37,7 @@ final class SeoServiceTest extends MonkeyTestCase {
 			]
 		);
 
-		$this->assertSame( [ 'title' ], $result['updated'] );
+		$this->assertSame( [ [ 'title' ], [ 'markdown_content' ] ], [ $result['updated'], $result['skipped'] ] );
 	}
 
 	/**
@@ -57,7 +57,7 @@ final class SeoServiceTest extends MonkeyTestCase {
 			]
 		);
 
-		$this->assertSame( [ 'markdown_content' ], $result['updated'] );
+		$this->assertSame( [ [ 'markdown_content' ], [] ], [ $result['updated'], $result['skipped'] ] );
 	}
 
 	/**
@@ -78,7 +78,7 @@ final class SeoServiceTest extends MonkeyTestCase {
 			]
 		);
 
-		$this->assertSame( [], $result['updated'] );
+		$this->assertSame( [ [], [ 'markdown_content' ] ], [ $result['updated'], $result['skipped'] ] );
 	}
 
 	/**
@@ -99,7 +99,7 @@ final class SeoServiceTest extends MonkeyTestCase {
 			]
 		);
 
-		$this->assertSame( [ 'markdown_content' ], $result['updated'] );
+		$this->assertSame( [ [ 'markdown_content' ], [] ], [ $result['updated'], $result['skipped'] ] );
 	}
 
 	/**

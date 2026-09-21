@@ -50,17 +50,39 @@ final class Frontmatter {
 	];
 
 	/**
+	 * Characters YAML does not allow in a scalar: C0 controls, DEL, C1
+	 * controls and the noncharacters U+FFFE/U+FFFF. Each run becomes a
+	 * space. A C1 control (other than NEL) or a noncharacter makes PyYAML
+	 * and libyaml reject the whole block.
+	 */
+	private const UNPRINTABLE = '/[\x{0000}-\x{001F}\x{007F}-\x{009F}\x{FFFE}\x{FFFF}]+/u';
+
+	/**
 	 * YAML double-quoted scalar.
 	 *
 	 * @param string $value Raw value (may contain HTML entities).
 	 * @return string
 	 */
 	public static function quote( string $value ): string {
-		$value = html_entity_decode( $value, ENT_QUOTES | ENT_HTML5, 'UTF-8' );
+		$value = html_entity_decode( self::scrub_utf8( $value ), ENT_QUOTES | ENT_HTML5, 'UTF-8' );
 		$value = strtr( $value, self::ESCAPES );
-		$value = (string) preg_replace( '/[\x00-\x1F\x7F]+/u', ' ', $value );
+		$value = preg_replace( self::UNPRINTABLE, ' ', $value ) ?? $value;
 
 		return '"' . trim( $value ) . '"';
+	}
+
+	/**
+	 * Replace invalid UTF-8 sequences with U+FFFD. Otherwise the /u regex
+	 * fails on them and the value would come out empty. htmlspecialchars()
+	 * with ENT_SUBSTITUTE substitutes them, and htmlspecialchars_decode()
+	 * exactly undoes its own &amp; &lt; &gt;, so valid text is unchanged.
+	 * This is core PHP and needs no mbstring.
+	 *
+	 * @param string $value Value.
+	 * @return string
+	 */
+	private static function scrub_utf8( string $value ): string {
+		return htmlspecialchars_decode( htmlspecialchars( $value, ENT_NOQUOTES | ENT_SUBSTITUTE, 'UTF-8' ), ENT_NOQUOTES );
 	}
 
 	/**

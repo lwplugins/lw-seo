@@ -30,6 +30,12 @@ final class FrontmatterTest extends MonkeyTestCase {
 			'autolink cannot become a link'      => [ '<javascript:alert(1)>', '"\u003Cjavascript:alert(1)\u003E"' ],
 			'backtick cannot open a code span'   => [ 'a`b', '"a\u0060b"' ],
 			'escapes combine with yaml escapes'  => [ '<a> \\ "q"', '"\u003Ca\u003E \\\\ \\"q\\""' ],
+			'c1 control becomes a space'         => [ "a\u{80}b", '"a b"' ],
+			'c1 range end becomes a space'       => [ "a\u{9F}\u{9A}b", '"a b"' ],
+			'nel becomes a space'                => [ "a\u{85}b", '"a b"' ],
+			'yaml noncharacters become a space'  => [ "a\u{FFFE}\u{FFFF}b", '"a b"' ],
+			'printable non-ascii is kept'        => [ "\u{A0}ü\u{2028}😀", "\"\u{A0}ü\u{2028}😀\"" ],
+			'invalid utf-8 is substituted'       => [ "a\xffb<", "\"a\u{FFFD}b\\u003C\"" ],
 		];
 	}
 

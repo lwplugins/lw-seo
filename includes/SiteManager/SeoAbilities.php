@@ -89,7 +89,7 @@ final class SeoAbilities {
 						],
 						'meta'    => [
 							'type'        => 'object',
-							'description' => __( 'SEO fields: title, description, noindex, og_title, og_description, og_image, ai_train, ai_input, search, markdown_content.', 'lw-seo' ),
+							'description' => __( 'SEO fields: title, description, noindex, og_title, og_description, og_image, ai_train, ai_input, search, markdown_content. markdown_content requires the unfiltered_html capability; without it the field is left unchanged and listed in "skipped".', 'lw-seo' ),
 						],
 					],
 				],
