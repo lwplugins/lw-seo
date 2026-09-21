@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace LightweightPlugins\SEO\CLI;
 
 use LightweightPlugins\SEO\Options;
+use LightweightPlugins\SEO\Sitemap\ProviderRegistry;
 use LightweightPlugins\SEO\Sitemap\Sitemap;
 
 /**
@@ -31,6 +32,10 @@ final class SitemapCommand {
 		}
 
 		\WP_CLI::line( 'Sitemap index: ' . Sitemap::get_index_url() );
+
+		$providers = array_keys( ProviderRegistry::build() );
+		\WP_CLI::line( 'Sitemaps: ' . ( [] === $providers ? '(none)' : implode( ', ', $providers ) ) );
+
 		\WP_CLI::success( 'Sitemap is enabled.' );
 	}
 

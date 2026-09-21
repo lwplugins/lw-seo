@@ -24,5 +24,8 @@ final class Bootstrap {
 		\WP_CLI::add_command( 'lw-seo redirect', RedirectCommand::class );
 		\WP_CLI::add_command( 'lw-seo sitemap', SitemapCommand::class );
 		\WP_CLI::add_command( 'lw-seo option', OptionCommand::class );
+		\WP_CLI::add_command( 'lw-seo llms', LlmsCommand::class );
+		\WP_CLI::add_command( 'lw-seo robots', RobotsCommand::class );
+		\WP_CLI::add_command( 'lw-seo crawlers', CrawlersCommand::class );
 	}
 }

@@ -56,10 +56,13 @@ final class Cache {
 	 * admin opening the link from the settings page). The requester is
 	 * restored even when the builder throws.
 	 *
+	 * Public so `wp lw-seo llms preview` can reuse it for an uncached
+	 * preview without duplicating the anonymous-visitor dance.
+	 *
 	 * @param callable $build Builder returning the document.
 	 * @return string
 	 */
-	private static function build_as_visitor( callable $build ): string {
+	public static function build_as_visitor( callable $build ): string {
 		$user_id = get_current_user_id();
 		wp_set_current_user( 0 );
 

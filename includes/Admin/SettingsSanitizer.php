@@ -37,6 +37,18 @@ final class SettingsSanitizer {
 	private const URL_KEYS = [ 'social_', 'default_og_image', 'knowledge_logo' ];
 
 	/**
+	 * The fixed value lists for choice options, keyed by option key.
+	 *
+	 * Exposed so other callers (the WP-CLI `option set` command) can
+	 * validate against the same list instead of duplicating it.
+	 *
+	 * @return array<string, array<int, string>>
+	 */
+	public static function choices(): array {
+		return self::CHOICE_KEYS;
+	}
+
+	/**
 	 * Sanitize submitted settings.
 	 *
 	 * @param array<string, mixed> $input    Submitted values.
