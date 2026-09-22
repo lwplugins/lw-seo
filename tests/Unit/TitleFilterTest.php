@@ -38,6 +38,7 @@ final class TitleFilterTest extends MonkeyTestCase {
 		Functions\when( 'is_front_page' )->justReturn( false );
 		Functions\when( 'is_home' )->justReturn( false );
 		Functions\when( 'is_singular' )->justReturn( false );
+		Functions\when( 'is_post_type_archive' )->justReturn( false );
 		Functions\when( 'is_category' )->justReturn( false );
 		Functions\when( 'is_tag' )->justReturn( false );
 		Functions\when( 'is_tax' )->justReturn( false );
@@ -66,7 +67,7 @@ final class TitleFilterTest extends MonkeyTestCase {
 		$this->assertSame( [ 'title' => 'Site - Tagline' ], $parts );
 	}
 
-	public function test_posts_page_uses_its_own_seo_title(): void {
+	public function test_posts_page_custom_title_replaces_the_whole_title(): void {
 		Functions\when( 'is_home' )->justReturn( true );
 		Functions\when( 'get_post_meta' )->justReturn( 'Blog SEO title' );
 
@@ -77,13 +78,7 @@ final class TitleFilterTest extends MonkeyTestCase {
 			]
 		);
 
-		$this->assertSame(
-			[
-				'title' => 'Blog SEO title',
-				'site'  => 'Site',
-			],
-			$parts
-		);
+		$this->assertSame( [ 'title' => 'Blog SEO title' ], $parts );
 	}
 
 	public function test_posts_page_falls_back_to_page_template(): void {
@@ -102,7 +97,7 @@ final class TitleFilterTest extends MonkeyTestCase {
 		$this->assertSame( [ 'title' => 'Blog - Site' ], $parts );
 	}
 
-	public function test_singular_custom_title_keeps_site_part(): void {
+	public function test_singular_custom_title_replaces_the_whole_title(): void {
 		Functions\when( 'is_singular' )->justReturn( true );
 		Functions\when( 'get_queried_object' )->justReturn( new \WP_Post( [ 'ID' => 7, 'post_type' => 'post' ] ) );
 		Functions\when( 'get_post_meta' )->justReturn( 'Custom' );
@@ -114,9 +109,38 @@ final class TitleFilterTest extends MonkeyTestCase {
 			]
 		);
 
+		$this->assertSame( [ 'title' => 'Custom' ], $parts );
+	}
+
+	public function test_post_type_archive_uses_its_title_template(): void {
+		Functions\when( 'is_post_type_archive' )->justReturn( true );
+		Functions\when( 'get_query_var' )->justReturn( 'product' );
+		Functions\when( 'post_type_archive_title' )->justReturn( 'Shop' );
+
+		$parts = ( new TitleFilter() )->filter_title(
+			[
+				'title' => 'Shop',
+				'site'  => 'Site',
+			]
+		);
+
+		$this->assertSame( [ 'title' => 'Shop - Site' ], $parts );
+	}
+
+	public function test_post_type_archive_without_a_template_keeps_the_wordpress_title(): void {
+		Functions\when( 'is_post_type_archive' )->justReturn( true );
+		Functions\when( 'get_query_var' )->justReturn( 'book' );
+
+		$parts = ( new TitleFilter() )->filter_title(
+			[
+				'title' => 'Books',
+				'site'  => 'Site',
+			]
+		);
+
 		$this->assertSame(
 			[
-				'title' => 'Custom',
+				'title' => 'Books',
 				'site'  => 'Site',
 			],
 			$parts

@@ -57,6 +57,7 @@ Lightweight SEO plugin for WordPress - minimal footprint, maximum impact.
 ### WooCommerce Integration
 - **Auto-Detection** - Automatically enables when WooCommerce is active
 - **Product OpenGraph** - Price, currency, availability, brand, condition
+- **Shop Title** - Title template for the shop page (product archive)
 - **Product Schema** - Full Schema.org Product markup with offers
 - **Reviews Schema** - Product reviews and aggregate ratings
 - **Product Sitemap** - Include products and product categories

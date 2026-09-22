@@ -8,7 +8,7 @@ Use these variables in title templates to dynamically generate page titles.
 |----------|-------------|----------------|
 | `%%sitename%%` | Site name from Settings → General | My Website |
 | `%%sitedesc%%` | Site tagline from Settings → General | Just another WordPress site |
-| `%%title%%` | Post/page title | How to Configure SEO |
+| `%%title%%` | Post/page title; on a post type archive (e.g. the WooCommerce shop) the archive title | How to Configure SEO |
 | `%%sep%%` | Separator character (configured in settings) | \| |
 | `%%excerpt%%` | Post excerpt (first 155 chars) | This post explains... |
 | `%%author%%` | Post author display name | John Doe |
@@ -105,7 +105,7 @@ Override the template for individual posts/pages:
 1. Edit the post/page
 2. Find the **LW SEO** meta box
 3. Enter a custom title in the "SEO Title" field
-4. This replaces the template entirely
+4. This replaces the template entirely, site name included: add your brand to the custom title if you want it there
 
 ## Tips
 

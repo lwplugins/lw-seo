@@ -46,6 +46,10 @@ final class TitleFilter {
 			return $this->singular_title( $title_parts );
 		}
 
+		if ( is_post_type_archive() ) {
+			return $this->apply_template( $title_parts, (string) Options::get( 'title_ptarchive_' . ArchiveContext::post_type() ) );
+		}
+
 		if ( is_category() || is_tag() || is_tax() ) {
 			return $this->term_title( $title_parts );
 		}
@@ -87,9 +91,7 @@ final class TitleFilter {
 		$custom_title = Options::get_post_meta( $page_id, 'title' );
 
 		if ( ! empty( $custom_title ) ) {
-			$title_parts['title'] = (string) $custom_title;
-
-			return $title_parts;
+			return $this->custom_title( $title_parts, (string) $custom_title );
 		}
 
 		$post = get_post( $page_id );
@@ -117,9 +119,7 @@ final class TitleFilter {
 		$custom_title = Options::get_post_meta( $post->ID, 'title' );
 
 		if ( ! empty( $custom_title ) ) {
-			$title_parts['title'] = (string) $custom_title;
-
-			return $title_parts;
+			return $this->custom_title( $title_parts, (string) $custom_title );
 		}
 
 		return $this->apply_template( $title_parts, (string) Options::get( 'title_' . $post->post_type ), $post );
@@ -141,13 +141,25 @@ final class TitleFilter {
 		$custom_title = Options::get_term_meta( $term->term_id, 'title' );
 
 		if ( ! empty( $custom_title ) ) {
-			$title_parts['title'] = (string) $custom_title;
-			unset( $title_parts['site'], $title_parts['tagline'] );
-
-			return $title_parts;
+			return $this->custom_title( $title_parts, (string) $custom_title );
 		}
 
 		return $this->apply_template( $title_parts, (string) Options::get( 'title_' . $term->taxonomy ), null, $term );
+	}
+
+	/**
+	 * Replace the title with a custom SEO title: it is the whole title, so the
+	 * site name / tagline suffix is dropped, the same way a template drops it.
+	 *
+	 * @param array<string, string> $title_parts Title parts.
+	 * @param string                $title       The custom title.
+	 * @return array<string, string>
+	 */
+	private function custom_title( array $title_parts, string $title ): array {
+		$title_parts['title'] = $title;
+		unset( $title_parts['site'], $title_parts['tagline'] );
+
+		return $title_parts;
 	}
 
 	/**

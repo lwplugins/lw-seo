@@ -116,6 +116,7 @@ final class Options {
 			// WooCommerce.
 			'woo_enabled'                     => true,
 			'title_product'                   => '%%title%% %%sep%% %%sitename%%',
+			'title_ptarchive_product'         => '%%title%% %%sep%% %%sitename%%',
 			'noindex_product'                 => false,
 			'woo_schema_enabled'              => true,
 			'woo_schema_reviews'              => true,

@@ -141,7 +141,7 @@ final class ReplaceVars {
 			return self::$user->display_name;
 		}
 
-		return '';
+		return is_post_type_archive() ? (string) post_type_archive_title( '', false ) : '';
 	}
 
 	/**

@@ -39,6 +39,23 @@ final class ArchiveContext {
 	 * @return string Empty string when the post type cannot be resolved or has no archive.
 	 */
 	public static function post_type_archive_link(): string {
+		$post_type = self::post_type();
+
+		if ( '' === $post_type ) {
+			return '';
+		}
+
+		$link = get_post_type_archive_link( $post_type );
+
+		return is_string( $link ) ? $link : '';
+	}
+
+	/**
+	 * Name of the queried post type archive's post type.
+	 *
+	 * @return string Empty string when it cannot be resolved.
+	 */
+	public static function post_type(): string {
 		$post_type = get_query_var( 'post_type' );
 
 		if ( is_array( $post_type ) ) {
@@ -50,13 +67,7 @@ final class ArchiveContext {
 			$post_type = $queried instanceof \WP_Post_Type ? $queried->name : '';
 		}
 
-		if ( '' === $post_type ) {
-			return '';
-		}
-
-		$link = get_post_type_archive_link( $post_type );
-
-		return is_string( $link ) ? $link : '';
+		return $post_type;
 	}
 
 	/**

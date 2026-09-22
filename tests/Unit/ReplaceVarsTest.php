@@ -41,6 +41,7 @@ final class ReplaceVarsTest extends MonkeyTestCase {
 				default          => $default_value,
 			}
 		);
+		Functions\when( 'is_post_type_archive' )->justReturn( false );
 	}
 
 	/**
@@ -119,6 +120,13 @@ final class ReplaceVarsTest extends MonkeyTestCase {
 		$term = new \WP_Term( [ 'name' => 'Technológia' ] );
 
 		$this->assertSame( 'Technológia', ReplaceVars::replace( '%%title%%', null, $term ) );
+	}
+
+	public function test_title_is_the_archive_title_on_a_post_type_archive(): void {
+		Functions\when( 'is_post_type_archive' )->justReturn( true );
+		Functions\when( 'post_type_archive_title' )->justReturn( 'Shop' );
+
+		$this->assertSame( 'Shop', ReplaceVars::replace( '%%title%%' ) );
 	}
 
 	public function test_replaces_excerpt_from_post_excerpt_field(): void {

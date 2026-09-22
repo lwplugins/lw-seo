@@ -177,6 +177,21 @@ final class TabWooCommerce implements TabInterface {
 				</td>
 			</tr>
 			<tr>
+				<th scope="row">
+					<label for="title_ptarchive_product"><?php esc_html_e( 'Shop Title', 'lw-seo' ); ?></label>
+				</th>
+				<td>
+					<?php
+					$this->render_text_field(
+						[
+							'name'        => 'title_ptarchive_product',
+							'description' => __( 'Title of the shop page (product archive). %%title%% is the shop page title.', 'lw-seo' ),
+						]
+					);
+					?>
+				</td>
+			</tr>
+			<tr>
 				<th scope="row"><?php esc_html_e( 'Noindex Products', 'lw-seo' ); ?></th>
 				<td>
 					<?php
