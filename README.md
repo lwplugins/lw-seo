@@ -73,7 +73,7 @@ Lightweight SEO plugin for WordPress - minimal footprint, maximum impact.
 
 ### Redirects & 404
 - **Redirect Manager** - 301, 302, 307, 410 and 451 redirects, with CSV import/export
-- **404 to homepage** - Optional redirect of 404s to the homepage
+- **404 to homepage** - Optional redirect of 404s to the homepage, as a last resort after your redirect rules and WordPress's own redirects (renamed slugs, guessed URLs)
 
 ### Migration
 - **Import from Rank Math and Yoast SEO** - Options, post and term meta, primary categories and redirects (admin Import tab or `wp lw-seo migrate`)
