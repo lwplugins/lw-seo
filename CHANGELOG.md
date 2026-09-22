@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.6.1] - 2026-09-22
+
+### Fixed
+- llms-full.txt and the Markdown endpoint (`/md`) now include the content of pages built with Bricks. They came out as a URL and a title only, because Bricks keeps a page's content in its own data, not in `post_content`. The content is rendered the way the Bricks theme's own Rank Math integration renders it.
+- Every llms-full.txt entry now carries the post's SEO description (falling back to its excerpt) under its URL, so no entry has less than its llms.txt line, also for pages whose text comes from a theme template or custom fields.
+
+### Added
+- robots.txt lists `/llms-full.txt` next to `/llms.txt` (as a comment) when it is enabled.
+
 ## [1.6.0] - 2026-09-21
 
 ### Upgrade notes

@@ -3,7 +3,7 @@ Contributors: lwplugins
 Tags: seo, sitemap, schema, opengraph, breadcrumbs
 Requires at least: 6.0
 Tested up to: 7.1
-Stable tag: 1.6.0
+Stable tag: 1.6.1
 Requires PHP: 8.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -135,6 +135,11 @@ Your sitemap is available at `yoursite.com/sitemap.xml`
 6. Settings page - Advanced tab
 
 == Changelog ==
+
+= 1.6.1 =
+* Fix: llms-full.txt and the /md Markdown endpoint now include the content of pages built with Bricks; they came out as a URL and a title only, because Bricks keeps a page's content in its own data, not in post_content.
+* Fix: every llms-full.txt entry now carries the post's SEO description (or excerpt), so no entry has less than its llms.txt line, also for pages whose text comes from a theme template or custom fields.
+* New: robots.txt lists /llms-full.txt next to /llms.txt (as a comment) when it is enabled.
 
 = 1.6.0 =
 * New: Sitemap — every public custom post type is included automatically, with a per-type off switch on the Sitemap tab; custom taxonomies are opt-in; tags get their own toggle alongside categories.
