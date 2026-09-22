@@ -34,8 +34,8 @@ final class Builder {
 	/**
 	 * Build the final robots.txt.
 	 *
-	 * @param string                                                                                          $output  robots.txt built so far.
-	 * @param array{public: bool, sitemap: string, llms: string, signal: string, blocked: array<int, string>} $context Additions.
+	 * @param string                                                                                                             $output  robots.txt built so far.
+	 * @param array{public: bool, sitemap: string, llms: string, llms_full: string, signal: string, blocked: array<int, string>} $context Additions.
 	 * @return string
 	 */
 	public static function build( string $output, array $context ): string {
@@ -57,6 +57,10 @@ final class Builder {
 
 		if ( '' !== $context['llms'] ) {
 			$lines[] = '# llms.txt: ' . $context['llms'];
+		}
+
+		if ( '' !== $context['llms_full'] ) {
+			$lines[] = '# llms-full.txt: ' . $context['llms_full'];
 		}
 
 		if ( [] === $lines ) {

@@ -18,16 +18,17 @@ final class BuilderTest extends MonkeyTestCase {
 
 	/**
 	 * @param array<string, mixed> $overrides Context overrides.
-	 * @return array{public: bool, sitemap: string, llms: string, signal: string, blocked: array<int, string>}
+	 * @return array{public: bool, sitemap: string, llms: string, llms_full: string, signal: string, blocked: array<int, string>}
 	 */
 	private static function context( array $overrides = [] ): array {
 		return array_merge(
 			[
-				'public'  => true,
-				'sitemap' => '',
-				'llms'    => '',
-				'signal'  => '',
-				'blocked' => [],
+				'public'    => true,
+				'sitemap'   => '',
+				'llms'      => '',
+				'llms_full' => '',
+				'signal'    => '',
+				'blocked'   => [],
 			],
 			$overrides
 		);
@@ -58,6 +59,20 @@ final class BuilderTest extends MonkeyTestCase {
 		);
 
 		$this->assertSame( $expected, $result );
+	}
+
+	public function test_lists_llms_full_txt_after_llms_txt(): void {
+		$result = Builder::build(
+			self::CORE,
+			self::context(
+				[
+					'llms'      => 'https://x.test/llms.txt',
+					'llms_full' => 'https://x.test/llms-full.txt',
+				]
+			)
+		);
+
+		$this->assertStringEndsWith( "# llms.txt: https://x.test/llms.txt\n# llms-full.txt: https://x.test/llms-full.txt\n", $result );
 	}
 
 	public function test_sitemap_is_skipped_on_non_public_sites_and_when_already_present(): void {

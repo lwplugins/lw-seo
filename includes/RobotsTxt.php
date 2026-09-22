@@ -42,11 +42,12 @@ final class RobotsTxt {
 		return Builder::build(
 			$output,
 			[
-				'public'  => $public,
-				'sitemap' => Options::get( 'sitemap_enabled' ) ? Sitemap::get_index_url() : '',
-				'llms'    => Options::get( 'llms_txt_enabled' ) ? home_url( '/llms.txt' ) : '',
-				'signal'  => ContentSignals::format_header( ContentSignals::global_signals() ),
-				'blocked' => Policy::blocked_agents( Registry::all(), Options::get_all() ),
+				'public'    => $public,
+				'sitemap'   => Options::get( 'sitemap_enabled' ) ? Sitemap::get_index_url() : '',
+				'llms'      => Options::get( 'llms_txt_enabled' ) ? home_url( '/llms.txt' ) : '',
+				'llms_full' => Options::get( 'llms_txt_enabled' ) && Options::get( 'llms_full_txt_enabled' ) ? home_url( '/llms-full.txt' ) : '',
+				'signal'    => ContentSignals::format_header( ContentSignals::global_signals() ),
+				'blocked'   => Policy::blocked_agents( Registry::all(), Options::get_all() ),
 			]
 		);
 	}
