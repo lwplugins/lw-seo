@@ -3,7 +3,7 @@ Contributors: lwplugins
 Tags: seo, sitemap, schema, opengraph, breadcrumbs
 Requires at least: 6.0
 Tested up to: 7.1
-Stable tag: 1.6.1
+Stable tag: 1.6.2
 Requires PHP: 8.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -21,7 +21,7 @@ LW SEO provides essential SEO features without the bloat. No upsells, no trackin
 * Custom meta titles with template variables
 * Auto-generated meta descriptions
 * Customizable title separator
-* Canonical URLs
+* Canonical URLs, self-referencing on paginated archives, filterable (lw_seo_canonical_url)
 * Per-post/page SEO settings via meta box
 
 **Social Media**
@@ -40,7 +40,7 @@ LW SEO provides essential SEO features without the bloat. No upsells, no trackin
 * URL Redirect Manager (301, 302, 307, 410, 451)
 * Regex redirect support
 * CSV import/export for redirects
-* 404 to homepage redirect option
+* 404 to homepage redirect option (after WordPress's own redirects for renamed slugs and guessed URLs)
 
 **AI & LLM**
 
@@ -67,7 +67,7 @@ Use these in your title templates:
 
 * `%%sitename%%` - Site name
 * `%%sitedesc%%` - Site tagline
-* `%%title%%` - Post/page title
+* `%%title%%` - Post/page title (the archive title on a post type archive, e.g. the shop)
 * `%%sep%%` - Separator character
 * `%%excerpt%%` - Post excerpt
 * `%%author%%` - Author name
@@ -135,6 +135,19 @@ Your sitemap is available at `yoursite.com/sitemap.xml`
 6. Settings page - Advanced tab
 
 == Changelog ==
+
+= 1.6.2 =
+* New: Shop title template (title_ptarchive_product, "Shop Title" on the WooCommerce tab); post type archives use a title_ptarchive_{post_type} template when one is set, and %%title%% there is the archive title.
+* New: lw_seo_canonical_url filter for the canonical URL LW SEO prints (og:url follows it); returning an empty string prints no canonical tag.
+* New: lw_seo_sitemap_excluded_ids filter for post IDs to leave out of the XML sitemap.
+* Fix: paginated term and author archives, and a front page listing posts, pointed their canonical and og:url at page 1; /page/2/ and later now point at themselves, like post type archives (shop) and the posts page already did. Paginated posts (<!--nextpage-->) and comment pages take WordPress's own canonical for that page.
+* Fix: singular pages carried two rel="canonical" tags, LW SEO's and WordPress core's (disagreeing when a custom canonical was set); core's is now removed whenever LW SEO prints one, and wp_get_canonical_url() returns the custom canonical.
+* Fix: a custom SEO title on a post, page, product or the posts page kept WordPress's "- Site Name" suffix; it now replaces the whole title, the same as a custom term title.
+* Fix: post type archives, including the WooCommerce shop, got no title template.
+* Fix: the WooCommerce Product schema could list reviews without aggregateRating when WooCommerce's cached rating count was stale; the rating is now recounted from the approved rated reviews in that case.
+* Fix: the XML sitemap listed the WooCommerce cart, checkout and my account pages, which WooCommerce marks noindex.
+* Fix: with "Redirect 404 to homepage" on, a renamed post or product's old URL redirected to the homepage (302) instead of its new URL (301); the homepage redirect now runs after WordPress's own 404 redirects.
+* Update: GitHub Actions use actions/checkout v7; PHPStan runs against the WooCommerce 11.1 stubs.
 
 = 1.6.1 =
 * Fix: llms-full.txt and the /md Markdown endpoint now include the content of pages built with Bricks; they came out as a URL and a title only, because Bricks keeps a page's content in its own data, not in post_content.
@@ -427,6 +440,9 @@ Your sitemap is available at `yoursite.com/sitemap.xml`
 * llms.txt generation
 
 == Upgrade Notice ==
+
+= 1.6.2 =
+A custom SEO title is now the whole title (no site name appended): add your brand to custom titles where you want it. Paginated archives get a self-referencing canonical. "Redirect 404 to homepage" now lets WordPress redirect renamed slugs first.
 
 = 1.6.0 =
 Content Signals now default to "not specified"; robots.txt is filter-only (a physical robots.txt file now overrides it); "Claude-Web" blocking migrates to ClaudeBot; the Markdown override requires unfiltered_html — review overrides saved by other roles.

@@ -1,5 +1,24 @@
 # Changelog
 
+## [1.6.2] - 2026-09-22
+
+### Added
+- Shop title template: `title_ptarchive_product` ("Shop Title" on the WooCommerce tab, default `%%title%% %%sep%% %%sitename%%`). Post type archives use a `title_ptarchive_{post_type}` template when one is set, and `%%title%%` there is the archive title (the shop page's title on the WooCommerce shop).
+- `lw_seo_canonical_url( $url, $queried_object )` filter for the canonical URL LW SEO prints; `og:url` follows it. Returning an empty string prints no canonical tag.
+- `lw_seo_sitemap_excluded_ids( $ids, $post_type )` filter for post IDs to leave out of the XML sitemap.
+
+### Fixed
+- Paginated term and author archives, and a front page listing posts, pointed their canonical and `og:url` at page 1; `/page/2/` and later now point at themselves, like post type archives (shop) and the posts page already did. Paginated posts (`<!--nextpage-->`) and comment pages take WordPress's own canonical for that page.
+- Singular pages carried two `rel="canonical"` tags, LW SEO's and WordPress core's (disagreeing when a custom canonical was set). Core's is now removed whenever LW SEO prints one, and `wp_get_canonical_url()` returns the custom canonical.
+- A custom SEO title on a post, page, product or the posts page kept WordPress's "- Site Name" suffix; it now replaces the whole title, the same as a custom term title.
+- Post type archives, including the WooCommerce shop, got no title template.
+- The WooCommerce Product schema could list reviews without `aggregateRating` when WooCommerce's cached rating count was stale; the rating is now recounted from the approved rated reviews in that case.
+- The XML sitemap listed the WooCommerce cart, checkout and my account pages, which WooCommerce marks noindex.
+- With "Redirect 404 to homepage" on, a renamed post or product's old URL redirected to the homepage (302) instead of its new URL (301); the homepage redirect now runs after WordPress's own 404 redirects.
+
+### Changed
+- GitHub Actions use `actions/checkout` v7; PHPStan runs against the WooCommerce 11.1 stubs (`php-stubs/woocommerce-stubs` ^11.1).
+
 ## [1.6.1] - 2026-09-22
 
 ### Fixed
