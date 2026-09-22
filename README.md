@@ -15,7 +15,7 @@ Lightweight SEO plugin for WordPress - minimal footprint, maximum impact.
 - **Custom Titles** - Per-post/page title override with template variables
 - **Meta Descriptions** - Auto-generated from excerpt or content
 - **Title Separator** - Customizable separator character
-- **Canonical URLs** - Prevent duplicate content issues
+- **Canonical URLs** - One self-referencing canonical per page (also on `/page/2/` of archives), filterable via `lw_seo_canonical_url`
 - **Robots Control** - noindex/nofollow per post
 
 ### Social Media

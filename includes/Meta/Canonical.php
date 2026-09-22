@@ -1,6 +1,6 @@
 <?php
 /**
- * Canonical URL hand-off with WordPress core.
+ * Canonical URL resolution and hand-off with WordPress core.
  *
  * @package LightweightPlugins\SEO
  */
@@ -13,7 +13,8 @@ use LightweightPlugins\SEO\Helpers\MetaCoerce;
 use LightweightPlugins\SEO\Options;
 
 /**
- * Keeps WordPress core's canonical in line with the one LW SEO prints.
+ * Resolves the canonical URL LW SEO prints, runs it through the public
+ * `lw_seo_canonical_url` filter, and keeps WordPress core's canonical in line.
  *
  * Core prints its own `<link rel="canonical">` on singular views
  * (`rel_canonical()` on `wp_head`). It is removed only at the moment LW SEO
@@ -50,6 +51,46 @@ final class Canonical {
 		$custom = self::custom_for_post( (int) $post->ID );
 
 		return '' !== $custom ? $custom : $url;
+	}
+
+	/**
+	 * Canonical URL of a singular view: the custom canonical, else core's
+	 * (which adds the page of a paginated post and the comment page), else
+	 * the permalink (core returns none for an unpublished post).
+	 *
+	 * @param \WP_Post $post The post.
+	 * @return string
+	 */
+	public static function for_post( \WP_Post $post ): string {
+		$custom = self::custom_for_post( (int) $post->ID );
+
+		if ( '' !== $custom ) {
+			return $custom;
+		}
+
+		$core = wp_get_canonical_url( $post );
+
+		return is_string( $core ) && '' !== $core ? $core : (string) get_permalink( $post );
+	}
+
+	/**
+	 * Run the canonical URL of the current view through the public filter.
+	 *
+	 * @param string $url    Canonical URL LW SEO resolved.
+	 * @param mixed  $object Queried object (WP_Post, WP_Term, WP_User, WP_Post_Type) or null.
+	 * @return string The URL to print; '' prints no canonical tag.
+	 */
+	public static function filter( string $url, mixed $object ): string {
+		/**
+		 * Filter the canonical URL LW SEO prints; og:url follows it.
+		 *
+		 * Return an empty string to print no canonical tag: og:url then keeps
+		 * the unfiltered URL, and WordPress core's own tag stays on singular views.
+		 *
+		 * @param string $url    Canonical URL.
+		 * @param mixed  $object Queried object, or null (e.g. the front page).
+		 */
+		return (string) apply_filters( 'lw_seo_canonical_url', $url, $object );
 	}
 
 	/**

@@ -51,8 +51,7 @@ final class SingularMeta {
 		$custom_title = Options::get_post_meta( $post->ID, 'title' );
 		$title        = ! empty( $custom_title ) ? $custom_title : get_the_title( $post );
 		$description  = $this->description( $post );
-		$custom_canon = Options::get_post_meta( $post->ID, 'canonical' );
-		$canonical    = ! empty( $custom_canon ) ? $custom_canon : get_permalink( $post );
+		$canonical    = Canonical::for_post( $post );
 
 		// Get OG specific values.
 		$custom_og_title = Options::get_post_meta( $post->ID, 'og_title' );

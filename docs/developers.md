@@ -16,6 +16,27 @@ namespace LightweightPlugins\SEO;
 
 ## Hooks & Filters
 
+### Head Meta Filters
+
+```php
+/**
+ * The canonical URL LW SEO prints in <head>; og:url follows it.
+ *
+ * Paginated archives (/page/2/) and paginated posts already get a
+ * self-referencing canonical. Return an empty string to print no canonical
+ * tag: og:url then keeps the unfiltered URL, and WordPress core's own
+ * rel=canonical stays on singular views.
+ *
+ * @param string $url    Canonical URL.
+ * @param mixed  $object Queried object (WP_Post, WP_Term, WP_User,
+ *                       WP_Post_Type), or null (e.g. a front page listing posts).
+ */
+$url = apply_filters( 'lw_seo_canonical_url', $url, $object );
+```
+
+LW SEO also filters core's `get_canonical_url`, so `wp_get_canonical_url()`
+returns a post's custom canonical from the meta box.
+
 ### Sitemap Filters
 
 ```php
@@ -96,6 +117,11 @@ The Markdown endpoint filters (`lw_seo_markdown_is_supported`,
 Examples:
 
 ```php
+// Point every filtered/sorted shop URL at the clean shop page.
+add_filter( 'lw_seo_canonical_url', function ( string $url, $object ): string {
+	return $object instanceof WP_Post_Type && 'product' === $object->name ? strtok( $url, '?' ) : $url;
+}, 10, 2 );
+
 // Exclude an internal-only custom post type from the sitemap, llms.txt
 // and the Markdown endpoint in one place.
 add_filter( 'lw_seo_post_is_eligible', function ( bool $eligible, WP_Post $post ): bool {

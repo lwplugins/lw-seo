@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace LightweightPlugins\SEO\Tests\Unit;
 
+use Brain\Monkey\Filters;
 use Brain\Monkey\Functions;
 use LightweightPlugins\SEO\Meta\SingularMeta;
 use LightweightPlugins\SEO\Meta\TagRenderer;
@@ -48,6 +49,7 @@ final class TagRendererTest extends MonkeyTestCase {
 		Functions\when( 'get_locale' )->justReturn( 'hu_HU' );
 		Functions\when( 'get_bloginfo' )->justReturn( 'Site' );
 		Functions\when( 'is_singular' )->justReturn( false );
+		Functions\when( 'get_queried_object' )->justReturn( null );
 	}
 
 	protected function tearDown(): void {
@@ -219,6 +221,80 @@ final class TagRendererTest extends MonkeyTestCase {
 		);
 
 		$this->assertSame( 10, has_action( 'wp_head', 'rel_canonical' ) );
+	}
+
+	public function test_canonical_url_filter_sets_canonical_and_og_url(): void {
+		$this->options = [
+			'opengraph_enabled' => true,
+			'twitter_enabled'   => false,
+		];
+		$term          = new \WP_Term( [ 'term_id' => 5 ] );
+		Functions\when( 'get_queried_object' )->justReturn( $term );
+		Filters\expectApplied( 'lw_seo_canonical_url' )
+			->once()
+			->with( 'https://example.com/shop/?color=red', $term )
+			->andReturn( 'https://example.com/shop/' );
+
+		$html = $this->capture(
+			static function (): void {
+				( new TagRenderer() )->render( 'T', '', 'https://example.com/shop/?color=red', 'T', '', '', 'website' );
+			}
+		);
+
+		$this->assertStringContainsString( '<link rel="canonical" href="https://example.com/shop/" />', $html );
+		$this->assertStringContainsString( '<meta property="og:url" content="https://example.com/shop/" />', $html );
+	}
+
+	public function test_canonical_url_filtered_to_empty_prints_no_canonical_and_keeps_core_tag(): void {
+		$this->options = [
+			'opengraph_enabled' => true,
+			'twitter_enabled'   => false,
+		];
+		Functions\when( 'get_queried_object' )->justReturn( null );
+		Filters\expectApplied( 'lw_seo_canonical_url' )->once()->andReturn( '' );
+		add_action( 'wp_head', 'rel_canonical' );
+
+		$html = $this->capture(
+			static function (): void {
+				( new TagRenderer() )->render( 'T', '', 'https://example.com/post/', 'T', '', '', 'article' );
+			}
+		);
+
+		$this->assertStringNotContainsString( 'rel="canonical"', $html );
+		$this->assertStringContainsString( '<meta property="og:url" content="https://example.com/post/" />', $html );
+		$this->assertSame( 10, has_action( 'wp_head', 'rel_canonical' ) );
+	}
+
+	public function test_singular_canonical_follows_core_on_a_paginated_post(): void {
+		$this->options = [
+			'opengraph_enabled' => false,
+			'twitter_enabled'   => false,
+		];
+
+		$post = new \WP_Post(
+			[
+				'ID'           => 7,
+				'post_type'    => 'post',
+				'post_excerpt' => 'Excerpt',
+				'post_content' => '',
+			]
+		);
+
+		Functions\when( 'get_queried_object' )->justReturn( $post );
+		Functions\when( 'get_post_meta' )->justReturn( '' );
+		Functions\when( 'get_the_title' )->justReturn( 'Post' );
+		Functions\when( 'wp_strip_all_tags' )->alias( static fn( $value ) => (string) $value );
+		Functions\when( 'has_post_thumbnail' )->justReturn( false );
+		Functions\when( 'get_permalink' )->justReturn( 'https://example.com/post/' );
+		Functions\when( 'wp_get_canonical_url' )->justReturn( 'https://example.com/post/2/' );
+
+		$html = $this->capture(
+			static function (): void {
+				( new SingularMeta( new TagRenderer() ) )->output();
+			}
+		);
+
+		$this->assertStringContainsString( '<link rel="canonical" href="https://example.com/post/2/" />', $html );
 	}
 
 	public function test_singular_output_returns_early_without_a_post(): void {

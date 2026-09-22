@@ -44,7 +44,7 @@ final class ArchiveMeta {
 		$title          = ! empty( $title_template ) ? ReplaceVars::replace( $title_template ) : get_bloginfo( 'name' );
 		$custom_desc    = Options::get( 'desc_home' );
 		$description    = ! empty( $custom_desc ) ? $custom_desc : get_bloginfo( 'description' );
-		$url            = home_url( '/' );
+		$url            = ArchiveContext::paged_url( home_url( '/' ) );
 		$og_image       = (string) Options::get( 'default_og_image' );
 
 		$this->renderer->render( $title, $description, $url, $title, $description, $og_image, 'website' );
@@ -78,9 +78,9 @@ final class ArchiveMeta {
 		$title        = ! empty( $custom_title ) ? $custom_title : get_the_title( $post );
 		$description  = $singular->description( $post );
 
-		$custom_canon = Options::get_post_meta( $page_id, 'canonical' );
-		$canonical    = ! empty( $custom_canon )
-			? (string) $custom_canon
+		$custom_canon = Canonical::custom_for_post( $page_id );
+		$canonical    = '' !== $custom_canon
+			? $custom_canon
 			: ArchiveContext::paged_url( (string) get_permalink( $post ) );
 
 		$custom_og_title = Options::get_post_meta( $page_id, 'og_title' );
@@ -160,7 +160,7 @@ final class ArchiveMeta {
 		}
 
 		if ( is_string( $url ) ) {
-			$this->renderer->render( $title, $description, $url, $og_title, $og_desc, $og_image, 'website' );
+			$this->renderer->render( $title, $description, ArchiveContext::paged_url( $url ), $og_title, $og_desc, $og_image, 'website' );
 		}
 	}
 
@@ -183,7 +183,7 @@ final class ArchiveMeta {
 
 		$title       = $author->display_name;
 		$description = get_the_author_meta( 'description', $author->ID );
-		$url         = get_author_posts_url( $author->ID );
+		$url         = ArchiveContext::paged_url( get_author_posts_url( $author->ID ) );
 		$og_image    = (string) Options::get( 'default_og_image' );
 
 		$this->renderer->render( $title, $description, $url, $title, $description, $og_image, 'profile' );

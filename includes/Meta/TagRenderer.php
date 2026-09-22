@@ -44,9 +44,13 @@ final class TagRenderer {
 			printf( '<meta name="description" content="%s" />' . "\n", esc_attr( $description ) );
 		}
 
-		// Canonical URL.
-		printf( '<link rel="canonical" href="%s" />' . "\n", esc_url( $canonical ) );
-		Canonical::replace_core_tag();
+		// Canonical URL, after the public filter; og:url follows it.
+		$filtered = Canonical::filter( $canonical, get_queried_object() );
+		if ( '' !== $filtered ) {
+			$canonical = $filtered;
+			printf( '<link rel="canonical" href="%s" />' . "\n", esc_url( $canonical ) );
+			Canonical::replace_core_tag();
+		}
 
 		// Open Graph tags.
 		if ( Options::get( 'opengraph_enabled' ) ) {
