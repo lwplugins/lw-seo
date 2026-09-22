@@ -54,6 +54,20 @@ if ( ! class_exists( 'WP_User' ) ) {
 	}
 }
 
+if ( ! class_exists( 'WP_Comment' ) ) {
+	#[AllowDynamicProperties]
+	class WP_Comment {
+		/**
+		 * @param array<string, mixed> $props Properties to set.
+		 */
+		public function __construct( array $props = [] ) {
+			foreach ( $props as $key => $value ) {
+				$this->{$key} = $value;
+			}
+		}
+	}
+}
+
 if ( ! class_exists( 'WP_Post_Type' ) ) {
 	#[AllowDynamicProperties]
 	class WP_Post_Type {

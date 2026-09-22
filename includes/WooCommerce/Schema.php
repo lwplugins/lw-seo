@@ -105,17 +105,8 @@ final class Schema {
 			];
 		}
 
-		// Reviews and ratings.
-		$rating = $this->get_aggregate_rating( $product );
-		if ( $rating ) {
-			$schema['aggregateRating'] = $rating;
-		}
-
-		// Reviews.
-		$reviews = $this->get_product_reviews( $product );
-		if ( ! empty( $reviews ) ) {
-			$schema['review'] = $reviews;
-		}
+		// Rating and reviews.
+		$schema += ( new ReviewSchema() )->properties( $product );
 
 		// Offer(s).
 		$schema['offers'] = $this->get_product_offers( $product );
@@ -191,78 +182,6 @@ final class Schema {
 		}
 
 		return '';
-	}
-
-	/**
-	 * Get aggregate rating.
-	 *
-	 * @param \WC_Product $product The product.
-	 * @return array<string, mixed>|null
-	 */
-	private function get_aggregate_rating( \WC_Product $product ): ?array {
-		$rating_count = $product->get_rating_count();
-		$average      = $product->get_average_rating();
-
-		if ( $rating_count < 1 || empty( $average ) ) {
-			return null;
-		}
-
-		return [
-			'@type'       => 'AggregateRating',
-			'ratingValue' => floatval( $average ),
-			'ratingCount' => $rating_count,
-			'bestRating'  => 5,
-			'worstRating' => 1,
-		];
-	}
-
-	/**
-	 * Get product reviews.
-	 *
-	 * @param \WC_Product $product The product.
-	 * @return array<array<string, mixed>>
-	 */
-	private function get_product_reviews( \WC_Product $product ): array {
-		if ( ! Options::get( 'woo_schema_reviews', true ) ) {
-			return [];
-		}
-
-		$reviews = [];
-
-		$comments = get_comments(
-			[
-				'post_id' => $product->get_id(),
-				'status'  => 'approve',
-				'type'    => 'review',
-				'number'  => 5,
-			]
-		);
-
-		foreach ( $comments as $comment ) {
-			$rating = get_comment_meta( (int) $comment->comment_ID, 'rating', true );
-
-			if ( empty( $rating ) ) {
-				continue;
-			}
-
-			$reviews[] = [
-				'@type'         => 'Review',
-				'author'        => [
-					'@type' => 'Person',
-					'name'  => $comment->comment_author,
-				],
-				'datePublished' => get_comment_date( 'c', $comment ),
-				'reviewBody'    => $comment->comment_content,
-				'reviewRating'  => [
-					'@type'       => 'Rating',
-					'ratingValue' => intval( $rating ),
-					'bestRating'  => 5,
-					'worstRating' => 1,
-				],
-			];
-		}
-
-		return $reviews;
 	}
 
 	/**
