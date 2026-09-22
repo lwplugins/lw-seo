@@ -63,6 +63,16 @@ $post_types = apply_filters( 'lw_seo_sitemap_post_types', $post_types );
  * @param int  $post_id Post ID.
  */
 $exclude = apply_filters( 'lw_seo_sitemap_exclude_post', false, $post_id );
+
+/**
+ * IDs of posts left out of the sitemap. Holds the WooCommerce cart,
+ * checkout and my account pages (noindex by WooCommerce) when WooCommerce
+ * is active.
+ *
+ * @param int[]  $ids       Post IDs.
+ * @param string $post_type Post type of the sitemap being built.
+ */
+$ids = apply_filters( 'lw_seo_sitemap_excluded_ids', $ids, $post_type );
 ```
 
 ### Content & AI Filters

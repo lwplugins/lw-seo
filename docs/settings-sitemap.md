@@ -54,6 +54,9 @@ sitemap:
 - An individual post or term marked **noindex** on its own edit screen.
 - Password-protected posts.
 - Non-viewable post types and non-public taxonomies.
+- The WooCommerce cart, checkout and my account pages, which WooCommerce
+  marks noindex itself (developers can add more IDs with the
+  `lw_seo_sitemap_excluded_ids` filter).
 
 ## Excluding an Individual Post
 

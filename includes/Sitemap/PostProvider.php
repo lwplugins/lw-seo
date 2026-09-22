@@ -78,9 +78,11 @@ final class PostProvider implements ProviderInterface {
 			]
 		);
 
+		$excluded = ExcludedPosts::ids( $this->post_type );
+
 		$items = [];
 		foreach ( $posts as $post ) {
-			if ( ! Eligibility::is_post_eligible( $post ) ) {
+			if ( in_array( (int) $post->ID, $excluded, true ) || ! Eligibility::is_post_eligible( $post ) ) {
 				continue;
 			}
 

@@ -28,8 +28,8 @@ Lightweight SEO plugin for WordPress - minimal footprint, maximum impact.
 - **Auto-generated** - Posts, pages, categories, tags and WooCommerce products
 - **Custom Post Types** - Every public CPT (ACF, CPT UI, …) is included automatically, with a per-type toggle
 - **Custom Taxonomies** - Opt-in, per taxonomy
-- **Clean** - noindex types/taxonomies, noindex and password-protected posts are left out
-- **Developer filters** - `lw_seo_sitemap_post_types`, `lw_seo_sitemap_exclude_post`, `lw_seo_sitemap_urls`
+- **Clean** - noindex types/taxonomies, noindex and password-protected posts, and the WooCommerce cart/checkout/my account pages are left out
+- **Developer filters** - `lw_seo_sitemap_post_types`, `lw_seo_sitemap_exclude_post`, `lw_seo_sitemap_excluded_ids`, `lw_seo_sitemap_urls`
 - Available at `yoursite.com/sitemap.xml` (per-type files: `sitemap-{type}.xml`)
 
 ### Schema.org / JSON-LD
