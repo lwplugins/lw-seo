@@ -38,12 +38,13 @@ final class HeadMeta {
 	}
 
 	/**
-	 * Register the wp_head hook.
+	 * Register the wp_head hook and the core canonical filter.
 	 *
 	 * @return void
 	 */
 	public function register(): void {
 		add_action( 'wp_head', [ $this, 'output' ], 1 );
+		( new Canonical() )->register();
 	}
 
 	/**

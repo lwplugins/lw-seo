@@ -46,6 +46,7 @@ final class TagRenderer {
 
 		// Canonical URL.
 		printf( '<link rel="canonical" href="%s" />' . "\n", esc_url( $canonical ) );
+		Canonical::replace_core_tag();
 
 		// Open Graph tags.
 		if ( Options::get( 'opengraph_enabled' ) ) {

@@ -192,6 +192,35 @@ final class TagRendererTest extends MonkeyTestCase {
 		$this->assertStringContainsString( '<link rel="canonical" href="https://example.com/custom/" />', $html );
 	}
 
+	public function test_printing_a_canonical_removes_the_core_canonical_tag(): void {
+		$this->options = [
+			'opengraph_enabled' => false,
+			'twitter_enabled'   => false,
+		];
+		add_action( 'wp_head', 'rel_canonical' );
+
+		$this->capture(
+			static function (): void {
+				( new TagRenderer() )->render( 'T', '', 'https://example.com/post/', 'T', '', '', 'article' );
+			}
+		);
+
+		$this->assertFalse( has_action( 'wp_head', 'rel_canonical' ) );
+	}
+
+	public function test_core_canonical_tag_stays_when_singular_output_prints_nothing(): void {
+		Functions\when( 'get_queried_object' )->justReturn( null );
+		add_action( 'wp_head', 'rel_canonical' );
+
+		$this->capture(
+			static function (): void {
+				( new SingularMeta( new TagRenderer() ) )->output();
+			}
+		);
+
+		$this->assertSame( 10, has_action( 'wp_head', 'rel_canonical' ) );
+	}
+
 	public function test_singular_output_returns_early_without_a_post(): void {
 		Functions\when( 'get_queried_object' )->justReturn( null );
 
