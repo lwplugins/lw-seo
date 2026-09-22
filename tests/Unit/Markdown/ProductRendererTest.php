@@ -10,10 +10,17 @@ declare(strict_types=1);
 namespace LightweightPlugins\SEO\Tests\Unit\Markdown;
 
 use Brain\Monkey\Functions;
+use Bricks\Database;
+use Bricks\Helpers;
 use LightweightPlugins\SEO\Markdown\ProductRenderer;
 use LightweightPlugins\SEO\Tests\Unit\MonkeyTestCase;
 
 final class ProductRendererTest extends MonkeyTestCase {
+
+	protected function tearDown(): void {
+		Database::test_reset();
+		parent::tearDown();
+	}
 
 	/**
 	 * The product title is plain text in the heading.
@@ -33,6 +40,25 @@ final class ProductRendererTest extends MonkeyTestCase {
 		);
 
 		$this->assertSame( "# Mug \\[x\\](javascript:alert(1))\n\n", ( new ProductRenderer( $post ) )->body() );
+	}
+
+	public function test_body_describes_a_bricks_product_with_its_bricks_content(): void {
+		Functions\when( 'get_post_meta' )->justReturn( '' );
+		Functions\when( 'wc_get_product' )->justReturn( false );
+		Functions\when( 'get_the_title' )->justReturn( 'Mug' );
+		Functions\when( 'wp_strip_all_tags' )->alias( static fn( string $text ): string => trim( strip_tags( $text ) ) );
+		Helpers::$test_bricks_posts = [ 9 ];
+		Database::$test_content[9]  = [ [ 'id' => 'abc123', 'settings' => [ 'text' => 'Built with Bricks' ] ] ];
+
+		$post = new \WP_Post(
+			[
+				'ID'           => 9,
+				'post_excerpt' => '',
+				'post_content' => '',
+			]
+		);
+
+		$this->assertSame( "# Mug\n\n## Description\n\nBuilt with Bricks\n\n", ( new ProductRenderer( $post ) )->body() );
 	}
 
 	/**

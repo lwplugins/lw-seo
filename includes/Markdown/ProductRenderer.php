@@ -97,8 +97,7 @@ final class ProductRenderer implements RendererInterface {
 		}
 
 		// Full description.
-		// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
-		$content = apply_filters( 'the_content', $this->post->post_content );
+		$content = ContentSource::html( $this->post );
 		if ( ! empty( trim( $content ) ) ) {
 			$body .= "## Description\n\n";
 			$body .= HtmlToMarkdown::convert( $content ) . "\n";

@@ -117,16 +117,23 @@ final class SectionCollector {
 	 * @return array{title: string, url: string, description: string}
 	 */
 	public static function link( \WP_Post $post, bool $markdown ): array {
-		$description = (string) Options::get_post_meta( (int) $post->ID, 'description' );
-		if ( '' === $description ) {
-			$description = (string) $post->post_excerpt;
-		}
-
 		return [
 			'title'       => get_the_title( $post ),
 			'url'         => $markdown ? Url::for_post( $post ) : (string) get_permalink( $post ),
-			'description' => wp_trim_words( $description, 30, '…' ),
+			'description' => wp_trim_words( self::description( $post ), 30, '…' ),
 		];
+	}
+
+	/**
+	 * A post's summary: the SEO description, falling back to the excerpt.
+	 *
+	 * @param \WP_Post $post Post object.
+	 * @return string Untrimmed, as the author wrote it.
+	 */
+	public static function description( \WP_Post $post ): string {
+		$description = (string) Options::get_post_meta( (int) $post->ID, 'description' );
+
+		return '' !== $description ? $description : (string) $post->post_excerpt;
 	}
 
 	/**

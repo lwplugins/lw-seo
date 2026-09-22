@@ -182,6 +182,27 @@ final class SectionCollectorTest extends MonkeyTestCase {
 		$this->assertSame( 'Fallback excerpt', $link['description'] );
 	}
 
+	public function test_description_prefers_the_description_meta_over_the_excerpt(): void {
+		Functions\when( 'get_post_meta' )->alias(
+			static fn( int $id, string $key ): string => '_lw_seo_description' === $key ? 'Meta description' : ''
+		);
+
+		$this->assertSame( 'Meta description', SectionCollector::description( $this->post() ) );
+	}
+
+	public function test_description_falls_back_to_the_excerpt(): void {
+		Functions\when( 'get_post_meta' )->justReturn( '' );
+
+		$this->assertSame( 'Fallback excerpt', SectionCollector::description( $this->post() ) );
+	}
+
+	public function test_description_is_not_trimmed(): void {
+		$long = implode( ' ', array_fill( 0, 40, 'word' ) );
+		Functions\when( 'get_post_meta' )->justReturn( '' );
+
+		$this->assertSame( $long, SectionCollector::description( $this->post( [ 'post_excerpt' => $long ] ) ) );
+	}
+
 	public function test_link_uses_markdown_url_when_requested(): void {
 		$this->stub_options( [], [ 'permalink_structure' => '/%postname%/' ] );
 		Functions\when( 'get_the_title' )->justReturn( 'A post' );

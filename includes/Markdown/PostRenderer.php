@@ -98,7 +98,7 @@ final class PostRenderer implements RendererInterface {
 			return apply_filters( 'lw_seo_markdown_body', $custom_md, $this->post );
 		}
 
-		$content = apply_filters( 'the_content', $this->post->post_content ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Core WP filter.
+		$content = ContentSource::html( $this->post );
 		$body    = '# ' . HtmlToMarkdown::plain_text( get_the_title( $this->post ) ) . "\n\n";
 		$body   .= HtmlToMarkdown::convert( $content );
 

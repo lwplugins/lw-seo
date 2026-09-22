@@ -74,6 +74,20 @@ final class FullText {
 			unset( $GLOBALS['post'] );
 		}
 
-		return "---\n\nURL: " . get_permalink( $post ) . "\n\n" . trim( $body ) . "\n";
+		return "---\n\nURL: " . get_permalink( $post ) . "\n\n" . self::description_line( $post ) . trim( $body ) . "\n";
+	}
+
+	/**
+	 * The summary llms.txt shows for the post, as inert text. Kept even when
+	 * the body has content, so no entry carries less than its llms.txt line
+	 * (builder- or template-rendered pages often have an empty body).
+	 *
+	 * @param \WP_Post $post Post object.
+	 * @return string '' when the post has no description.
+	 */
+	private static function description_line( \WP_Post $post ): string {
+		$description = HtmlToMarkdown::plain_text( SectionCollector::description( $post ) );
+
+		return '' === $description ? '' : 'Description: ' . $description . "\n\n";
 	}
 }

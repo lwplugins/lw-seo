@@ -16,6 +16,8 @@ parameters:
 	# Declare the plugin's runtime-defined constants for static analysis.
 	bootstrapFiles:
 		- phpstan-bootstrap.php
+		# Bricks theme API (optional integration, Markdown\BricksContent); no stub package exists.
+		- tests/Stubs/bricks-classes.php
 
 	# Third-party APIs the plugin optionally integrates with. WordPress core
 	# stubs come from the szepeviktor/phpstan-wordpress extension above.

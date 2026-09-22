@@ -52,10 +52,10 @@ final class FullTextTest extends MonkeyTestCase {
 
 	public function test_chunk_restores_the_previous_global_post(): void {
 		$this->stub_cheap_dispatcher_body();
-		$previous = new \WP_Post( [ 'ID' => 1, 'post_type' => 'post' ] );
+		$previous = new \WP_Post( [ 'ID' => 1, 'post_type' => 'post', 'post_excerpt' => '' ] );
 		$GLOBALS['post'] = $previous;
 
-		FullText::chunk( new \WP_Post( [ 'ID' => 2, 'post_type' => 'post' ] ) );
+		FullText::chunk( new \WP_Post( [ 'ID' => 2, 'post_type' => 'post', 'post_excerpt' => '' ] ) );
 
 		$this->assertSame( $previous, $GLOBALS['post'] );
 	}
@@ -64,17 +64,52 @@ final class FullTextTest extends MonkeyTestCase {
 		$this->stub_cheap_dispatcher_body();
 		unset( $GLOBALS['post'] );
 
-		FullText::chunk( new \WP_Post( [ 'ID' => 2, 'post_type' => 'post' ] ) );
+		FullText::chunk( new \WP_Post( [ 'ID' => 2, 'post_type' => 'post', 'post_excerpt' => '' ] ) );
 
 		$this->assertArrayNotHasKey( 'post', $GLOBALS );
 	}
 
 	/**
+	 * A page whose content the renderer can't reach (a page builder, a theme
+	 * template) must still carry the summary llms.txt shows for it.
+	 */
+	public function test_chunk_puts_the_description_between_the_url_and_the_body(): void {
+		$this->stub_cheap_dispatcher_body( 'Short summary' );
+
+		$this->assertSame(
+			"---\n\nURL: https://x.test/a/\n\nDescription: Short summary\n\nCustom markdown body\n",
+			FullText::chunk( new \WP_Post( [ 'ID' => 2, 'post_type' => 'post', 'post_excerpt' => '' ] ) )
+		);
+	}
+
+	public function test_chunk_description_leaves_no_live_markup(): void {
+		$this->stub_cheap_dispatcher_body( '[x](javascript:alert(1)) &lt;img src=x onerror=alert(1)&gt;' );
+
+		$this->assertStringContainsString(
+			"Description: \\[x\\](javascript:alert(1)) \\<img src=x onerror=alert(1)\\>\n",
+			FullText::chunk( new \WP_Post( [ 'ID' => 2, 'post_type' => 'post', 'post_excerpt' => '' ] ) )
+		);
+	}
+
+	public function test_chunk_omits_the_description_line_when_there_is_none(): void {
+		$this->stub_cheap_dispatcher_body();
+
+		$this->assertSame(
+			"---\n\nURL: https://x.test/a/\n\nCustom markdown body\n",
+			FullText::chunk( new \WP_Post( [ 'ID' => 2, 'post_type' => 'post', 'post_excerpt' => '' ] ) )
+		);
+	}
+
+	/**
 	 * Stub Dispatcher::body()'s dependencies with the custom-Markdown path,
 	 * the cheapest route through PostRenderer::body().
+	 *
+	 * @param string $description SEO description meta.
 	 */
-	private function stub_cheap_dispatcher_body(): void {
-		Functions\when( 'get_post_meta' )->justReturn( 'Custom markdown body' );
+	private function stub_cheap_dispatcher_body( string $description = '' ): void {
+		Functions\when( 'get_post_meta' )->alias(
+			static fn( int $id, string $key ): string => '_lw_seo_description' === $key ? $description : 'Custom markdown body'
+		);
 		Functions\when( 'apply_filters' )->returnArg( 2 );
 		Functions\when( 'setup_postdata' )->justReturn( true );
 		Functions\when( 'get_permalink' )->justReturn( 'https://x.test/a/' );
