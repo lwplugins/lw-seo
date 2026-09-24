@@ -33,7 +33,7 @@ final class Manager {
 	/**
 	 * Get all redirects.
 	 *
-	 * @return array<int, array{source: string, destination: string, type: int, regex: bool, hits: int, last_accessed: string}>
+	 * @return array<int, array{id?: string, source: string, destination: string, type: int, regex: bool, hits: int, last_accessed: string, created?: string}>
 	 */
 	public static function get_all(): array {
 		$redirects = get_option( self::OPTION_NAME, [] );
@@ -44,7 +44,7 @@ final class Manager {
 	 * Get a single redirect by ID.
 	 *
 	 * @param int $id Redirect ID (array index).
-	 * @return array{source: string, destination: string, type: int, regex: bool, hits: int, last_accessed: string}|null
+	 * @return array{id?: string, source: string, destination: string, type: int, regex: bool, hits: int, last_accessed: string, created?: string}|null
 	 */
 	public static function get( int $id ): ?array {
 		$redirects = self::get_all();
@@ -77,7 +77,8 @@ final class Manager {
 
 		$redirects   = self::get_all();
 		$redirects[] = [
-			'source'        => self::normalize_source( $source ),
+			'id'            => wp_generate_uuid4(),
+			'source'        => self::prepare_source( $source, $regex ),
 			'destination'   => $destination,
 			'type'          => $type,
 			'regex'         => $regex,
@@ -117,7 +118,7 @@ final class Manager {
 			$type = 301;
 		}
 
-		$redirects[ $id ]['source']      = self::normalize_source( $source );
+		$redirects[ $id ]['source']      = self::prepare_source( $source, $regex );
 		$redirects[ $id ]['destination'] = $destination;
 		$redirects[ $id ]['type']        = $type;
 		$redirects[ $id ]['regex']       = $regex;
@@ -186,8 +187,7 @@ final class Manager {
 		foreach ( $redirects as $id => $redirect ) {
 			if ( $redirect['regex'] ) {
 				// Regex match.
-				$pattern = '@' . str_replace( '@', '\\@', $redirect['source'] ) . '@i';
-				if ( preg_match( $pattern, $path ) ) {
+				if ( preg_match( self::regex_pattern( $redirect['source'] ), $path ) ) {
 					return [
 						'id'       => $id,
 						'redirect' => $redirect,
@@ -232,6 +232,35 @@ final class Manager {
 	}
 
 	/**
+	 * Source as it is stored: a plain path is normalized, a regex is kept
+	 * as written (a leading slash would break an anchored `^…` pattern).
+	 *
+	 * @param string $source Source URL, path or pattern.
+	 * @param bool   $regex  Whether the source is a regex.
+	 * @return string
+	 */
+	private static function prepare_source( string $source, bool $regex ): string {
+		return $regex ? trim( $source ) : self::normalize_source( $source );
+	}
+
+	/**
+	 * PCRE pattern of a stored regex source, for matching and for filling
+	 * `$1` in the destination. Versions before 1.7.0 prefixed every source
+	 * with a slash, so a stored `/^…` pattern could never match; the slash
+	 * in front of the anchor is dropped here.
+	 *
+	 * @param string $source Stored regex source.
+	 * @return string
+	 */
+	public static function regex_pattern( string $source ): string {
+		if ( str_starts_with( $source, '/^' ) ) {
+			$source = substr( $source, 1 );
+		}
+
+		return '@' . str_replace( '@', '\\@', $source ) . '@i';
+	}
+
+	/**
 	 * Import redirects from CSV.
 	 *
 	 * @param string $csv_content CSV content.
@@ -257,33 +286,38 @@ final class Manager {
 				continue;
 			}
 
-			$parts = str_getcsv( $line );
-			if ( count( $parts ) < 2 ) {
-				$result['errors'][] = sprintf( 'Line %d: Invalid format', $line_num + 1 );
-				++$result['skipped'];
-				continue;
+			$parts = str_getcsv( $line, ',', '"', '\\' );
+			$error = __( 'Invalid format.', 'lw-seo' );
+
+			if ( count( $parts ) >= 2 ) {
+				$source      = (string) $parts[0];
+				$destination = (string) $parts[1];
+				$type        = isset( $parts[2] ) ? (int) $parts[2] : 301;
+				$regex       = self::csv_flag( (string) ( $parts[3] ?? '' ) );
+				$error       = Validator::error( $source, $destination, $type, $regex );
+
+				if ( null === $error && false !== self::add( $source, $destination, $type, $regex ) ) {
+					++$result['imported'];
+					continue;
+				}
 			}
 
-			$source      = $parts[0] ?? '';
-			$destination = $parts[1] ?? '';
-			$type        = isset( $parts[2] ) ? (int) $parts[2] : 301;
-			$regex       = isset( $parts[3] ) && in_array( strtolower( $parts[3] ), [ '1', 'true', 'yes' ], true );
-
-			if ( empty( $source ) ) {
-				$result['errors'][] = sprintf( 'Line %d: Empty source', $line_num + 1 );
-				++$result['skipped'];
-				continue;
-			}
-
-			$added = self::add( $source, $destination, $type, $regex );
-			if ( false !== $added ) {
-				++$result['imported'];
-			} else {
-				++$result['skipped'];
-			}
+			/* translators: 1: CSV line number, 2: reason the line was skipped */
+			$result['errors'][] = sprintf( __( 'Line %1$d: %2$s', 'lw-seo' ), $line_num + 1, $error ?? __( 'Could not be saved.', 'lw-seo' ) );
+			++$result['skipped'];
 		}
 
 		return $result;
+	}
+
+	/**
+	 * Whether a CSV regex column is truthy.
+	 *
+	 * @param string $value Column value.
+	 * @return bool
+	 */
+	private static function csv_flag( string $value ): bool {
+		return in_array( strtolower( trim( $value ) ), [ '1', 'true', 'yes' ], true );
 	}
 
 	/**

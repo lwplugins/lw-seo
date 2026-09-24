@@ -15,8 +15,7 @@ composer.lock
 .DS_Store
 Thumbs.db
 
-# Build
-/build/
+# Build (build/ is committed: Composer and git installs need the admin bundle)
 /dist/
 
 # Logs
@@ -34,3 +33,4 @@ Thumbs.db
 # Local-only audit output and Superpowers planning docs
 /AUDIT-RESULT.md
 /docs/superpowers/
+/.superpowers/

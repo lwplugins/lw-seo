@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace LightweightPlugins\SEO;
 
 use LightweightPlugins\SEO\Crawlers\Registry;
+use LightweightPlugins\SEO\Local\OpeningHours;
 
 /**
  * Handles plugin options and settings.
@@ -152,7 +153,7 @@ final class Options {
 
 			// 404.
 			'redirect_404_to_home'            => false,
-		] + Registry::option_defaults();
+		] + Registry::option_defaults() + OpeningHours::option_defaults();
 	}
 
 	/**

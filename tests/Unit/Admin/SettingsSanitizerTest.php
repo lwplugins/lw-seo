@@ -45,6 +45,9 @@ final class SettingsSanitizerTest extends MonkeyTestCase {
 			'choice kept'              => [ 'content_signals_ai_train', '', [ 'content_signals_ai_train' => 'no' ], 'no' ],
 			'choice rejected'          => [ 'content_signals_ai_train', '', [ 'content_signals_ai_train' => 'maybe' ], '' ],
 			'textarea keeps newlines'  => [ 'llms_txt_intro', '', [ 'llms_txt_intro' => "Line 1\nLine 2" ], "Line 1\nLine 2" ],
+			'opening time normalised'  => [ 'local_hours_friday_close', '', [ 'local_hours_friday_close' => '7:30' ], '07:30' ],
+			'opening time rejected'    => [ 'local_hours_friday_close', '', [ 'local_hours_friday_close' => '99:99' ], '' ],
+			'closed flag is a bool'    => [ 'local_hours_friday_closed', false, [ 'local_hours_friday_closed' => '1' ], true ],
 		];
 	}
 

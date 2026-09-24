@@ -9,25 +9,11 @@ declare(strict_types=1);
 
 namespace LightweightPlugins\SEO\Admin;
 
-use LightweightPlugins\SEO\Admin\Settings\TabInterface;
-use LightweightPlugins\SEO\Admin\Settings\TabGeneral;
-use LightweightPlugins\SEO\Admin\Settings\TabContent;
-use LightweightPlugins\SEO\Admin\Settings\TabSocial;
-use LightweightPlugins\SEO\Admin\Settings\TabSitemap;
-use LightweightPlugins\SEO\Admin\Settings\TabAi;
-use LightweightPlugins\SEO\Admin\Settings\TabAdvanced;
-use LightweightPlugins\SEO\Admin\Settings\TabWooCommerce;
-use LightweightPlugins\SEO\Admin\Settings\TabLocal;
-use LightweightPlugins\SEO\Admin\Settings\TabRedirects;
-use LightweightPlugins\SEO\Admin\Settings\Tab404;
-use LightweightPlugins\SEO\Admin\Settings\TabMigration;
-use LightweightPlugins\SEO\WooCommerce\WooCommerce;
-use LightweightPlugins\SEO\WooCommerce\SlugCollisionDetector;
-use LightweightPlugins\SEO\Meta\HeadMeta;
-use LightweightPlugins\SEO\Options;
+use LightweightPlugins\SEO\Rest\Admin\Routes;
 
 /**
- * Handles the plugin settings page.
+ * The SEO settings screen: a mount point for the React admin (build/index),
+ * which reads and writes through the lw-seo/v1/admin REST routes.
  */
 final class SettingsPage {
 
@@ -37,74 +23,29 @@ final class SettingsPage {
 	public const SLUG = 'lw-seo';
 
 	/**
-	 * Settings group.
+	 * Script and style handle.
 	 */
-	private const SETTINGS_GROUP = 'lw_seo_settings';
+	private const HANDLE = 'lw-seo-admin-app';
 
 	/**
-	 * Registered tabs.
-	 *
-	 * @var array<TabInterface>
+	 * Documentation URL.
 	 */
-	private array $tabs = [];
+	private const DOCS_URL = 'https://lwplugins.com/docs/lw-seo/';
+
+	/**
+	 * Hook suffix returned by add_submenu_page().
+	 *
+	 * @var string
+	 */
+	private string $hook_suffix = '';
 
 	/**
 	 * Constructor.
 	 */
 	public function __construct() {
-		$this->register_tabs();
-
 		add_action( 'admin_menu', [ $this, 'add_menu_page' ] );
-		add_action( 'admin_init', [ $this, 'register_settings' ] );
 		add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_assets' ] );
-		add_action( 'update_option_' . Options::OPTION_NAME, [ $this, 'flush_on_permalink_change' ], 10, 2 );
-	}
-
-	/**
-	 * Soft-flush rewrites and clear the slug-blocker cache when any of the
-	 * three WooCommerce permalink flags changed.
-	 *
-	 * @param mixed $old_value Previous option value.
-	 * @param mixed $new_value New option value.
-	 * @return void
-	 */
-	public function flush_on_permalink_change( $old_value, $new_value ): void {
-		$keys = [ 'wc_remove_category_base', 'wc_remove_category_parent_slugs', 'wc_remove_product_base' ];
-		foreach ( $keys as $key ) {
-			$old = is_array( $old_value ) ? ! empty( $old_value[ $key ] ) : false;
-			$new = is_array( $new_value ) ? ! empty( $new_value[ $key ] ) : false;
-			if ( $old !== $new ) {
-				SlugCollisionDetector::invalidate();
-				flush_rewrite_rules( false );
-				return;
-			}
-		}
-	}
-
-	/**
-	 * Register settings tabs.
-	 *
-	 * @return void
-	 */
-	private function register_tabs(): void {
-		$this->tabs = [
-			new TabGeneral(),
-			new TabContent(),
-			new TabSocial(),
-			new TabSitemap(),
-			new TabAi(),
-			new TabLocal(),
-			new TabRedirects(),
-			new Tab404(),
-			new TabAdvanced(),
-			new TabMigration(),
-		];
-
-		// Add WooCommerce tab if WooCommerce is active.
-		if ( WooCommerce::is_active() ) {
-			// Insert before Local tab.
-			array_splice( $this->tabs, 5, 0, [ new TabWooCommerce() ] );
-		}
+		add_filter( 'admin_body_class', [ $this, 'body_class' ] );
 	}
 
 	/**
@@ -115,7 +56,7 @@ final class SettingsPage {
 	public function add_menu_page(): void {
 		ParentPage::maybe_register();
 
-		add_submenu_page(
+		$hook = add_submenu_page(
 			ParentPage::SLUG,
 			__( 'SEO Settings', 'lw-seo' ),
 			__( 'SEO', 'lw-seo' ),
@@ -123,141 +64,58 @@ final class SettingsPage {
 			self::SLUG,
 			[ $this, 'render' ]
 		);
+
+		$this->hook_suffix = is_string( $hook ) ? $hook : '';
 	}
 
 	/**
-	 * Enqueue admin assets.
+	 * Enqueue the React app on the settings screen.
 	 *
 	 * @param string $hook Current admin page.
 	 * @return void
 	 */
 	public function enqueue_assets( string $hook ): void {
-		$valid_hooks = [
-			'toplevel_page_' . ParentPage::SLUG,
-			ParentPage::SLUG . '_page_' . self::SLUG,
-		];
-
-		if ( ! in_array( $hook, $valid_hooks, true ) ) {
+		if ( '' === $this->hook_suffix || $hook !== $this->hook_suffix ) {
 			return;
 		}
 
-		// Enqueue WordPress media library.
+		if ( ! BuildAssets::enqueue( 'index', self::HANDLE ) ) {
+			return;
+		}
+
 		wp_enqueue_media();
 
-		wp_enqueue_style(
-			'lw-seo-settings',
-			LW_SEO_URL . 'assets/css/settings.css',
-			[],
-			LW_SEO_VERSION
-		);
-
-		wp_enqueue_script(
-			'lw-seo-settings',
-			LW_SEO_URL . 'assets/js/admin.js',
-			[ 'jquery' ],
-			LW_SEO_VERSION,
-			true
-		);
-
-		// Redirects JavaScript.
-		wp_enqueue_script(
-			'lw-seo-redirects',
-			LW_SEO_URL . 'assets/js/redirects.js',
-			[],
-			LW_SEO_VERSION,
-			true
-		);
-
-		wp_localize_script(
-			'lw-seo-redirects',
-			'lwSeoRedirectsL10n',
-			[
-				'nonce'          => wp_create_nonce( 'lw_seo_redirects' ),
-				'addButton'      => __( 'Add Redirect', 'lw-seo' ),
-				'updateButton'   => __( 'Update Redirect', 'lw-seo' ),
-				'editButton'     => __( 'Edit', 'lw-seo' ),
-				'deleteButton'   => __( 'Delete', 'lw-seo' ),
-				'confirmDelete'  => __( 'Are you sure you want to delete this redirect?', 'lw-seo' ),
-				'sourceRequired' => __( 'Source URL is required.', 'lw-seo' ),
-				'selectFile'     => __( 'Please select a CSV file.', 'lw-seo' ),
-				'importErrors'   => __( 'Some rows could not be imported:', 'lw-seo' ),
-				'notRequired'    => __( 'Not required for this type', 'lw-seo' ),
-				'na'             => __( 'N/A', 'lw-seo' ),
-				'regex'          => __( 'Regex', 'lw-seo' ),
-			]
-		);
-
-		// Migration JavaScript.
-		wp_enqueue_script(
-			'lw-seo-migration',
-			LW_SEO_URL . 'assets/js/migration.js',
-			[],
-			LW_SEO_VERSION,
-			true
-		);
-
-		wp_localize_script(
-			'lw-seo-migration',
-			'lwSeoMigrationL10n',
-			[
-				'nonce'                => wp_create_nonce( 'lw_seo_migration' ),
-				'noData'               => __( 'No data found in the database for this plugin.', 'lw-seo' ),
-				'options'              => __( 'Global Options', 'lw-seo' ),
-				'posts'                => __( 'Posts with SEO meta', 'lw-seo' ),
-				'terms'                => __( 'Terms with SEO meta', 'lw-seo' ),
-				'users'                => __( 'Users with SEO meta', 'lw-seo' ),
-				'redirects'            => __( 'Redirects (DB table)', 'lw-seo' ),
-				'found'                => __( 'Found', 'lw-seo' ),
-				'notFound'             => __( 'Not found', 'lw-seo' ),
-				'previewTitle'         => __( 'Preview Results (Dry Run)', 'lw-seo' ),
-				'resultTitle'          => __( 'Migration Results', 'lw-seo' ),
-				'optionsMigrated'      => __( 'Options migrated', 'lw-seo' ),
-				'postsMigrated'        => __( 'Posts migrated', 'lw-seo' ),
-				'postsAlreadyFull'     => __( 'Posts skipped (LW SEO data already present)', 'lw-seo' ),
-				'postsNoData'          => __( 'Posts skipped (no actionable data)', 'lw-seo' ),
-				'termsMigrated'        => __( 'Terms migrated', 'lw-seo' ),
-				'termsAlreadyFull'     => __( 'Terms skipped (LW SEO data already present)', 'lw-seo' ),
-				'termsNoData'          => __( 'Terms skipped (no actionable data)', 'lw-seo' ),
-				'usersMigrated'        => __( 'Users migrated', 'lw-seo' ),
-				'primaryTermsMigrated' => __( 'Primary terms migrated', 'lw-seo' ),
-				'redirectsMigrated'    => __( 'Redirects migrated', 'lw-seo' ),
-				'redirectsSkipped'     => __( 'Redirects skipped', 'lw-seo' ),
-				'warnings'             => __( 'Warnings', 'lw-seo' ),
-				'dryRunNotice'         => __( 'This was a preview. No data was modified.', 'lw-seo' ),
-				'confirmRun'           => __( 'Are you sure you want to run the migration? Existing LW SEO data will not be overwritten.', 'lw-seo' ),
-			]
+		wp_add_inline_script(
+			self::HANDLE,
+			'window.lwSeo = ' . wp_json_encode(
+				[
+					'version'   => LW_SEO_VERSION,
+					'namespace' => Routes::NAMESPACE,
+					'docsUrl'   => self::DOCS_URL,
+				]
+			) . ';',
+			'before'
 		);
 	}
 
 	/**
-	 * Register settings.
+	 * Mark the settings screen body for the app's styles.
 	 *
-	 * @return void
+	 * @param string $classes Space-separated body classes.
+	 * @return string
 	 */
-	public function register_settings(): void {
-		register_setting(
-			self::SETTINGS_GROUP,
-			Options::OPTION_NAME,
-			[
-				'type'              => 'array',
-				'sanitize_callback' => [ $this, 'sanitize_settings' ],
-				'default'           => Options::get_defaults(),
-			]
-		);
+	public function body_class( string $classes ): string {
+		$screen = function_exists( 'get_current_screen' ) ? get_current_screen() : null;
+
+		if ( '' === $this->hook_suffix || ! $screen || $screen->id !== $this->hook_suffix ) {
+			return $classes;
+		}
+
+		return $classes . ' lw-seo-screen';
 	}
 
 	/**
-	 * Sanitize settings.
-	 *
-	 * @param array<string, mixed> $input Input values.
-	 * @return array<string, mixed>
-	 */
-	public function sanitize_settings( array $input ): array {
-		return SettingsSanitizer::sanitize( $input, Options::get_defaults() );
-	}
-
-	/**
-	 * Render settings page.
+	 * Render the mount point (or a notice when the build is missing).
 	 *
 	 * @return void
 	 */
@@ -266,71 +124,15 @@ final class SettingsPage {
 			return;
 		}
 
-		?>
-		<div class="wrap">
-			<h1>
-				<img src="<?php echo esc_url( LW_SEO_URL . 'assets/img/title-icon.svg' ); ?>" alt="" class="lw-title-icon" />
-				<?php esc_html_e( 'Lightweight SEO', 'lw-seo' ); ?>
-				<span style="font-size: 13px; font-weight: 400; color: #888;">(<?php echo esc_html( LW_SEO_VERSION ); ?>)</span>
-			</h1>
-
-			<?php if ( HeadMeta::is_conflicting_plugin_active() ) : ?>
-				<div class="notice notice-warning inline">
-					<p><?php esc_html_e( 'Another SEO plugin (Yoast SEO, Rank Math or All in One SEO) is active. LW SEO skips its meta tags to avoid duplicates. Deactivate the other plugin to use LW SEO fully.', 'lw-seo' ); ?></p>
-				</div>
-			<?php endif; ?>
-
-			<form method="post" action="options.php">
-				<?php settings_fields( self::SETTINGS_GROUP ); ?>
-
-				<div class="lw-seo-settings">
-					<?php $this->render_tabs_nav(); ?>
-
-					<div class="lw-seo-tab-content">
-						<?php $this->render_tabs_content(); ?>
-						<?php submit_button(); ?>
-					</div>
-				</div>
-			</form>
-		</div>
-		<?php
-	}
-
-	/**
-	 * Render tabs navigation.
-	 *
-	 * @return void
-	 */
-	private function render_tabs_nav(): void {
-		?>
-		<ul class="lw-seo-tabs">
-			<?php foreach ( $this->tabs as $index => $tab ) : ?>
-				<li>
-					<a href="#<?php echo esc_attr( $tab->get_slug() ); ?>" <?php echo 0 === $index ? 'class="active"' : ''; ?>>
-						<span class="dashicons <?php echo esc_attr( $tab->get_icon() ); ?>"></span>
-						<?php echo esc_html( $tab->get_label() ); ?>
-					</a>
-				</li>
-			<?php endforeach; ?>
-		</ul>
-		<?php
-	}
-
-	/**
-	 * Render tabs content.
-	 *
-	 * @return void
-	 */
-	private function render_tabs_content(): void {
-		foreach ( $this->tabs as $index => $tab ) {
-			$active_class = 0 === $index ? ' active' : '';
+		if ( ! BuildAssets::exists( 'index' ) ) {
 			printf(
-				'<div id="tab-%s" class="lw-seo-tab-panel%s">',
-				esc_attr( $tab->get_slug() ),
-				esc_attr( $active_class )
+				'<div class="wrap"><h1>%s</h1><div class="notice notice-error"><p>%s</p></div></div>',
+				esc_html__( 'LW SEO', 'lw-seo' ),
+				esc_html__( 'The settings screen files are missing. Re-install the plugin from a release ZIP, or run "npm install && npm run build" in the plugin directory.', 'lw-seo' )
 			);
-			$tab->render();
-			echo '</div>';
+			return;
 		}
+
+		echo '<div id="lw-seo-root" class="lw-seo-root"></div>';
 	}
 }

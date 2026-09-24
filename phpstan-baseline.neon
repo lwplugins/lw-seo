@@ -1,18 +1,6 @@
 parameters:
 	ignoreErrors:
 		-
-			message: '#^Unreachable statement \- code above always terminates\.$#'
-			identifier: deadCode.unreachable
-			count: 2
-			path: includes/Migration/Ajax.php
-
-		-
-			message: '#^Unreachable statement \- code above always terminates\.$#'
-			identifier: deadCode.unreachable
-			count: 14
-			path: includes/Redirects/Ajax.php
-
-		-
 			message: '#^Call to function is_wp_error\(\) with WP_Term will always evaluate to false\.$#'
 			identifier: function.impossibleType
 			count: 1

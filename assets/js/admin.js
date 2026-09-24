@@ -1,5 +1,5 @@
 /**
- * LW SEO Admin JavaScript
+ * LW SEO classic editor meta box JavaScript
  *
  * @package LightweightPlugins\SEO
  */
@@ -83,124 +83,6 @@
 						}
 					}
 				);
-			}
-		);
-	}
-
-	/**
-	 * Initialize settings page tabs.
-	 */
-	function initSettingsTabs() {
-		const tabLinks  = document.querySelectorAll( '.lw-seo-tabs a' );
-		const tabPanels = document.querySelectorAll( '.lw-seo-tab-panel' );
-
-		if ( ! tabLinks.length || ! tabPanels.length) {
-			return;
-		}
-
-		// Get active tab from URL hash or default to first tab.
-		const hash     = window.location.hash.substring( 1 );
-		const firstTab = tabLinks[0].getAttribute( 'href' ).substring( 1 );
-		let validTab   = false;
-
-		tabLinks.forEach(
-			function (link) {
-				if (link.getAttribute( 'href' ).substring( 1 ) === hash) {
-					validTab = true;
-				}
-			}
-		);
-
-		activateTab( validTab ? hash : firstTab );
-
-		// Handle tab clicks.
-		tabLinks.forEach(
-			function (link) {
-				link.addEventListener(
-					'click',
-					function (e) {
-						e.preventDefault();
-						const tabId = this.getAttribute( 'href' ).substring( 1 );
-						activateTab( tabId );
-						history.replaceState( null, '', '#' + tabId );
-					}
-				);
-			}
-		);
-
-		// Preserve active tab on form submit.
-		const form = document.querySelector( '.lw-seo-settings' );
-		if (form) {
-			const formEl = form.closest( 'form' );
-			if (formEl) {
-				formEl.addEventListener(
-					'submit',
-					function () {
-						const activeLink = document.querySelector( '.lw-seo-tabs a.active' );
-						if ( ! activeLink) {
-							return;
-						}
-						const tabSlug = activeLink.getAttribute( 'href' ).substring( 1 );
-						const referer = formEl.querySelector( 'input[name="_wp_http_referer"]' );
-						if (referer && referer.value.indexOf( '#' ) === -1) {
-							referer.value += '#' + tabSlug;
-						}
-					}
-				);
-			}
-		}
-
-		function activateTab(tabId) {
-			tabLinks.forEach(
-				function (link) {
-					const linkTabId = link.getAttribute( 'href' ).substring( 1 );
-					if (linkTabId === tabId) {
-						link.classList.add( 'active' );
-					} else {
-						link.classList.remove( 'active' );
-					}
-				}
-			);
-
-			tabPanels.forEach(
-				function (panel) {
-					if (panel.id === 'tab-' + tabId) {
-						panel.classList.add( 'active' );
-					} else {
-						panel.classList.remove( 'active' );
-					}
-				}
-			);
-		}
-	}
-
-	/**
-	 * Initialize crawler card visual feedback.
-	 */
-	function initCrawlerCards() {
-		const cards = document.querySelectorAll( '.lw-seo-crawler-card' );
-
-		cards.forEach(
-			function (card) {
-				const checkbox = card.querySelector( 'input[type="checkbox"]' );
-				if ( ! checkbox) {
-					return;
-				}
-
-				// Update card state on change.
-				function updateCardState() {
-					if (checkbox.checked) {
-						card.classList.add( 'blocked' );
-					} else {
-						card.classList.remove( 'blocked' );
-					}
-				}
-
-				// Initial state.
-				updateCardState();
-
-				// Listen for changes.
-				checkbox.addEventListener( 'change', updateCardState );
 			}
 		);
 	}
@@ -298,8 +180,6 @@
 	function init() {
 		initCounters();
 		initCollapsibles();
-		initSettingsTabs();
-		initCrawlerCards();
 		initMediaUploader();
 	}
 

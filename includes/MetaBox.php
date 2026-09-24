@@ -10,10 +10,13 @@ declare(strict_types=1);
 namespace LightweightPlugins\SEO;
 
 use LightweightPlugins\SEO\Admin\MarkdownOverrideField;
+use LightweightPlugins\SEO\Editor\EditorPostTypes;
+use LightweightPlugins\SEO\Editor\MetaFields;
 use LightweightPlugins\SEO\Helpers\MetaCoerce;
 
 /**
- * Handles the SEO meta box in post editor.
+ * Handles the SEO meta box in the classic editor (the block editor uses the
+ * React panel and the `lw_seo` REST field).
  */
 final class MetaBox {
 
@@ -47,37 +50,9 @@ final class MetaBox {
 	 * @return void
 	 */
 	public function add_meta_box(): void {
-		$post_types = $this->get_post_types();
-
-		foreach ( $post_types as $post_type ) {
-			add_meta_box(
-				self::META_BOX_ID,
-				__( 'LW SEO', 'lw-seo' ),
-				[ $this, 'render_meta_box' ],
-				$post_type,
-				'normal',
-				'high'
-			);
+		foreach ( EditorPostTypes::get() as $post_type ) {
+			add_meta_box( self::META_BOX_ID, __( 'LW SEO', 'lw-seo' ), [ $this, 'render_meta_box' ], $post_type, 'normal', 'high', [ '__back_compat_meta_box' => true ] );
 		}
-	}
-
-	/**
-	 * Get post types that should have the meta box.
-	 *
-	 * @return array<string>
-	 */
-	private function get_post_types(): array {
-		$post_types = get_post_types( [ 'public' => true ], 'names' );
-
-		// Remove attachment.
-		unset( $post_types['attachment'] );
-
-		/**
-		 * Filter the post types that get the SEO meta box.
-		 *
-		 * @param array $post_types Array of post type names.
-		 */
-		return apply_filters( 'lw_seo_meta_box_post_types', array_values( $post_types ) );
 	}
 
 	/**
@@ -92,7 +67,7 @@ final class MetaBox {
 		}
 
 		$screen = get_current_screen();
-		if ( ! $screen || ! in_array( $screen->post_type, $this->get_post_types(), true ) ) {
+		if ( ! $screen || $screen->is_block_editor() || ! in_array( $screen->post_type, EditorPostTypes::get(), true ) ) {
 			return;
 		}
 
@@ -391,27 +366,11 @@ final class MetaBox {
 		}
 
 		// Check post type.
-		if ( ! in_array( $post->post_type, $this->get_post_types(), true ) ) {
+		if ( ! in_array( $post->post_type, EditorPostTypes::get(), true ) ) {
 			return;
 		}
 
-		// Save fields.
-		$fields = [
-			'title'            => 'sanitize_text_field',
-			'description'      => 'sanitize_textarea_field',
-			'noindex'          => 'sanitize_text_field',
-			'nofollow'         => 'sanitize_text_field',
-			'canonical'        => 'esc_url_raw',
-			'og_title'         => 'sanitize_text_field',
-			'og_description'   => 'sanitize_textarea_field',
-			'og_image'         => 'esc_url_raw',
-			'ai_train'         => [ SignalValue::class, 'sanitize' ],
-			'ai_input'         => [ SignalValue::class, 'sanitize' ],
-			'search'           => [ SignalValue::class, 'sanitize' ],
-			'markdown_content' => 'sanitize_textarea_field',
-		];
-
-		foreach ( $fields as $field => $sanitize_callback ) {
+		foreach ( MetaFields::POST as $field => $kind ) {
 			if ( ! MarkdownOverrideField::may_set( $field ) ) {
 				continue;
 			}
@@ -420,8 +379,8 @@ final class MetaBox {
 			$value      = '';
 
 			if ( isset( $_POST[ $input_name ] ) ) {
-				// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Sanitized via $sanitize_callback.
-				$value = call_user_func( $sanitize_callback, wp_unslash( $_POST[ $input_name ] ) );
+				// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Sanitized via MetaFields::sanitize().
+				$value = MetaFields::sanitize( $kind, wp_unslash( $_POST[ $input_name ] ) );
 			}
 
 			Options::set_post_meta( $post_id, $field, $value );

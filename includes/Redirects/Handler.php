@@ -79,8 +79,7 @@ final class Handler {
 
 				// Handle regex replacement in destination.
 				if ( $redirect['regex'] && str_contains( $destination, '$' ) ) {
-					$pattern     = '@' . str_replace( '@', '\\@', $redirect['source'] ) . '@i';
-					$destination = preg_replace( $pattern, $destination, $path );
+					$destination = preg_replace( Manager::regex_pattern( $redirect['source'] ), $destination, $path );
 				}
 
 				// Make absolute URL if relative.

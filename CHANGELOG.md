@@ -1,5 +1,27 @@
 # Changelog
 
+## [1.7.0] - 2026-09-24
+
+### Added
+- New settings screen built with WordPress components: side navigation for every section, a top bar with Save/Discard and a Cmd/Ctrl+S shortcut, loading skeletons and a mobile layout. Only the settings you changed are saved, so saving one tab never resets another.
+- "LW SEO" panel in the block editor's document sidebar (SEO title and description with character counters, noindex/nofollow, social title/description/image, canonical URL, content signals, markdown override). It saves with the post through a new `lw_seo` REST field. The classic meta box stays for the classic editor.
+- Redirect manager rebuilt as a filterable, searchable table with add/edit forms, CSV import/export and inline validation. Every redirect gets a stable ID (existing redirects get one the first time the list is read).
+- Admin REST API under `lw-seo/v1/admin/` (settings, redirects, migration) for users with `manage_options`.
+- Bricks compatibility: while LW SEO renders the head, the Bricks theme's own meta description/robots/document title tags are turned off, and its Open Graph tags too when LW SEO's Open Graph is enabled.
+- Hungarian translation of the whole new interface, including the block editor panel, the term fields and the FAQ block (JavaScript translation files shipped in `languages/`).
+
+### Changed
+- The term edit screen's SEO fields are rendered by the new interface, with the social and AI sections collapsible. They still save with the core term form.
+- Settings are no longer registered through the Settings API, so migrators and WP-CLI that write `lw_seo_options` no longer have settings they did not send reset to off.
+
+### Fixed
+- The per-day opening hours on the Local SEO tab were never saved; they are now stored as `local_hours_{day}_closed|open|close` and appear in the LocalBusiness schema and shortcodes.
+- Title templates containing `%%date%%`, `%%category%%` or other variables that start like a percent-encoded character were damaged on save.
+- A regex redirect source starting with `^` (e.g. `^/old/(\d+)$`) got a slash in front of it and never matched. Regex sources are now stored as written, and patterns saved by earlier versions are repaired when matched, including `$1` in the destination.
+
+### Removed
+- The classic settings page, its stylesheet and the redirects/migration AJAX handlers.
+
 ## [1.6.2] - 2026-09-22
 
 ### Added

@@ -81,18 +81,27 @@ final class HeadMeta {
 	 * @return bool
 	 */
 	public static function is_conflicting_plugin_active(): bool {
+		return '' !== self::conflicting_plugin_name();
+	}
+
+	/**
+	 * Product name of the active conflicting SEO plugin.
+	 *
+	 * @return string '' when none is active.
+	 */
+	public static function conflicting_plugin_name(): string {
 		if ( defined( 'WPSEO_VERSION' ) ) {
-			return true;
+			return 'Yoast SEO';
 		}
 
 		if ( class_exists( 'RankMath' ) ) {
-			return true;
+			return 'Rank Math';
 		}
 
 		if ( defined( 'AIOSEO_VERSION' ) ) {
-			return true;
+			return 'All in One SEO';
 		}
 
-		return false;
+		return '';
 	}
 }

@@ -10,15 +10,18 @@ declare(strict_types=1);
 namespace LightweightPlugins\SEO;
 
 use LightweightPlugins\SEO\Admin\SettingsPage;
+use LightweightPlugins\SEO\Editor\BlockEditorAssets;
+use LightweightPlugins\SEO\Editor\PostRestField;
+use LightweightPlugins\SEO\Rest\Admin\Routes as AdminRoutes;
+use LightweightPlugins\SEO\WooCommerce\PermalinkFlagFlusher;
 use LightweightPlugins\SEO\Blocks\FAQ\Block as FAQBlock;
+use LightweightPlugins\SEO\Compat\Bricks as BricksCompat;
 use LightweightPlugins\SEO\Schema\Schema;
 use LightweightPlugins\SEO\Sitemap\Sitemap;
 use LightweightPlugins\SEO\WooCommerce\WooCommerce;
 use LightweightPlugins\SEO\Local\Schema as LocalSchema;
 use LightweightPlugins\SEO\Local\Shortcodes as LocalShortcodes;
 use LightweightPlugins\SEO\Redirects\Handler as RedirectHandler;
-use LightweightPlugins\SEO\Redirects\Ajax as RedirectAjax;
-use LightweightPlugins\SEO\Migration\Ajax as MigrationAjax;
 use LightweightPlugins\SEO\Migration\CleanupV1314;
 use LightweightPlugins\SEO\NotFoundHandler;
 use LightweightPlugins\SEO\LlmsTxt\Endpoint as LlmsTxtEndpoint;
@@ -92,7 +95,13 @@ final class Plugin {
 			new MetaBox();
 			new TermMetaBox();
 			new SettingsPage();
+			( new BlockEditorAssets() )->register();
 		}
+
+		// Admin REST API (React settings screen) and the block editor field.
+		( new AdminRoutes() )->register();
+		( new PostRestField() )->register();
+		( new PermalinkFlagFlusher() )->register();
 
 		// Frontend/shared components.
 		new Sitemap();
@@ -122,16 +131,15 @@ final class Plugin {
 		// WooCommerce integration (self-checks if WooCommerce is active).
 		new WooCommerce();
 
+		// Bricks theme: its own SEO / Open Graph tags would duplicate ours.
+		( new BricksCompat() )->register();
+
 		// Local SEO.
 		new LocalSchema();
 		new LocalShortcodes();
 
 		// Redirects.
 		new RedirectHandler();
-		if ( is_admin() ) {
-			new RedirectAjax();
-			new MigrationAjax();
-		}
 
 		// 404 handler.
 		new NotFoundHandler();

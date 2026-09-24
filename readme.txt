@@ -3,7 +3,7 @@ Contributors: lwplugins
 Tags: seo, sitemap, schema, opengraph, breadcrumbs
 Requires at least: 6.0
 Tested up to: 7.1
-Stable tag: 1.6.2
+Stable tag: 1.7.0
 Requires PHP: 8.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -135,6 +135,20 @@ Your sitemap is available at `yoursite.com/sitemap.xml`
 6. Settings page - Advanced tab
 
 == Changelog ==
+
+= 1.7.0 =
+* New: settings screen built with WordPress components: side navigation, a top bar with Save/Discard and a Cmd/Ctrl+S shortcut, loading skeletons and a mobile layout; only changed settings are saved, so saving one tab never resets another.
+* New: "LW SEO" panel in the block editor's document sidebar (SEO title and description with counters, noindex/nofollow, social fields, canonical URL, content signals, markdown override), saved with the post through a new lw_seo REST field; the classic meta box stays for the classic editor.
+* New: redirect manager rebuilt as a filterable, searchable table with add/edit forms, CSV import/export and inline validation; every redirect gets a stable ID.
+* New: admin REST API under lw-seo/v1/admin/ (settings, redirects, migration) for users with manage_options.
+* New: Bricks compatibility: while LW SEO renders the head, the Bricks theme's own SEO meta tags are turned off, and its Open Graph tags too when LW SEO's Open Graph is enabled.
+* New: Hungarian translation of the whole new interface, including the block editor panel, the term fields and the FAQ block.
+* Change: the term edit screen's SEO fields are rendered by the new interface (social and AI sections collapsible) and still save with the core term form.
+* Change: settings are no longer registered through the Settings API, so migrators and WP-CLI writing lw_seo_options no longer have unsent settings reset to off.
+* Change: the classic settings page, its stylesheet and the redirects/migration AJAX handlers were removed.
+* Fix: the per-day opening hours on the Local SEO tab were never saved; they are now stored and appear in the LocalBusiness schema and shortcodes.
+* Fix: title templates containing %%date%%, %%category%% or other variables that start like a percent-encoded character were damaged on save.
+* Fix: a regex redirect source starting with ^ got a slash in front of it and never matched; regex sources are now stored as written, and patterns saved by earlier versions are repaired when matched, including $1 in the destination.
 
 = 1.6.2 =
 * New: Shop title template (title_ptarchive_product, "Shop Title" on the WooCommerce tab); post type archives use a title_ptarchive_{post_type} template when one is set, and %%title%% there is the archive title.
@@ -440,6 +454,9 @@ Your sitemap is available at `yoursite.com/sitemap.xml`
 * llms.txt generation
 
 == Upgrade Notice ==
+
+= 1.7.0 =
+New settings screen and a block editor "LW SEO" panel. On Bricks sites the theme's own SEO and Open Graph tags are turned off while LW SEO renders the head: move any Bricks page meta descriptions into LW SEO.
 
 = 1.6.2 =
 A custom SEO title is now the whole title (no site name appended): add your brand to custom titles where you want it. Paginated archives get a self-referencing canonical. "Redirect 404 to homepage" now lets WordPress redirect renamed slugs first.

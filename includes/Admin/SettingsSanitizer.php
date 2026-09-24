@@ -9,6 +9,8 @@ declare(strict_types=1);
 
 namespace LightweightPlugins\SEO\Admin;
 
+use LightweightPlugins\SEO\Local\OpeningHours;
+
 /**
  * Sanitizes the settings form input against the option defaults.
  *
@@ -51,6 +53,11 @@ final class SettingsSanitizer {
 	/**
 	 * Sanitize submitted settings.
 	 *
+	 * Every default key is sanitized from $input; a key missing from $input
+	 * is treated as unset (false for a bool, '' for a URL, the default
+	 * otherwise). Partial updates must merge onto the stored values first
+	 * (SettingsStore::merge()).
+	 *
 	 * @param array<string, mixed> $input    Submitted values.
 	 * @param array<string, mixed> $defaults Option defaults.
 	 * @return array<string, mixed>
@@ -90,6 +97,10 @@ final class SettingsSanitizer {
 			return in_array( $value, self::CHOICE_KEYS[ $key ], true ) ? $value : self::CHOICE_KEYS[ $key ][0];
 		}
 
+		if ( OpeningHours::is_time_key( $key ) ) {
+			return OpeningHours::sanitize_time( $value );
+		}
+
 		if ( self::is_url_key( $key ) ) {
 			return null === $value ? '' : esc_url_raw( $value );
 		}
@@ -98,7 +109,39 @@ final class SettingsSanitizer {
 			return $default;
 		}
 
-		return in_array( $key, self::TEXTAREA_KEYS, true ) ? sanitize_textarea_field( $value ) : sanitize_text_field( $value );
+		return self::text( $key, (string) $value );
+	}
+
+	/**
+	 * Sanitize a text option without damaging %%variables%%.
+	 *
+	 * WordPress sanitize_text_field() drops anything that looks like a percent-encoded
+	 * octet, so "%%date%%" (%da) or "%%category%%" (%ca) in a title template
+	 * lost characters on every save. The variables are swapped out for inert
+	 * placeholders first and restored afterwards.
+	 *
+	 * @param string $key   Option key.
+	 * @param string $value Submitted text.
+	 * @return string
+	 */
+	public static function text( string $key, string $value ): string {
+		$vars  = [];
+		$value = (string) preg_replace_callback(
+			'/%%[a-z_]+%%/i',
+			static function ( array $match ) use ( &$vars ): string {
+				$vars[] = $match[0];
+				return 'LWSEOVAR' . ( count( $vars ) - 1 ) . 'X';
+			},
+			$value
+		);
+
+		$value = in_array( $key, self::TEXTAREA_KEYS, true ) ? sanitize_textarea_field( $value ) : sanitize_text_field( $value );
+
+		return (string) preg_replace_callback(
+			'/LWSEOVAR(\d+)X/',
+			static fn ( array $match ): string => $vars[ (int) $match[1] ] ?? '',
+			$value
+		);
 	}
 
 	/**

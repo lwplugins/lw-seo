@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LW SEO 1.6.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/lw-seo\n"
-"POT-Creation-Date: 2026-09-21T19:36:47+00:00\n"
-"PO-Revision-Date: 2026-09-21 19:37+0000\n"
+"POT-Creation-Date: 2026-09-24T19:20:36+00:00\n"
+"PO-Revision-Date: 2026-09-24 18:50+0000\n"
 "Last-Translator: Claude AI <ai@anthropic.com>\n"
 "Language-Team: LW Plugins <info@lwplugins.com>\n"
 "Language: hu_HU\n"
@@ -17,8 +17,8 @@ msgstr ""
 "X-Generator: WP-CLI 2.12.0\n"
 
 #. Plugin Name of the plugin
-#: lw-seo.php includes/Admin/TermFields.php:47 includes/MetaBox.php:55
-#: assets/js/blocks/faq.js:279
+#: lw-seo.php includes/Admin/SettingsPage.php:130 includes/MetaBox.php:54
+#: assets/js/blocks/faq.js:279 build/editor.js:2 build/term.js:2
 msgid "LW SEO"
 msgstr "LW SEO"
 
@@ -488,9 +488,7 @@ msgstr "Turisztikai információs központ"
 msgid "Travel Agency"
 msgstr "Utazási iroda"
 
-#: includes/Admin/Data/BusinessTypes.php:137
-#: includes/Admin/Settings/TabGeneral.php:34
-#: includes/Admin/Settings/TabWooCommerce.php:144
+#: includes/Admin/Data/BusinessTypes.php:137 build/index.js:1 build/index.js:2
 msgid "General"
 msgstr "Általános"
 
@@ -522,17 +520,16 @@ msgstr "Szolgáltatások"
 msgid "Lodging"
 msgstr "Szállás"
 
-#: includes/Admin/MarkdownOverrideField.php:48
-#: includes/Admin/MarkdownOverrideField.php:83
+#: includes/Admin/MarkdownOverrideField.php:48 build/editor.js:2
+#: build/term.js:2
 msgid "Markdown Content"
 msgstr "Markdown tartalom"
 
-#: includes/Admin/MarkdownOverrideField.php:53
+#: includes/Admin/MarkdownOverrideField.php:53 build/editor.js:2
 msgid "Custom Markdown"
 msgstr "Egyéni Markdown"
 
 #: includes/Admin/MarkdownOverrideField.php:61
-#: includes/Admin/MarkdownOverrideField.php:87
 msgid "# Title..."
 msgstr "# Cím..."
 
@@ -545,15 +542,8 @@ msgstr ""
 "automatikusan generált tartalom helyett. Ideális Elementor, Divi vagy más "
 "page builder oldalakhoz."
 
-#: includes/Admin/MarkdownOverrideField.php:91
-msgid ""
-"If filled, this markdown is served at the /md endpoint instead of the auto-"
-"generated content."
-msgstr ""
-"Ha ki van töltve, ez a markdown a /md endpointon lesz kiszolgálva az "
-"automatikusan generált tartalom helyett."
-
-#: includes/Admin/MarkdownOverrideField.php:113
+#: includes/Admin/MarkdownOverrideField.php:88 build/editor.js:2
+#: build/term.js:2
 msgid ""
 "Only users allowed to post unfiltered HTML can edit the Markdown override."
 msgstr ""
@@ -576,1321 +566,22 @@ msgstr "Beállítások"
 msgid "Get Plugin"
 msgstr "Bővítmény letöltése"
 
-#: includes/Admin/Settings/CrawlerSection.php:29
-msgid "AI Crawler Access"
-msgstr "AI crawler hozzáférés"
-
-#: includes/Admin/Settings/CrawlerSection.php:31
-msgid ""
-"Blocked crawlers get a \"Disallow: /\" rule in robots.txt. Checked = Blocked."
-msgstr ""
-"A tiltott crawlerek egy \"Disallow: /\" szabályt kapnak a robots.txt-ben. "
-"Bejelölve = Tiltva."
-
-#: includes/Admin/Settings/CrawlerSection.php:35
-msgid "Block by purpose"
-msgstr "Tiltás cél szerint"
-
-#: includes/Admin/Settings/CrawlerSection.php:48
-msgid ""
-"Covers every crawler with that purpose, including ones added in future "
-"updates."
-msgstr ""
-"Lefedi az összes ilyen célú crawlert, beleértve a jövőbeli frissítésekben "
-"hozzáadottakat is."
-
-#: includes/Admin/Settings/CrawlerSection.php:57
-msgid ""
-"robots.txt is a request, not an enforcement. OpenAI, Perplexity, Meta and "
-"Amazon state that their user-triggered fetchers may ignore it."
-msgstr ""
-"A robots.txt egy kérés, nem kikényszerítés. Az OpenAI, a Perplexity, a Meta "
-"és az Amazon szerint a felhasználó által indított lekérőik figyelmen kívül "
-"hagyhatják."
-
-#: includes/Admin/Settings/CrawlerSection.php:117
-msgid "Block all AI training crawlers"
-msgstr "Minden AI tanító crawler tiltása"
-
-#: includes/Admin/Settings/CrawlerSection.php:118
-msgid "Training crawlers"
-msgstr "AI tanító crawlerek"
-
-#: includes/Admin/Settings/CrawlerSection.php:121
-msgid "Block all AI search crawlers"
-msgstr "Minden AI kereső crawler tiltása"
-
-#: includes/Admin/Settings/CrawlerSection.php:122
-msgid "AI search crawlers"
-msgstr "AI kereső crawlerek"
-
-#: includes/Admin/Settings/CrawlerSection.php:125
-msgid "Block all user-triggered AI fetchers"
-msgstr "Minden felhasználó által indított AI lekérés tiltása"
-
-#: includes/Admin/Settings/CrawlerSection.php:126
-msgid "User-triggered fetchers"
-msgstr "Felhasználó által indított lekérők"
-
-#: includes/Admin/Settings/FieldRendererTrait.php:153 includes/MetaBox.php:261
-msgid "Select Image"
-msgstr "Kép kiválasztása"
-
-#: includes/Admin/Settings/LlmsSection.php:31
-msgid "llms.txt File"
-msgstr "llms.txt fájl"
-
-#: includes/Admin/Settings/LlmsSection.php:52
-msgid "llms.txt"
-msgstr "llms.txt"
-
-#: includes/Admin/Settings/LlmsSection.php:58
-msgid "Enable llms.txt for AI crawlers"
-msgstr "Engedélyezd az llms.txt-t AI crawler-ek számára"
-
-#. translators: %1$s: llms.txt URL, %2$s: llmstxt.org link
-#: includes/Admin/Settings/LlmsSection.php:66
-#, php-format
-msgid "Your llms.txt: %1$s — %2$s"
-msgstr "Az llms.txt-d: %1$s — %2$s"
-
-#: includes/Admin/Settings/LlmsSection.php:68
-msgid "Learn more"
-msgstr "Tudj meg többet"
-
-#: includes/Admin/Settings/LlmsSection.php:85
-#: includes/Admin/Settings/TabSocial.php:110
-msgid "Summary"
-msgstr "Összefoglaló"
-
-#: includes/Admin/Settings/LlmsSection.php:91
-msgid "One sentence shown as the summary line. Empty = the site tagline."
-msgstr ""
-"Egy mondat, ami összefoglaló sorként jelenik meg. Üresen = a webhely "
-"jelmondata."
-
-#: includes/Admin/Settings/LlmsSection.php:98
-msgid "Introduction"
-msgstr "Bevezetés"
-
-#: includes/Admin/Settings/LlmsSection.php:104
-msgid ""
-"Optional Markdown text shown before the page lists. Do not use headings."
-msgstr ""
-"Opcionális Markdown szöveg, ami az oldallisták előtt jelenik meg. Ne "
-"használj címsorokat."
-
-#: includes/Admin/Settings/LlmsSection.php:121
-msgid "Content types"
-msgstr "Tartalomtípusok"
-
-#: includes/Admin/Settings/LlmsSection.php:124
-msgid ""
-"Each type becomes its own section. Noindex content and content with AI Input "
-"set to \"No\" are left out."
-msgstr ""
-"Minden típus külön szekció lesz. A noindex tartalom és az \"AI bemenet\" "
-"mezőnél \"Nem\"-re állított tartalom kimarad."
-
-#: includes/Admin/Settings/LlmsSection.php:128
-msgid "Items per section"
-msgstr "Elemek szekciónként"
-
-#: includes/Admin/Settings/LlmsSection.php:137
-msgid "Pages are listed in menu order, other types newest first."
-msgstr ""
-"Az oldalak menüsorrendben, a többi típus a legújabbal kezdve van listázva."
-
-#: includes/Admin/Settings/LlmsSection.php:141
-msgid "Markdown links"
-msgstr "Markdown hivatkozások"
-
-#: includes/Admin/Settings/LlmsSection.php:147
-msgid ""
-"Link to the Markdown version of each page (/md) instead of the HTML page"
-msgstr ""
-"Az egyes oldalak Markdown verziójára (/md) mutasson a HTML oldal helyett"
-
-#: includes/Admin/Settings/LlmsSection.php:164
-msgid "Extra links"
-msgstr "Extra linkek"
-
-#: includes/Admin/Settings/LlmsSection.php:170
-msgid ""
-"One per line: Title | https://url | optional description. Listed under "
-"\"Optional\"."
-msgstr ""
-"Soronként egy: Cím | https://url | opcionális leírás. Az \"Optional\" "
-"szekcióban jelennek meg."
-
-#: includes/Admin/Settings/LlmsSection.php:177
-msgid "llms-full.txt"
-msgstr "llms-full.txt"
-
-#: includes/Admin/Settings/LlmsSection.php:183
-msgid "Also serve /llms-full.txt with the full Markdown content (max 1 MB)"
-msgstr ""
-"Szolgáld ki a /llms-full.txt-t is a teljes Markdown tartalommal (max. 1 MB)"
-
-#: includes/Admin/Settings/LlmsSection.php:187
-msgid ""
-"Built as a logged-out visitor. Content-restriction plugins that only protect "
-"the main page query may not apply here; use the lw_seo_post_is_eligible "
-"filter to leave restricted posts out."
-msgstr ""
-"Kijelentkezett látogatóként épül fel. Azok a tartalomkorlátozó bővítmények, "
-"amelyek csak a fő oldallekérdezést védik, itt nem biztos, hogy "
-"érvényesülnek; használd az lw_seo_post_is_eligible filtert, hogy a "
-"korlátozott bejegyzések kimaradjanak."
-
-#: includes/Admin/Settings/Tab404.php:34
-msgid "404"
-msgstr "404"
-
-#: includes/Admin/Settings/Tab404.php:53
-msgid "404 Error Handling"
-msgstr "404 hibakezelés"
-
-#: includes/Admin/Settings/Tab404.php:56
-msgid "Configure how 404 (Not Found) errors are handled on your site."
-msgstr ""
-"Állítsd be, hogyan legyenek kezelve a 404 (Nem található) hibák az oldaladon."
-
-#: includes/Admin/Settings/Tab404.php:61
-msgid "Redirect 404 to Homepage"
-msgstr "404 átirányítása a kezdőlapra"
-
-#: includes/Admin/Settings/Tab404.php:67
-msgid "Automatically redirect all 404 errors to the homepage"
-msgstr "Minden 404 hiba automatikus átirányítása a kezdőlapra"
-
-#: includes/Admin/Settings/Tab404.php:72
-msgid ""
-"When enabled, visitors who land on a non-existent page will be redirected to "
-"your homepage with a 302 (temporary) redirect."
-msgstr ""
-"Ha engedélyezed, a nem létező oldalra érkező látogatók a kezdőlapodra "
-"lesznek átirányítva 302-es (ideiglenes) átirányítással."
-
-#: includes/Admin/Settings/TabAdvanced.php:36 includes/MetaBox.php:281
-msgid "Advanced"
-msgstr "Speciális"
-
-#: includes/Admin/Settings/TabAdvanced.php:55
-msgid "Advanced Settings"
-msgstr "Speciális beállítások"
-
-#: includes/Admin/Settings/TabAdvanced.php:58
-msgid "Advanced settings and cleanup options."
-msgstr "Speciális beállítások és takarítási opciók."
-
-#: includes/Admin/Settings/TabAdvanced.php:74
-msgid "Features"
-msgstr "Funkciók"
-
-#: includes/Admin/Settings/TabAdvanced.php:77
-msgid "Breadcrumbs"
-msgstr "Morzsamenü"
-
-#: includes/Admin/Settings/TabAdvanced.php:83
-msgid "Enable breadcrumbs"
-msgstr "Morzsamenü engedélyezése"
-
-#: includes/Admin/Settings/TabAdvanced.php:88
-msgid "Use shortcode [lw_breadcrumbs] or function lw_seo_breadcrumbs()"
-msgstr ""
-"Használd a [lw_breadcrumbs] shortcode-ot vagy a lw_seo_breadcrumbs() "
-"függvényt"
-
-#: includes/Admin/Settings/TabAdvanced.php:93
-#: includes/Admin/Settings/TabWooCommerce.php:203
-msgid "Schema.org"
-msgstr "Schema.org"
-
-#: includes/Admin/Settings/TabAdvanced.php:99
-msgid "Enable Schema.org JSON-LD output"
-msgstr "Schema.org JSON-LD kimenet engedélyezése"
-
-#: includes/Admin/Settings/TabAdvanced.php:106
-msgid "robots.txt"
-msgstr "robots.txt"
-
-#: includes/Admin/Settings/TabAdvanced.php:112
-msgid "Add sitemap URL and AI rules to robots.txt"
-msgstr "Sitemap URL és AI szabályok hozzáadása a robots.txt-hez"
-
-#: includes/Admin/Settings/TabAdvanced.php:120
-msgid "Your robots.txt"
-msgstr "A robots.txt fájlod"
-
-#. translators: %s: path of the robots.txt file
-#: includes/Admin/Settings/TabAdvanced.php:144
-#, php-format
-msgid ""
-"A physical robots.txt file exists (%s). The web server serves it directly, "
-"so these settings have no effect. Delete the file to let LW SEO manage "
-"robots.txt."
-msgstr ""
-"Létezik egy fizikai robots.txt fájl (%s). A webszerver közvetlenül azt "
-"szolgálja ki, ezért ezek a beállítások nem hatnak. Töröld a fájlt, hogy az "
-"LW SEO kezelhesse a robots.txt-t."
-
-#: includes/Admin/Settings/TabAdvanced.php:152
-msgid "Preview"
-msgstr "Előnézet"
-
-#: includes/Admin/Settings/TabAdvanced.php:165
-msgid "Head Cleanup"
-msgstr "Head takarítás"
-
-#: includes/Admin/Settings/TabAdvanced.php:168
-msgid "Shortlinks"
-msgstr "Rövid linkek"
-
-#: includes/Admin/Settings/TabAdvanced.php:174
-msgid "Remove shortlinks from head"
-msgstr "Rövid linkek eltávolítása a head-ből"
-
-#: includes/Admin/Settings/TabAdvanced.php:181
-msgid "RSD Link"
-msgstr "RSD link"
-
-#: includes/Admin/Settings/TabAdvanced.php:187
-msgid "Remove RSD link from head"
-msgstr "RSD link eltávolítása a head-ből"
-
-#: includes/Admin/Settings/TabAdvanced.php:194
-msgid "WLW Manifest"
-msgstr "WLW manifest"
-
-#: includes/Admin/Settings/TabAdvanced.php:200
-msgid "Remove Windows Live Writer link"
-msgstr "Windows Live Writer link eltávolítása"
-
-#: includes/Admin/Settings/TabAi.php:34
-msgid "AI / LLM"
-msgstr "AI / LLM"
-
-#: includes/Admin/Settings/TabAi.php:53
-msgid "AI / LLM Settings"
-msgstr "AI / LLM beállítások"
-
-#: includes/Admin/Settings/TabAi.php:56
-msgid "Control how AI crawlers interact with your site."
-msgstr "Szabályozd, hogyan lépnek kapcsolatba az AI crawler-ek az oldaladdal."
-
-#: includes/Admin/Settings/TabAi.php:72
-#: includes/Admin/Settings/TabLocal.php:174
-msgid "Not specified"
-msgstr "Nincs megadva"
-
-#: includes/Admin/Settings/TabAi.php:73
-msgid "Allow"
-msgstr "Engedélyezés"
-
-#: includes/Admin/Settings/TabAi.php:74
-msgid "Disallow"
-msgstr "Tiltás"
-
-#: includes/Admin/Settings/TabAi.php:77
-msgid "Search"
-msgstr "Keresés"
-
-#: includes/Admin/Settings/TabAi.php:78
-msgid "AI Input (RAG, grounding)"
-msgstr "AI bemenet (RAG, grounding)"
-
-#: includes/Admin/Settings/TabAi.php:79 includes/Admin/TermFields.php:129
-#: includes/MetaBox.php:322
-msgid "AI Training"
-msgstr "AI tanítás"
-
-#: includes/Admin/Settings/TabAi.php:82
-msgid "Content Signals"
-msgstr "Tartalmi jelzések"
-
-#: includes/Admin/Settings/TabAi.php:84
-msgid ""
-"Tell AI systems how they may use your content. Sent as a Content-Signal HTTP "
-"header, a meta tag and a robots.txt line. \"Not specified\" neither grants "
-"nor restricts that use."
-msgstr ""
-"Mondd meg az AI rendszereknek, hogyan használhatják a tartalmadat. Content-"
-"Signal HTTP headerként, meta tagként és egy robots.txt sorban kerül "
-"elküldésre. A \"Nincs megadva\" sem nem engedélyezi, sem nem korlátozza ezt "
-"a használatot."
-
-#: includes/Admin/Settings/TabContent.php:34
-msgid "Content"
-msgstr "Tartalom"
-
-#: includes/Admin/Settings/TabContent.php:53
-msgid "Content Types"
-msgstr "Tartalomtípusok"
-
-#: includes/Admin/Settings/TabContent.php:56
-msgid "Title templates and indexing settings for different content types."
-msgstr "Címsablonok és indexelési beállítások a különböző tartalomtípusokhoz."
-
-#: includes/Admin/Settings/TabContent.php:74
-msgid "Posts"
-msgstr "Bejegyzések"
-
-#: includes/Admin/Settings/TabContent.php:78
-#: includes/Admin/Settings/TabContent.php:110
-msgid "Title Template"
-msgstr "Címsablon"
-
-#: includes/Admin/Settings/TabContent.php:83
-msgid "Default Index"
-msgstr "Alapértelmezett indexelés"
-
-#: includes/Admin/Settings/TabContent.php:89
-msgid "Set posts to noindex by default"
-msgstr "Bejegyzések beállítása alapértelmezetten noindexre"
-
-#: includes/Admin/Settings/TabContent.php:106
-msgid "Pages"
-msgstr "Oldalak"
-
-#: includes/Admin/Settings/TabContent.php:125
-msgid "Taxonomies"
-msgstr "Taxonómiák"
-
-#: includes/Admin/Settings/TabContent.php:129
-msgid "Categories Title"
-msgstr "Kategóriák címe"
-
-#: includes/Admin/Settings/TabContent.php:134
-msgid "Categories Index"
-msgstr "Kategóriák indexelése"
-
-#: includes/Admin/Settings/TabContent.php:140
-msgid "Set categories to noindex"
-msgstr "Kategóriák beállítása noindexre"
-
-#: includes/Admin/Settings/TabContent.php:147
-msgid "Tags Index"
-msgstr "Címkék indexelése"
-
-#: includes/Admin/Settings/TabContent.php:153
-msgid "Set tags to noindex"
-msgstr "Címkék beállítása noindexre"
-
-#: includes/Admin/Settings/TabContent.php:170
-msgid "Archives"
-msgstr "Archívumok"
-
-#: includes/Admin/Settings/TabContent.php:173
-msgid "Author Archives"
-msgstr "Szerzői archívumok"
-
-#: includes/Admin/Settings/TabContent.php:179
-msgid "Set author archives to noindex"
-msgstr "Szerzői archívumok beállítása noindexre"
-
-#: includes/Admin/Settings/TabContent.php:186
-msgid "Date Archives"
-msgstr "Dátum archívumok"
-
-#: includes/Admin/Settings/TabContent.php:192
-msgid "Set date archives to noindex"
-msgstr "Dátum archívumok beállítása noindexre"
-
-#: includes/Admin/Settings/TabGeneral.php:53
-msgid "General Settings"
-msgstr "Általános beállítások"
-
-#: includes/Admin/Settings/TabGeneral.php:56
-msgid "Basic SEO settings for your site."
-msgstr "Alapvető SEO beállítások az oldaladhoz."
-
-#: includes/Admin/Settings/TabGeneral.php:62
-msgid "Title Separator"
-msgstr "Címelválasztó"
-
-#: includes/Admin/Settings/TabGeneral.php:68
-msgid "Homepage Title"
-msgstr "Kezdőlap címe"
-
-#: includes/Admin/Settings/TabGeneral.php:75
-msgid "Variables: %%sitename%%, %%sitedesc%%, %%sep%%"
-msgstr "Változók: %%sitename%%, %%sitedesc%%, %%sep%%"
-
-#: includes/Admin/Settings/TabGeneral.php:83
-msgid "Homepage Description"
-msgstr "Kezdőlap leírása"
-
-#: includes/Admin/Settings/TabGeneral.php:90
-msgid "Leave empty to use the site tagline."
-msgstr "Hagyd üresen a webhely szlogenjének használatához."
-
-#: includes/Admin/Settings/TabGeneral.php:98
-msgid "Site Represents"
-msgstr "A webhelyet képviseli"
-
-#: includes/Admin/Settings/TabGeneral.php:106
-msgid "Organization"
-msgstr "Szervezet"
-
-#: includes/Admin/Settings/TabGeneral.php:107
-msgid "Person"
-msgstr "Személy"
-
-#: includes/Admin/Settings/TabGeneral.php:116
-msgid "Organization/Person Name"
-msgstr "Szervezet/Személy neve"
-
-#: includes/Admin/Settings/TabGeneral.php:123
-msgid "Used in Schema.org markup."
-msgstr "Schema.org jelölésben használva."
-
-#: includes/Admin/Settings/TabLocal.php:37 includes/Local/Shortcodes.php:45
-msgid "Monday"
-msgstr "Hétfő"
-
-#: includes/Admin/Settings/TabLocal.php:38 includes/Local/Shortcodes.php:46
-msgid "Tuesday"
-msgstr "Kedd"
-
-#: includes/Admin/Settings/TabLocal.php:39 includes/Local/Shortcodes.php:47
-msgid "Wednesday"
-msgstr "Szerda"
-
-#: includes/Admin/Settings/TabLocal.php:40 includes/Local/Shortcodes.php:48
-msgid "Thursday"
-msgstr "Csütörtök"
-
-#: includes/Admin/Settings/TabLocal.php:41 includes/Local/Shortcodes.php:49
-msgid "Friday"
-msgstr "Péntek"
-
-#: includes/Admin/Settings/TabLocal.php:42 includes/Local/Shortcodes.php:50
-msgid "Saturday"
-msgstr "Szombat"
-
-#: includes/Admin/Settings/TabLocal.php:43 includes/Local/Shortcodes.php:51
-msgid "Sunday"
-msgstr "Vasárnap"
-
-#: includes/Admin/Settings/TabLocal.php:64
-#: includes/Admin/Settings/TabLocal.php:83
-msgid "Local SEO"
-msgstr "Helyi SEO"
-
-#: includes/Admin/Settings/TabLocal.php:86
-msgid ""
-"Add LocalBusiness structured data to help your business appear in local "
-"search results."
-msgstr ""
-"Adj hozzá LocalBusiness strukturált adatokat, hogy a vállalkozásod "
-"megjelenjen a helyi keresési találatok között."
-
-#: includes/Admin/Settings/TabLocal.php:104
-msgid "Business Information"
-msgstr "Vállalkozási információk"
-
-#: includes/Admin/Settings/TabLocal.php:107
-msgid "Enable Local SEO"
-msgstr "Helyi SEO engedélyezése"
-
-#: includes/Admin/Settings/TabLocal.php:113
-msgid "Enable LocalBusiness schema"
-msgstr "LocalBusiness schema engedélyezése"
-
-#: includes/Admin/Settings/TabLocal.php:121
-msgid "Business Type"
-msgstr "Vállalkozás típusa"
-
-#: includes/Admin/Settings/TabLocal.php:126
-msgid "Select the type that best describes your business."
-msgstr "Válaszd ki azt a típust, ami a legjobban leírja a vállalkozásodat."
-
-#: includes/Admin/Settings/TabLocal.php:132
-msgid "Business Name"
-msgstr "Vállalkozás neve"
-
-#: includes/Admin/Settings/TabLocal.php:145
-msgid "Leave empty to use site name."
-msgstr "Hagyd üresen a webhely nevének használatához."
-
-#: includes/Admin/Settings/TabLocal.php:151
-msgid "Business Description"
-msgstr "Vállalkozás leírása"
-
-#: includes/Admin/Settings/TabLocal.php:166
-msgid "Price Range"
-msgstr "Árkategória"
-
-#: includes/Admin/Settings/TabLocal.php:220
-msgid "Address"
-msgstr "Cím"
-
-#: includes/Admin/Settings/TabLocal.php:224
-msgid "Street Address"
-msgstr "Utca, házszám"
-
-#: includes/Admin/Settings/TabLocal.php:239
-msgid "Address Line 2"
-msgstr "Cím 2. sora"
-
-#: includes/Admin/Settings/TabLocal.php:254
-msgid "City"
-msgstr "Város"
-
-#: includes/Admin/Settings/TabLocal.php:269
-msgid "State / Region"
-msgstr "Állam / régió"
-
-#: includes/Admin/Settings/TabLocal.php:284
-msgid "Postal Code"
-msgstr "Irányítószám"
-
-#: includes/Admin/Settings/TabLocal.php:299
-msgid "Country"
-msgstr "Ország"
-
-#: includes/Admin/Settings/TabLocal.php:312
-msgid "Use ISO 3166-1 alpha-2 code (e.g., HU, US, DE)."
-msgstr "Használd az ISO 3166-1 alpha-2 kódot (pl. HU, US, DE)."
-
-#: includes/Admin/Settings/TabLocal.php:327
-msgid "Contact"
-msgstr "Kapcsolat"
-
-#: includes/Admin/Settings/TabLocal.php:331
-msgid "Phone"
-msgstr "Telefon"
-
-#: includes/Admin/Settings/TabLocal.php:347
-msgid "Email"
-msgstr "Email"
-
-#: includes/Admin/Settings/TabLocal.php:372
-msgid "Opening Hours"
-msgstr "Nyitvatartás"
-
-#: includes/Admin/Settings/TabLocal.php:375
-msgid "Use Opening Hours"
-msgstr "Nyitvatartás használata"
-
-#: includes/Admin/Settings/TabLocal.php:381
-msgid "Enable opening hours in schema"
-msgstr "Nyitvatartás engedélyezése a sémában"
-
-#: includes/Admin/Settings/TabLocal.php:425 includes/Local/Shortcodes.php:294
-#: includes/Local/Shortcodes.php:326
-msgid "Closed"
-msgstr "Zárva"
-
-#: includes/Admin/Settings/TabLocal.php:430
-msgid "Open:"
-msgstr "Nyitás:"
-
-#: includes/Admin/Settings/TabLocal.php:441
-msgid "Close:"
-msgstr "Zárás:"
-
-#: includes/Admin/Settings/TabLocal.php:459
-msgid "Coordinates"
-msgstr "Koordináták"
-
-#: includes/Admin/Settings/TabLocal.php:463
-msgid "Latitude"
-msgstr "Szélesség"
-
-#: includes/Admin/Settings/TabLocal.php:479
-msgid "Longitude"
-msgstr "Hosszúság"
-
-#. translators: %s: Google Maps URL
-#: includes/Admin/Settings/TabLocal.php:498
-#, php-format
-msgid ""
-"Find coordinates at %s - right-click location and select \"What's here?\"."
-msgstr ""
-"Koordináták keresése itt: %s - kattints jobb gombbal a helyre, és válaszd a "
-"\"Mi van itt?\" opciót."
-
-#: includes/Admin/Settings/TabMigration.php:32
-#: includes/Admin/Settings/TabRedirects.php:240
-msgid "Import"
-msgstr "Importálás"
-
-#: includes/Admin/Settings/TabMigration.php:51
-msgid "Import SEO Data"
-msgstr "SEO adatok importálása"
-
-#: includes/Admin/Settings/TabMigration.php:54
-msgid ""
-"Import SEO data from other SEO plugins. Existing LW SEO data will not be "
-"overwritten."
-msgstr ""
-"SEO adatok importálása más SEO bővítményekből. A meglévő LW SEO adatok nem "
-"lesznek felülírva."
-
-#: includes/Admin/Settings/TabMigration.php:60
-msgid "RankMath SEO"
-msgstr "RankMath SEO"
-
-#: includes/Admin/Settings/TabMigration.php:61
-msgid "Detect RankMath SEO data in your database for migration."
-msgstr "RankMath SEO adatok észlelése az adatbázisodban a migrációhoz."
-
-#: includes/Admin/Settings/TabMigration.php:65
-msgid "Yoast SEO"
-msgstr "Yoast SEO"
-
-#: includes/Admin/Settings/TabMigration.php:66
-msgid "Detect Yoast SEO data in your database for migration."
-msgstr "Yoast SEO adatok felismerése az adatbázisodban migrációhoz."
-
-#: includes/Admin/Settings/TabMigration.php:87
-msgid "Detect Data"
-msgstr "Adatok észlelése"
-
-#: includes/Admin/Settings/TabMigration.php:99
-msgid "Preview Migration"
-msgstr "Migráció előnézete"
-
-#: includes/Admin/Settings/TabMigration.php:102
-msgid "Run Migration"
-msgstr "Migráció futtatása"
-
-#: includes/Admin/Settings/TabRedirects.php:37
-msgid "Redirects"
-msgstr "Átirányítások"
-
-#: includes/Admin/Settings/TabRedirects.php:57
-msgid "Redirect Manager"
-msgstr "Átirányításkezelő"
-
-#: includes/Admin/Settings/TabRedirects.php:60
-msgid ""
-"Create and manage URL redirects to prevent 404 errors and preserve SEO value."
-msgstr ""
-"URL átirányítások létrehozása és kezelése a 404 hibák megelőzéséhez és az "
-"SEO érték megőrzéséhez."
-
-#: includes/Admin/Settings/TabRedirects.php:65
-msgid "Enable Redirects"
-msgstr "Átirányítások engedélyezése"
-
-#: includes/Admin/Settings/TabRedirects.php:71
-msgid "Process redirect rules"
-msgstr "Átirányítási szabályok feldolgozása"
-
-#: includes/Admin/Settings/TabRedirects.php:81
-msgid "Add New Redirect"
-msgstr "Új átirányítás hozzáadása"
-
-#: includes/Admin/Settings/TabRedirects.php:89
-msgid "Source URL"
-msgstr "Forrás URL"
-
-#: includes/Admin/Settings/TabRedirects.php:99
-msgid "The old URL path that should redirect (e.g., /old-page/)."
-msgstr "A régi URL útvonal, amit át kell irányítani (pl. /old-page/)."
-
-#: includes/Admin/Settings/TabRedirects.php:105
-msgid "Destination URL"
-msgstr "Cél URL"
-
-#: includes/Admin/Settings/TabRedirects.php:115
-msgid "The new URL to redirect to. Leave empty for 410/451 types."
-msgstr "Az új URL, amire átirányítson. Hagyd üresen a 410/451 típusokhoz."
-
-#: includes/Admin/Settings/TabRedirects.php:121
-msgid "Redirect Type"
-msgstr "Átirányítás típusa"
-
-#: includes/Admin/Settings/TabRedirects.php:134
-#: includes/Admin/Settings/TabRedirects.php:186
-#: includes/Admin/SettingsPage.php:186
-msgid "Regex"
-msgstr "Regex"
-
-#: includes/Admin/Settings/TabRedirects.php:138
-msgid "Source is a regular expression"
-msgstr "A forrás reguláris kifejezés"
-
-#: includes/Admin/Settings/TabRedirects.php:141
-msgid ""
-"Advanced: Use regex patterns like ^/category/(.*)$ with $1 in destination."
-msgstr ""
-"Speciális: Használj regex mintákat, például ^/category/(.*)$ és a célban $1-"
-"et."
-
-#: includes/Admin/Settings/TabRedirects.php:149
-#: includes/Admin/SettingsPage.php:176
-msgid "Add Redirect"
-msgstr "Átirányítás hozzáadása"
-
-#: includes/Admin/Settings/TabRedirects.php:152
-msgid "Cancel"
-msgstr "Mégse"
-
-#: includes/Admin/Settings/TabRedirects.php:163
-msgid "Existing Redirects"
-msgstr "Meglévő átirányítások"
-
-#: includes/Admin/Settings/TabRedirects.php:168
-msgid "No redirects configured yet."
-msgstr "Még nincs beállítva átirányítás."
-
-#: includes/Admin/Settings/TabRedirects.php:173
-msgid "Source"
-msgstr "Forrás"
-
-#: includes/Admin/Settings/TabRedirects.php:174
-msgid "Destination"
-msgstr "Cél"
-
-#: includes/Admin/Settings/TabRedirects.php:175
-msgid "Type"
-msgstr "Típus"
-
-#: includes/Admin/Settings/TabRedirects.php:176
-msgid "Hits"
-msgstr "Találatok"
-
-#: includes/Admin/Settings/TabRedirects.php:177
-msgid "Actions"
-msgstr "Műveletek"
-
-#: includes/Admin/Settings/TabRedirects.php:191
-#: includes/Admin/SettingsPage.php:185
-msgid "N/A"
-msgstr "N/A"
-
-#: includes/Admin/Settings/TabRedirects.php:210
-#: includes/Admin/SettingsPage.php:178
-msgid "Edit"
-msgstr "Szerkesztés"
-
-#: includes/Admin/Settings/TabRedirects.php:213
-#: includes/Admin/SettingsPage.php:179
-msgid "Delete"
-msgstr "Törlés"
-
-#: includes/Admin/Settings/TabRedirects.php:224
-msgid "Import / Export"
-msgstr "Import / Export"
-
-#: includes/Admin/Settings/TabRedirects.php:228
-msgid "Export"
-msgstr "Exportálás"
-
-#: includes/Admin/Settings/TabRedirects.php:231
-msgid "Download CSV"
-msgstr "CSV letöltése"
-
-#: includes/Admin/Settings/TabRedirects.php:234
-msgid "Export all redirects as a CSV file."
-msgstr "Az összes átirányítás exportálása CSV fájlba."
-
-#: includes/Admin/Settings/TabRedirects.php:245
-msgid "Import CSV"
-msgstr "CSV importálása"
-
-#: includes/Admin/Settings/TabRedirects.php:248
-msgid "Import redirects from a CSV file. Format: source,destination,type,regex"
-msgstr ""
-"Átirányítások importálása CSV fájlból. Formátum: "
-"source,destination,type,regex"
-
-#: includes/Admin/Settings/TabSitemap.php:38
-#: includes/Admin/Settings/TabWooCommerce.php:247
-msgid "Sitemap"
-msgstr "Oldaltérkép"
-
-#: includes/Admin/Settings/TabSitemap.php:58
-#: includes/Admin/Settings/TabSitemap.php:69
-msgid "XML Sitemap"
-msgstr "XML oldaltérkép"
-
-#: includes/Admin/Settings/TabSitemap.php:62
-msgid "Your sitemap:"
-msgstr "Az oldaltérképed:"
-
-#: includes/Admin/Settings/TabSitemap.php:69
-msgid "Enable XML sitemap"
-msgstr "XML oldaltérkép engedélyezése"
-
-#: includes/Admin/Settings/TabSitemap.php:83
-msgid "Include Posts"
-msgstr "Bejegyzések felvétele"
-
-#: includes/Admin/Settings/TabSitemap.php:83
-msgid "Include posts in sitemap"
-msgstr "Bejegyzések felvétele az oldaltérképbe"
-
-#: includes/Admin/Settings/TabSitemap.php:84
-msgid "Include Pages"
-msgstr "Oldalak felvétele"
-
-#: includes/Admin/Settings/TabSitemap.php:84
-msgid "Include pages in sitemap"
-msgstr "Oldalak felvétele az oldaltérképbe"
-
-#: includes/Admin/Settings/TabSitemap.php:92
-msgid "Custom Post Types"
-msgstr "Egyéni bejegyzéstípusok"
-
-#: includes/Admin/Settings/TabSitemap.php:95
-msgid ""
-"New custom post types are included automatically. Content set to noindex is "
-"always left out."
-msgstr ""
-"Az új egyéni bejegyzéstípusok automatikusan bekerülnek. A noindexre állított "
-"tartalom mindig kimarad."
-
-#: includes/Admin/Settings/TabSitemap.php:107
-msgid "Include Categories"
-msgstr "Kategóriák felvétele"
-
-#: includes/Admin/Settings/TabSitemap.php:107
-msgid "Include categories in sitemap"
-msgstr "Kategóriák felvétele az oldaltérképbe"
-
-#: includes/Admin/Settings/TabSitemap.php:108
-msgid "Include Tags"
-msgstr "Címkék bevonása"
-
-#: includes/Admin/Settings/TabSitemap.php:108
-msgid "Include tags in sitemap"
-msgstr "Címkék bevonása a sitemapbe"
-
-#: includes/Admin/Settings/TabSitemap.php:116
-msgid "Custom Taxonomies"
-msgstr "Egyéni taxonómiák"
-
-#: includes/Admin/Settings/TabSitemap.php:119
-msgid "Custom taxonomy archives are only listed when switched on here."
-msgstr ""
-"Az egyéni taxonómia archívumok csak akkor vannak listázva, ha itt be van "
-"kapcsolva."
-
-#: includes/Admin/Settings/TabSocial.php:34 includes/MetaBox.php:216
-msgid "Social"
-msgstr "Közösségi"
-
-#: includes/Admin/Settings/TabSocial.php:53
-msgid "Social Media"
-msgstr "Közösségi média"
-
-#: includes/Admin/Settings/TabSocial.php:56
-msgid "Settings for Open Graph and Twitter Cards."
-msgstr "Beállítások az Open Graph és a Twitter Cards funkcióhoz."
-
-#: includes/Admin/Settings/TabSocial.php:71
-msgid "Meta Tags"
-msgstr "Meta tagek"
-
-#: includes/Admin/Settings/TabSocial.php:74
-msgid "Open Graph"
-msgstr "Open Graph"
-
-#: includes/Admin/Settings/TabSocial.php:80
-msgid "Enable Open Graph meta tags"
-msgstr "Open Graph meta tagek engedélyezése"
-
-#: includes/Admin/Settings/TabSocial.php:87
-msgid "Twitter Cards"
-msgstr "Twitter Cards"
-
-#: includes/Admin/Settings/TabSocial.php:93
-msgid "Enable Twitter Card meta tags"
-msgstr "Twitter Card meta tagek engedélyezése"
-
-#: includes/Admin/Settings/TabSocial.php:101
-msgid "Default Card Type"
-msgstr "Alapértelmezett kártyatípus"
-
-#: includes/Admin/Settings/TabSocial.php:109
-msgid "Summary with large image"
-msgstr "Összefoglaló nagy képpel"
-
-#: includes/Admin/Settings/TabSocial.php:119
-msgid "Default Social Image"
-msgstr "Alapértelmezett közösségi kép"
-
-#: includes/Admin/Settings/TabSocial.php:126
-msgid "Used when a post has no featured image. Recommended: 1200x630px."
-msgstr ""
-"Akkor használjuk, ha egy bejegyzésnek nincs kiemelt képe. Ajánlott: "
-"1200x630px."
-
-#: includes/Admin/Settings/TabSocial.php:143
-msgid "Facebook"
-msgstr "Facebook"
-
-#: includes/Admin/Settings/TabSocial.php:144
-msgid "Twitter / X"
-msgstr "Twitter / X"
-
-#: includes/Admin/Settings/TabSocial.php:145
-msgid "Instagram"
-msgstr "Instagram"
-
-#: includes/Admin/Settings/TabSocial.php:146
-msgid "LinkedIn"
-msgstr "LinkedIn"
-
-#: includes/Admin/Settings/TabSocial.php:147
-msgid "YouTube"
-msgstr "YouTube"
-
-#: includes/Admin/Settings/TabSocial.php:151
-msgid "Social Profiles"
-msgstr "Közösségi profilok"
-
-#: includes/Admin/Settings/TabWooCommerce.php:36
-msgid "WooCommerce"
-msgstr "WooCommerce"
-
-#: includes/Admin/Settings/TabWooCommerce.php:55
-#: includes/Admin/Settings/TabWooCommerce.php:147
-msgid "WooCommerce SEO"
-msgstr "WooCommerce SEO"
-
-#: includes/Admin/Settings/TabWooCommerce.php:58
-msgid "Optimize your WooCommerce products for search engines and social media."
-msgstr ""
-"Optimalizáld a WooCommerce termékeidet keresőmotorokhoz és közösségi "
-"médiához."
-
-#: includes/Admin/Settings/TabWooCommerce.php:75
-msgid "Permalinks"
-msgstr "Permalinkek"
-
-#: includes/Admin/Settings/TabWooCommerce.php:77
-msgid ""
-"Slug-only WooCommerce permalinks (RankMath-compatible). Categories whose "
-"root slug collides with a page, reserved slug, or another taxonomy/CPT base "
-"are automatically skipped to avoid breaking existing URLs."
-msgstr ""
-"Csak slug alapú WooCommerce permalinkek (RankMath-kompatibilis). Azok a "
-"kategóriák, amelyek gyökér slugja ütközik egy oldallal, egy foglalt sluggal "
-"vagy egy másik taxonómia/CPT bázissal, automatikusan kimaradnak, hogy "
-"elkerüljük a meglévő URL-ek elrontását."
-
-#: includes/Admin/Settings/TabWooCommerce.php:81
-msgid "Category base"
-msgstr "Kategória bázis"
-
-#: includes/Admin/Settings/TabWooCommerce.php:87
-msgid "Remove /product-category/ from product category URLs"
-msgstr "A /product-category/ eltávolítása a termékkategória URL-ekből"
-
-#: includes/Admin/Settings/TabWooCommerce.php:94
-msgid "Parent slugs"
-msgstr "Szülő slugok"
-
-#: includes/Admin/Settings/TabWooCommerce.php:100
-msgid "Remove parent category slugs (expose leaf-only URLs)"
-msgstr "A szülő kategória slugok eltávolítása (csak a levél URL-ek kitétele)"
-
-#: includes/Admin/Settings/TabWooCommerce.php:107
-msgid "Product base"
-msgstr "Termék alap"
-
-#: includes/Admin/Settings/TabWooCommerce.php:113
-msgid "Remove /product/ from product URLs"
-msgstr "A /product/ eltávolítása a termék URL-ekből"
-
-#: includes/Admin/Settings/TabWooCommerce.php:126
-msgid "Skipped categories (slug collision)"
-msgstr "Kihagyott kategóriák (slug ütközés)"
-
-#: includes/Admin/Settings/TabWooCommerce.php:130
-msgid ""
-"These category slugs already belong to a page, reserved WordPress slug, or "
-"another taxonomy/CPT base. They keep their default WooCommerce URL to avoid "
-"shadowing the existing content. Rename either the category or the "
-"conflicting slug to convert."
-msgstr ""
-"Ezek a kategória slugok már egy oldalhoz, foglalt WordPress slughoz vagy egy "
-"másik taxonómia/CPT alaphoz tartoznak. Az alapértelmezett WooCommerce URL-"
-"jüket megtartják, hogy ne árnyékolják be a meglévő tartalmat. Nevezd át vagy "
-"a kategóriát, vagy az ütköző slugot a konvertáláshoz."
-
-#: includes/Admin/Settings/TabWooCommerce.php:153
-msgid "Enable WooCommerce SEO features"
-msgstr "WooCommerce SEO funkciók engedélyezése"
-
-#: includes/Admin/Settings/TabWooCommerce.php:159
-msgid ""
-"Adds product-specific OpenGraph tags, Schema.org Product markup, and more."
-msgstr ""
-"Termékspecifikus OpenGraph tageket, Schema.org Product jelölést és még sok "
-"mást ad hozzá."
-
-#: includes/Admin/Settings/TabWooCommerce.php:165
-msgid "Product Title"
-msgstr "Termék címe"
-
-#: includes/Admin/Settings/TabWooCommerce.php:180
-msgid "Noindex Products"
-msgstr "Termékek noindexelése"
-
-#: includes/Admin/Settings/TabWooCommerce.php:186
-msgid "Add noindex to product pages"
-msgstr "Noindex hozzáadása a termékoldalakhoz"
-
-#: includes/Admin/Settings/TabWooCommerce.php:206
-msgid "Product Schema"
-msgstr "Termék Schema"
-
-#: includes/Admin/Settings/TabWooCommerce.php:212
-msgid "Enable Product Schema.org markup"
-msgstr "Schema.org Product jelölés engedélyezése"
-
-#: includes/Admin/Settings/TabWooCommerce.php:218
-msgid ""
-"Adds structured data for products including price, availability, and reviews."
-msgstr ""
-"Strukturált adatokat ad hozzá a termékekhez, beleértve az árat, az "
-"elérhetőséget és az értékeléseket."
-
-#: includes/Admin/Settings/TabWooCommerce.php:223
-msgid "Include Reviews"
-msgstr "Értékelések beemelése"
-
-#: includes/Admin/Settings/TabWooCommerce.php:229
-msgid "Include product reviews in Schema"
-msgstr "Termékértékelések beemelése a Schema-ba"
-
-#: includes/Admin/Settings/TabWooCommerce.php:250
-msgid "Products in Sitemap"
-msgstr "Termékek a webhelytérképben"
-
-#: includes/Admin/Settings/TabWooCommerce.php:256
-msgid "Include products in XML sitemap"
-msgstr "Termékek beemelése az XML webhelytérképbe"
-
-#: includes/Admin/Settings/TabWooCommerce.php:264
-msgid "Product Categories"
-msgstr "Termékkategóriák"
-
-#: includes/Admin/Settings/TabWooCommerce.php:270
-msgid "Include product categories in XML sitemap"
-msgstr "Termékkategóriák beemelése az XML webhelytérképbe"
-
-#: includes/Admin/Settings/TabWooCommerce.php:278
-msgid "Product Tags"
-msgstr "Termékcímkék"
-
-#: includes/Admin/Settings/TabWooCommerce.php:284
-msgid "Include product tags in XML sitemap"
-msgstr "Termékcímkék beemelése az XML webhelytérképbe"
-
-#: includes/Admin/SettingsPage.php:120
+#: includes/Admin/SettingsPage.php:61
 msgid "SEO Settings"
 msgstr "SEO beállítások"
 
-#: includes/Admin/SettingsPage.php:121 includes/SiteManager/Integration.php:38
+#: includes/Admin/SettingsPage.php:62 includes/SiteManager/Integration.php:38
 msgid "SEO"
 msgstr "SEO"
 
-#: includes/Admin/SettingsPage.php:177
-msgid "Update Redirect"
-msgstr "Átirányítás frissítése"
-
-#: includes/Admin/SettingsPage.php:180
-msgid "Are you sure you want to delete this redirect?"
-msgstr "Biztos, hogy törölni akarod ezt az átirányítást?"
-
-#: includes/Admin/SettingsPage.php:181 includes/Redirects/Ajax.php:68
-#: includes/Redirects/Ajax.php:122
-msgid "Source URL is required."
-msgstr "A forrás URL megadása kötelező."
-
-#: includes/Admin/SettingsPage.php:182
-msgid "Please select a CSV file."
-msgstr "Kérlek, válassz egy CSV fájlt."
-
-#: includes/Admin/SettingsPage.php:183
-msgid "Some rows could not be imported:"
-msgstr "Néhány sort nem sikerült importálni:"
-
-#: includes/Admin/SettingsPage.php:184
-msgid "Not required for this type"
-msgstr "Ehhez a típushoz nem kötelező"
-
-#: includes/Admin/SettingsPage.php:204
-msgid "No data found in the database for this plugin."
-msgstr "Nem található adat az adatbázisban ehhez a bővítményhez."
-
-#: includes/Admin/SettingsPage.php:205
-msgid "Global Options"
-msgstr "Globális beállítások"
-
-#: includes/Admin/SettingsPage.php:206
-msgid "Posts with SEO meta"
-msgstr "Bejegyzések SEO meta adatokkal"
-
-#: includes/Admin/SettingsPage.php:207
-msgid "Terms with SEO meta"
-msgstr "Kifejezések SEO meta adatokkal"
-
-#: includes/Admin/SettingsPage.php:208
-msgid "Users with SEO meta"
-msgstr "Felhasználók SEO meta adatokkal"
-
-#: includes/Admin/SettingsPage.php:209
-msgid "Redirects (DB table)"
-msgstr "Átirányítások (DB tábla)"
-
-#: includes/Admin/SettingsPage.php:210
-msgid "Found"
-msgstr "Találat"
-
-#: includes/Admin/SettingsPage.php:211
-msgid "Not found"
-msgstr "Nincs találat"
-
-#: includes/Admin/SettingsPage.php:212
-msgid "Preview Results (Dry Run)"
-msgstr "Eredmények előnézete (Dry Run)"
-
-#: includes/Admin/SettingsPage.php:213
-msgid "Migration Results"
-msgstr "Migráció eredményei"
-
-#: includes/Admin/SettingsPage.php:214
-msgid "Options migrated"
-msgstr "Migrált beállítások"
-
-#: includes/Admin/SettingsPage.php:215
-msgid "Posts migrated"
-msgstr "Migrált bejegyzések"
-
-#: includes/Admin/SettingsPage.php:216
-msgid "Posts skipped (LW SEO data already present)"
-msgstr "Kihagyott bejegyzések (LW SEO adatok már jelen vannak)"
-
-#: includes/Admin/SettingsPage.php:217
-msgid "Posts skipped (no actionable data)"
-msgstr "Kihagyott bejegyzések (nincs feldolgozható adat)"
-
-#: includes/Admin/SettingsPage.php:218
-msgid "Terms migrated"
-msgstr "Migrált kifejezések"
-
-#: includes/Admin/SettingsPage.php:219
-msgid "Terms skipped (LW SEO data already present)"
-msgstr "Kihagyott kifejezések (LW SEO adatok már jelen vannak)"
-
-#: includes/Admin/SettingsPage.php:220
-msgid "Terms skipped (no actionable data)"
-msgstr "Kihagyott kifejezések (nincs feldolgozható adat)"
-
-#: includes/Admin/SettingsPage.php:221
-msgid "Users migrated"
-msgstr "Migrált felhasználók"
-
-#: includes/Admin/SettingsPage.php:222
-msgid "Primary terms migrated"
-msgstr "Migrált elsődleges kifejezések"
-
-#: includes/Admin/SettingsPage.php:223
-msgid "Redirects migrated"
-msgstr "Migrált átirányítások"
-
-#: includes/Admin/SettingsPage.php:224
-msgid "Redirects skipped"
-msgstr "Kihagyott átirányítások"
-
-#: includes/Admin/SettingsPage.php:225
-msgid "Warnings"
-msgstr "Figyelmeztetések"
-
-#: includes/Admin/SettingsPage.php:226
-msgid "This was a preview. No data was modified."
-msgstr "Ez egy előnézet volt. Nem módosult semmilyen adat."
-
-#: includes/Admin/SettingsPage.php:227
+#: includes/Admin/SettingsPage.php:131
 msgid ""
-"Are you sure you want to run the migration? Existing LW SEO data will not be "
-"overwritten."
+"The settings screen files are missing. Re-install the plugin from a release "
+"ZIP, or run \"npm install && npm run build\" in the plugin directory."
 msgstr ""
-"Biztos, hogy lefuttatod a migrációt? A meglévő LW SEO adatok nem lesznek "
-"felülírva."
-
-#: includes/Admin/SettingsPage.php:273
-msgid "Lightweight SEO"
-msgstr "Lightweight SEO"
-
-#: includes/Admin/SettingsPage.php:279
-msgid ""
-"Another SEO plugin (Yoast SEO, Rank Math or All in One SEO) is active. LW "
-"SEO skips its meta tags to avoid duplicates. Deactivate the other plugin to "
-"use LW SEO fully."
-msgstr ""
-"Egy másik SEO bővítmény (Yoast SEO, Rank Math vagy All in One SEO) aktív. Az "
-"LW SEO kihagyja a meta tagjeit, hogy elkerülje a duplikációt. Kapcsold ki a "
-"másik bővítményt az LW SEO teljes használatához."
-
-#: includes/Admin/TermFields.php:52 includes/MetaBox.php:155
-msgid "SEO Title"
-msgstr "SEO cím"
-
-#: includes/Admin/TermFields.php:55 includes/MetaBox.php:170
-msgid "Leave empty to use the default title template."
-msgstr "Hagyd üresen az alapértelmezett címsablon használatához."
-
-#: includes/Admin/TermFields.php:59 includes/MetaBox.php:176
-msgid "Meta Description"
-msgstr "Meta leírás"
-
-#: includes/Admin/TermFields.php:65
-msgid "Robots"
-msgstr "Robots"
-
-#: includes/Admin/TermFields.php:69
-msgid "noindex this archive"
-msgstr "noindex erre az archívumra"
-
-#: includes/Admin/TermFields.php:88 includes/MetaBox.php:221
-msgid "Social Title"
-msgstr "Közösségi cím"
-
-#: includes/Admin/TermFields.php:91 includes/MetaBox.php:229
-msgid "Defaults to SEO title"
-msgstr "Alapértelmezetten az SEO cím"
-
-#: includes/Admin/TermFields.php:95 includes/MetaBox.php:235
-msgid "Social Description"
-msgstr "Közösségi leírás"
-
-#: includes/Admin/TermFields.php:98 includes/MetaBox.php:242
-msgid "Defaults to meta description"
-msgstr "Alapértelmezetten a meta leírás"
-
-#: includes/Admin/TermFields.php:102 includes/MetaBox.php:248
-msgid "Social Image"
-msgstr "Közösségi kép"
-
-#: includes/Admin/TermFields.php:123 includes/MetaBox.php:315
-msgid "Default (use global setting)"
-msgstr "Alapértelmezett (globális beállítás használata)"
-
-#: includes/Admin/TermFields.php:124 includes/MetaBox.php:316
-msgid "Yes"
-msgstr "Igen"
-
-#: includes/Admin/TermFields.php:125 includes/MetaBox.php:317
-msgid "No"
-msgstr "Nem"
-
-#: includes/Admin/TermFields.php:130 includes/MetaBox.php:334
-msgid "AI Input (RAG)"
-msgstr "AI bemenet (RAG)"
-
-#: includes/Admin/TermFields.php:131 includes/MetaBox.php:346
-msgid "AI Search"
-msgstr "AI keresés"
+"A beállítóoldal fájljai hiányoznak. Telepítsd újra a bővítményt egy kiadási "
+"ZIP-ből, vagy futtasd az \"npm install && npm run build\" parancsot a "
+"bővítmény mappájában."
 
 #: includes/Breadcrumbs.php:45 includes/Breadcrumbs.php:67
 #: includes/Breadcrumbs.php:400 includes/Breadcrumbs.php:420
@@ -1911,62 +602,164 @@ msgstr "Az oldal nem található"
 msgid "Breadcrumb"
 msgstr "Morzsamenü"
 
-#: includes/MetaBox.php:124
+#: includes/Editor/PostRestField.php:85
+msgid "Sorry, you are not allowed to edit the SEO settings of this post."
+msgstr "Nincs jogosultságod a bejegyzés SEO-beállításainak szerkesztéséhez."
+
+#: includes/Editor/PostRestField.php:119
+msgid "LW SEO fields."
+msgstr "LW SEO mezők."
+
+#: includes/Local/Shortcodes.php:45 build/index.js:1
+msgid "Monday"
+msgstr "Hétfő"
+
+#: includes/Local/Shortcodes.php:46 build/index.js:1
+msgid "Tuesday"
+msgstr "Kedd"
+
+#: includes/Local/Shortcodes.php:47 build/index.js:1
+msgid "Wednesday"
+msgstr "Szerda"
+
+#: includes/Local/Shortcodes.php:48 build/index.js:1
+msgid "Thursday"
+msgstr "Csütörtök"
+
+#: includes/Local/Shortcodes.php:49 build/index.js:1
+msgid "Friday"
+msgstr "Péntek"
+
+#: includes/Local/Shortcodes.php:50 build/index.js:1
+msgid "Saturday"
+msgstr "Szombat"
+
+#: includes/Local/Shortcodes.php:51 build/index.js:1
+msgid "Sunday"
+msgstr "Vasárnap"
+
+#: includes/Local/Shortcodes.php:294 includes/Local/Shortcodes.php:326
+#: build/index.js:1
+msgid "Closed"
+msgstr "Zárva"
+
+#: includes/MetaBox.php:99
 msgid "characters remaining"
 msgstr "karakter van hátra"
 
-#: includes/MetaBox.php:125
+#: includes/MetaBox.php:100
 msgid "Too long!"
 msgstr "Túl hosszú!"
 
-#: includes/MetaBox.php:184
+#: includes/MetaBox.php:130 build/editor.js:2 build/term.js:2
+msgid "SEO Title"
+msgstr "SEO cím"
+
+#: includes/MetaBox.php:145 build/editor.js:2 build/term.js:2
+msgid "Leave empty to use the default title template."
+msgstr "Hagyd üresen az alapértelmezett címsablon használatához."
+
+#: includes/MetaBox.php:151 build/editor.js:2 build/term.js:2
+msgid "Meta Description"
+msgstr "Meta leírás"
+
+#: includes/MetaBox.php:159
 msgid "Enter a meta description..."
 msgstr "Adj meg egy meta leírást..."
 
-#: includes/MetaBox.php:199
+#: includes/MetaBox.php:174 build/index.js:1 build/index.js:2
 msgid "noindex"
 msgstr "noindex"
 
-#: includes/MetaBox.php:208
+#: includes/MetaBox.php:183
 msgid "nofollow"
 msgstr "nofollow"
 
-#: includes/MetaBox.php:258
+#: includes/MetaBox.php:191 build/editor.js:2 build/index.js:1 build/term.js:2
+msgid "Social"
+msgstr "Közösségi"
+
+#: includes/MetaBox.php:196 build/editor.js:2 build/term.js:2
+msgid "Social Title"
+msgstr "Közösségi cím"
+
+#: includes/MetaBox.php:204 build/editor.js:2 build/term.js:2
+msgid "Defaults to SEO title"
+msgstr "Alapértelmezetten az SEO cím"
+
+#: includes/MetaBox.php:210 build/editor.js:2 build/term.js:2
+msgid "Social Description"
+msgstr "Közösségi leírás"
+
+#: includes/MetaBox.php:217 build/editor.js:2 build/term.js:2
+msgid "Defaults to meta description"
+msgstr "Alapértelmezetten a meta leírás"
+
+#: includes/MetaBox.php:223 build/editor.js:2 build/term.js:2
+msgid "Social Image"
+msgstr "Közösségi kép"
+
+#: includes/MetaBox.php:233
 msgid "Image URL"
 msgstr "Kép URL"
 
-#: includes/MetaBox.php:264 assets/js/blocks/faq.js:84
+#: includes/MetaBox.php:236 build/editor.js:2 build/index.js:1 build/term.js:2
+msgid "Select Image"
+msgstr "Kép kiválasztása"
+
+#: includes/MetaBox.php:239 assets/js/blocks/faq.js:84 build/editor.js:2
+#: build/index.js:1 build/term.js:2
 msgid "Remove"
 msgstr "Eltávolítás"
 
-#: includes/MetaBox.php:272
+#: includes/MetaBox.php:247
 msgid "Priority: Social Image → Featured Image → Default Image."
 msgstr "Prioritás: Közösségi kép → Kiemelt kép → Alapértelmezett kép."
 
-#: includes/MetaBox.php:286
+#: includes/MetaBox.php:256 build/editor.js:2 build/index.js:1
+msgid "Advanced"
+msgstr "Speciális"
+
+#: includes/MetaBox.php:261 build/editor.js:2
 msgid "Canonical URL"
 msgstr "Kanonikus URL"
 
-#: includes/MetaBox.php:297
+#: includes/MetaBox.php:272 build/editor.js:2
 msgid "Leave empty to use the default permalink."
 msgstr "Hagyd üresen az alapértelmezett permalink használatához."
 
-#: includes/MetaBox.php:306
+#: includes/MetaBox.php:281 build/editor.js:2 build/term.js:2
 msgid "AI Content Signals"
 msgstr "AI tartalmi jelzések"
 
-#: includes/MetaBox.php:357
+#: includes/MetaBox.php:290 build/editor.js:2 build/term.js:2
+msgid "Default (use global setting)"
+msgstr "Alapértelmezett (globális beállítás használata)"
+
+#: includes/MetaBox.php:291 build/editor.js:2 build/term.js:2
+msgid "Yes"
+msgstr "Igen"
+
+#: includes/MetaBox.php:292 build/editor.js:2 build/term.js:2
+msgid "No"
+msgstr "Nem"
+
+#: includes/MetaBox.php:297 build/editor.js:2 build/index.js:2 build/term.js:2
+msgid "AI Training"
+msgstr "AI tanítás"
+
+#: includes/MetaBox.php:309 build/editor.js:2 build/term.js:2
+msgid "AI Input (RAG)"
+msgstr "AI bemenet (RAG)"
+
+#: includes/MetaBox.php:321 build/editor.js:2 build/term.js:2
+msgid "AI Search"
+msgstr "AI keresés"
+
+#: includes/MetaBox.php:332 build/editor.js:2
 msgid "Override the global Content Signals settings for this content."
 msgstr ""
 "Felülírja a globális Tartalmi jelzések beállításait ennél a tartalomnál."
-
-#: includes/Migration/Ajax.php:59 includes/Redirects/Ajax.php:36
-msgid "Security check failed."
-msgstr "Biztonsági ellenőrzés sikertelen."
-
-#: includes/Migration/Ajax.php:64 includes/Redirects/Ajax.php:41
-msgid "Permission denied."
-msgstr "Hozzáférés megtagadva."
 
 #. translators: %s: comma-separated list of RankMath WooCommerce permalink features without an LW SEO equivalent enabled.
 #: includes/Migration/RankMath/WarningCollector.php:77
@@ -2029,75 +822,56 @@ msgstr ""
 "A következő Yoast meta kulcsoknak nincs LW SEO megfelelője, és nem lesznek "
 "migrálva: %s"
 
-#: includes/Redirects/Ajax.php:77 includes/Redirects/Ajax.php:131
-msgid "Invalid regex pattern."
-msgstr "Érvénytelen regex minta."
-
-#: includes/Redirects/Ajax.php:85
-msgid "Failed to add redirect."
-msgstr "Nem sikerült hozzáadni az átirányítást."
-
-#: includes/Redirects/Ajax.php:91
-msgid "Redirect added successfully."
-msgstr "Az átirányítás sikeresen hozzáadva."
-
-#: includes/Redirects/Ajax.php:117 includes/Redirects/Ajax.php:165
-#: includes/Redirects/Ajax.php:193
-msgid "Invalid redirect ID."
-msgstr "Érvénytelen átirányítás-azonosító."
-
-#: includes/Redirects/Ajax.php:139
-msgid "Failed to update redirect."
-msgstr "Nem sikerült frissíteni az átirányítást."
-
-#: includes/Redirects/Ajax.php:145
-msgid "Redirect updated successfully."
-msgstr "Az átirányítás sikeresen frissítve."
-
-#: includes/Redirects/Ajax.php:172
-msgid "Failed to delete redirect."
-msgstr "Nem sikerült törölni az átirányítást."
-
-#: includes/Redirects/Ajax.php:176
-msgid "Redirect deleted successfully."
-msgstr "Az átirányítás sikeresen törölve."
-
-#: includes/Redirects/Ajax.php:200
-msgid "Redirect not found."
-msgstr "Átirányítás nem található."
-
-#: includes/Redirects/Ajax.php:241
-msgid "No CSV data provided."
-msgstr "Nincs CSV adat megadva."
-
-#. translators: 1: number of imported redirects, 2: number of skipped redirects
-#: includes/Redirects/Ajax.php:251
-#, php-format
-msgid "Imported %1$d redirects, skipped %2$d."
-msgstr "%1$d átirányítás importálva, %2$d kihagyva."
-
-#: includes/Redirects/Handler.php:131
+#: includes/Redirects/Handler.php:130
 msgid "Content Deleted"
 msgstr "Tartalom törölve"
 
-#: includes/Redirects/Handler.php:132
+#: includes/Redirects/Handler.php:131
 msgid "The content you are looking for has been permanently removed."
 msgstr "A keresett tartalom véglegesen eltávolítva."
 
-#: includes/Redirects/Handler.php:154
+#: includes/Redirects/Handler.php:153
 msgid "Unavailable For Legal Reasons"
 msgstr "Nem elérhető jogi okokból"
 
-#: includes/Redirects/Handler.php:155
+#: includes/Redirects/Handler.php:154
 msgid "This content is not available due to legal reasons."
 msgstr "Ez a tartalom jogi okokból nem elérhető."
 
-#: includes/Redirects/Handler.php:226
+#: includes/Redirects/Handler.php:225
 msgid "Return to homepage"
 msgstr "Vissza a kezdőlapra"
 
+#: includes/Redirects/Manager.php:290
+msgid "Invalid format."
+msgstr "Érvénytelen formátum."
+
+#. translators: 1: CSV line number, 2: reason the line was skipped
+#: includes/Redirects/Manager.php:306
+#, php-format
+msgid "Line %1$d: %2$s"
+msgstr "%1$d. sor: %2$s"
+
+#. translators: 1: CSV line number, 2: reason the line was skipped
+#: includes/Redirects/Manager.php:306
+msgid "Could not be saved."
+msgstr "Nem sikerült menteni."
+
+#: includes/Redirects/Validator.php:33
+msgid "Source URL is required."
+msgstr "A forrás URL megadása kötelező."
+
+#: includes/Redirects/Validator.php:37
+msgid "Destination URL is required for this redirect type."
+msgstr "Ehhez az átirányítás-típushoz meg kell adni a cél URL-t."
+
+#: includes/Redirects/Validator.php:41
+msgid "Invalid regex pattern."
+msgstr "Érvénytelen regex minta."
+
 #. translators: 1: current page number, 2: total page count
-#: includes/ReplaceVars.php:327
+#. translators: 1: current page, 2: total pages.
+#: includes/ReplaceVars.php:327 build/index.js:2
 #, php-format
 msgid "Page %1$d of %2$d"
 msgstr "%1$d/%2$d oldal"
@@ -2173,6 +947,26 @@ msgstr "Oldalszám"
 #: includes/ReplaceVars.php:354
 msgid "Page X of Y"
 msgstr "X/Y. oldal"
+
+#: includes/Rest/Admin/MigrationController.php:92
+msgid "Unknown migration source."
+msgstr "Ismeretlen migrációs forrás."
+
+#: includes/Rest/Admin/RedirectsController.php:84
+msgid "Failed to add redirect."
+msgstr "Nem sikerült hozzáadni az átirányítást."
+
+#: includes/Rest/Admin/RedirectsController.php:150
+msgid "No CSV data provided."
+msgstr "Nincs CSV adat megadva."
+
+#: includes/Rest/Admin/RedirectsController.php:215
+msgid "Redirect not found."
+msgstr "Átirányítás nem található."
+
+#: includes/Rest/Admin/SettingsMeta.php:54
+msgid "Other"
+msgstr "Egyéb"
 
 #: includes/RestApi.php:61 includes/RestApi.php:124 includes/RestApi.php:143
 msgid "Post ID"
@@ -2385,6 +1179,1325 @@ msgstr ""
 #: assets/js/blocks/faq.js:238
 msgid "Add Question"
 msgstr "Kérdés hozzáadása"
+
+#. translators: 1: characters used, 2: recommended maximum.
+#: build/editor.js:2 build/term.js:2
+msgid "%1$d / %2$d characters"
+msgstr "%1$d / %2$d karakter"
+
+#: build/editor.js:2
+msgid "Enter a meta description…"
+msgstr "Adj meg egy meta leírást…"
+
+#: build/editor.js:2
+msgid "Keep this page out of search results and the sitemap."
+msgstr "Az oldal ne jelenjen meg a keresési találatokban és az oldaltérképben."
+
+#: build/editor.js:2
+msgid "Ask search engines not to follow the links on this page."
+msgstr "A keresőmotorok ne kövessék az oldalon lévő linkeket."
+
+#: build/editor.js:2 build/index.js:1 build/term.js:2
+msgid "Replace"
+msgstr "Csere"
+
+#: build/editor.js:2
+msgid "Priority: Social Image, then Featured Image, then the default image."
+msgstr ""
+"Sorrend: közösségi kép, majd kiemelt kép, végül az alapértelmezett kép."
+
+#: build/editor.js:2
+msgid ""
+"If filled, this markdown is served at the /md endpoint instead of the auto-"
+"generated content. Ideal for page builder pages."
+msgstr ""
+"Ha ki van töltve, a /md végpont ezt a markdownt adja vissza az automatikusan "
+"generált tartalom helyett. Oldalépítővel készült oldalakhoz ideális."
+
+#: build/index.js:1 build/index.js:2
+msgid "Loading…"
+msgstr "Betöltés…"
+
+#: build/index.js:1
+msgid "Try again"
+msgstr "Újrapróbálás"
+
+#: build/index.js:1
+msgid "Settings saved."
+msgstr "Beállítások elmentve."
+
+#: build/index.js:1
+msgid "LW Plugins (opens in a new tab)"
+msgstr "LW Plugins (új lapon nyílik meg)"
+
+#: build/index.js:1
+msgid "LW SEO home"
+msgstr "LW SEO kezdőlap"
+
+#: build/index.js:1
+msgid "LW SEO sections"
+msgstr "LW SEO szekciók"
+
+#: build/index.js:1
+msgid "Documentation"
+msgstr "Dokumentáció"
+
+#: build/index.js:1
+msgid "(opens in a new tab)"
+msgstr "(új lapon nyílik meg)"
+
+#: build/index.js:1
+msgid "Unsaved changes"
+msgstr "Nem mentett változások"
+
+#: build/index.js:1
+msgid "Discard"
+msgstr "Elvetés"
+
+#: build/index.js:1
+msgid "Save changes"
+msgstr "Változások mentése"
+
+#: build/index.js:1
+msgid "General Settings"
+msgstr "Általános beállítások"
+
+#: build/index.js:1
+msgid "Content"
+msgstr "Tartalom"
+
+#: build/index.js:1
+msgid "Content Types"
+msgstr "Tartalomtípusok"
+
+#: build/index.js:1
+msgid "Social Media"
+msgstr "Közösségi média"
+
+#: build/index.js:1
+msgid "Sitemap"
+msgstr "Oldaltérkép"
+
+#: build/index.js:1 build/index.js:2
+msgid "XML Sitemap"
+msgstr "XML oldaltérkép"
+
+#: build/index.js:1
+msgid "AI / LLM"
+msgstr "AI / LLM"
+
+#: build/index.js:1
+msgid "AI / LLM Settings"
+msgstr "AI / LLM beállítások"
+
+#: build/index.js:1
+msgid "WooCommerce"
+msgstr "WooCommerce"
+
+#: build/index.js:1 build/index.js:2
+msgid "WooCommerce SEO"
+msgstr "WooCommerce SEO"
+
+#: build/index.js:1 build/index.js:2
+msgid "Local SEO"
+msgstr "Helyi SEO"
+
+#: build/index.js:1 build/index.js:2
+msgid "Redirects"
+msgstr "Átirányítások"
+
+#: build/index.js:1
+msgid "Redirect Manager"
+msgstr "Átirányításkezelő"
+
+#: build/index.js:1 build/index.js:4
+msgid "404 Error Handling"
+msgstr "404 hibakezelés"
+
+#: build/index.js:1
+msgid "Advanced Settings"
+msgstr "Speciális beállítások"
+
+#: build/index.js:1
+msgid "Import"
+msgstr "Importálás"
+
+#: build/index.js:1
+msgid "Import SEO Data"
+msgstr "SEO adatok importálása"
+
+#: build/index.js:1 build/index.js:2
+msgid "Not specified"
+msgstr "Nincs megadva"
+
+#: build/index.js:1
+msgid "Allow"
+msgstr "Engedélyezés"
+
+#: build/index.js:1
+msgid "Disallow"
+msgstr "Tiltás"
+
+#: build/index.js:1
+msgid "Training crawlers"
+msgstr "AI tanító crawlerek"
+
+#: build/index.js:1
+msgid "AI search crawlers"
+msgstr "AI kereső crawlerek"
+
+#: build/index.js:1
+msgid "User-triggered fetchers"
+msgstr "Felhasználó által indított lekérők"
+
+#: build/index.js:1 build/index.js:2
+msgid "Blocked"
+msgstr "Tiltva"
+
+#: build/index.js:1 build/index.js:2
+msgid "Allowed"
+msgstr "Engedélyezve"
+
+#: build/index.js:1
+msgid "Variables:"
+msgstr "Változók:"
+
+#: build/index.js:1 build/index.js:2
+msgid "Indexed"
+msgstr "Indexelve"
+
+#: build/index.js:1
+msgid "Open"
+msgstr "Nyitás"
+
+#: build/index.js:1
+msgid "Close"
+msgstr "Zárás"
+
+#: build/index.js:1
+msgid "Detect RankMath SEO data in your database for migration."
+msgstr "RankMath SEO adatok észlelése az adatbázisodban a migrációhoz."
+
+#: build/index.js:1
+msgid "Detect Yoast SEO data in your database for migration."
+msgstr "Yoast SEO adatok felismerése az adatbázisodban migrációhoz."
+
+#: build/index.js:1
+msgid "Detect Data"
+msgstr "Adatok észlelése"
+
+#: build/index.js:1
+msgid "Preview Migration"
+msgstr "Migráció előnézete"
+
+#: build/index.js:1
+msgid "Run Migration"
+msgstr "Migráció futtatása"
+
+#: build/index.js:1
+msgid "No data found in the database for this plugin."
+msgstr "Nem található adat az adatbázisban ehhez a bővítményhez."
+
+#: build/index.js:1
+msgid "Global Options"
+msgstr "Globális beállítások"
+
+#: build/index.js:1
+msgid "Found"
+msgstr "Találat"
+
+#: build/index.js:1
+msgid "Not found"
+msgstr "Nincs találat"
+
+#: build/index.js:1
+msgid "Posts with SEO meta"
+msgstr "Bejegyzések SEO meta adatokkal"
+
+#: build/index.js:1
+msgid "Terms with SEO meta"
+msgstr "Kifejezések SEO meta adatokkal"
+
+#: build/index.js:1
+msgid "Users with SEO meta"
+msgstr "Felhasználók SEO meta adatokkal"
+
+#: build/index.js:1
+msgid "Redirects (DB table)"
+msgstr "Átirányítások (DB tábla)"
+
+#: build/index.js:1
+msgid "Preview Results (Dry Run)"
+msgstr "Eredmények előnézete (Dry Run)"
+
+#: build/index.js:1
+msgid "Migration Results"
+msgstr "Migráció eredményei"
+
+#: build/index.js:1
+msgid "This was a preview. No data was modified."
+msgstr "Ez egy előnézet volt. Nem módosult semmilyen adat."
+
+#: build/index.js:1
+msgid "Options migrated"
+msgstr "Migrált beállítások"
+
+#: build/index.js:1
+msgid "Posts migrated"
+msgstr "Migrált bejegyzések"
+
+#: build/index.js:1
+msgid "Posts skipped (LW SEO data already present)"
+msgstr "Kihagyott bejegyzések (LW SEO adatok már jelen vannak)"
+
+#: build/index.js:1
+msgid "Posts skipped (no actionable data)"
+msgstr "Kihagyott bejegyzések (nincs feldolgozható adat)"
+
+#: build/index.js:1
+msgid "Terms migrated"
+msgstr "Migrált kifejezések"
+
+#: build/index.js:1
+msgid "Terms skipped (LW SEO data already present)"
+msgstr "Kihagyott kifejezések (LW SEO adatok már jelen vannak)"
+
+#: build/index.js:1
+msgid "Terms skipped (no actionable data)"
+msgstr "Kihagyott kifejezések (nincs feldolgozható adat)"
+
+#: build/index.js:1
+msgid "Users migrated"
+msgstr "Migrált felhasználók"
+
+#: build/index.js:1
+msgid "Primary terms migrated"
+msgstr "Migrált elsődleges kifejezések"
+
+#: build/index.js:1
+msgid "Redirects migrated"
+msgstr "Migrált átirányítások"
+
+#: build/index.js:1
+msgid "Redirects skipped"
+msgstr "Kihagyott átirányítások"
+
+#: build/index.js:1
+msgid "Migrated options"
+msgstr "Átvett beállítások"
+
+#: build/index.js:1
+msgid ""
+"Are you sure you want to run the migration? Existing LW SEO data will not be "
+"overwritten."
+msgstr ""
+"Biztos, hogy lefuttatod a migrációt? A meglévő LW SEO adatok nem lesznek "
+"felülírva."
+
+#: build/index.js:1
+msgid "Import / Export"
+msgstr "Import / Export"
+
+#: build/index.js:1
+msgid "Export"
+msgstr "Exportálás"
+
+#: build/index.js:1
+msgid "Export all redirects as a CSV file."
+msgstr "Az összes átirányítás exportálása CSV fájlba."
+
+#: build/index.js:1
+msgid "Download CSV"
+msgstr "CSV letöltése"
+
+#: build/index.js:1
+msgid "Import redirects from a CSV file. Format: source,destination,type,regex"
+msgstr ""
+"Átirányítások importálása CSV fájlból. Formátum: "
+"source,destination,type,regex"
+
+#. translators: 1: imported redirects, 2: skipped rows.
+#: build/index.js:2
+msgid "Imported %1$d redirects, skipped %2$d."
+msgstr "%1$d átirányítás importálva, %2$d kihagyva."
+
+#: build/index.js:2
+msgid "Import CSV"
+msgstr "CSV importálása"
+
+#: build/index.js:2
+msgid "Edit redirect"
+msgstr "Átirányítás szerkesztése"
+
+#: build/index.js:2
+msgid "Add redirect"
+msgstr "Átirányítás hozzáadása"
+
+#: build/index.js:2
+msgid "Source URL"
+msgstr "Forrás URL"
+
+#: build/index.js:2
+msgid "The old URL path that should redirect (e.g., /old-page/)."
+msgstr "A régi URL útvonal, amit át kell irányítani (pl. /old-page/)."
+
+#: build/index.js:2
+msgid "Redirect Type"
+msgstr "Átirányítás típusa"
+
+#: build/index.js:2
+msgid "Destination URL"
+msgstr "Cél URL"
+
+#: build/index.js:2
+msgid "The new URL to redirect to."
+msgstr "Az új URL, ahová átirányítunk."
+
+#: build/index.js:2
+msgid "Not required for this type."
+msgstr "Ennél a típusnál nem szükséges."
+
+#: build/index.js:2
+msgid "Source is a regular expression"
+msgstr "A forrás reguláris kifejezés"
+
+#: build/index.js:2
+msgid ""
+"Advanced: use patterns like ^/category/(.*)$ with $1 in the destination."
+msgstr "Haladó: használj ilyen mintát: ^/category/(.*)$, a célban pedig $1-et."
+
+#: build/index.js:2
+msgid "Cancel"
+msgstr "Mégse"
+
+#: build/index.js:2
+msgid "Update Redirect"
+msgstr "Átirányítás frissítése"
+
+#: build/index.js:2
+msgid "Add Redirect"
+msgstr "Átirányítás hozzáadása"
+
+#: build/index.js:2
+msgid "Included"
+msgstr "Benne van"
+
+#: build/index.js:2
+msgid "Left out"
+msgstr "Kihagyva"
+
+#: build/index.js:2
+msgid "Site"
+msgstr "Webhely"
+
+#: build/index.js:2
+msgid "Basic SEO settings for your site."
+msgstr "Alapvető SEO beállítások az oldaladhoz."
+
+#: build/index.js:2
+msgid "Title Separator"
+msgstr "Címelválasztó"
+
+#: build/index.js:2
+msgid "Homepage Title"
+msgstr "Kezdőlap címe"
+
+#: build/index.js:2
+msgid "Homepage Description"
+msgstr "Kezdőlap leírása"
+
+#: build/index.js:2
+msgid "Leave empty to use the site tagline."
+msgstr "Hagyd üresen a webhely szlogenjének használatához."
+
+#: build/index.js:2
+msgid "Knowledge Graph"
+msgstr "Knowledge Graph"
+
+#: build/index.js:2
+msgid "Who the site represents in Schema.org markup."
+msgstr "Kit képvisel a webhely a Schema.org jelölésben."
+
+#: build/index.js:2
+msgid "Site Represents"
+msgstr "A webhelyet képviseli"
+
+#: build/index.js:2
+msgid "Organization"
+msgstr "Szervezet"
+
+#: build/index.js:2
+msgid "Person"
+msgstr "Személy"
+
+#: build/index.js:2
+msgid "Organization/Person Name"
+msgstr "Szervezet/Személy neve"
+
+#: build/index.js:2
+msgid "Used in Schema.org markup."
+msgstr "Schema.org jelölésben használva."
+
+#: build/index.js:2
+msgid "Logo"
+msgstr "Logó"
+
+#: build/index.js:2
+msgid "Organization logo for Schema.org markup."
+msgstr "A szervezet logója a Schema.org jelöléshez."
+
+#: build/index.js:2
+msgid "Posts and pages"
+msgstr "Bejegyzések és oldalak"
+
+#: build/index.js:2
+msgid "Post Title Template"
+msgstr "Bejegyzéscím-sablon"
+
+#: build/index.js:2
+msgid "Posts"
+msgstr "Bejegyzések"
+
+#: build/index.js:2
+msgid "Set posts to noindex by default."
+msgstr "A bejegyzések alapból noindex-esek legyenek."
+
+#: build/index.js:2
+msgid "Page Title Template"
+msgstr "Oldalcím-sablon"
+
+#: build/index.js:2
+msgid "Pages"
+msgstr "Oldalak"
+
+#: build/index.js:2
+msgid "Set pages to noindex by default."
+msgstr "Az oldalak alapból noindex-esek legyenek."
+
+#: build/index.js:2
+msgid "Taxonomies"
+msgstr "Taxonómiák"
+
+#: build/index.js:2
+msgid "Category Title Template"
+msgstr "Kategóriacím-sablon"
+
+#: build/index.js:2
+msgid "Categories"
+msgstr "Kategóriák"
+
+#: build/index.js:2
+msgid "Set categories to noindex."
+msgstr "A kategóriák legyenek noindex-esek."
+
+#: build/index.js:2
+msgid "Tag Title Template"
+msgstr "Címkecím-sablon"
+
+#: build/index.js:2
+msgid "Tags"
+msgstr "Címkék"
+
+#: build/index.js:2
+msgid "Set tags to noindex."
+msgstr "A címkék legyenek noindex-esek."
+
+#: build/index.js:2
+msgid "Archives and special pages"
+msgstr "Archívumok és különleges oldalak"
+
+#: build/index.js:2
+msgid "Author Archive Title"
+msgstr "Szerzői archívum címe"
+
+#: build/index.js:2
+msgid "Author Archives"
+msgstr "Szerzői archívumok"
+
+#: build/index.js:2
+msgid "Set author archives to noindex."
+msgstr "A szerzői archívumok legyenek noindex-esek."
+
+#: build/index.js:2
+msgid "Date Archive Title"
+msgstr "Dátum-archívum címe"
+
+#: build/index.js:2
+msgid "Date Archives"
+msgstr "Dátum archívumok"
+
+#: build/index.js:2
+msgid "Set date archives to noindex."
+msgstr "A dátum-archívumok legyenek noindex-esek."
+
+#: build/index.js:2
+msgid "Search Results Title"
+msgstr "Keresési találatok címe"
+
+#: build/index.js:2
+msgid "404 Page Title"
+msgstr "404-es oldal címe"
+
+#: build/index.js:2
+msgid "Meta Tags"
+msgstr "Meta tagek"
+
+#: build/index.js:2
+msgid "Settings for Open Graph and Twitter Cards."
+msgstr "Beállítások az Open Graph és a Twitter Cards funkcióhoz."
+
+#: build/index.js:2
+msgid "Open Graph"
+msgstr "Open Graph"
+
+#: build/index.js:2
+msgid "Enable Open Graph meta tags"
+msgstr "Open Graph meta tagek engedélyezése"
+
+#: build/index.js:2 build/index.js:4
+msgid "Off"
+msgstr "Ki"
+
+#: build/index.js:2
+msgid "Twitter Cards"
+msgstr "Twitter Cards"
+
+#: build/index.js:2
+msgid "Enable Twitter Card meta tags"
+msgstr "Twitter Card meta tagek engedélyezése"
+
+#: build/index.js:2
+msgid "Default Card Type"
+msgstr "Alapértelmezett kártyatípus"
+
+#: build/index.js:2
+msgid "Summary with large image"
+msgstr "Összefoglaló nagy képpel"
+
+#: build/index.js:2
+msgid "Summary"
+msgstr "Összefoglaló"
+
+#: build/index.js:2
+msgid "Default Social Image"
+msgstr "Alapértelmezett közösségi kép"
+
+#: build/index.js:2
+msgid "Used when a post has no featured image. Recommended: 1200x630px."
+msgstr ""
+"Akkor használjuk, ha egy bejegyzésnek nincs kiemelt képe. Ajánlott: "
+"1200x630px."
+
+#: build/index.js:2
+msgid "Social Profiles"
+msgstr "Közösségi profilok"
+
+#: build/index.js:2
+msgid "Your sitemap:"
+msgstr "Az oldaltérképed:"
+
+#: build/index.js:2 build/index.js:4
+msgid "Enabled"
+msgstr "Be"
+
+#: build/index.js:2
+msgid "Custom Post Types"
+msgstr "Egyéni bejegyzéstípusok"
+
+#: build/index.js:2
+msgid ""
+"New custom post types are included automatically. Content set to noindex is "
+"always left out."
+msgstr ""
+"Az új egyéni bejegyzéstípusok automatikusan bekerülnek. A noindexre állított "
+"tartalom mindig kimarad."
+
+#: build/index.js:2
+msgid "Custom Taxonomies"
+msgstr "Egyéni taxonómiák"
+
+#: build/index.js:2
+msgid "Custom taxonomy archives are only listed when switched on here."
+msgstr ""
+"Az egyéni taxonómia archívumok csak akkor vannak listázva, ha itt be van "
+"kapcsolva."
+
+#: build/index.js:2
+msgid "Content Signals"
+msgstr "Tartalmi jelzések"
+
+#: build/index.js:2
+msgid ""
+"Tell AI systems how they may use your content. Sent as a Content-Signal HTTP "
+"header, a meta tag and a robots.txt line. \"Not specified\" neither grants "
+"nor restricts that use."
+msgstr ""
+"Mondd meg az AI rendszereknek, hogyan használhatják a tartalmadat. Content-"
+"Signal HTTP headerként, meta tagként és egy robots.txt sorban kerül "
+"elküldésre. A \"Nincs megadva\" sem nem engedélyezi, sem nem korlátozza ezt "
+"a használatot."
+
+#: build/index.js:2
+msgid "Search"
+msgstr "Keresés"
+
+#: build/index.js:2
+msgid "AI Input (RAG, grounding)"
+msgstr "AI bemenet (RAG, grounding)"
+
+#: build/index.js:2
+msgid "llms.txt File"
+msgstr "llms.txt fájl"
+
+#: build/index.js:2
+msgid "Your llms.txt:"
+msgstr "A te llms.txt fájlod:"
+
+#: build/index.js:2
+msgid "Learn more"
+msgstr "Tudj meg többet"
+
+#: build/index.js:2
+msgid "llms.txt"
+msgstr "llms.txt"
+
+#: build/index.js:2
+msgid "Enable llms.txt for AI crawlers"
+msgstr "Engedélyezd az llms.txt-t AI crawler-ek számára"
+
+#: build/index.js:2
+msgid "One sentence shown as the summary line. Empty = the site tagline."
+msgstr ""
+"Egy mondat, ami összefoglaló sorként jelenik meg. Üresen = a webhely "
+"jelmondata."
+
+#: build/index.js:2
+msgid "Introduction"
+msgstr "Bevezetés"
+
+#: build/index.js:2
+msgid ""
+"Optional Markdown text shown before the page lists. Do not use headings."
+msgstr ""
+"Opcionális Markdown szöveg, ami az oldallisták előtt jelenik meg. Ne "
+"használj címsorokat."
+
+#: build/index.js:2
+msgid "Content types"
+msgstr "Tartalomtípusok"
+
+#: build/index.js:2
+msgid ""
+"Each type becomes its own section. Noindex content and content with AI Input "
+"set to \"No\" are left out."
+msgstr ""
+"Minden típus külön szekció lesz. A noindex tartalom és az \"AI bemenet\" "
+"mezőnél \"Nem\"-re állított tartalom kimarad."
+
+#: build/index.js:2
+msgid "Items per section"
+msgstr "Elemek szekciónként"
+
+#: build/index.js:2
+msgid "Pages are listed in menu order, other types newest first."
+msgstr ""
+"Az oldalak menüsorrendben, a többi típus a legújabbal kezdve van listázva."
+
+#: build/index.js:2
+msgid "Markdown links"
+msgstr "Markdown hivatkozások"
+
+#: build/index.js:2
+msgid "Link to the Markdown version of each page (/md)"
+msgstr "Link az oldalak Markdown változatára (/md)"
+
+#: build/index.js:2
+msgid "Link to the HTML page"
+msgstr "Link a HTML oldalra"
+
+#: build/index.js:2
+msgid "Extra links"
+msgstr "Extra linkek"
+
+#: build/index.js:2
+msgid ""
+"One per line: Title | https://url | optional description. Listed under "
+"\"Optional\"."
+msgstr ""
+"Soronként egy: Cím | https://url | opcionális leírás. Az \"Optional\" "
+"szekcióban jelennek meg."
+
+#: build/index.js:2
+msgid "llms-full.txt"
+msgstr "llms-full.txt"
+
+#: build/index.js:2
+msgid ""
+"Built as a logged-out visitor. Content-restriction plugins that only protect "
+"the main page query may not apply here; use the lw_seo_post_is_eligible "
+"filter to leave restricted posts out."
+msgstr ""
+"Kijelentkezett látogatóként épül fel. Azok a tartalomkorlátozó bővítmények, "
+"amelyek csak a fő oldallekérdezést védik, itt nem biztos, hogy "
+"érvényesülnek; használd az lw_seo_post_is_eligible filtert, hogy a "
+"korlátozott bejegyzések kimaradjanak."
+
+#: build/index.js:2
+msgid "Also serve /llms-full.txt with the full Markdown content (max 1 MB)"
+msgstr ""
+"Szolgáld ki a /llms-full.txt-t is a teljes Markdown tartalommal (max. 1 MB)"
+
+#: build/index.js:2
+msgid "AI Crawler Access"
+msgstr "AI crawler hozzáférés"
+
+#: build/index.js:2
+msgid "Blocked crawlers get a \"Disallow: /\" rule in robots.txt."
+msgstr "A tiltott crawlerek \"Disallow: /\" szabályt kapnak a robots.txt-ben."
+
+#: build/index.js:2
+msgid "All AI training crawlers"
+msgstr "Minden AI-tanító crawler"
+
+#: build/index.js:2
+msgid ""
+"Covers every crawler with that purpose, including ones added in future "
+"updates."
+msgstr ""
+"Lefedi az összes ilyen célú crawlert, beleértve a jövőbeli frissítésekben "
+"hozzáadottakat is."
+
+#: build/index.js:2
+msgid "All AI search crawlers"
+msgstr "Minden AI-kereső crawler"
+
+#: build/index.js:2
+msgid "All user-triggered AI fetchers"
+msgstr "Minden felhasználó által indított AI-lekérő"
+
+#: build/index.js:2
+msgid ""
+"robots.txt is a request, not an enforcement. OpenAI, Perplexity, Meta and "
+"Amazon state that their user-triggered fetchers may ignore it."
+msgstr ""
+"A robots.txt egy kérés, nem kikényszerítés. Az OpenAI, a Perplexity, a Meta "
+"és az Amazon szerint a felhasználó által indított lekérőik figyelmen kívül "
+"hagyhatják."
+
+#: build/index.js:2
+msgid "Optimize your WooCommerce products for search engines and social media."
+msgstr ""
+"Optimalizáld a WooCommerce termékeidet keresőmotorokhoz és közösségi "
+"médiához."
+
+#: build/index.js:2
+msgid ""
+"Adds product-specific OpenGraph tags, Schema.org Product markup, and more."
+msgstr ""
+"Termékspecifikus OpenGraph tageket, Schema.org Product jelölést és még sok "
+"mást ad hozzá."
+
+#: build/index.js:2
+msgid "Product Title"
+msgstr "Termék címe"
+
+#: build/index.js:2
+msgid "Shop Title"
+msgstr "Bolt címe"
+
+#: build/index.js:2
+msgid ""
+"Title of the shop page (product archive). %%title%% is the shop page title."
+msgstr "A bolt oldal (termékarchívum) címe. A %%title%% a bolt oldal címe."
+
+#: build/index.js:2
+msgid "Products"
+msgstr "Termékek"
+
+#: build/index.js:2
+msgid "Add noindex to product pages."
+msgstr "A termékoldalak kapjanak noindexet."
+
+#: build/index.js:2
+msgid "Permalinks"
+msgstr "Permalinkek"
+
+#: build/index.js:2
+msgid ""
+"Slug-only WooCommerce permalinks. Categories whose root slug collides with a "
+"page, reserved slug, or another taxonomy/CPT base are automatically skipped "
+"to avoid breaking existing URLs."
+msgstr ""
+"Csak slugot tartalmazó WooCommerce permalinkek. Azokat a kategóriákat, "
+"amelyek fő slugja ütközik egy oldallal, foglalt sluggal vagy másik taxonómia/"
+"CPT alappal, automatikusan kihagyjuk, hogy a meglévő URL-ek ne törjenek el."
+
+#: build/index.js:2
+msgid "Category base"
+msgstr "Kategória bázis"
+
+#: build/index.js:2
+msgid "Remove /product-category/ from product category URLs"
+msgstr "A /product-category/ eltávolítása a termékkategória URL-ekből"
+
+#: build/index.js:2
+msgid "Keep"
+msgstr "Megtart"
+
+#: build/index.js:2
+msgid "Parent slugs"
+msgstr "Szülő slugok"
+
+#: build/index.js:2
+msgid "Remove parent category slugs (leaf-only URLs)"
+msgstr "Szülőkategória-slugok eltávolítása (csak a legalsó szint az URL-ben)"
+
+#: build/index.js:2
+msgid "Product base"
+msgstr "Termék alap"
+
+#: build/index.js:2
+msgid "Remove /product/ from product URLs"
+msgstr "A /product/ eltávolítása a termék URL-ekből"
+
+#: build/index.js:2
+msgid "Skipped categories (slug collision):"
+msgstr "Kihagyott kategóriák (slug-ütközés):"
+
+#: build/index.js:2
+msgid ""
+"These category slugs already belong to a page, reserved WordPress slug, or "
+"another taxonomy/CPT base. They keep their default WooCommerce URL. Rename "
+"either the category or the conflicting slug to convert."
+msgstr ""
+"Ezek a kategóriaslugok már egy oldalhoz, foglalt WordPress-slughoz vagy "
+"másik taxonómia/CPT alaphoz tartoznak, ezért megtartják az alapértelmezett "
+"WooCommerce URL-jüket. Az átalakításhoz nevezd át a kategóriát vagy az "
+"ütköző slugot."
+
+#: build/index.js:2
+msgid "Schema.org and sitemap"
+msgstr "Schema.org és oldaltérkép"
+
+#: build/index.js:2
+msgid "Product Schema"
+msgstr "Termék Schema"
+
+#: build/index.js:2
+msgid ""
+"Structured data for products including price, availability, and reviews."
+msgstr "Strukturált adatok a termékekhez: ár, elérhetőség és értékelések."
+
+#: build/index.js:2
+msgid "Include Reviews"
+msgstr "Értékelések beemelése"
+
+#: build/index.js:2
+msgid "Include product reviews in Schema"
+msgstr "Termékértékelések beemelése a Schema-ba"
+
+#: build/index.js:2
+msgid "Products in Sitemap"
+msgstr "Termékek a webhelytérképben"
+
+#: build/index.js:2
+msgid "Product Categories"
+msgstr "Termékkategóriák"
+
+#: build/index.js:2
+msgid "Product Tags"
+msgstr "Termékcímkék"
+
+#: build/index.js:2
+msgid "Business Information"
+msgstr "Vállalkozási információk"
+
+#: build/index.js:2
+msgid ""
+"Add LocalBusiness structured data to help your business appear in local "
+"search results."
+msgstr ""
+"Adj hozzá LocalBusiness strukturált adatokat, hogy a vállalkozásod "
+"megjelenjen a helyi keresési találatok között."
+
+#: build/index.js:2
+msgid "Enable LocalBusiness schema"
+msgstr "LocalBusiness schema engedélyezése"
+
+#: build/index.js:2
+msgid "Business Type"
+msgstr "Vállalkozás típusa"
+
+#: build/index.js:2
+msgid "Select the type that best describes your business."
+msgstr "Válaszd ki azt a típust, ami a legjobban leírja a vállalkozásodat."
+
+#: build/index.js:2
+msgid "Business Name"
+msgstr "Vállalkozás neve"
+
+#: build/index.js:2
+msgid "Leave empty to use the site name."
+msgstr "Hagyd üresen a webhely nevének használatához."
+
+#: build/index.js:2
+msgid "Business Description"
+msgstr "Vállalkozás leírása"
+
+#: build/index.js:2
+msgid "Price Range"
+msgstr "Árkategória"
+
+#: build/index.js:2
+msgid "Address and contact"
+msgstr "Cím és elérhetőség"
+
+#: build/index.js:2
+msgid "Street Address"
+msgstr "Utca, házszám"
+
+#: build/index.js:2
+msgid "Address Line 2"
+msgstr "Cím 2. sora"
+
+#: build/index.js:2
+msgid "City"
+msgstr "Város"
+
+#: build/index.js:2
+msgid "State / Region"
+msgstr "Állam / régió"
+
+#: build/index.js:2
+msgid "Postal Code"
+msgstr "Irányítószám"
+
+#: build/index.js:2
+msgid "Country"
+msgstr "Ország"
+
+#: build/index.js:2
+msgid "Use ISO 3166–1 alpha-2 code (e.g., HU, US, DE)."
+msgstr "ISO 3166-1 alpha-2 kód (pl. HU, US, DE)."
+
+#: build/index.js:2
+msgid "Phone"
+msgstr "Telefon"
+
+#: build/index.js:2
+msgid "Email"
+msgstr "Email"
+
+#: build/index.js:2
+msgid "Opening Hours"
+msgstr "Nyitvatartás"
+
+#: build/index.js:2
+msgid "Opening hours"
+msgstr "Nyitvatartás"
+
+#: build/index.js:2
+msgid "Include opening hours in schema"
+msgstr "A nyitvatartás kerüljön a sémába"
+
+#: build/index.js:2
+msgid "Coordinates"
+msgstr "Koordináták"
+
+#: build/index.js:2
+msgid "Find coordinates on"
+msgstr "Koordináták keresése itt:"
+
+#: build/index.js:2
+msgid "(right-click the location)."
+msgstr "(kattints jobb gombbal a helyre)."
+
+#: build/index.js:2
+msgid "Latitude"
+msgstr "Szélesség"
+
+#: build/index.js:2
+msgid "Longitude"
+msgstr "Hosszúság"
+
+#: build/index.js:2
+msgid "Source"
+msgstr "Forrás"
+
+#: build/index.js:2
+msgid "Regex"
+msgstr "Regex"
+
+#: build/index.js:2
+msgid "Destination"
+msgstr "Cél"
+
+#: build/index.js:2
+msgid "N/A"
+msgstr "N/A"
+
+#: build/index.js:2
+msgid "Type"
+msgstr "Típus"
+
+#: build/index.js:2
+msgid "Hits"
+msgstr "Találatok"
+
+#: build/index.js:2
+msgid "Actions"
+msgstr "Műveletek"
+
+#: build/index.js:2
+msgid "Edit"
+msgstr "Szerkesztés"
+
+#: build/index.js:2 build/index.js:4
+msgid "Delete"
+msgstr "Törlés"
+
+#: build/index.js:2
+msgid ""
+"Create and manage URL redirects to prevent 404 errors and preserve SEO value."
+msgstr ""
+"URL átirányítások létrehozása és kezelése a 404 hibák megelőzéséhez és az "
+"SEO érték megőrzéséhez."
+
+#: build/index.js:2
+msgid "Process redirects"
+msgstr "Átirányítások feldolgozása"
+
+#: build/index.js:2
+msgid "Redirect rules are active"
+msgstr "Az átirányítási szabályok aktívak"
+
+#: build/index.js:2
+msgid "Existing Redirects"
+msgstr "Meglévő átirányítások"
+
+#: build/index.js:2
+msgid "Filter"
+msgstr "Szűrés"
+
+#: build/index.js:2
+msgid "Clear"
+msgstr "Törlés"
+
+#: build/index.js:2
+msgid "Clear all filters"
+msgstr "Minden szűrő törlése"
+
+#: build/index.js:2
+msgid "All"
+msgstr "Mind"
+
+#: build/index.js:2
+msgid "No redirects match these filters."
+msgstr "Egy átirányítás sem felel meg ezeknek a szűrőknek."
+
+#: build/index.js:2
+msgid "No redirects configured yet."
+msgstr "Még nincs beállítva átirányítás."
+
+#: build/index.js:2
+msgid "Previous page"
+msgstr "Előző oldal"
+
+#: build/index.js:2
+msgid "Next page"
+msgstr "Következő oldal"
+
+#: build/index.js:2
+msgid "Rows per page"
+msgstr "Sor oldalanként"
+
+#: build/index.js:2
+msgid "Select all redirects on this page"
+msgstr "Az oldal összes átirányításának kijelölése"
+
+#: build/index.js:2
+msgid "Clear selection"
+msgstr "Kijelölés törlése"
+
+#: build/index.js:2
+msgid "Bulk actions"
+msgstr "Csoportos műveletek"
+
+#. translators: %d: number of rows.
+#: build/index.js:2
+msgid "%d entry"
+msgid_plural "%d entries"
+msgstr[0] "%d tétel"
+msgstr[1] "%d tétel"
+
+#. translators: %d: number of results.
+#: build/index.js:2
+msgid "%d result"
+msgid_plural "%d results"
+msgstr[0] "%d találat"
+msgstr[1] "%d találat"
+
+#. translators: %s: redirect source.
+#: build/index.js:2
+msgid "Select: %s"
+msgstr "Kijelölés: %s"
+
+#. translators: %d: number of selected redirects.
+#: build/index.js:3
+msgid "%d selected"
+msgid_plural "%d selected"
+msgstr[0] "%d kijelölve"
+msgstr[1] "%d kijelölve"
+
+#. translators: 1: selected redirects, 2: of those, on this page.
+#: build/index.js:4
+msgid "%1$d selected, %2$d on this page"
+msgstr "%1$d kijelölve, ebből %2$d ezen az oldalon"
+
+#. translators: 1: redirects the action applies to, 2: selected redirects on this page.
+#: build/index.js:4
+msgid "applies to %1$d of %2$d"
+msgstr "%2$d közül %1$d elemre vonatkozik"
+
+#: build/index.js:4
+msgid "Search source or destination"
+msgstr "Keresés forrásban vagy célban"
+
+#: build/index.js:4
+msgid "Redirect added."
+msgstr "Átirányítás hozzáadva."
+
+#: build/index.js:4
+msgid "Redirect updated."
+msgstr "Átirányítás frissítve."
+
+#: build/index.js:4
+msgid "Redirect deleted."
+msgstr "Átirányítás törölve."
+
+#: build/index.js:4
+msgid "Are you sure you want to delete this redirect?"
+msgstr "Biztos, hogy törölni akarod ezt az átirányítást?"
+
+#: build/index.js:4
+msgid "Configure how 404 (Not Found) errors are handled on your site."
+msgstr ""
+"Állítsd be, hogyan legyenek kezelve a 404 (Nem található) hibák az oldaladon."
+
+#: build/index.js:4
+msgid "Redirect 404 to Homepage"
+msgstr "404 átirányítása a kezdőlapra"
+
+#: build/index.js:4
+msgid ""
+"When enabled, visitors who land on a non-existent page will be redirected to "
+"your homepage with a 302 (temporary) redirect."
+msgstr ""
+"Ha engedélyezed, a nem létező oldalra érkező látogatók a kezdőlapodra "
+"lesznek átirányítva 302-es (ideiglenes) átirányítással."
+
+#: build/index.js:4
+msgid "Redirect every 404 to the homepage"
+msgstr "Minden 404 átirányítása a kezdőlapra"
+
+#: build/index.js:4
+msgid "Features"
+msgstr "Funkciók"
+
+#: build/index.js:4
+msgid "Breadcrumbs"
+msgstr "Morzsamenü"
+
+#: build/index.js:4
+msgid "Use shortcode [lw_breadcrumbs] or function lw_seo_breadcrumbs()."
+msgstr ""
+"Használd a [lw_breadcrumbs] shortcode-ot vagy az lw_seo_breadcrumbs() "
+"függvényt."
+
+#: build/index.js:4
+msgid "Schema.org"
+msgstr "Schema.org"
+
+#: build/index.js:4
+msgid "Output Schema.org JSON-LD"
+msgstr "Schema.org JSON-LD kiírása"
+
+#: build/index.js:4
+msgid "robots.txt"
+msgstr "robots.txt"
+
+#: build/index.js:4
+msgid "Add sitemap URL and AI rules to robots.txt"
+msgstr "Sitemap URL és AI szabályok hozzáadása a robots.txt-hez"
+
+#: build/index.js:4
+msgid "Your robots.txt"
+msgstr "A robots.txt fájlod"
+
+#. translators: %s: path of the robots.txt file.
+#: build/index.js:5
+msgid ""
+"A physical robots.txt file exists (%s). The web server serves it directly, "
+"so these settings have no effect. Delete the file to let LW SEO manage "
+"robots.txt."
+msgstr ""
+"Létezik egy fizikai robots.txt fájl (%s). A webszerver közvetlenül azt "
+"szolgálja ki, ezért ezek a beállítások nem hatnak. Töröld a fájlt, hogy az "
+"LW SEO kezelhesse a robots.txt-t."
+
+#: build/index.js:5
+msgid "Head Cleanup"
+msgstr "Head takarítás"
+
+#: build/index.js:5
+msgid "Shortlinks"
+msgstr "Rövid linkek"
+
+#: build/index.js:5
+msgid "Removed from head"
+msgstr "Eltávolítva a headből"
+
+#: build/index.js:5
+msgid "Kept"
+msgstr "Megtartva"
+
+#: build/index.js:5
+msgid "RSD Link"
+msgstr "RSD link"
+
+#: build/index.js:5
+msgid "WLW Manifest"
+msgstr "WLW manifest"
+
+#: build/index.js:5
+msgid ""
+"Import SEO data from other SEO plugins. Existing LW SEO data will not be "
+"overwritten."
+msgstr ""
+"SEO adatok importálása más SEO bővítményekből. A meglévő LW SEO adatok nem "
+"lesznek felülírva."
+
+#: build/index.js:5
+msgid ""
+"Another SEO plugin (Yoast SEO, Rank Math or All in One SEO) is active. LW "
+"SEO skips its meta tags to avoid duplicates. Deactivate the other plugin to "
+"use LW SEO fully."
+msgstr ""
+"Egy másik SEO bővítmény (Yoast SEO, Rank Math vagy All in One SEO) aktív. Az "
+"LW SEO kihagyja a meta tagjeit, hogy elkerülje a duplikációt. Kapcsold ki a "
+"másik bővítményt az LW SEO teljes használatához."
+
+#: build/term.js:2
+msgid "noindex this archive"
+msgstr "noindex erre az archívumra"
+
+#: build/term.js:2
+msgid ""
+"If filled, this markdown is served at the /md endpoint instead of the auto-"
+"generated content."
+msgstr ""
+"Ha ki van töltve, ez a markdown a /md endpointon lesz kiszolgálva az "
+"automatikusan generált tartalom helyett."
 
 #: includes/Blocks/FAQ/block.json
 msgctxt "block title"

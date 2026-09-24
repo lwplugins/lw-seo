@@ -9,8 +9,10 @@ declare(strict_types=1);
 
 namespace LightweightPlugins\SEO;
 
+use LightweightPlugins\SEO\Admin\BuildAssets;
 use LightweightPlugins\SEO\Admin\MarkdownOverrideField;
-use LightweightPlugins\SEO\Admin\TermFields;
+use LightweightPlugins\SEO\Editor\MetaFields;
+use LightweightPlugins\SEO\Editor\TermScreen;
 
 /**
  * Adds SEO fields to taxonomy term edit screens.
@@ -28,26 +30,11 @@ final class TermMetaBox {
 	private const NONCE_NAME = 'lw_seo_term_nonce';
 
 	/**
-	 * Saveable fields with their sanitize callables.
-	 */
-	private const FIELDS = [
-		'title'            => 'sanitize_text_field',
-		'description'      => 'sanitize_textarea_field',
-		'noindex'          => 'sanitize_text_field',
-		'og_title'         => 'sanitize_text_field',
-		'og_description'   => 'sanitize_textarea_field',
-		'og_image'         => 'esc_url_raw',
-		'ai_train'         => SignalValue::class . '::sanitize',
-		'ai_input'         => SignalValue::class . '::sanitize',
-		'search'           => SignalValue::class . '::sanitize',
-		'markdown_content' => 'sanitize_textarea_field',
-	];
-
-	/**
 	 * Constructor.
 	 */
 	public function __construct() {
 		add_action( 'admin_init', [ $this, 'register_hooks' ] );
+		add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_assets' ] );
 	}
 
 	/**
@@ -56,23 +43,38 @@ final class TermMetaBox {
 	 * @return void
 	 */
 	public function register_hooks(): void {
-		$taxonomies = get_taxonomies( [ 'public' => true ], 'names' );
-
-		foreach ( $taxonomies as $taxonomy ) {
+		foreach ( $this->taxonomies() as $taxonomy ) {
 			add_action( $taxonomy . '_edit_form_fields', [ $this, 'render_fields' ], 10, 1 );
 			add_action( 'edited_' . $taxonomy, [ $this, 'save_fields' ], 10, 1 );
 		}
 	}
 
 	/**
-	 * Render all SEO fields on term edit screen.
+	 * Enqueue the React term fields on the term edit screen.
+	 *
+	 * @param string $hook Current admin page.
+	 * @return void
+	 */
+	public function enqueue_assets( string $hook ): void {
+		TermScreen::enqueue( $hook, $this->taxonomies() );
+	}
+
+	/**
+	 * Render the SEO fields mount point on the term edit screen.
+	 *
+	 * Without the build nothing is printed, not even the nonce, so a save
+	 * cannot wipe the stored values with absent fields.
 	 *
 	 * @param \WP_Term $term Current term object.
 	 * @return void
 	 */
 	public function render_fields( \WP_Term $term ): void {
+		if ( ! BuildAssets::exists( 'term' ) ) {
+			return;
+		}
+
 		wp_nonce_field( self::NONCE_ACTION, self::NONCE_NAME );
-		TermFields::render( $term );
+		TermScreen::render( $term );
 	}
 
 	/**
@@ -96,7 +98,7 @@ final class TermMetaBox {
 			return;
 		}
 
-		foreach ( self::FIELDS as $field => $sanitize_callback ) {
+		foreach ( MetaFields::TERM as $field => $kind ) {
 			if ( ! MarkdownOverrideField::may_set( $field ) ) {
 				continue;
 			}
@@ -105,11 +107,20 @@ final class TermMetaBox {
 			$value      = '';
 
 			if ( isset( $_POST[ $input_name ] ) ) {
-				// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Sanitized via $sanitize_callback.
-				$value = call_user_func( $sanitize_callback, wp_unslash( $_POST[ $input_name ] ) );
+				// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Sanitized via MetaFields::sanitize().
+				$value = MetaFields::sanitize( $kind, wp_unslash( $_POST[ $input_name ] ) );
 			}
 
 			Options::set_term_meta( $term_id, $field, $value );
 		}
+	}
+
+	/**
+	 * Taxonomies with SEO fields.
+	 *
+	 * @return array<int, string>
+	 */
+	private function taxonomies(): array {
+		return array_values( get_taxonomies( [ 'public' => true ], 'names' ) );
 	}
 }

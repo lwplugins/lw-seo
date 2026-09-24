@@ -12,7 +12,7 @@ namespace LightweightPlugins\SEO\Admin;
 /**
  * The per-post / per-term custom Markdown override. It is served verbatim at
  * the /md endpoint, so, like raw HTML, only users with unfiltered_html may
- * set it. This class holds that rule and the field's two editor renderings.
+ * set it. This class holds that rule and the classic meta box rendering.
  */
 final class MarkdownOverrideField {
 
@@ -68,31 +68,6 @@ final class MarkdownOverrideField {
 					</div>
 				</div>
 			</details>
-		<?php
-	}
-
-	/**
-	 * Term edit screen row; read-only for users who may not set it.
-	 *
-	 * @param string $value Stored override.
-	 * @return void
-	 */
-	public static function render_term_row( string $value ): void {
-		?>
-		<tr class="form-field">
-			<th scope="row"><label for="lw_seo_markdown_content"><?php esc_html_e( 'Markdown Content', 'lw-seo' ); ?></label></th>
-			<td>
-				<textarea id="lw_seo_markdown_content" name="lw_seo_markdown_content" rows="10" class="large-text"
-					style="font-family: monospace; font-size: 13px;"
-					placeholder="<?php esc_attr_e( '# Title...', 'lw-seo' ); ?>"
-					<?php disabled( ! self::may_set( self::KEY ) ); ?>
-				><?php echo esc_textarea( $value ); ?></textarea>
-				<p class="description">
-					<?php esc_html_e( 'If filled, this markdown is served at the /md endpoint instead of the auto-generated content.', 'lw-seo' ); ?>
-				</p>
-				<?php self::render_lock_note( 'description' ); ?>
-			</td>
-		</tr>
 		<?php
 	}
 

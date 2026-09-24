@@ -2,23 +2,25 @@
 # This file is distributed under the GPL-2.0-or-later.
 msgid ""
 msgstr ""
-"Project-Id-Version: LW SEO 1.6.0\n"
+"Project-Id-Version: LW SEO 1.7.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/lw-seo\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-09-21T19:36:47+00:00\n"
+"POT-Creation-Date: 2026-09-24T19:20:36+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: lw-seo\n"
 
 #. Plugin Name of the plugin
 #: lw-seo.php
-#: includes/Admin/TermFields.php:47
-#: includes/MetaBox.php:55
+#: includes/Admin/SettingsPage.php:130
+#: includes/MetaBox.php:54
 #: assets/js/blocks/faq.js:279
+#: build/editor.js:2
+#: build/term.js:2
 msgid "LW SEO"
 msgstr ""
 
@@ -491,8 +493,8 @@ msgid "Travel Agency"
 msgstr ""
 
 #: includes/Admin/Data/BusinessTypes.php:137
-#: includes/Admin/Settings/TabGeneral.php:34
-#: includes/Admin/Settings/TabWooCommerce.php:144
+#: build/index.js:1
+#: build/index.js:2
 msgid "General"
 msgstr ""
 
@@ -525,16 +527,17 @@ msgid "Lodging"
 msgstr ""
 
 #: includes/Admin/MarkdownOverrideField.php:48
-#: includes/Admin/MarkdownOverrideField.php:83
+#: build/editor.js:2
+#: build/term.js:2
 msgid "Markdown Content"
 msgstr ""
 
 #: includes/Admin/MarkdownOverrideField.php:53
+#: build/editor.js:2
 msgid "Custom Markdown"
 msgstr ""
 
 #: includes/Admin/MarkdownOverrideField.php:61
-#: includes/Admin/MarkdownOverrideField.php:87
 msgid "# Title..."
 msgstr ""
 
@@ -542,11 +545,9 @@ msgstr ""
 msgid "If filled, this markdown is served at the /md endpoint instead of the auto-generated content. Ideal for Elementor, Divi, or other page builder pages."
 msgstr ""
 
-#: includes/Admin/MarkdownOverrideField.php:91
-msgid "If filled, this markdown is served at the /md endpoint instead of the auto-generated content."
-msgstr ""
-
-#: includes/Admin/MarkdownOverrideField.php:113
+#: includes/Admin/MarkdownOverrideField.php:88
+#: build/editor.js:2
+#: build/term.js:2
 msgid "Only users allowed to post unfiltered HTML can edit the Markdown override."
 msgstr ""
 
@@ -566,1231 +567,17 @@ msgstr ""
 msgid "Get Plugin"
 msgstr ""
 
-#: includes/Admin/Settings/CrawlerSection.php:29
-msgid "AI Crawler Access"
-msgstr ""
-
-#: includes/Admin/Settings/CrawlerSection.php:31
-msgid "Blocked crawlers get a \"Disallow: /\" rule in robots.txt. Checked = Blocked."
-msgstr ""
-
-#: includes/Admin/Settings/CrawlerSection.php:35
-msgid "Block by purpose"
-msgstr ""
-
-#: includes/Admin/Settings/CrawlerSection.php:48
-msgid "Covers every crawler with that purpose, including ones added in future updates."
-msgstr ""
-
-#: includes/Admin/Settings/CrawlerSection.php:57
-msgid "robots.txt is a request, not an enforcement. OpenAI, Perplexity, Meta and Amazon state that their user-triggered fetchers may ignore it."
-msgstr ""
-
-#: includes/Admin/Settings/CrawlerSection.php:117
-msgid "Block all AI training crawlers"
-msgstr ""
-
-#: includes/Admin/Settings/CrawlerSection.php:118
-msgid "Training crawlers"
-msgstr ""
-
-#: includes/Admin/Settings/CrawlerSection.php:121
-msgid "Block all AI search crawlers"
-msgstr ""
-
-#: includes/Admin/Settings/CrawlerSection.php:122
-msgid "AI search crawlers"
-msgstr ""
-
-#: includes/Admin/Settings/CrawlerSection.php:125
-msgid "Block all user-triggered AI fetchers"
-msgstr ""
-
-#: includes/Admin/Settings/CrawlerSection.php:126
-msgid "User-triggered fetchers"
-msgstr ""
-
-#: includes/Admin/Settings/FieldRendererTrait.php:153
-#: includes/MetaBox.php:261
-msgid "Select Image"
-msgstr ""
-
-#: includes/Admin/Settings/LlmsSection.php:31
-msgid "llms.txt File"
-msgstr ""
-
-#: includes/Admin/Settings/LlmsSection.php:52
-msgid "llms.txt"
-msgstr ""
-
-#: includes/Admin/Settings/LlmsSection.php:58
-msgid "Enable llms.txt for AI crawlers"
-msgstr ""
-
-#. translators: %1$s: llms.txt URL, %2$s: llmstxt.org link
-#: includes/Admin/Settings/LlmsSection.php:66
-#, php-format
-msgid "Your llms.txt: %1$s — %2$s"
-msgstr ""
-
-#: includes/Admin/Settings/LlmsSection.php:68
-msgid "Learn more"
-msgstr ""
-
-#: includes/Admin/Settings/LlmsSection.php:85
-#: includes/Admin/Settings/TabSocial.php:110
-msgid "Summary"
-msgstr ""
-
-#: includes/Admin/Settings/LlmsSection.php:91
-msgid "One sentence shown as the summary line. Empty = the site tagline."
-msgstr ""
-
-#: includes/Admin/Settings/LlmsSection.php:98
-msgid "Introduction"
-msgstr ""
-
-#: includes/Admin/Settings/LlmsSection.php:104
-msgid "Optional Markdown text shown before the page lists. Do not use headings."
-msgstr ""
-
-#: includes/Admin/Settings/LlmsSection.php:121
-msgid "Content types"
-msgstr ""
-
-#: includes/Admin/Settings/LlmsSection.php:124
-msgid "Each type becomes its own section. Noindex content and content with AI Input set to \"No\" are left out."
-msgstr ""
-
-#: includes/Admin/Settings/LlmsSection.php:128
-msgid "Items per section"
-msgstr ""
-
-#: includes/Admin/Settings/LlmsSection.php:137
-msgid "Pages are listed in menu order, other types newest first."
-msgstr ""
-
-#: includes/Admin/Settings/LlmsSection.php:141
-msgid "Markdown links"
-msgstr ""
-
-#: includes/Admin/Settings/LlmsSection.php:147
-msgid "Link to the Markdown version of each page (/md) instead of the HTML page"
-msgstr ""
-
-#: includes/Admin/Settings/LlmsSection.php:164
-msgid "Extra links"
-msgstr ""
-
-#: includes/Admin/Settings/LlmsSection.php:170
-msgid "One per line: Title | https://url | optional description. Listed under \"Optional\"."
-msgstr ""
-
-#: includes/Admin/Settings/LlmsSection.php:177
-msgid "llms-full.txt"
-msgstr ""
-
-#: includes/Admin/Settings/LlmsSection.php:183
-msgid "Also serve /llms-full.txt with the full Markdown content (max 1 MB)"
-msgstr ""
-
-#: includes/Admin/Settings/LlmsSection.php:187
-msgid "Built as a logged-out visitor. Content-restriction plugins that only protect the main page query may not apply here; use the lw_seo_post_is_eligible filter to leave restricted posts out."
-msgstr ""
-
-#: includes/Admin/Settings/Tab404.php:34
-msgid "404"
-msgstr ""
-
-#: includes/Admin/Settings/Tab404.php:53
-msgid "404 Error Handling"
-msgstr ""
-
-#: includes/Admin/Settings/Tab404.php:56
-msgid "Configure how 404 (Not Found) errors are handled on your site."
-msgstr ""
-
-#: includes/Admin/Settings/Tab404.php:61
-msgid "Redirect 404 to Homepage"
-msgstr ""
-
-#: includes/Admin/Settings/Tab404.php:67
-msgid "Automatically redirect all 404 errors to the homepage"
-msgstr ""
-
-#: includes/Admin/Settings/Tab404.php:72
-msgid "When enabled, visitors who land on a non-existent page will be redirected to your homepage with a 302 (temporary) redirect."
-msgstr ""
-
-#: includes/Admin/Settings/TabAdvanced.php:36
-#: includes/MetaBox.php:281
-msgid "Advanced"
-msgstr ""
-
-#: includes/Admin/Settings/TabAdvanced.php:55
-msgid "Advanced Settings"
-msgstr ""
-
-#: includes/Admin/Settings/TabAdvanced.php:58
-msgid "Advanced settings and cleanup options."
-msgstr ""
-
-#: includes/Admin/Settings/TabAdvanced.php:74
-msgid "Features"
-msgstr ""
-
-#: includes/Admin/Settings/TabAdvanced.php:77
-msgid "Breadcrumbs"
-msgstr ""
-
-#: includes/Admin/Settings/TabAdvanced.php:83
-msgid "Enable breadcrumbs"
-msgstr ""
-
-#: includes/Admin/Settings/TabAdvanced.php:88
-msgid "Use shortcode [lw_breadcrumbs] or function lw_seo_breadcrumbs()"
-msgstr ""
-
-#: includes/Admin/Settings/TabAdvanced.php:93
-#: includes/Admin/Settings/TabWooCommerce.php:203
-msgid "Schema.org"
-msgstr ""
-
-#: includes/Admin/Settings/TabAdvanced.php:99
-msgid "Enable Schema.org JSON-LD output"
-msgstr ""
-
-#: includes/Admin/Settings/TabAdvanced.php:106
-msgid "robots.txt"
-msgstr ""
-
-#: includes/Admin/Settings/TabAdvanced.php:112
-msgid "Add sitemap URL and AI rules to robots.txt"
-msgstr ""
-
-#: includes/Admin/Settings/TabAdvanced.php:120
-msgid "Your robots.txt"
-msgstr ""
-
-#. translators: %s: path of the robots.txt file
-#: includes/Admin/Settings/TabAdvanced.php:144
-#, php-format
-msgid "A physical robots.txt file exists (%s). The web server serves it directly, so these settings have no effect. Delete the file to let LW SEO manage robots.txt."
-msgstr ""
-
-#: includes/Admin/Settings/TabAdvanced.php:152
-msgid "Preview"
-msgstr ""
-
-#: includes/Admin/Settings/TabAdvanced.php:165
-msgid "Head Cleanup"
-msgstr ""
-
-#: includes/Admin/Settings/TabAdvanced.php:168
-msgid "Shortlinks"
-msgstr ""
-
-#: includes/Admin/Settings/TabAdvanced.php:174
-msgid "Remove shortlinks from head"
-msgstr ""
-
-#: includes/Admin/Settings/TabAdvanced.php:181
-msgid "RSD Link"
-msgstr ""
-
-#: includes/Admin/Settings/TabAdvanced.php:187
-msgid "Remove RSD link from head"
-msgstr ""
-
-#: includes/Admin/Settings/TabAdvanced.php:194
-msgid "WLW Manifest"
-msgstr ""
-
-#: includes/Admin/Settings/TabAdvanced.php:200
-msgid "Remove Windows Live Writer link"
-msgstr ""
-
-#: includes/Admin/Settings/TabAi.php:34
-msgid "AI / LLM"
-msgstr ""
-
-#: includes/Admin/Settings/TabAi.php:53
-msgid "AI / LLM Settings"
-msgstr ""
-
-#: includes/Admin/Settings/TabAi.php:56
-msgid "Control how AI crawlers interact with your site."
-msgstr ""
-
-#: includes/Admin/Settings/TabAi.php:72
-#: includes/Admin/Settings/TabLocal.php:174
-msgid "Not specified"
-msgstr ""
-
-#: includes/Admin/Settings/TabAi.php:73
-msgid "Allow"
-msgstr ""
-
-#: includes/Admin/Settings/TabAi.php:74
-msgid "Disallow"
-msgstr ""
-
-#: includes/Admin/Settings/TabAi.php:77
-msgid "Search"
-msgstr ""
-
-#: includes/Admin/Settings/TabAi.php:78
-msgid "AI Input (RAG, grounding)"
-msgstr ""
-
-#: includes/Admin/Settings/TabAi.php:79
-#: includes/Admin/TermFields.php:129
-#: includes/MetaBox.php:322
-msgid "AI Training"
-msgstr ""
-
-#: includes/Admin/Settings/TabAi.php:82
-msgid "Content Signals"
-msgstr ""
-
-#: includes/Admin/Settings/TabAi.php:84
-msgid "Tell AI systems how they may use your content. Sent as a Content-Signal HTTP header, a meta tag and a robots.txt line. \"Not specified\" neither grants nor restricts that use."
-msgstr ""
-
-#: includes/Admin/Settings/TabContent.php:34
-msgid "Content"
-msgstr ""
-
-#: includes/Admin/Settings/TabContent.php:53
-msgid "Content Types"
-msgstr ""
-
-#: includes/Admin/Settings/TabContent.php:56
-msgid "Title templates and indexing settings for different content types."
-msgstr ""
-
-#: includes/Admin/Settings/TabContent.php:74
-msgid "Posts"
-msgstr ""
-
-#: includes/Admin/Settings/TabContent.php:78
-#: includes/Admin/Settings/TabContent.php:110
-msgid "Title Template"
-msgstr ""
-
-#: includes/Admin/Settings/TabContent.php:83
-msgid "Default Index"
-msgstr ""
-
-#: includes/Admin/Settings/TabContent.php:89
-msgid "Set posts to noindex by default"
-msgstr ""
-
-#: includes/Admin/Settings/TabContent.php:106
-msgid "Pages"
-msgstr ""
-
-#: includes/Admin/Settings/TabContent.php:125
-msgid "Taxonomies"
-msgstr ""
-
-#: includes/Admin/Settings/TabContent.php:129
-msgid "Categories Title"
-msgstr ""
-
-#: includes/Admin/Settings/TabContent.php:134
-msgid "Categories Index"
-msgstr ""
-
-#: includes/Admin/Settings/TabContent.php:140
-msgid "Set categories to noindex"
-msgstr ""
-
-#: includes/Admin/Settings/TabContent.php:147
-msgid "Tags Index"
-msgstr ""
-
-#: includes/Admin/Settings/TabContent.php:153
-msgid "Set tags to noindex"
-msgstr ""
-
-#: includes/Admin/Settings/TabContent.php:170
-msgid "Archives"
-msgstr ""
-
-#: includes/Admin/Settings/TabContent.php:173
-msgid "Author Archives"
-msgstr ""
-
-#: includes/Admin/Settings/TabContent.php:179
-msgid "Set author archives to noindex"
-msgstr ""
-
-#: includes/Admin/Settings/TabContent.php:186
-msgid "Date Archives"
-msgstr ""
-
-#: includes/Admin/Settings/TabContent.php:192
-msgid "Set date archives to noindex"
-msgstr ""
-
-#: includes/Admin/Settings/TabGeneral.php:53
-msgid "General Settings"
-msgstr ""
-
-#: includes/Admin/Settings/TabGeneral.php:56
-msgid "Basic SEO settings for your site."
-msgstr ""
-
-#: includes/Admin/Settings/TabGeneral.php:62
-msgid "Title Separator"
-msgstr ""
-
-#: includes/Admin/Settings/TabGeneral.php:68
-msgid "Homepage Title"
-msgstr ""
-
-#: includes/Admin/Settings/TabGeneral.php:75
-msgid "Variables: %%sitename%%, %%sitedesc%%, %%sep%%"
-msgstr ""
-
-#: includes/Admin/Settings/TabGeneral.php:83
-msgid "Homepage Description"
-msgstr ""
-
-#: includes/Admin/Settings/TabGeneral.php:90
-msgid "Leave empty to use the site tagline."
-msgstr ""
-
-#: includes/Admin/Settings/TabGeneral.php:98
-msgid "Site Represents"
-msgstr ""
-
-#: includes/Admin/Settings/TabGeneral.php:106
-msgid "Organization"
-msgstr ""
-
-#: includes/Admin/Settings/TabGeneral.php:107
-msgid "Person"
-msgstr ""
-
-#: includes/Admin/Settings/TabGeneral.php:116
-msgid "Organization/Person Name"
-msgstr ""
-
-#: includes/Admin/Settings/TabGeneral.php:123
-msgid "Used in Schema.org markup."
-msgstr ""
-
-#: includes/Admin/Settings/TabLocal.php:37
-#: includes/Local/Shortcodes.php:45
-msgid "Monday"
-msgstr ""
-
-#: includes/Admin/Settings/TabLocal.php:38
-#: includes/Local/Shortcodes.php:46
-msgid "Tuesday"
-msgstr ""
-
-#: includes/Admin/Settings/TabLocal.php:39
-#: includes/Local/Shortcodes.php:47
-msgid "Wednesday"
-msgstr ""
-
-#: includes/Admin/Settings/TabLocal.php:40
-#: includes/Local/Shortcodes.php:48
-msgid "Thursday"
-msgstr ""
-
-#: includes/Admin/Settings/TabLocal.php:41
-#: includes/Local/Shortcodes.php:49
-msgid "Friday"
-msgstr ""
-
-#: includes/Admin/Settings/TabLocal.php:42
-#: includes/Local/Shortcodes.php:50
-msgid "Saturday"
-msgstr ""
-
-#: includes/Admin/Settings/TabLocal.php:43
-#: includes/Local/Shortcodes.php:51
-msgid "Sunday"
-msgstr ""
-
-#: includes/Admin/Settings/TabLocal.php:64
-#: includes/Admin/Settings/TabLocal.php:83
-msgid "Local SEO"
-msgstr ""
-
-#: includes/Admin/Settings/TabLocal.php:86
-msgid "Add LocalBusiness structured data to help your business appear in local search results."
-msgstr ""
-
-#: includes/Admin/Settings/TabLocal.php:104
-msgid "Business Information"
-msgstr ""
-
-#: includes/Admin/Settings/TabLocal.php:107
-msgid "Enable Local SEO"
-msgstr ""
-
-#: includes/Admin/Settings/TabLocal.php:113
-msgid "Enable LocalBusiness schema"
-msgstr ""
-
-#: includes/Admin/Settings/TabLocal.php:121
-msgid "Business Type"
-msgstr ""
-
-#: includes/Admin/Settings/TabLocal.php:126
-msgid "Select the type that best describes your business."
-msgstr ""
-
-#: includes/Admin/Settings/TabLocal.php:132
-msgid "Business Name"
-msgstr ""
-
-#: includes/Admin/Settings/TabLocal.php:145
-msgid "Leave empty to use site name."
-msgstr ""
-
-#: includes/Admin/Settings/TabLocal.php:151
-msgid "Business Description"
-msgstr ""
-
-#: includes/Admin/Settings/TabLocal.php:166
-msgid "Price Range"
-msgstr ""
-
-#: includes/Admin/Settings/TabLocal.php:220
-msgid "Address"
-msgstr ""
-
-#: includes/Admin/Settings/TabLocal.php:224
-msgid "Street Address"
-msgstr ""
-
-#: includes/Admin/Settings/TabLocal.php:239
-msgid "Address Line 2"
-msgstr ""
-
-#: includes/Admin/Settings/TabLocal.php:254
-msgid "City"
-msgstr ""
-
-#: includes/Admin/Settings/TabLocal.php:269
-msgid "State / Region"
-msgstr ""
-
-#: includes/Admin/Settings/TabLocal.php:284
-msgid "Postal Code"
-msgstr ""
-
-#: includes/Admin/Settings/TabLocal.php:299
-msgid "Country"
-msgstr ""
-
-#: includes/Admin/Settings/TabLocal.php:312
-msgid "Use ISO 3166-1 alpha-2 code (e.g., HU, US, DE)."
-msgstr ""
-
-#: includes/Admin/Settings/TabLocal.php:327
-msgid "Contact"
-msgstr ""
-
-#: includes/Admin/Settings/TabLocal.php:331
-msgid "Phone"
-msgstr ""
-
-#: includes/Admin/Settings/TabLocal.php:347
-msgid "Email"
-msgstr ""
-
-#: includes/Admin/Settings/TabLocal.php:372
-msgid "Opening Hours"
-msgstr ""
-
-#: includes/Admin/Settings/TabLocal.php:375
-msgid "Use Opening Hours"
-msgstr ""
-
-#: includes/Admin/Settings/TabLocal.php:381
-msgid "Enable opening hours in schema"
-msgstr ""
-
-#: includes/Admin/Settings/TabLocal.php:425
-#: includes/Local/Shortcodes.php:294
-#: includes/Local/Shortcodes.php:326
-msgid "Closed"
-msgstr ""
-
-#: includes/Admin/Settings/TabLocal.php:430
-msgid "Open:"
-msgstr ""
-
-#: includes/Admin/Settings/TabLocal.php:441
-msgid "Close:"
-msgstr ""
-
-#: includes/Admin/Settings/TabLocal.php:459
-msgid "Coordinates"
-msgstr ""
-
-#: includes/Admin/Settings/TabLocal.php:463
-msgid "Latitude"
-msgstr ""
-
-#: includes/Admin/Settings/TabLocal.php:479
-msgid "Longitude"
-msgstr ""
-
-#. translators: %s: Google Maps URL
-#: includes/Admin/Settings/TabLocal.php:498
-#, php-format
-msgid "Find coordinates at %s - right-click location and select \"What's here?\"."
-msgstr ""
-
-#: includes/Admin/Settings/TabMigration.php:32
-#: includes/Admin/Settings/TabRedirects.php:240
-msgid "Import"
-msgstr ""
-
-#: includes/Admin/Settings/TabMigration.php:51
-msgid "Import SEO Data"
-msgstr ""
-
-#: includes/Admin/Settings/TabMigration.php:54
-msgid "Import SEO data from other SEO plugins. Existing LW SEO data will not be overwritten."
-msgstr ""
-
-#: includes/Admin/Settings/TabMigration.php:60
-msgid "RankMath SEO"
-msgstr ""
-
-#: includes/Admin/Settings/TabMigration.php:61
-msgid "Detect RankMath SEO data in your database for migration."
-msgstr ""
-
-#: includes/Admin/Settings/TabMigration.php:65
-msgid "Yoast SEO"
-msgstr ""
-
-#: includes/Admin/Settings/TabMigration.php:66
-msgid "Detect Yoast SEO data in your database for migration."
-msgstr ""
-
-#: includes/Admin/Settings/TabMigration.php:87
-msgid "Detect Data"
-msgstr ""
-
-#: includes/Admin/Settings/TabMigration.php:99
-msgid "Preview Migration"
-msgstr ""
-
-#: includes/Admin/Settings/TabMigration.php:102
-msgid "Run Migration"
-msgstr ""
-
-#: includes/Admin/Settings/TabRedirects.php:37
-msgid "Redirects"
-msgstr ""
-
-#: includes/Admin/Settings/TabRedirects.php:57
-msgid "Redirect Manager"
-msgstr ""
-
-#: includes/Admin/Settings/TabRedirects.php:60
-msgid "Create and manage URL redirects to prevent 404 errors and preserve SEO value."
-msgstr ""
-
-#: includes/Admin/Settings/TabRedirects.php:65
-msgid "Enable Redirects"
-msgstr ""
-
-#: includes/Admin/Settings/TabRedirects.php:71
-msgid "Process redirect rules"
-msgstr ""
-
-#: includes/Admin/Settings/TabRedirects.php:81
-msgid "Add New Redirect"
-msgstr ""
-
-#: includes/Admin/Settings/TabRedirects.php:89
-msgid "Source URL"
-msgstr ""
-
-#: includes/Admin/Settings/TabRedirects.php:99
-msgid "The old URL path that should redirect (e.g., /old-page/)."
-msgstr ""
-
-#: includes/Admin/Settings/TabRedirects.php:105
-msgid "Destination URL"
-msgstr ""
-
-#: includes/Admin/Settings/TabRedirects.php:115
-msgid "The new URL to redirect to. Leave empty for 410/451 types."
-msgstr ""
-
-#: includes/Admin/Settings/TabRedirects.php:121
-msgid "Redirect Type"
-msgstr ""
-
-#: includes/Admin/Settings/TabRedirects.php:134
-#: includes/Admin/Settings/TabRedirects.php:186
-#: includes/Admin/SettingsPage.php:186
-msgid "Regex"
-msgstr ""
-
-#: includes/Admin/Settings/TabRedirects.php:138
-msgid "Source is a regular expression"
-msgstr ""
-
-#: includes/Admin/Settings/TabRedirects.php:141
-msgid "Advanced: Use regex patterns like ^/category/(.*)$ with $1 in destination."
-msgstr ""
-
-#: includes/Admin/Settings/TabRedirects.php:149
-#: includes/Admin/SettingsPage.php:176
-msgid "Add Redirect"
-msgstr ""
-
-#: includes/Admin/Settings/TabRedirects.php:152
-msgid "Cancel"
-msgstr ""
-
-#: includes/Admin/Settings/TabRedirects.php:163
-msgid "Existing Redirects"
-msgstr ""
-
-#: includes/Admin/Settings/TabRedirects.php:168
-msgid "No redirects configured yet."
-msgstr ""
-
-#: includes/Admin/Settings/TabRedirects.php:173
-msgid "Source"
-msgstr ""
-
-#: includes/Admin/Settings/TabRedirects.php:174
-msgid "Destination"
-msgstr ""
-
-#: includes/Admin/Settings/TabRedirects.php:175
-msgid "Type"
-msgstr ""
-
-#: includes/Admin/Settings/TabRedirects.php:176
-msgid "Hits"
-msgstr ""
-
-#: includes/Admin/Settings/TabRedirects.php:177
-msgid "Actions"
-msgstr ""
-
-#: includes/Admin/Settings/TabRedirects.php:191
-#: includes/Admin/SettingsPage.php:185
-msgid "N/A"
-msgstr ""
-
-#: includes/Admin/Settings/TabRedirects.php:210
-#: includes/Admin/SettingsPage.php:178
-msgid "Edit"
-msgstr ""
-
-#: includes/Admin/Settings/TabRedirects.php:213
-#: includes/Admin/SettingsPage.php:179
-msgid "Delete"
-msgstr ""
-
-#: includes/Admin/Settings/TabRedirects.php:224
-msgid "Import / Export"
-msgstr ""
-
-#: includes/Admin/Settings/TabRedirects.php:228
-msgid "Export"
-msgstr ""
-
-#: includes/Admin/Settings/TabRedirects.php:231
-msgid "Download CSV"
-msgstr ""
-
-#: includes/Admin/Settings/TabRedirects.php:234
-msgid "Export all redirects as a CSV file."
-msgstr ""
-
-#: includes/Admin/Settings/TabRedirects.php:245
-msgid "Import CSV"
-msgstr ""
-
-#: includes/Admin/Settings/TabRedirects.php:248
-msgid "Import redirects from a CSV file. Format: source,destination,type,regex"
-msgstr ""
-
-#: includes/Admin/Settings/TabSitemap.php:38
-#: includes/Admin/Settings/TabWooCommerce.php:247
-msgid "Sitemap"
-msgstr ""
-
-#: includes/Admin/Settings/TabSitemap.php:58
-#: includes/Admin/Settings/TabSitemap.php:69
-msgid "XML Sitemap"
-msgstr ""
-
-#: includes/Admin/Settings/TabSitemap.php:62
-msgid "Your sitemap:"
-msgstr ""
-
-#: includes/Admin/Settings/TabSitemap.php:69
-msgid "Enable XML sitemap"
-msgstr ""
-
-#: includes/Admin/Settings/TabSitemap.php:83
-msgid "Include Posts"
-msgstr ""
-
-#: includes/Admin/Settings/TabSitemap.php:83
-msgid "Include posts in sitemap"
-msgstr ""
-
-#: includes/Admin/Settings/TabSitemap.php:84
-msgid "Include Pages"
-msgstr ""
-
-#: includes/Admin/Settings/TabSitemap.php:84
-msgid "Include pages in sitemap"
-msgstr ""
-
-#: includes/Admin/Settings/TabSitemap.php:92
-msgid "Custom Post Types"
-msgstr ""
-
-#: includes/Admin/Settings/TabSitemap.php:95
-msgid "New custom post types are included automatically. Content set to noindex is always left out."
-msgstr ""
-
-#: includes/Admin/Settings/TabSitemap.php:107
-msgid "Include Categories"
-msgstr ""
-
-#: includes/Admin/Settings/TabSitemap.php:107
-msgid "Include categories in sitemap"
-msgstr ""
-
-#: includes/Admin/Settings/TabSitemap.php:108
-msgid "Include Tags"
-msgstr ""
-
-#: includes/Admin/Settings/TabSitemap.php:108
-msgid "Include tags in sitemap"
-msgstr ""
-
-#: includes/Admin/Settings/TabSitemap.php:116
-msgid "Custom Taxonomies"
-msgstr ""
-
-#: includes/Admin/Settings/TabSitemap.php:119
-msgid "Custom taxonomy archives are only listed when switched on here."
-msgstr ""
-
-#: includes/Admin/Settings/TabSocial.php:34
-#: includes/MetaBox.php:216
-msgid "Social"
-msgstr ""
-
-#: includes/Admin/Settings/TabSocial.php:53
-msgid "Social Media"
-msgstr ""
-
-#: includes/Admin/Settings/TabSocial.php:56
-msgid "Settings for Open Graph and Twitter Cards."
-msgstr ""
-
-#: includes/Admin/Settings/TabSocial.php:71
-msgid "Meta Tags"
-msgstr ""
-
-#: includes/Admin/Settings/TabSocial.php:74
-msgid "Open Graph"
-msgstr ""
-
-#: includes/Admin/Settings/TabSocial.php:80
-msgid "Enable Open Graph meta tags"
-msgstr ""
-
-#: includes/Admin/Settings/TabSocial.php:87
-msgid "Twitter Cards"
-msgstr ""
-
-#: includes/Admin/Settings/TabSocial.php:93
-msgid "Enable Twitter Card meta tags"
-msgstr ""
-
-#: includes/Admin/Settings/TabSocial.php:101
-msgid "Default Card Type"
-msgstr ""
-
-#: includes/Admin/Settings/TabSocial.php:109
-msgid "Summary with large image"
-msgstr ""
-
-#: includes/Admin/Settings/TabSocial.php:119
-msgid "Default Social Image"
-msgstr ""
-
-#: includes/Admin/Settings/TabSocial.php:126
-msgid "Used when a post has no featured image. Recommended: 1200x630px."
-msgstr ""
-
-#: includes/Admin/Settings/TabSocial.php:143
-msgid "Facebook"
-msgstr ""
-
-#: includes/Admin/Settings/TabSocial.php:144
-msgid "Twitter / X"
-msgstr ""
-
-#: includes/Admin/Settings/TabSocial.php:145
-msgid "Instagram"
-msgstr ""
-
-#: includes/Admin/Settings/TabSocial.php:146
-msgid "LinkedIn"
-msgstr ""
-
-#: includes/Admin/Settings/TabSocial.php:147
-msgid "YouTube"
-msgstr ""
-
-#: includes/Admin/Settings/TabSocial.php:151
-msgid "Social Profiles"
-msgstr ""
-
-#: includes/Admin/Settings/TabWooCommerce.php:36
-msgid "WooCommerce"
-msgstr ""
-
-#: includes/Admin/Settings/TabWooCommerce.php:55
-#: includes/Admin/Settings/TabWooCommerce.php:147
-msgid "WooCommerce SEO"
-msgstr ""
-
-#: includes/Admin/Settings/TabWooCommerce.php:58
-msgid "Optimize your WooCommerce products for search engines and social media."
-msgstr ""
-
-#: includes/Admin/Settings/TabWooCommerce.php:75
-msgid "Permalinks"
-msgstr ""
-
-#: includes/Admin/Settings/TabWooCommerce.php:77
-msgid "Slug-only WooCommerce permalinks (RankMath-compatible). Categories whose root slug collides with a page, reserved slug, or another taxonomy/CPT base are automatically skipped to avoid breaking existing URLs."
-msgstr ""
-
-#: includes/Admin/Settings/TabWooCommerce.php:81
-msgid "Category base"
-msgstr ""
-
-#: includes/Admin/Settings/TabWooCommerce.php:87
-msgid "Remove /product-category/ from product category URLs"
-msgstr ""
-
-#: includes/Admin/Settings/TabWooCommerce.php:94
-msgid "Parent slugs"
-msgstr ""
-
-#: includes/Admin/Settings/TabWooCommerce.php:100
-msgid "Remove parent category slugs (expose leaf-only URLs)"
-msgstr ""
-
-#: includes/Admin/Settings/TabWooCommerce.php:107
-msgid "Product base"
-msgstr ""
-
-#: includes/Admin/Settings/TabWooCommerce.php:113
-msgid "Remove /product/ from product URLs"
-msgstr ""
-
-#: includes/Admin/Settings/TabWooCommerce.php:126
-msgid "Skipped categories (slug collision)"
-msgstr ""
-
-#: includes/Admin/Settings/TabWooCommerce.php:130
-msgid "These category slugs already belong to a page, reserved WordPress slug, or another taxonomy/CPT base. They keep their default WooCommerce URL to avoid shadowing the existing content. Rename either the category or the conflicting slug to convert."
-msgstr ""
-
-#: includes/Admin/Settings/TabWooCommerce.php:153
-msgid "Enable WooCommerce SEO features"
-msgstr ""
-
-#: includes/Admin/Settings/TabWooCommerce.php:159
-msgid "Adds product-specific OpenGraph tags, Schema.org Product markup, and more."
-msgstr ""
-
-#: includes/Admin/Settings/TabWooCommerce.php:165
-msgid "Product Title"
-msgstr ""
-
-#: includes/Admin/Settings/TabWooCommerce.php:180
-msgid "Noindex Products"
-msgstr ""
-
-#: includes/Admin/Settings/TabWooCommerce.php:186
-msgid "Add noindex to product pages"
-msgstr ""
-
-#: includes/Admin/Settings/TabWooCommerce.php:206
-msgid "Product Schema"
-msgstr ""
-
-#: includes/Admin/Settings/TabWooCommerce.php:212
-msgid "Enable Product Schema.org markup"
-msgstr ""
-
-#: includes/Admin/Settings/TabWooCommerce.php:218
-msgid "Adds structured data for products including price, availability, and reviews."
-msgstr ""
-
-#: includes/Admin/Settings/TabWooCommerce.php:223
-msgid "Include Reviews"
-msgstr ""
-
-#: includes/Admin/Settings/TabWooCommerce.php:229
-msgid "Include product reviews in Schema"
-msgstr ""
-
-#: includes/Admin/Settings/TabWooCommerce.php:250
-msgid "Products in Sitemap"
-msgstr ""
-
-#: includes/Admin/Settings/TabWooCommerce.php:256
-msgid "Include products in XML sitemap"
-msgstr ""
-
-#: includes/Admin/Settings/TabWooCommerce.php:264
-msgid "Product Categories"
-msgstr ""
-
-#: includes/Admin/Settings/TabWooCommerce.php:270
-msgid "Include product categories in XML sitemap"
-msgstr ""
-
-#: includes/Admin/Settings/TabWooCommerce.php:278
-msgid "Product Tags"
-msgstr ""
-
-#: includes/Admin/Settings/TabWooCommerce.php:284
-msgid "Include product tags in XML sitemap"
-msgstr ""
-
-#: includes/Admin/SettingsPage.php:120
+#: includes/Admin/SettingsPage.php:61
 msgid "SEO Settings"
 msgstr ""
 
-#: includes/Admin/SettingsPage.php:121
+#: includes/Admin/SettingsPage.php:62
 #: includes/SiteManager/Integration.php:38
 msgid "SEO"
 msgstr ""
 
-#: includes/Admin/SettingsPage.php:177
-msgid "Update Redirect"
-msgstr ""
-
-#: includes/Admin/SettingsPage.php:180
-msgid "Are you sure you want to delete this redirect?"
-msgstr ""
-
-#: includes/Admin/SettingsPage.php:181
-#: includes/Redirects/Ajax.php:68
-#: includes/Redirects/Ajax.php:122
-msgid "Source URL is required."
-msgstr ""
-
-#: includes/Admin/SettingsPage.php:182
-msgid "Please select a CSV file."
-msgstr ""
-
-#: includes/Admin/SettingsPage.php:183
-msgid "Some rows could not be imported:"
-msgstr ""
-
-#: includes/Admin/SettingsPage.php:184
-msgid "Not required for this type"
-msgstr ""
-
-#: includes/Admin/SettingsPage.php:204
-msgid "No data found in the database for this plugin."
-msgstr ""
-
-#: includes/Admin/SettingsPage.php:205
-msgid "Global Options"
-msgstr ""
-
-#: includes/Admin/SettingsPage.php:206
-msgid "Posts with SEO meta"
-msgstr ""
-
-#: includes/Admin/SettingsPage.php:207
-msgid "Terms with SEO meta"
-msgstr ""
-
-#: includes/Admin/SettingsPage.php:208
-msgid "Users with SEO meta"
-msgstr ""
-
-#: includes/Admin/SettingsPage.php:209
-msgid "Redirects (DB table)"
-msgstr ""
-
-#: includes/Admin/SettingsPage.php:210
-msgid "Found"
-msgstr ""
-
-#: includes/Admin/SettingsPage.php:211
-msgid "Not found"
-msgstr ""
-
-#: includes/Admin/SettingsPage.php:212
-msgid "Preview Results (Dry Run)"
-msgstr ""
-
-#: includes/Admin/SettingsPage.php:213
-msgid "Migration Results"
-msgstr ""
-
-#: includes/Admin/SettingsPage.php:214
-msgid "Options migrated"
-msgstr ""
-
-#: includes/Admin/SettingsPage.php:215
-msgid "Posts migrated"
-msgstr ""
-
-#: includes/Admin/SettingsPage.php:216
-msgid "Posts skipped (LW SEO data already present)"
-msgstr ""
-
-#: includes/Admin/SettingsPage.php:217
-msgid "Posts skipped (no actionable data)"
-msgstr ""
-
-#: includes/Admin/SettingsPage.php:218
-msgid "Terms migrated"
-msgstr ""
-
-#: includes/Admin/SettingsPage.php:219
-msgid "Terms skipped (LW SEO data already present)"
-msgstr ""
-
-#: includes/Admin/SettingsPage.php:220
-msgid "Terms skipped (no actionable data)"
-msgstr ""
-
-#: includes/Admin/SettingsPage.php:221
-msgid "Users migrated"
-msgstr ""
-
-#: includes/Admin/SettingsPage.php:222
-msgid "Primary terms migrated"
-msgstr ""
-
-#: includes/Admin/SettingsPage.php:223
-msgid "Redirects migrated"
-msgstr ""
-
-#: includes/Admin/SettingsPage.php:224
-msgid "Redirects skipped"
-msgstr ""
-
-#: includes/Admin/SettingsPage.php:225
-msgid "Warnings"
-msgstr ""
-
-#: includes/Admin/SettingsPage.php:226
-msgid "This was a preview. No data was modified."
-msgstr ""
-
-#: includes/Admin/SettingsPage.php:227
-msgid "Are you sure you want to run the migration? Existing LW SEO data will not be overwritten."
-msgstr ""
-
-#: includes/Admin/SettingsPage.php:273
-msgid "Lightweight SEO"
-msgstr ""
-
-#: includes/Admin/SettingsPage.php:279
-msgid "Another SEO plugin (Yoast SEO, Rank Math or All in One SEO) is active. LW SEO skips its meta tags to avoid duplicates. Deactivate the other plugin to use LW SEO fully."
-msgstr ""
-
-#: includes/Admin/TermFields.php:52
-#: includes/MetaBox.php:155
-msgid "SEO Title"
-msgstr ""
-
-#: includes/Admin/TermFields.php:55
-#: includes/MetaBox.php:170
-msgid "Leave empty to use the default title template."
-msgstr ""
-
-#: includes/Admin/TermFields.php:59
-#: includes/MetaBox.php:176
-msgid "Meta Description"
-msgstr ""
-
-#: includes/Admin/TermFields.php:65
-msgid "Robots"
-msgstr ""
-
-#: includes/Admin/TermFields.php:69
-msgid "noindex this archive"
-msgstr ""
-
-#: includes/Admin/TermFields.php:88
-#: includes/MetaBox.php:221
-msgid "Social Title"
-msgstr ""
-
-#: includes/Admin/TermFields.php:91
-#: includes/MetaBox.php:229
-msgid "Defaults to SEO title"
-msgstr ""
-
-#: includes/Admin/TermFields.php:95
-#: includes/MetaBox.php:235
-msgid "Social Description"
-msgstr ""
-
-#: includes/Admin/TermFields.php:98
-#: includes/MetaBox.php:242
-msgid "Defaults to meta description"
-msgstr ""
-
-#: includes/Admin/TermFields.php:102
-#: includes/MetaBox.php:248
-msgid "Social Image"
-msgstr ""
-
-#: includes/Admin/TermFields.php:123
-#: includes/MetaBox.php:315
-msgid "Default (use global setting)"
-msgstr ""
-
-#: includes/Admin/TermFields.php:124
-#: includes/MetaBox.php:316
-msgid "Yes"
-msgstr ""
-
-#: includes/Admin/TermFields.php:125
-#: includes/MetaBox.php:317
-msgid "No"
-msgstr ""
-
-#: includes/Admin/TermFields.php:130
-#: includes/MetaBox.php:334
-msgid "AI Input (RAG)"
-msgstr ""
-
-#: includes/Admin/TermFields.php:131
-#: includes/MetaBox.php:346
-msgid "AI Search"
+#: includes/Admin/SettingsPage.php:131
+msgid "The settings screen files are missing. Re-install the plugin from a release ZIP, or run \"npm install && npm run build\" in the plugin directory."
 msgstr ""
 
 #: includes/Breadcrumbs.php:45
@@ -1814,63 +601,217 @@ msgstr ""
 msgid "Breadcrumb"
 msgstr ""
 
-#: includes/MetaBox.php:124
+#: includes/Editor/PostRestField.php:85
+msgid "Sorry, you are not allowed to edit the SEO settings of this post."
+msgstr ""
+
+#: includes/Editor/PostRestField.php:119
+msgid "LW SEO fields."
+msgstr ""
+
+#: includes/Local/Shortcodes.php:45
+#: build/index.js:1
+msgid "Monday"
+msgstr ""
+
+#: includes/Local/Shortcodes.php:46
+#: build/index.js:1
+msgid "Tuesday"
+msgstr ""
+
+#: includes/Local/Shortcodes.php:47
+#: build/index.js:1
+msgid "Wednesday"
+msgstr ""
+
+#: includes/Local/Shortcodes.php:48
+#: build/index.js:1
+msgid "Thursday"
+msgstr ""
+
+#: includes/Local/Shortcodes.php:49
+#: build/index.js:1
+msgid "Friday"
+msgstr ""
+
+#: includes/Local/Shortcodes.php:50
+#: build/index.js:1
+msgid "Saturday"
+msgstr ""
+
+#: includes/Local/Shortcodes.php:51
+#: build/index.js:1
+msgid "Sunday"
+msgstr ""
+
+#: includes/Local/Shortcodes.php:294
+#: includes/Local/Shortcodes.php:326
+#: build/index.js:1
+msgid "Closed"
+msgstr ""
+
+#: includes/MetaBox.php:99
 msgid "characters remaining"
 msgstr ""
 
-#: includes/MetaBox.php:125
+#: includes/MetaBox.php:100
 msgid "Too long!"
 msgstr ""
 
-#: includes/MetaBox.php:184
+#: includes/MetaBox.php:130
+#: build/editor.js:2
+#: build/term.js:2
+msgid "SEO Title"
+msgstr ""
+
+#: includes/MetaBox.php:145
+#: build/editor.js:2
+#: build/term.js:2
+msgid "Leave empty to use the default title template."
+msgstr ""
+
+#: includes/MetaBox.php:151
+#: build/editor.js:2
+#: build/term.js:2
+msgid "Meta Description"
+msgstr ""
+
+#: includes/MetaBox.php:159
 msgid "Enter a meta description..."
 msgstr ""
 
-#: includes/MetaBox.php:199
+#: includes/MetaBox.php:174
+#: build/index.js:1
+#: build/index.js:2
 msgid "noindex"
 msgstr ""
 
-#: includes/MetaBox.php:208
+#: includes/MetaBox.php:183
 msgid "nofollow"
 msgstr ""
 
-#: includes/MetaBox.php:258
+#: includes/MetaBox.php:191
+#: build/editor.js:2
+#: build/index.js:1
+#: build/term.js:2
+msgid "Social"
+msgstr ""
+
+#: includes/MetaBox.php:196
+#: build/editor.js:2
+#: build/term.js:2
+msgid "Social Title"
+msgstr ""
+
+#: includes/MetaBox.php:204
+#: build/editor.js:2
+#: build/term.js:2
+msgid "Defaults to SEO title"
+msgstr ""
+
+#: includes/MetaBox.php:210
+#: build/editor.js:2
+#: build/term.js:2
+msgid "Social Description"
+msgstr ""
+
+#: includes/MetaBox.php:217
+#: build/editor.js:2
+#: build/term.js:2
+msgid "Defaults to meta description"
+msgstr ""
+
+#: includes/MetaBox.php:223
+#: build/editor.js:2
+#: build/term.js:2
+msgid "Social Image"
+msgstr ""
+
+#: includes/MetaBox.php:233
 msgid "Image URL"
 msgstr ""
 
-#: includes/MetaBox.php:264
+#: includes/MetaBox.php:236
+#: build/editor.js:2
+#: build/index.js:1
+#: build/term.js:2
+msgid "Select Image"
+msgstr ""
+
+#: includes/MetaBox.php:239
 #: assets/js/blocks/faq.js:84
+#: build/editor.js:2
+#: build/index.js:1
+#: build/term.js:2
 msgid "Remove"
 msgstr ""
 
-#: includes/MetaBox.php:272
+#: includes/MetaBox.php:247
 msgid "Priority: Social Image → Featured Image → Default Image."
 msgstr ""
 
-#: includes/MetaBox.php:286
+#: includes/MetaBox.php:256
+#: build/editor.js:2
+#: build/index.js:1
+msgid "Advanced"
+msgstr ""
+
+#: includes/MetaBox.php:261
+#: build/editor.js:2
 msgid "Canonical URL"
 msgstr ""
 
-#: includes/MetaBox.php:297
+#: includes/MetaBox.php:272
+#: build/editor.js:2
 msgid "Leave empty to use the default permalink."
 msgstr ""
 
-#: includes/MetaBox.php:306
+#: includes/MetaBox.php:281
+#: build/editor.js:2
+#: build/term.js:2
 msgid "AI Content Signals"
 msgstr ""
 
-#: includes/MetaBox.php:357
+#: includes/MetaBox.php:290
+#: build/editor.js:2
+#: build/term.js:2
+msgid "Default (use global setting)"
+msgstr ""
+
+#: includes/MetaBox.php:291
+#: build/editor.js:2
+#: build/term.js:2
+msgid "Yes"
+msgstr ""
+
+#: includes/MetaBox.php:292
+#: build/editor.js:2
+#: build/term.js:2
+msgid "No"
+msgstr ""
+
+#: includes/MetaBox.php:297
+#: build/editor.js:2
+#: build/index.js:2
+#: build/term.js:2
+msgid "AI Training"
+msgstr ""
+
+#: includes/MetaBox.php:309
+#: build/editor.js:2
+#: build/term.js:2
+msgid "AI Input (RAG)"
+msgstr ""
+
+#: includes/MetaBox.php:321
+#: build/editor.js:2
+#: build/term.js:2
+msgid "AI Search"
+msgstr ""
+
+#: includes/MetaBox.php:332
+#: build/editor.js:2
 msgid "Override the global Content Signals settings for this content."
-msgstr ""
-
-#: includes/Migration/Ajax.php:59
-#: includes/Redirects/Ajax.php:36
-msgid "Security check failed."
-msgstr ""
-
-#: includes/Migration/Ajax.php:64
-#: includes/Redirects/Ajax.php:41
-msgid "Permission denied."
 msgstr ""
 
 #. translators: %s: comma-separated list of RankMath WooCommerce permalink features without an LW SEO equivalent enabled.
@@ -1903,78 +844,58 @@ msgstr ""
 msgid "The following Yoast meta keys have no LW SEO equivalent and will not be migrated: %s"
 msgstr ""
 
-#: includes/Redirects/Ajax.php:77
-#: includes/Redirects/Ajax.php:131
-msgid "Invalid regex pattern."
-msgstr ""
-
-#: includes/Redirects/Ajax.php:85
-msgid "Failed to add redirect."
-msgstr ""
-
-#: includes/Redirects/Ajax.php:91
-msgid "Redirect added successfully."
-msgstr ""
-
-#: includes/Redirects/Ajax.php:117
-#: includes/Redirects/Ajax.php:165
-#: includes/Redirects/Ajax.php:193
-msgid "Invalid redirect ID."
-msgstr ""
-
-#: includes/Redirects/Ajax.php:139
-msgid "Failed to update redirect."
-msgstr ""
-
-#: includes/Redirects/Ajax.php:145
-msgid "Redirect updated successfully."
-msgstr ""
-
-#: includes/Redirects/Ajax.php:172
-msgid "Failed to delete redirect."
-msgstr ""
-
-#: includes/Redirects/Ajax.php:176
-msgid "Redirect deleted successfully."
-msgstr ""
-
-#: includes/Redirects/Ajax.php:200
-msgid "Redirect not found."
-msgstr ""
-
-#: includes/Redirects/Ajax.php:241
-msgid "No CSV data provided."
-msgstr ""
-
-#. translators: 1: number of imported redirects, 2: number of skipped redirects
-#: includes/Redirects/Ajax.php:251
-#, php-format
-msgid "Imported %1$d redirects, skipped %2$d."
-msgstr ""
-
-#: includes/Redirects/Handler.php:131
+#: includes/Redirects/Handler.php:130
 msgid "Content Deleted"
 msgstr ""
 
-#: includes/Redirects/Handler.php:132
+#: includes/Redirects/Handler.php:131
 msgid "The content you are looking for has been permanently removed."
 msgstr ""
 
-#: includes/Redirects/Handler.php:154
+#: includes/Redirects/Handler.php:153
 msgid "Unavailable For Legal Reasons"
 msgstr ""
 
-#: includes/Redirects/Handler.php:155
+#: includes/Redirects/Handler.php:154
 msgid "This content is not available due to legal reasons."
 msgstr ""
 
-#: includes/Redirects/Handler.php:226
+#: includes/Redirects/Handler.php:225
 msgid "Return to homepage"
 msgstr ""
 
-#. translators: 1: current page number, 2: total page count
-#: includes/ReplaceVars.php:327
+#: includes/Redirects/Manager.php:290
+msgid "Invalid format."
+msgstr ""
+
+#. translators: 1: CSV line number, 2: reason the line was skipped
+#: includes/Redirects/Manager.php:306
 #, php-format
+msgid "Line %1$d: %2$s"
+msgstr ""
+
+#. translators: 1: CSV line number, 2: reason the line was skipped
+#: includes/Redirects/Manager.php:306
+msgid "Could not be saved."
+msgstr ""
+
+#: includes/Redirects/Validator.php:33
+msgid "Source URL is required."
+msgstr ""
+
+#: includes/Redirects/Validator.php:37
+msgid "Destination URL is required for this redirect type."
+msgstr ""
+
+#: includes/Redirects/Validator.php:41
+msgid "Invalid regex pattern."
+msgstr ""
+
+#. translators: 1: current page number, 2: total page count
+#. translators: 1: current page, 2: total pages.
+#: includes/ReplaceVars.php:327
+#: build/index.js:2
+#, php-format,js-format
 msgid "Page %1$d of %2$d"
 msgstr ""
 
@@ -2048,6 +969,26 @@ msgstr ""
 
 #: includes/ReplaceVars.php:354
 msgid "Page X of Y"
+msgstr ""
+
+#: includes/Rest/Admin/MigrationController.php:92
+msgid "Unknown migration source."
+msgstr ""
+
+#: includes/Rest/Admin/RedirectsController.php:84
+msgid "Failed to add redirect."
+msgstr ""
+
+#: includes/Rest/Admin/RedirectsController.php:150
+msgid "No CSV data provided."
+msgstr ""
+
+#: includes/Rest/Admin/RedirectsController.php:215
+msgid "Redirect not found."
+msgstr ""
+
+#: includes/Rest/Admin/SettingsMeta.php:54
+msgid "Other"
 msgstr ""
 
 #: includes/RestApi.php:61
@@ -2247,6 +1188,1238 @@ msgstr ""
 
 #: assets/js/blocks/faq.js:238
 msgid "Add Question"
+msgstr ""
+
+#. translators: 1: characters used, 2: recommended maximum.
+#: build/editor.js:2
+#: build/term.js:2
+#, js-format
+msgid "%1$d / %2$d characters"
+msgstr ""
+
+#: build/editor.js:2
+msgid "Enter a meta description…"
+msgstr ""
+
+#: build/editor.js:2
+msgid "Keep this page out of search results and the sitemap."
+msgstr ""
+
+#: build/editor.js:2
+msgid "Ask search engines not to follow the links on this page."
+msgstr ""
+
+#: build/editor.js:2
+#: build/index.js:1
+#: build/term.js:2
+msgid "Replace"
+msgstr ""
+
+#: build/editor.js:2
+msgid "Priority: Social Image, then Featured Image, then the default image."
+msgstr ""
+
+#: build/editor.js:2
+msgid "If filled, this markdown is served at the /md endpoint instead of the auto-generated content. Ideal for page builder pages."
+msgstr ""
+
+#: build/index.js:1
+#: build/index.js:2
+msgid "Loading…"
+msgstr ""
+
+#: build/index.js:1
+msgid "Try again"
+msgstr ""
+
+#: build/index.js:1
+msgid "Settings saved."
+msgstr ""
+
+#: build/index.js:1
+msgid "LW Plugins (opens in a new tab)"
+msgstr ""
+
+#: build/index.js:1
+msgid "LW SEO home"
+msgstr ""
+
+#: build/index.js:1
+msgid "LW SEO sections"
+msgstr ""
+
+#: build/index.js:1
+msgid "Documentation"
+msgstr ""
+
+#: build/index.js:1
+msgid "(opens in a new tab)"
+msgstr ""
+
+#: build/index.js:1
+msgid "Unsaved changes"
+msgstr ""
+
+#: build/index.js:1
+msgid "Discard"
+msgstr ""
+
+#: build/index.js:1
+msgid "Save changes"
+msgstr ""
+
+#: build/index.js:1
+msgid "General Settings"
+msgstr ""
+
+#: build/index.js:1
+msgid "Content"
+msgstr ""
+
+#: build/index.js:1
+msgid "Content Types"
+msgstr ""
+
+#: build/index.js:1
+msgid "Social Media"
+msgstr ""
+
+#: build/index.js:1
+msgid "Sitemap"
+msgstr ""
+
+#: build/index.js:1
+#: build/index.js:2
+msgid "XML Sitemap"
+msgstr ""
+
+#: build/index.js:1
+msgid "AI / LLM"
+msgstr ""
+
+#: build/index.js:1
+msgid "AI / LLM Settings"
+msgstr ""
+
+#: build/index.js:1
+msgid "WooCommerce"
+msgstr ""
+
+#: build/index.js:1
+#: build/index.js:2
+msgid "WooCommerce SEO"
+msgstr ""
+
+#: build/index.js:1
+#: build/index.js:2
+msgid "Local SEO"
+msgstr ""
+
+#: build/index.js:1
+#: build/index.js:2
+msgid "Redirects"
+msgstr ""
+
+#: build/index.js:1
+msgid "Redirect Manager"
+msgstr ""
+
+#: build/index.js:1
+#: build/index.js:4
+msgid "404 Error Handling"
+msgstr ""
+
+#: build/index.js:1
+msgid "Advanced Settings"
+msgstr ""
+
+#: build/index.js:1
+msgid "Import"
+msgstr ""
+
+#: build/index.js:1
+msgid "Import SEO Data"
+msgstr ""
+
+#: build/index.js:1
+#: build/index.js:2
+msgid "Not specified"
+msgstr ""
+
+#: build/index.js:1
+msgid "Allow"
+msgstr ""
+
+#: build/index.js:1
+msgid "Disallow"
+msgstr ""
+
+#: build/index.js:1
+msgid "Training crawlers"
+msgstr ""
+
+#: build/index.js:1
+msgid "AI search crawlers"
+msgstr ""
+
+#: build/index.js:1
+msgid "User-triggered fetchers"
+msgstr ""
+
+#: build/index.js:1
+#: build/index.js:2
+msgid "Blocked"
+msgstr ""
+
+#: build/index.js:1
+#: build/index.js:2
+msgid "Allowed"
+msgstr ""
+
+#: build/index.js:1
+msgid "Variables:"
+msgstr ""
+
+#: build/index.js:1
+#: build/index.js:2
+msgid "Indexed"
+msgstr ""
+
+#: build/index.js:1
+msgid "Open"
+msgstr ""
+
+#: build/index.js:1
+msgid "Close"
+msgstr ""
+
+#: build/index.js:1
+msgid "Detect RankMath SEO data in your database for migration."
+msgstr ""
+
+#: build/index.js:1
+msgid "Detect Yoast SEO data in your database for migration."
+msgstr ""
+
+#: build/index.js:1
+msgid "Detect Data"
+msgstr ""
+
+#: build/index.js:1
+msgid "Preview Migration"
+msgstr ""
+
+#: build/index.js:1
+msgid "Run Migration"
+msgstr ""
+
+#: build/index.js:1
+msgid "No data found in the database for this plugin."
+msgstr ""
+
+#: build/index.js:1
+msgid "Global Options"
+msgstr ""
+
+#: build/index.js:1
+msgid "Found"
+msgstr ""
+
+#: build/index.js:1
+msgid "Not found"
+msgstr ""
+
+#: build/index.js:1
+msgid "Posts with SEO meta"
+msgstr ""
+
+#: build/index.js:1
+msgid "Terms with SEO meta"
+msgstr ""
+
+#: build/index.js:1
+msgid "Users with SEO meta"
+msgstr ""
+
+#: build/index.js:1
+msgid "Redirects (DB table)"
+msgstr ""
+
+#: build/index.js:1
+msgid "Preview Results (Dry Run)"
+msgstr ""
+
+#: build/index.js:1
+msgid "Migration Results"
+msgstr ""
+
+#: build/index.js:1
+msgid "This was a preview. No data was modified."
+msgstr ""
+
+#: build/index.js:1
+msgid "Options migrated"
+msgstr ""
+
+#: build/index.js:1
+msgid "Posts migrated"
+msgstr ""
+
+#: build/index.js:1
+msgid "Posts skipped (LW SEO data already present)"
+msgstr ""
+
+#: build/index.js:1
+msgid "Posts skipped (no actionable data)"
+msgstr ""
+
+#: build/index.js:1
+msgid "Terms migrated"
+msgstr ""
+
+#: build/index.js:1
+msgid "Terms skipped (LW SEO data already present)"
+msgstr ""
+
+#: build/index.js:1
+msgid "Terms skipped (no actionable data)"
+msgstr ""
+
+#: build/index.js:1
+msgid "Users migrated"
+msgstr ""
+
+#: build/index.js:1
+msgid "Primary terms migrated"
+msgstr ""
+
+#: build/index.js:1
+msgid "Redirects migrated"
+msgstr ""
+
+#: build/index.js:1
+msgid "Redirects skipped"
+msgstr ""
+
+#: build/index.js:1
+msgid "Migrated options"
+msgstr ""
+
+#: build/index.js:1
+msgid "Are you sure you want to run the migration? Existing LW SEO data will not be overwritten."
+msgstr ""
+
+#: build/index.js:1
+msgid "Import / Export"
+msgstr ""
+
+#: build/index.js:1
+msgid "Export"
+msgstr ""
+
+#: build/index.js:1
+msgid "Export all redirects as a CSV file."
+msgstr ""
+
+#: build/index.js:1
+msgid "Download CSV"
+msgstr ""
+
+#: build/index.js:1
+msgid "Import redirects from a CSV file. Format: source,destination,type,regex"
+msgstr ""
+
+#. translators: 1: imported redirects, 2: skipped rows.
+#: build/index.js:2
+#, js-format
+msgid "Imported %1$d redirects, skipped %2$d."
+msgstr ""
+
+#: build/index.js:2
+msgid "Import CSV"
+msgstr ""
+
+#: build/index.js:2
+msgid "Edit redirect"
+msgstr ""
+
+#: build/index.js:2
+msgid "Add redirect"
+msgstr ""
+
+#: build/index.js:2
+msgid "Source URL"
+msgstr ""
+
+#: build/index.js:2
+msgid "The old URL path that should redirect (e.g., /old-page/)."
+msgstr ""
+
+#: build/index.js:2
+msgid "Redirect Type"
+msgstr ""
+
+#: build/index.js:2
+msgid "Destination URL"
+msgstr ""
+
+#: build/index.js:2
+msgid "The new URL to redirect to."
+msgstr ""
+
+#: build/index.js:2
+msgid "Not required for this type."
+msgstr ""
+
+#: build/index.js:2
+msgid "Source is a regular expression"
+msgstr ""
+
+#: build/index.js:2
+msgid "Advanced: use patterns like ^/category/(.*)$ with $1 in the destination."
+msgstr ""
+
+#: build/index.js:2
+msgid "Cancel"
+msgstr ""
+
+#: build/index.js:2
+msgid "Update Redirect"
+msgstr ""
+
+#: build/index.js:2
+msgid "Add Redirect"
+msgstr ""
+
+#: build/index.js:2
+msgid "Included"
+msgstr ""
+
+#: build/index.js:2
+msgid "Left out"
+msgstr ""
+
+#: build/index.js:2
+msgid "Site"
+msgstr ""
+
+#: build/index.js:2
+msgid "Basic SEO settings for your site."
+msgstr ""
+
+#: build/index.js:2
+msgid "Title Separator"
+msgstr ""
+
+#: build/index.js:2
+msgid "Homepage Title"
+msgstr ""
+
+#: build/index.js:2
+msgid "Homepage Description"
+msgstr ""
+
+#: build/index.js:2
+msgid "Leave empty to use the site tagline."
+msgstr ""
+
+#: build/index.js:2
+msgid "Knowledge Graph"
+msgstr ""
+
+#: build/index.js:2
+msgid "Who the site represents in Schema.org markup."
+msgstr ""
+
+#: build/index.js:2
+msgid "Site Represents"
+msgstr ""
+
+#: build/index.js:2
+msgid "Organization"
+msgstr ""
+
+#: build/index.js:2
+msgid "Person"
+msgstr ""
+
+#: build/index.js:2
+msgid "Organization/Person Name"
+msgstr ""
+
+#: build/index.js:2
+msgid "Used in Schema.org markup."
+msgstr ""
+
+#: build/index.js:2
+msgid "Logo"
+msgstr ""
+
+#: build/index.js:2
+msgid "Organization logo for Schema.org markup."
+msgstr ""
+
+#: build/index.js:2
+msgid "Posts and pages"
+msgstr ""
+
+#: build/index.js:2
+msgid "Post Title Template"
+msgstr ""
+
+#: build/index.js:2
+msgid "Posts"
+msgstr ""
+
+#: build/index.js:2
+msgid "Set posts to noindex by default."
+msgstr ""
+
+#: build/index.js:2
+msgid "Page Title Template"
+msgstr ""
+
+#: build/index.js:2
+msgid "Pages"
+msgstr ""
+
+#: build/index.js:2
+msgid "Set pages to noindex by default."
+msgstr ""
+
+#: build/index.js:2
+msgid "Taxonomies"
+msgstr ""
+
+#: build/index.js:2
+msgid "Category Title Template"
+msgstr ""
+
+#: build/index.js:2
+msgid "Categories"
+msgstr ""
+
+#: build/index.js:2
+msgid "Set categories to noindex."
+msgstr ""
+
+#: build/index.js:2
+msgid "Tag Title Template"
+msgstr ""
+
+#: build/index.js:2
+msgid "Tags"
+msgstr ""
+
+#: build/index.js:2
+msgid "Set tags to noindex."
+msgstr ""
+
+#: build/index.js:2
+msgid "Archives and special pages"
+msgstr ""
+
+#: build/index.js:2
+msgid "Author Archive Title"
+msgstr ""
+
+#: build/index.js:2
+msgid "Author Archives"
+msgstr ""
+
+#: build/index.js:2
+msgid "Set author archives to noindex."
+msgstr ""
+
+#: build/index.js:2
+msgid "Date Archive Title"
+msgstr ""
+
+#: build/index.js:2
+msgid "Date Archives"
+msgstr ""
+
+#: build/index.js:2
+msgid "Set date archives to noindex."
+msgstr ""
+
+#: build/index.js:2
+msgid "Search Results Title"
+msgstr ""
+
+#: build/index.js:2
+msgid "404 Page Title"
+msgstr ""
+
+#: build/index.js:2
+msgid "Meta Tags"
+msgstr ""
+
+#: build/index.js:2
+msgid "Settings for Open Graph and Twitter Cards."
+msgstr ""
+
+#: build/index.js:2
+msgid "Open Graph"
+msgstr ""
+
+#: build/index.js:2
+msgid "Enable Open Graph meta tags"
+msgstr ""
+
+#: build/index.js:2
+#: build/index.js:4
+msgid "Off"
+msgstr ""
+
+#: build/index.js:2
+msgid "Twitter Cards"
+msgstr ""
+
+#: build/index.js:2
+msgid "Enable Twitter Card meta tags"
+msgstr ""
+
+#: build/index.js:2
+msgid "Default Card Type"
+msgstr ""
+
+#: build/index.js:2
+msgid "Summary with large image"
+msgstr ""
+
+#: build/index.js:2
+msgid "Summary"
+msgstr ""
+
+#: build/index.js:2
+msgid "Default Social Image"
+msgstr ""
+
+#: build/index.js:2
+msgid "Used when a post has no featured image. Recommended: 1200x630px."
+msgstr ""
+
+#: build/index.js:2
+msgid "Social Profiles"
+msgstr ""
+
+#: build/index.js:2
+msgid "Your sitemap:"
+msgstr ""
+
+#: build/index.js:2
+#: build/index.js:4
+msgid "Enabled"
+msgstr ""
+
+#: build/index.js:2
+msgid "Custom Post Types"
+msgstr ""
+
+#: build/index.js:2
+msgid "New custom post types are included automatically. Content set to noindex is always left out."
+msgstr ""
+
+#: build/index.js:2
+msgid "Custom Taxonomies"
+msgstr ""
+
+#: build/index.js:2
+msgid "Custom taxonomy archives are only listed when switched on here."
+msgstr ""
+
+#: build/index.js:2
+msgid "Content Signals"
+msgstr ""
+
+#: build/index.js:2
+msgid "Tell AI systems how they may use your content. Sent as a Content-Signal HTTP header, a meta tag and a robots.txt line. \"Not specified\" neither grants nor restricts that use."
+msgstr ""
+
+#: build/index.js:2
+msgid "Search"
+msgstr ""
+
+#: build/index.js:2
+msgid "AI Input (RAG, grounding)"
+msgstr ""
+
+#: build/index.js:2
+msgid "llms.txt File"
+msgstr ""
+
+#: build/index.js:2
+msgid "Your llms.txt:"
+msgstr ""
+
+#: build/index.js:2
+msgid "Learn more"
+msgstr ""
+
+#: build/index.js:2
+msgid "llms.txt"
+msgstr ""
+
+#: build/index.js:2
+msgid "Enable llms.txt for AI crawlers"
+msgstr ""
+
+#: build/index.js:2
+msgid "One sentence shown as the summary line. Empty = the site tagline."
+msgstr ""
+
+#: build/index.js:2
+msgid "Introduction"
+msgstr ""
+
+#: build/index.js:2
+msgid "Optional Markdown text shown before the page lists. Do not use headings."
+msgstr ""
+
+#: build/index.js:2
+msgid "Content types"
+msgstr ""
+
+#: build/index.js:2
+msgid "Each type becomes its own section. Noindex content and content with AI Input set to \"No\" are left out."
+msgstr ""
+
+#: build/index.js:2
+msgid "Items per section"
+msgstr ""
+
+#: build/index.js:2
+msgid "Pages are listed in menu order, other types newest first."
+msgstr ""
+
+#: build/index.js:2
+msgid "Markdown links"
+msgstr ""
+
+#: build/index.js:2
+msgid "Link to the Markdown version of each page (/md)"
+msgstr ""
+
+#: build/index.js:2
+msgid "Link to the HTML page"
+msgstr ""
+
+#: build/index.js:2
+msgid "Extra links"
+msgstr ""
+
+#: build/index.js:2
+msgid "One per line: Title | https://url | optional description. Listed under \"Optional\"."
+msgstr ""
+
+#: build/index.js:2
+msgid "llms-full.txt"
+msgstr ""
+
+#: build/index.js:2
+msgid "Built as a logged-out visitor. Content-restriction plugins that only protect the main page query may not apply here; use the lw_seo_post_is_eligible filter to leave restricted posts out."
+msgstr ""
+
+#: build/index.js:2
+msgid "Also serve /llms-full.txt with the full Markdown content (max 1 MB)"
+msgstr ""
+
+#: build/index.js:2
+msgid "AI Crawler Access"
+msgstr ""
+
+#: build/index.js:2
+msgid "Blocked crawlers get a \"Disallow: /\" rule in robots.txt."
+msgstr ""
+
+#: build/index.js:2
+msgid "All AI training crawlers"
+msgstr ""
+
+#: build/index.js:2
+msgid "Covers every crawler with that purpose, including ones added in future updates."
+msgstr ""
+
+#: build/index.js:2
+msgid "All AI search crawlers"
+msgstr ""
+
+#: build/index.js:2
+msgid "All user-triggered AI fetchers"
+msgstr ""
+
+#: build/index.js:2
+msgid "robots.txt is a request, not an enforcement. OpenAI, Perplexity, Meta and Amazon state that their user-triggered fetchers may ignore it."
+msgstr ""
+
+#: build/index.js:2
+msgid "Optimize your WooCommerce products for search engines and social media."
+msgstr ""
+
+#: build/index.js:2
+msgid "Adds product-specific OpenGraph tags, Schema.org Product markup, and more."
+msgstr ""
+
+#: build/index.js:2
+msgid "Product Title"
+msgstr ""
+
+#: build/index.js:2
+msgid "Shop Title"
+msgstr ""
+
+#: build/index.js:2
+msgid "Title of the shop page (product archive). %%title%% is the shop page title."
+msgstr ""
+
+#: build/index.js:2
+msgid "Products"
+msgstr ""
+
+#: build/index.js:2
+msgid "Add noindex to product pages."
+msgstr ""
+
+#: build/index.js:2
+msgid "Permalinks"
+msgstr ""
+
+#: build/index.js:2
+msgid "Slug-only WooCommerce permalinks. Categories whose root slug collides with a page, reserved slug, or another taxonomy/CPT base are automatically skipped to avoid breaking existing URLs."
+msgstr ""
+
+#: build/index.js:2
+msgid "Category base"
+msgstr ""
+
+#: build/index.js:2
+msgid "Remove /product-category/ from product category URLs"
+msgstr ""
+
+#: build/index.js:2
+msgid "Keep"
+msgstr ""
+
+#: build/index.js:2
+msgid "Parent slugs"
+msgstr ""
+
+#: build/index.js:2
+msgid "Remove parent category slugs (leaf-only URLs)"
+msgstr ""
+
+#: build/index.js:2
+msgid "Product base"
+msgstr ""
+
+#: build/index.js:2
+msgid "Remove /product/ from product URLs"
+msgstr ""
+
+#: build/index.js:2
+msgid "Skipped categories (slug collision):"
+msgstr ""
+
+#: build/index.js:2
+msgid "These category slugs already belong to a page, reserved WordPress slug, or another taxonomy/CPT base. They keep their default WooCommerce URL. Rename either the category or the conflicting slug to convert."
+msgstr ""
+
+#: build/index.js:2
+msgid "Schema.org and sitemap"
+msgstr ""
+
+#: build/index.js:2
+msgid "Product Schema"
+msgstr ""
+
+#: build/index.js:2
+msgid "Structured data for products including price, availability, and reviews."
+msgstr ""
+
+#: build/index.js:2
+msgid "Include Reviews"
+msgstr ""
+
+#: build/index.js:2
+msgid "Include product reviews in Schema"
+msgstr ""
+
+#: build/index.js:2
+msgid "Products in Sitemap"
+msgstr ""
+
+#: build/index.js:2
+msgid "Product Categories"
+msgstr ""
+
+#: build/index.js:2
+msgid "Product Tags"
+msgstr ""
+
+#: build/index.js:2
+msgid "Business Information"
+msgstr ""
+
+#: build/index.js:2
+msgid "Add LocalBusiness structured data to help your business appear in local search results."
+msgstr ""
+
+#: build/index.js:2
+msgid "Enable LocalBusiness schema"
+msgstr ""
+
+#: build/index.js:2
+msgid "Business Type"
+msgstr ""
+
+#: build/index.js:2
+msgid "Select the type that best describes your business."
+msgstr ""
+
+#: build/index.js:2
+msgid "Business Name"
+msgstr ""
+
+#: build/index.js:2
+msgid "Leave empty to use the site name."
+msgstr ""
+
+#: build/index.js:2
+msgid "Business Description"
+msgstr ""
+
+#: build/index.js:2
+msgid "Price Range"
+msgstr ""
+
+#: build/index.js:2
+msgid "Address and contact"
+msgstr ""
+
+#: build/index.js:2
+msgid "Street Address"
+msgstr ""
+
+#: build/index.js:2
+msgid "Address Line 2"
+msgstr ""
+
+#: build/index.js:2
+msgid "City"
+msgstr ""
+
+#: build/index.js:2
+msgid "State / Region"
+msgstr ""
+
+#: build/index.js:2
+msgid "Postal Code"
+msgstr ""
+
+#: build/index.js:2
+msgid "Country"
+msgstr ""
+
+#: build/index.js:2
+msgid "Use ISO 3166–1 alpha-2 code (e.g., HU, US, DE)."
+msgstr ""
+
+#: build/index.js:2
+msgid "Phone"
+msgstr ""
+
+#: build/index.js:2
+msgid "Email"
+msgstr ""
+
+#: build/index.js:2
+msgid "Opening Hours"
+msgstr ""
+
+#: build/index.js:2
+msgid "Opening hours"
+msgstr ""
+
+#: build/index.js:2
+msgid "Include opening hours in schema"
+msgstr ""
+
+#: build/index.js:2
+msgid "Coordinates"
+msgstr ""
+
+#: build/index.js:2
+msgid "Find coordinates on"
+msgstr ""
+
+#: build/index.js:2
+msgid "(right-click the location)."
+msgstr ""
+
+#: build/index.js:2
+msgid "Latitude"
+msgstr ""
+
+#: build/index.js:2
+msgid "Longitude"
+msgstr ""
+
+#: build/index.js:2
+msgid "Source"
+msgstr ""
+
+#: build/index.js:2
+msgid "Regex"
+msgstr ""
+
+#: build/index.js:2
+msgid "Destination"
+msgstr ""
+
+#: build/index.js:2
+msgid "N/A"
+msgstr ""
+
+#: build/index.js:2
+msgid "Type"
+msgstr ""
+
+#: build/index.js:2
+msgid "Hits"
+msgstr ""
+
+#: build/index.js:2
+msgid "Actions"
+msgstr ""
+
+#: build/index.js:2
+msgid "Edit"
+msgstr ""
+
+#: build/index.js:2
+#: build/index.js:4
+msgid "Delete"
+msgstr ""
+
+#: build/index.js:2
+msgid "Create and manage URL redirects to prevent 404 errors and preserve SEO value."
+msgstr ""
+
+#: build/index.js:2
+msgid "Process redirects"
+msgstr ""
+
+#: build/index.js:2
+msgid "Redirect rules are active"
+msgstr ""
+
+#: build/index.js:2
+msgid "Existing Redirects"
+msgstr ""
+
+#: build/index.js:2
+msgid "Filter"
+msgstr ""
+
+#: build/index.js:2
+msgid "Clear"
+msgstr ""
+
+#: build/index.js:2
+msgid "Clear all filters"
+msgstr ""
+
+#: build/index.js:2
+msgid "All"
+msgstr ""
+
+#: build/index.js:2
+msgid "No redirects match these filters."
+msgstr ""
+
+#: build/index.js:2
+msgid "No redirects configured yet."
+msgstr ""
+
+#: build/index.js:2
+msgid "Previous page"
+msgstr ""
+
+#: build/index.js:2
+msgid "Next page"
+msgstr ""
+
+#: build/index.js:2
+msgid "Rows per page"
+msgstr ""
+
+#: build/index.js:2
+msgid "Select all redirects on this page"
+msgstr ""
+
+#: build/index.js:2
+msgid "Clear selection"
+msgstr ""
+
+#: build/index.js:2
+msgid "Bulk actions"
+msgstr ""
+
+#. translators: %d: number of rows.
+#: build/index.js:2
+#, js-format
+msgid "%d entry"
+msgid_plural "%d entries"
+msgstr[0] ""
+msgstr[1] ""
+
+#. translators: %d: number of results.
+#: build/index.js:2
+#, js-format
+msgid "%d result"
+msgid_plural "%d results"
+msgstr[0] ""
+msgstr[1] ""
+
+#. translators: %s: redirect source.
+#: build/index.js:2
+#, js-format
+msgid "Select: %s"
+msgstr ""
+
+#. translators: %d: number of selected redirects.
+#: build/index.js:3
+#, js-format
+msgid "%d selected"
+msgid_plural "%d selected"
+msgstr[0] ""
+msgstr[1] ""
+
+#. translators: 1: selected redirects, 2: of those, on this page.
+#: build/index.js:4
+#, js-format
+msgid "%1$d selected, %2$d on this page"
+msgstr ""
+
+#. translators: 1: redirects the action applies to, 2: selected redirects on this page.
+#: build/index.js:4
+#, js-format
+msgid "applies to %1$d of %2$d"
+msgstr ""
+
+#: build/index.js:4
+msgid "Search source or destination"
+msgstr ""
+
+#: build/index.js:4
+msgid "Redirect added."
+msgstr ""
+
+#: build/index.js:4
+msgid "Redirect updated."
+msgstr ""
+
+#: build/index.js:4
+msgid "Redirect deleted."
+msgstr ""
+
+#: build/index.js:4
+msgid "Are you sure you want to delete this redirect?"
+msgstr ""
+
+#: build/index.js:4
+msgid "Configure how 404 (Not Found) errors are handled on your site."
+msgstr ""
+
+#: build/index.js:4
+msgid "Redirect 404 to Homepage"
+msgstr ""
+
+#: build/index.js:4
+msgid "When enabled, visitors who land on a non-existent page will be redirected to your homepage with a 302 (temporary) redirect."
+msgstr ""
+
+#: build/index.js:4
+msgid "Redirect every 404 to the homepage"
+msgstr ""
+
+#: build/index.js:4
+msgid "Features"
+msgstr ""
+
+#: build/index.js:4
+msgid "Breadcrumbs"
+msgstr ""
+
+#: build/index.js:4
+msgid "Use shortcode [lw_breadcrumbs] or function lw_seo_breadcrumbs()."
+msgstr ""
+
+#: build/index.js:4
+msgid "Schema.org"
+msgstr ""
+
+#: build/index.js:4
+msgid "Output Schema.org JSON-LD"
+msgstr ""
+
+#: build/index.js:4
+msgid "robots.txt"
+msgstr ""
+
+#: build/index.js:4
+msgid "Add sitemap URL and AI rules to robots.txt"
+msgstr ""
+
+#: build/index.js:4
+msgid "Your robots.txt"
+msgstr ""
+
+#. translators: %s: path of the robots.txt file.
+#: build/index.js:5
+#, js-format
+msgid "A physical robots.txt file exists (%s). The web server serves it directly, so these settings have no effect. Delete the file to let LW SEO manage robots.txt."
+msgstr ""
+
+#: build/index.js:5
+msgid "Head Cleanup"
+msgstr ""
+
+#: build/index.js:5
+msgid "Shortlinks"
+msgstr ""
+
+#: build/index.js:5
+msgid "Removed from head"
+msgstr ""
+
+#: build/index.js:5
+msgid "Kept"
+msgstr ""
+
+#: build/index.js:5
+msgid "RSD Link"
+msgstr ""
+
+#: build/index.js:5
+msgid "WLW Manifest"
+msgstr ""
+
+#: build/index.js:5
+msgid "Import SEO data from other SEO plugins. Existing LW SEO data will not be overwritten."
+msgstr ""
+
+#: build/index.js:5
+msgid "Another SEO plugin (Yoast SEO, Rank Math or All in One SEO) is active. LW SEO skips its meta tags to avoid duplicates. Deactivate the other plugin to use LW SEO fully."
+msgstr ""
+
+#: build/term.js:2
+msgid "noindex this archive"
+msgstr ""
+
+#: build/term.js:2
+msgid "If filled, this markdown is served at the /md endpoint instead of the auto-generated content."
 msgstr ""
 
 #: includes/Blocks/FAQ/block.json
