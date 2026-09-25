@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.7.1] - 2026-09-25
+
+### Fixed
+- Notices from themes and other plugins (for example a theme's purchase-code or recommended-plugins notice) could show on the LW SEO screen. They are now kept off every LW Plugins screen, whatever their markup.
+- The "settings screen files are missing" notice is no longer hidden by the notice isolation.
+
 ## [1.7.0] - 2026-09-24
 
 ### Added

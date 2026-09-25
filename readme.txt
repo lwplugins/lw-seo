@@ -3,7 +3,7 @@ Contributors: lwplugins
 Tags: seo, sitemap, schema, opengraph, breadcrumbs
 Requires at least: 6.0
 Tested up to: 7.1
-Stable tag: 1.7.0
+Stable tag: 1.7.1
 Requires PHP: 8.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -135,6 +135,10 @@ Your sitemap is available at `yoursite.com/sitemap.xml`
 6. Settings page - Advanced tab
 
 == Changelog ==
+
+= 1.7.1 =
+* Fix: Notices from themes and other plugins (for example a theme's purchase-code or recommended-plugins notice) could show on the LW SEO screen. They are now kept off every LW Plugins screen, whatever their markup.
+* Fix: The "settings screen files are missing" notice is no longer hidden by the notice isolation.
 
 = 1.7.0 =
 * New: settings screen built with WordPress components: side navigation, a top bar with Save/Discard and a Cmd/Ctrl+S shortcut, loading skeletons and a mobile layout; only changed settings are saved, so saving one tab never resets another.
