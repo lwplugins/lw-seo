@@ -3,8 +3,8 @@
  * Plugin Name:       LW SEO
  * Plugin URI:        https://github.com/lwplugins/lw-seo
  * Description:       Lightweight SEO — minimal footprint, maximum impact.
- * Version:           1.7.1
- * Requires at least: 6.0
+ * Version:           1.7.2
+ * Requires at least: 6.6
  * Requires PHP:      8.2
  * Author:            LW Plugins
  * Author URI:        https://lwplugins.com
@@ -26,7 +26,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Plugin constants.
-define( 'LW_SEO_VERSION', '1.7.1' );
+define( 'LW_SEO_VERSION', '1.7.2' );
 define( 'LW_SEO_FILE', __FILE__ );
 define( 'LW_SEO_PATH', plugin_dir_path( __FILE__ ) );
 define( 'LW_SEO_URL', plugin_dir_url( __FILE__ ) );
