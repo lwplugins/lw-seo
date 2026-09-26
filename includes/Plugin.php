@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace LightweightPlugins\SEO;
 
+use LightweightPlugins\SEO\Admin\Hub\Hub;
 use LightweightPlugins\SEO\Admin\SettingsPage;
 use LightweightPlugins\SEO\Editor\BlockEditorAssets;
 use LightweightPlugins\SEO\Editor\PostRestField;
@@ -41,6 +42,7 @@ final class Plugin {
 	public function __construct() {
 		$this->load_dependencies();
 		$this->init_hooks();
+		Hub::init( LW_SEO_FILE );
 		$this->init_components();
 	}
 

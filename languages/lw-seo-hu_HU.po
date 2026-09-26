@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LW SEO 1.6.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/lw-seo\n"
-"POT-Creation-Date: 2026-09-24T19:20:36+00:00\n"
+"POT-Creation-Date: 2026-09-26T13:51:00+00:00\n"
 "PO-Revision-Date: 2026-09-24 18:50+0000\n"
 "Last-Translator: Claude AI <ai@anthropic.com>\n"
 "Language-Team: LW Plugins <info@lwplugins.com>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "X-Generator: WP-CLI 2.12.0\n"
 
 #. Plugin Name of the plugin
-#: lw-seo.php includes/Admin/SettingsPage.php:130 includes/MetaBox.php:54
+#: lw-seo.php includes/Admin/SettingsPage.php:132 includes/MetaBox.php:54
 #: assets/js/blocks/faq.js:279 build/editor.js:2 build/term.js:2
 msgid "LW SEO"
 msgstr "LW SEO"
@@ -33,8 +33,8 @@ msgid "Lightweight SEO — minimal footprint, maximum impact."
 msgstr "Lightweight SEO – minimális erőforrásigény, maximális hatás."
 
 #. Author of the plugin
-#: lw-seo.php includes/Admin/ParentPage.php:106
-#: includes/Admin/ParentPage.php:107 includes/Admin/ParentPage.php:128
+#: lw-seo.php includes/Admin/Hub/Page.php:59 includes/Admin/Hub/Page.php:60
+#: includes/Admin/Hub/Page.php:134 assets/hub/index.js:5
 msgid "LW Plugins"
 msgstr "LW Plugins"
 
@@ -520,6 +520,86 @@ msgstr "Szolgáltatások"
 msgid "Lodging"
 msgstr "Szállás"
 
+#: includes/Admin/Hub/Activator.php:48
+msgid "This is not an LW plugin."
+msgstr "Ez nem LW bővítmény."
+
+#: includes/Admin/Hub/Activator.php:54
+msgid "This plugin is not installed."
+msgstr "Ez a bővítmény nincs telepítve."
+
+#: includes/Admin/Hub/Activator.php:62
+msgid "You are not allowed to activate this plugin."
+msgstr "Nincs jogod bekapcsolni ezt a bővítményt."
+
+#: includes/Admin/Hub/Page.php:135
+msgid ""
+"The LW Plugins page files are missing. Re-install the plugin from a release "
+"ZIP."
+msgstr ""
+"Hiányoznak az LW Plugins oldal fájljai. Telepítsd újra a bővítményt egy "
+"kiadási ZIP-ből."
+
+#: includes/Admin/Hub/RegistryFallback.php:32
+msgid "GDPR-compliant cookie consent banner."
+msgstr "GDPR-kompatibilis sütihozzájárulási sáv."
+
+#: includes/Admin/Hub/RegistryFallback.php:41
+msgid "Disable WordPress features like comments."
+msgstr "WordPress-funkciók kikapcsolása, például a hozzászólásoké."
+
+#: includes/Admin/Hub/RegistryFallback.php:50
+msgid "Enable WordPress features: SVG uploads and more."
+msgstr "WordPress-funkciók bekapcsolása: SVG-feltöltés és egyebek."
+
+#: includes/Admin/Hub/RegistryFallback.php:59
+msgid "Rate limiting, bot blocking, IP bans and security headers."
+msgstr "Kéréskorlátozás, botszűrés, IP-tiltás és biztonsági fejlécek."
+
+#: includes/Admin/Hub/RegistryFallback.php:68
+msgid ""
+"Lightweight image optimization — auto-convert uploads to WebP via HelloImg."
+msgstr ""
+"Könnyű képoptimalizálás: a feltöltések automatikus WebP-konverziója a "
+"HelloImg-gel."
+
+#: includes/Admin/Hub/RegistryFallback.php:77
+msgid ""
+"Headless LMS backend: courses, lessons, access, progress and quizzes over a "
+"REST API."
+msgstr ""
+"Headless LMS-háttér: kurzusok, leckék, hozzáférés, haladás és kvízek REST "
+"API-n."
+
+#: includes/Admin/Hub/RegistryFallback.php:86
+msgid ""
+"Tracking pixels: Meta, GA4, Ads, GTM, TikTok, Pinterest, Bing, Reddit, "
+"Snapchat, X."
+msgstr ""
+"Követőpixelek: Meta, GA4, Ads, GTM, TikTok, Pinterest, Bing, Reddit, "
+"Snapchat, X."
+
+#: includes/Admin/Hub/RegistryFallback.php:95
+msgid "Malware scanner for files, the database and vulnerable software."
+msgstr ""
+"Kártevőkereső a fájlokhoz, az adatbázishoz és a sérülékeny szoftverekhez."
+
+#: includes/Admin/Hub/RegistryFallback.php:104
+msgid "Essential SEO features without the bloat."
+msgstr "A lényeges SEO-funkciók, felesleg nélkül."
+
+#: includes/Admin/Hub/RegistryFallback.php:113
+msgid "Site maintenance via AI/REST using Abilities API."
+msgstr "Oldalkarbantartás AI-on és REST-en át, az Abilities API-val."
+
+#: includes/Admin/Hub/RegistryFallback.php:122
+msgid "Manage WordPress translations from community repositories."
+msgstr "WordPress-fordítások kezelése közösségi tárolókból."
+
+#: includes/Admin/Hub/RegistryFallback.php:131
+msgid "Clean up your admin — notices sidebar & widget manager."
+msgstr "Rendezett admin: értesítési oldalsáv és widgetkezelő."
+
 #: includes/Admin/MarkdownOverrideField.php:48 build/editor.js:2
 #: build/term.js:2
 msgid "Markdown Content"
@@ -550,22 +630,6 @@ msgstr ""
 "Csak azok a felhasználók szerkeszthetik a Markdown felülírást, akik "
 "posztolhatnak szűrés nélküli HTML-t."
 
-#: includes/Admin/ParentPage.php:129
-msgid "Lightweight plugins for WordPress - minimal footprint, maximum impact."
-msgstr "Könnyű WordPress bővítmények – minimális terhelés, maximális hatás."
-
-#: includes/Admin/ParentPage.php:190
-msgid "Active"
-msgstr "Aktív"
-
-#: includes/Admin/ParentPage.php:197
-msgid "Settings"
-msgstr "Beállítások"
-
-#: includes/Admin/ParentPage.php:201
-msgid "Get Plugin"
-msgstr "Bővítmény letöltése"
-
 #: includes/Admin/SettingsPage.php:61
 msgid "SEO Settings"
 msgstr "SEO beállítások"
@@ -574,7 +638,7 @@ msgstr "SEO beállítások"
 msgid "SEO"
 msgstr "SEO"
 
-#: includes/Admin/SettingsPage.php:131
+#: includes/Admin/SettingsPage.php:133
 msgid ""
 "The settings screen files are missing. Re-install the plugin from a release "
 "ZIP, or run \"npm install && npm run build\" in the plugin directory."
@@ -871,80 +935,80 @@ msgstr "Érvénytelen regex minta."
 
 #. translators: 1: current page number, 2: total page count
 #. translators: 1: current page, 2: total pages.
-#: includes/ReplaceVars.php:327 build/index.js:2
+#: includes/ReplaceVars.php:320 build/index.js:2
 #, php-format
 msgid "Page %1$d of %2$d"
 msgstr "%1$d/%2$d oldal"
 
-#: includes/ReplaceVars.php:337
+#: includes/ReplaceVars.php:330
 msgid "Site name"
 msgstr "Webhely neve"
 
-#: includes/ReplaceVars.php:338
+#: includes/ReplaceVars.php:331
 msgid "Site tagline"
 msgstr "Webhely jelmondata"
 
-#: includes/ReplaceVars.php:339
+#: includes/ReplaceVars.php:332
 msgid "Separator"
 msgstr "Elválasztó"
 
-#: includes/ReplaceVars.php:340
+#: includes/ReplaceVars.php:333
 msgid "Post/page title"
 msgstr "Bejegyzés/oldal címe"
 
-#: includes/ReplaceVars.php:341
+#: includes/ReplaceVars.php:334
 msgid "Post excerpt"
 msgstr "Bejegyzés kivonata"
 
-#: includes/ReplaceVars.php:342
+#: includes/ReplaceVars.php:335
 msgid "Post date"
 msgstr "Bejegyzés dátuma"
 
-#: includes/ReplaceVars.php:343
+#: includes/ReplaceVars.php:336
 msgid "Post modified date"
 msgstr "Bejegyzés módosításának dátuma"
 
-#: includes/ReplaceVars.php:344
+#: includes/ReplaceVars.php:337
 msgid "Author name"
 msgstr "Szerző neve"
 
-#: includes/ReplaceVars.php:345
+#: includes/ReplaceVars.php:338
 msgid "Primary category"
 msgstr "Elsődleges kategória"
 
-#: includes/ReplaceVars.php:346
+#: includes/ReplaceVars.php:339
 msgid "First tag"
 msgstr "Első címke"
 
-#: includes/ReplaceVars.php:347
+#: includes/ReplaceVars.php:340
 msgid "Term name"
 msgstr "Kifejezés neve"
 
-#: includes/ReplaceVars.php:348
+#: includes/ReplaceVars.php:341
 msgid "Term description"
 msgstr "Kifejezés leírása"
 
-#: includes/ReplaceVars.php:349
+#: includes/ReplaceVars.php:342
 msgid "Search query"
 msgstr "Keresési lekérdezés"
 
-#: includes/ReplaceVars.php:350
+#: includes/ReplaceVars.php:343
 msgid "Current year"
 msgstr "Aktuális év"
 
-#: includes/ReplaceVars.php:351
+#: includes/ReplaceVars.php:344
 msgid "Current month"
 msgstr "Aktuális hónap"
 
-#: includes/ReplaceVars.php:352
+#: includes/ReplaceVars.php:345
 msgid "Current date"
 msgstr "Aktuális dátum"
 
-#: includes/ReplaceVars.php:353
+#: includes/ReplaceVars.php:346
 msgid "Page number"
 msgstr "Oldalszám"
 
-#: includes/ReplaceVars.php:354
+#: includes/ReplaceVars.php:347
 msgid "Page X of Y"
 msgstr "X/Y. oldal"
 
@@ -968,38 +1032,38 @@ msgstr "Átirányítás nem található."
 msgid "Other"
 msgstr "Egyéb"
 
-#: includes/RestApi.php:61 includes/RestApi.php:124 includes/RestApi.php:143
+#: includes/RestApi.php:62 includes/RestApi.php:125 includes/RestApi.php:144
 msgid "Post ID"
 msgstr "Bejegyzés ID"
 
-#: includes/RestApi.php:80
+#: includes/RestApi.php:81
 msgid "Term ID"
 msgstr "Kifejezés ID"
 
-#: includes/RestApi.php:86
+#: includes/RestApi.php:87
 msgid "Taxonomy name"
 msgstr "Taxonómia neve"
 
-#: includes/RestApi.php:105
+#: includes/RestApi.php:106
 msgid "Author ID"
 msgstr "Szerző ID"
 
-#: includes/RestApi.php:163 includes/RestApi.php:242 includes/RestApi.php:274
+#: includes/RestApi.php:164 includes/RestApi.php:243 includes/RestApi.php:275
 #: includes/SiteManager/SeoService.php:146
 #: includes/SiteManager/SeoService.php:207
 msgid "Post not found."
 msgstr "A bejegyzés nem található."
 
-#: includes/RestApi.php:172 includes/RestApi.php:250 includes/RestApi.php:282
+#: includes/RestApi.php:173 includes/RestApi.php:251 includes/RestApi.php:283
 msgid "Post is not accessible."
 msgstr "A bejegyzés nem érhető el."
 
-#: includes/RestApi.php:196 includes/SiteManager/SeoService.php:176
+#: includes/RestApi.php:197 includes/SiteManager/SeoService.php:176
 #: includes/SiteManager/SeoService.php:227
 msgid "Term not found."
 msgstr "A kifejezés nem található."
 
-#: includes/RestApi.php:219
+#: includes/RestApi.php:220
 msgid "Author not found."
 msgstr "A szerző nem található."
 
@@ -1110,6 +1174,156 @@ msgstr ""
 "parancsot a bővítmény könyvtárában, vagy telepítsd újra a bővítményt egy "
 "kiadási ZIP fájlból."
 
+#: assets/hub/index.js:1
+msgid "All LW plugins on GitHub"
+msgstr "Az összes LW bővítmény a GitHubon"
+
+#: assets/hub/index.js:1 build/index.js:1
+msgid "(opens in a new tab)"
+msgstr "(új lapon nyílik meg)"
+
+#: assets/hub/index.js:1 build/index.js:1
+msgid "LW Plugins (opens in a new tab)"
+msgstr "LW Plugins (új lapon nyílik meg)"
+
+#: assets/hub/index.js:1 build/index.js:1
+msgid "Try again"
+msgstr "Újrapróbálás"
+
+#. translators: %s: plugin name.
+#: assets/hub/index.js:2
+msgid "%s settings"
+msgstr "%s beállításai"
+
+#: assets/hub/index.js:2
+msgid "Settings"
+msgstr "Beállítások"
+
+#. translators: %s: plugin name.
+#: assets/hub/index.js:3
+msgid "Activate %s"
+msgstr "%s bekapcsolása"
+
+#: assets/hub/index.js:3
+msgid "Activating…"
+msgstr "Bekapcsolás…"
+
+#: assets/hub/index.js:3
+msgid "Activate"
+msgstr "Bekapcsolás"
+
+#: assets/hub/index.js:3
+msgid "GitHub"
+msgstr "GitHub"
+
+#. translators: %s: plugin name.
+#: assets/hub/index.js:4
+msgid "%s on GitHub (opens in a new tab)"
+msgstr "%s a GitHubon (új lapon nyílik meg)"
+
+#: assets/hub/index.js:4 build/index.js:2
+msgid "All"
+msgstr "Mind"
+
+#: assets/hub/index.js:4
+msgid "Active"
+msgstr "Aktív"
+
+#: assets/hub/index.js:4
+msgid "Inactive"
+msgstr "Kikapcsolva"
+
+#: assets/hub/index.js:4
+msgid "Not installed"
+msgstr "Nincs telepítve"
+
+#: assets/hub/index.js:4
+msgid "Plugin"
+msgstr "Bővítmény"
+
+#: assets/hub/index.js:4
+msgid "Status"
+msgstr "Állapot"
+
+#: assets/hub/index.js:4
+msgid "Version"
+msgstr "Verzió"
+
+#: assets/hub/index.js:4
+msgid "Action"
+msgstr "Művelet"
+
+#: assets/hub/index.js:4
+msgid "Beta"
+msgstr "Béta"
+
+#: assets/hub/index.js:4
+msgid "No version"
+msgstr "Nincs verzió"
+
+#. translators: %s: search text.
+#: assets/hub/index.js:5
+msgid "No plugins match “%s”."
+msgstr "Nincs találat erre: „%s”."
+
+#: assets/hub/index.js:5
+msgid "No plugins in this group."
+msgstr "Ebben a csoportban nincs bővítmény."
+
+#: assets/hub/index.js:5
+msgid "Show all plugins"
+msgstr "Az összes bővítmény mutatása"
+
+#: assets/hub/index.js:5 build/index.js:1 build/index.js:2
+msgid "Loading…"
+msgstr "Betöltés…"
+
+#: assets/hub/index.js:5
+msgid "Search plugins"
+msgstr "Keresés a bővítmények között"
+
+#: assets/hub/index.js:5
+msgid "Filter by status"
+msgstr "Szűrés állapot szerint"
+
+#: assets/hub/index.js:5
+msgid "active"
+msgid_plural "active"
+msgstr[0] "aktív"
+msgstr[1] "aktív"
+
+#: assets/hub/index.js:5
+msgid "inactive"
+msgid_plural "inactive"
+msgstr[0] "kikapcsolva"
+msgstr[1] "kikapcsolva"
+
+#: assets/hub/index.js:5
+msgid "not installed"
+msgid_plural "not installed"
+msgstr[0] "nincs telepítve"
+msgstr[1] "nincs telepítve"
+
+#. translators: %d: number of LW plugins listed.
+#: assets/hub/index.js:6
+msgid "%d LW plugin listed."
+msgid_plural "%d LW plugins listed."
+msgstr[0] "%d LW bővítmény látható."
+msgstr[1] "%d LW bővítmény látható."
+
+#: assets/hub/index.js:6
+msgid "That did not work. Please reload the page and try again."
+msgstr "Ez nem sikerült. Töltsd újra az oldalt, és próbáld újra."
+
+#. translators: %s: plugin name.
+#: assets/hub/index.js:7
+msgid "%s is active."
+msgstr "%s bekapcsolva."
+
+#: assets/hub/index.js:7
+msgid "Reload page"
+msgstr "Oldal újratöltése"
+
 #: assets/js/blocks/faq.js:45
 msgid "New Question"
 msgstr "Új kérdés"
@@ -1214,21 +1428,9 @@ msgstr ""
 "Ha ki van töltve, a /md végpont ezt a markdownt adja vissza az automatikusan "
 "generált tartalom helyett. Oldalépítővel készült oldalakhoz ideális."
 
-#: build/index.js:1 build/index.js:2
-msgid "Loading…"
-msgstr "Betöltés…"
-
-#: build/index.js:1
-msgid "Try again"
-msgstr "Újrapróbálás"
-
 #: build/index.js:1
 msgid "Settings saved."
 msgstr "Beállítások elmentve."
-
-#: build/index.js:1
-msgid "LW Plugins (opens in a new tab)"
-msgstr "LW Plugins (új lapon nyílik meg)"
 
 #: build/index.js:1
 msgid "LW SEO home"
@@ -1241,10 +1443,6 @@ msgstr "LW SEO szekciók"
 #: build/index.js:1
 msgid "Documentation"
 msgstr "Dokumentáció"
-
-#: build/index.js:1
-msgid "(opens in a new tab)"
-msgstr "(új lapon nyílik meg)"
 
 #: build/index.js:1
 msgid "Unsaved changes"
@@ -2286,10 +2484,6 @@ msgstr "Törlés"
 #: build/index.js:2
 msgid "Clear all filters"
 msgstr "Minden szűrő törlése"
-
-#: build/index.js:2
-msgid "All"
-msgstr "Mind"
 
 #: build/index.js:2
 msgid "No redirects match these filters."

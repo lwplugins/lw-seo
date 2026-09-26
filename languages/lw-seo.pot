@@ -2,21 +2,21 @@
 # This file is distributed under the GPL-2.0-or-later.
 msgid ""
 msgstr ""
-"Project-Id-Version: LW SEO 1.7.0\n"
+"Project-Id-Version: LW SEO 1.7.3\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/lw-seo\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-09-24T19:20:36+00:00\n"
+"POT-Creation-Date: 2026-09-26T13:51:00+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: lw-seo\n"
 
 #. Plugin Name of the plugin
 #: lw-seo.php
-#: includes/Admin/SettingsPage.php:130
+#: includes/Admin/SettingsPage.php:132
 #: includes/MetaBox.php:54
 #: assets/js/blocks/faq.js:279
 #: build/editor.js:2
@@ -36,9 +36,10 @@ msgstr ""
 
 #. Author of the plugin
 #: lw-seo.php
-#: includes/Admin/ParentPage.php:106
-#: includes/Admin/ParentPage.php:107
-#: includes/Admin/ParentPage.php:128
+#: includes/Admin/Hub/Page.php:59
+#: includes/Admin/Hub/Page.php:60
+#: includes/Admin/Hub/Page.php:134
+#: assets/hub/index.js:5
 msgid "LW Plugins"
 msgstr ""
 
@@ -526,6 +527,70 @@ msgstr ""
 msgid "Lodging"
 msgstr ""
 
+#: includes/Admin/Hub/Activator.php:48
+msgid "This is not an LW plugin."
+msgstr ""
+
+#: includes/Admin/Hub/Activator.php:54
+msgid "This plugin is not installed."
+msgstr ""
+
+#: includes/Admin/Hub/Activator.php:62
+msgid "You are not allowed to activate this plugin."
+msgstr ""
+
+#: includes/Admin/Hub/Page.php:135
+msgid "The LW Plugins page files are missing. Re-install the plugin from a release ZIP."
+msgstr ""
+
+#: includes/Admin/Hub/RegistryFallback.php:32
+msgid "GDPR-compliant cookie consent banner."
+msgstr ""
+
+#: includes/Admin/Hub/RegistryFallback.php:41
+msgid "Disable WordPress features like comments."
+msgstr ""
+
+#: includes/Admin/Hub/RegistryFallback.php:50
+msgid "Enable WordPress features: SVG uploads and more."
+msgstr ""
+
+#: includes/Admin/Hub/RegistryFallback.php:59
+msgid "Rate limiting, bot blocking, IP bans and security headers."
+msgstr ""
+
+#: includes/Admin/Hub/RegistryFallback.php:68
+msgid "Lightweight image optimization — auto-convert uploads to WebP via HelloImg."
+msgstr ""
+
+#: includes/Admin/Hub/RegistryFallback.php:77
+msgid "Headless LMS backend: courses, lessons, access, progress and quizzes over a REST API."
+msgstr ""
+
+#: includes/Admin/Hub/RegistryFallback.php:86
+msgid "Tracking pixels: Meta, GA4, Ads, GTM, TikTok, Pinterest, Bing, Reddit, Snapchat, X."
+msgstr ""
+
+#: includes/Admin/Hub/RegistryFallback.php:95
+msgid "Malware scanner for files, the database and vulnerable software."
+msgstr ""
+
+#: includes/Admin/Hub/RegistryFallback.php:104
+msgid "Essential SEO features without the bloat."
+msgstr ""
+
+#: includes/Admin/Hub/RegistryFallback.php:113
+msgid "Site maintenance via AI/REST using Abilities API."
+msgstr ""
+
+#: includes/Admin/Hub/RegistryFallback.php:122
+msgid "Manage WordPress translations from community repositories."
+msgstr ""
+
+#: includes/Admin/Hub/RegistryFallback.php:131
+msgid "Clean up your admin — notices sidebar & widget manager."
+msgstr ""
+
 #: includes/Admin/MarkdownOverrideField.php:48
 #: build/editor.js:2
 #: build/term.js:2
@@ -551,22 +616,6 @@ msgstr ""
 msgid "Only users allowed to post unfiltered HTML can edit the Markdown override."
 msgstr ""
 
-#: includes/Admin/ParentPage.php:129
-msgid "Lightweight plugins for WordPress - minimal footprint, maximum impact."
-msgstr ""
-
-#: includes/Admin/ParentPage.php:190
-msgid "Active"
-msgstr ""
-
-#: includes/Admin/ParentPage.php:197
-msgid "Settings"
-msgstr ""
-
-#: includes/Admin/ParentPage.php:201
-msgid "Get Plugin"
-msgstr ""
-
 #: includes/Admin/SettingsPage.php:61
 msgid "SEO Settings"
 msgstr ""
@@ -576,7 +625,7 @@ msgstr ""
 msgid "SEO"
 msgstr ""
 
-#: includes/Admin/SettingsPage.php:131
+#: includes/Admin/SettingsPage.php:133
 msgid "The settings screen files are missing. Re-install the plugin from a release ZIP, or run \"npm install && npm run build\" in the plugin directory."
 msgstr ""
 
@@ -893,81 +942,81 @@ msgstr ""
 
 #. translators: 1: current page number, 2: total page count
 #. translators: 1: current page, 2: total pages.
-#: includes/ReplaceVars.php:327
+#: includes/ReplaceVars.php:320
 #: build/index.js:2
 #, php-format,js-format
 msgid "Page %1$d of %2$d"
 msgstr ""
 
-#: includes/ReplaceVars.php:337
+#: includes/ReplaceVars.php:330
 msgid "Site name"
 msgstr ""
 
-#: includes/ReplaceVars.php:338
+#: includes/ReplaceVars.php:331
 msgid "Site tagline"
 msgstr ""
 
-#: includes/ReplaceVars.php:339
+#: includes/ReplaceVars.php:332
 msgid "Separator"
 msgstr ""
 
-#: includes/ReplaceVars.php:340
+#: includes/ReplaceVars.php:333
 msgid "Post/page title"
 msgstr ""
 
-#: includes/ReplaceVars.php:341
+#: includes/ReplaceVars.php:334
 msgid "Post excerpt"
 msgstr ""
 
-#: includes/ReplaceVars.php:342
+#: includes/ReplaceVars.php:335
 msgid "Post date"
 msgstr ""
 
-#: includes/ReplaceVars.php:343
+#: includes/ReplaceVars.php:336
 msgid "Post modified date"
 msgstr ""
 
-#: includes/ReplaceVars.php:344
+#: includes/ReplaceVars.php:337
 msgid "Author name"
 msgstr ""
 
-#: includes/ReplaceVars.php:345
+#: includes/ReplaceVars.php:338
 msgid "Primary category"
 msgstr ""
 
-#: includes/ReplaceVars.php:346
+#: includes/ReplaceVars.php:339
 msgid "First tag"
 msgstr ""
 
-#: includes/ReplaceVars.php:347
+#: includes/ReplaceVars.php:340
 msgid "Term name"
 msgstr ""
 
-#: includes/ReplaceVars.php:348
+#: includes/ReplaceVars.php:341
 msgid "Term description"
 msgstr ""
 
-#: includes/ReplaceVars.php:349
+#: includes/ReplaceVars.php:342
 msgid "Search query"
 msgstr ""
 
-#: includes/ReplaceVars.php:350
+#: includes/ReplaceVars.php:343
 msgid "Current year"
 msgstr ""
 
-#: includes/ReplaceVars.php:351
+#: includes/ReplaceVars.php:344
 msgid "Current month"
 msgstr ""
 
-#: includes/ReplaceVars.php:352
+#: includes/ReplaceVars.php:345
 msgid "Current date"
 msgstr ""
 
-#: includes/ReplaceVars.php:353
+#: includes/ReplaceVars.php:346
 msgid "Page number"
 msgstr ""
 
-#: includes/ReplaceVars.php:354
+#: includes/ReplaceVars.php:347
 msgid "Page X of Y"
 msgstr ""
 
@@ -991,45 +1040,45 @@ msgstr ""
 msgid "Other"
 msgstr ""
 
-#: includes/RestApi.php:61
-#: includes/RestApi.php:124
-#: includes/RestApi.php:143
+#: includes/RestApi.php:62
+#: includes/RestApi.php:125
+#: includes/RestApi.php:144
 msgid "Post ID"
 msgstr ""
 
-#: includes/RestApi.php:80
+#: includes/RestApi.php:81
 msgid "Term ID"
 msgstr ""
 
-#: includes/RestApi.php:86
+#: includes/RestApi.php:87
 msgid "Taxonomy name"
 msgstr ""
 
-#: includes/RestApi.php:105
+#: includes/RestApi.php:106
 msgid "Author ID"
 msgstr ""
 
-#: includes/RestApi.php:163
-#: includes/RestApi.php:242
-#: includes/RestApi.php:274
+#: includes/RestApi.php:164
+#: includes/RestApi.php:243
+#: includes/RestApi.php:275
 #: includes/SiteManager/SeoService.php:146
 #: includes/SiteManager/SeoService.php:207
 msgid "Post not found."
 msgstr ""
 
-#: includes/RestApi.php:172
-#: includes/RestApi.php:250
-#: includes/RestApi.php:282
+#: includes/RestApi.php:173
+#: includes/RestApi.php:251
+#: includes/RestApi.php:283
 msgid "Post is not accessible."
 msgstr ""
 
-#: includes/RestApi.php:196
+#: includes/RestApi.php:197
 #: includes/SiteManager/SeoService.php:176
 #: includes/SiteManager/SeoService.php:227
 msgid "Term not found."
 msgstr ""
 
-#: includes/RestApi.php:219
+#: includes/RestApi.php:220
 msgid "Author not found."
 msgstr ""
 
@@ -1120,6 +1169,168 @@ msgstr ""
 
 #: lw-seo.php:43
 msgid "Autoloader not found. Please run \"composer install\" in the plugin directory, or re-install the plugin from a release ZIP."
+msgstr ""
+
+#: assets/hub/index.js:1
+msgid "All LW plugins on GitHub"
+msgstr ""
+
+#: assets/hub/index.js:1
+#: build/index.js:1
+msgid "(opens in a new tab)"
+msgstr ""
+
+#: assets/hub/index.js:1
+#: build/index.js:1
+msgid "LW Plugins (opens in a new tab)"
+msgstr ""
+
+#: assets/hub/index.js:1
+#: build/index.js:1
+msgid "Try again"
+msgstr ""
+
+#. translators: %s: plugin name.
+#: assets/hub/index.js:2
+#, js-format
+msgid "%s settings"
+msgstr ""
+
+#: assets/hub/index.js:2
+msgid "Settings"
+msgstr ""
+
+#. translators: %s: plugin name.
+#: assets/hub/index.js:3
+#, js-format
+msgid "Activate %s"
+msgstr ""
+
+#: assets/hub/index.js:3
+msgid "Activating…"
+msgstr ""
+
+#: assets/hub/index.js:3
+msgid "Activate"
+msgstr ""
+
+#: assets/hub/index.js:3
+msgid "GitHub"
+msgstr ""
+
+#. translators: %s: plugin name.
+#: assets/hub/index.js:4
+#, js-format
+msgid "%s on GitHub (opens in a new tab)"
+msgstr ""
+
+#: assets/hub/index.js:4
+#: build/index.js:2
+msgid "All"
+msgstr ""
+
+#: assets/hub/index.js:4
+msgid "Active"
+msgstr ""
+
+#: assets/hub/index.js:4
+msgid "Inactive"
+msgstr ""
+
+#: assets/hub/index.js:4
+msgid "Not installed"
+msgstr ""
+
+#: assets/hub/index.js:4
+msgid "Plugin"
+msgstr ""
+
+#: assets/hub/index.js:4
+msgid "Status"
+msgstr ""
+
+#: assets/hub/index.js:4
+msgid "Version"
+msgstr ""
+
+#: assets/hub/index.js:4
+msgid "Action"
+msgstr ""
+
+#: assets/hub/index.js:4
+msgid "Beta"
+msgstr ""
+
+#: assets/hub/index.js:4
+msgid "No version"
+msgstr ""
+
+#. translators: %s: search text.
+#: assets/hub/index.js:5
+#, js-format
+msgid "No plugins match “%s”."
+msgstr ""
+
+#: assets/hub/index.js:5
+msgid "No plugins in this group."
+msgstr ""
+
+#: assets/hub/index.js:5
+msgid "Show all plugins"
+msgstr ""
+
+#: assets/hub/index.js:5
+#: build/index.js:1
+#: build/index.js:2
+msgid "Loading…"
+msgstr ""
+
+#: assets/hub/index.js:5
+msgid "Search plugins"
+msgstr ""
+
+#: assets/hub/index.js:5
+msgid "Filter by status"
+msgstr ""
+
+#: assets/hub/index.js:5
+msgid "active"
+msgid_plural "active"
+msgstr[0] ""
+msgstr[1] ""
+
+#: assets/hub/index.js:5
+msgid "inactive"
+msgid_plural "inactive"
+msgstr[0] ""
+msgstr[1] ""
+
+#: assets/hub/index.js:5
+msgid "not installed"
+msgid_plural "not installed"
+msgstr[0] ""
+msgstr[1] ""
+
+#. translators: %d: number of LW plugins listed.
+#: assets/hub/index.js:6
+#, js-format
+msgid "%d LW plugin listed."
+msgid_plural "%d LW plugins listed."
+msgstr[0] ""
+msgstr[1] ""
+
+#: assets/hub/index.js:6
+msgid "That did not work. Please reload the page and try again."
+msgstr ""
+
+#. translators: %s: plugin name.
+#: assets/hub/index.js:7
+#, js-format
+msgid "%s is active."
+msgstr ""
+
+#: assets/hub/index.js:7
+msgid "Reload page"
 msgstr ""
 
 #: assets/js/blocks/faq.js:45
@@ -1224,20 +1435,7 @@ msgid "If filled, this markdown is served at the /md endpoint instead of the aut
 msgstr ""
 
 #: build/index.js:1
-#: build/index.js:2
-msgid "Loading…"
-msgstr ""
-
-#: build/index.js:1
-msgid "Try again"
-msgstr ""
-
-#: build/index.js:1
 msgid "Settings saved."
-msgstr ""
-
-#: build/index.js:1
-msgid "LW Plugins (opens in a new tab)"
 msgstr ""
 
 #: build/index.js:1
@@ -1250,10 +1448,6 @@ msgstr ""
 
 #: build/index.js:1
 msgid "Documentation"
-msgstr ""
-
-#: build/index.js:1
-msgid "(opens in a new tab)"
 msgstr ""
 
 #: build/index.js:1
@@ -2228,10 +2422,6 @@ msgstr ""
 
 #: build/index.js:2
 msgid "Clear all filters"
-msgstr ""
-
-#: build/index.js:2
-msgid "All"
 msgstr ""
 
 #: build/index.js:2
