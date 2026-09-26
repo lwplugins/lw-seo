@@ -4,6 +4,7 @@
 
 ### Changed
 - The LW Plugins overview page is now a searchable table showing each LW plugin's status and version, with one-click activation for installed plugins; it always uses the newest version shipped by any active LW plugin.
+- Developer docs: `lw_seo_markdown_frontmatter` and `lw_seo_markdown_body` now document their second argument as `WP_Post|WP_Term $object` (it is a `WP_Term` on category, tag and other term archives, so a `WP_Post` type hint threw a TypeError there), and the hooks whose release is recorded in this changelog carry `@since` tags (1.6.0, 1.6.2, 1.7.3).
 
 ### Fixed
 - LW Site Manager's MCP server now lists this plugin's abilities (they were only reachable through REST).

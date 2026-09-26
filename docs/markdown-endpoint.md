@@ -160,7 +160,7 @@ add_filter( 'lw_seo_markdown_is_supported', function ( bool $supported, WP_Query
 
 ### `lw_seo_markdown_frontmatter`
 
-Add or modify YAML frontmatter fields.
+Add or modify YAML frontmatter fields. The second argument is the `WP_Post` (post, page, product) or the `WP_Term` (category, tag or other term archive) being rendered, so type-hint it as `WP_Post|WP_Term`.
 
 ```php
 add_filter( 'lw_seo_markdown_frontmatter', function ( array $data, WP_Post|WP_Term $object ): array {
@@ -174,7 +174,7 @@ add_filter( 'lw_seo_markdown_frontmatter', function ( array $data, WP_Post|WP_Te
 
 ### `lw_seo_markdown_body`
 
-Modify or replace the markdown body content.
+Modify or replace the markdown body content. The second argument is the `WP_Post` (post, page, product) or the `WP_Term` (category, tag or other term archive) being rendered, so type-hint it as `WP_Post|WP_Term`.
 
 ```php
 add_filter( 'lw_seo_markdown_body', function ( string $body, WP_Post|WP_Term $object ): string {

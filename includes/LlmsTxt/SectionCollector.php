@@ -93,6 +93,8 @@ final class SectionCollector {
 		/**
 		 * Filter the post types listed in llms.txt.
 		 *
+		 * @since 1.6.0
+		 *
 		 * @param array<string, string> $types Post type name => section heading.
 		 */
 		return (array) apply_filters( 'lw_seo_llms_txt_post_types', $types );

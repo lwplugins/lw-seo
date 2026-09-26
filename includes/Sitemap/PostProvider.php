@@ -89,6 +89,8 @@ final class PostProvider implements ProviderInterface {
 			/**
 			 * Exclude a specific post from the sitemap.
 			 *
+			 * @since 1.6.0
+			 *
 			 * @param bool $exclude Whether to exclude.
 			 * @param int  $post_id Post ID.
 			 */

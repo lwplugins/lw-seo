@@ -205,6 +205,8 @@ final class Sitemap {
 		/**
 		 * Filter sitemap URLs before output.
 		 *
+		 * @since 1.6.0
+		 *
 		 * @param array<int, array{loc: string, lastmod?: string, changefreq?: string, priority?: string}> $items URL entries.
 		 * @param string $name Sitemap name (post type or taxonomy).
 		 * @param int    $page Page number.

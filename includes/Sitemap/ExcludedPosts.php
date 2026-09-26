@@ -33,6 +33,8 @@ final class ExcludedPosts {
 		 * Holds the WooCommerce cart, checkout and my account pages when
 		 * WooCommerce is active; add IDs to leave more posts out.
 		 *
+		 * @since 1.6.2
+		 *
 		 * @param int[]  $ids       Post IDs.
 		 * @param string $post_type Post type of the sitemap being built.
 		 */

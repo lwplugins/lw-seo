@@ -50,6 +50,8 @@ final class Eligibility {
 		 * Markdown endpoint. Only consulted for posts that passed the built-in
 		 * checks, so it can remove posts but never add ineligible ones.
 		 *
+		 * @since 1.6.0
+		 *
 		 * @param bool     $eligible Always true here.
 		 * @param \WP_Post $post     The post.
 		 */

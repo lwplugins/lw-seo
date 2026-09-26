@@ -81,6 +81,8 @@ final class PostDescription {
 		 * Runs for generated descriptions and for the ones the editor
 		 * typed, so a content restriction plugin can replace or empty it.
 		 *
+		 * @since 1.7.3
+		 *
 		 * @param string   $description Description (plain text, except 'llms').
 		 * @param \WP_Post $post        The post.
 		 * @param string   $context     'meta', 'og', 'twitter', 'schema', 'markdown' or 'llms'.

@@ -87,6 +87,8 @@ final class Canonical {
 		 * Return an empty string to print no canonical tag: og:url then keeps
 		 * the unfiltered URL, and WordPress core's own tag stays on singular views.
 		 *
+		 * @since 1.6.2
+		 *
 		 * @param string $url    Canonical URL.
 		 * @param mixed  $object Queried object, or null (e.g. the front page).
 		 */

@@ -76,6 +76,8 @@ final class Registry {
 		/**
 		 * Filter the AI crawler registry.
 		 *
+		 * @since 1.6.0
+		 *
 		 * @param array<string, array{name: string, company: string, agent: string, purposes: array<int, string>}> $crawlers Crawlers.
 		 */
 		return (array) apply_filters( 'lw_seo_ai_crawlers', self::builtin() );

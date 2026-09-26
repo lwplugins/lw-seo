@@ -79,10 +79,14 @@ final class PostRenderer implements RendererInterface {
 		}
 
 		/**
-		 * Filter markdown frontmatter for a post.
+		 * Filter markdown frontmatter for a post, product or term.
 		 *
-		 * @param array<string, mixed> $data Frontmatter key-value pairs.
-		 * @param \WP_Post             $post The post object.
+		 * The second argument is a \WP_Term when a category, tag or other
+		 * term archive is rendered (TaxonomyRenderer), so don't type-hint it
+		 * as \WP_Post.
+		 *
+		 * @param array<string, mixed> $data   Frontmatter key-value pairs.
+		 * @param \WP_Post|\WP_Term    $object The post (or product) or the term being rendered.
 		 */
 		return apply_filters( 'lw_seo_markdown_frontmatter', $data, $this->post );
 	}
@@ -105,10 +109,14 @@ final class PostRenderer implements RendererInterface {
 		$body   .= HtmlToMarkdown::convert( $content );
 
 		/**
-		 * Filter markdown body for a post.
+		 * Filter markdown body for a post, product or term.
 		 *
-		 * @param string   $body Markdown body content.
-		 * @param \WP_Post $post The post object.
+		 * The second argument is a \WP_Term when a category, tag or other
+		 * term archive is rendered (TaxonomyRenderer), so don't type-hint it
+		 * as \WP_Post.
+		 *
+		 * @param string            $body   Markdown body content.
+		 * @param \WP_Post|\WP_Term $object The post (or product) or the term being rendered.
 		 */
 		return apply_filters( 'lw_seo_markdown_body', $body, $this->post );
 	}

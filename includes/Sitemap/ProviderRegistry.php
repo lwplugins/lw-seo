@@ -76,6 +76,8 @@ final class ProviderRegistry {
 		/**
 		 * Filter post types included in the sitemap.
 		 *
+		 * @since 1.6.0
+		 *
 		 * @param array<int, string> $post_types Post type names.
 		 */
 		$post_types = (array) apply_filters( 'lw_seo_sitemap_post_types', $post_types );

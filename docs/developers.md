@@ -27,6 +27,8 @@ namespace LightweightPlugins\SEO;
  * tag: og:url then keeps the unfiltered URL, and WordPress core's own
  * rel=canonical stays on singular views.
  *
+ * @since 1.6.2
+ *
  * @param string $url    Canonical URL.
  * @param mixed  $object Queried object (WP_Post, WP_Term, WP_User,
  *                       WP_Post_Type), or null (e.g. a front page listing posts).
@@ -57,6 +59,8 @@ returns a post's custom canonical from the meta box.
  *               (the only context that is not plain text yet: llms.txt
  *               makes it inert Markdown afterwards)
  *
+ * @since 1.7.3
+ *
  * @param string  $description Description.
  * @param WP_Post $post        The post.
  * @param string  $context     'meta'|'og'|'twitter'|'schema'|'markdown'|'llms'.
@@ -82,6 +86,8 @@ post with `lw_seo_post_is_eligible`.
 /**
  * Filter sitemap URLs before output.
  *
+ * @since 1.6.0
+ *
  * @param array  $items Array of URL entries for this sitemap page.
  * @param string $name  Sitemap name (post type or taxonomy).
  * @param int    $page  Page number.
@@ -91,12 +97,16 @@ $items = apply_filters( 'lw_seo_sitemap_urls', $items, $name, $page );
 /**
  * Filter post types included in sitemap.
  *
+ * @since 1.6.0
+ *
  * @param array $post_types Post type names.
  */
 $post_types = apply_filters( 'lw_seo_sitemap_post_types', $post_types );
 
 /**
  * Exclude specific post from sitemap.
+ *
+ * @since 1.6.0
  *
  * @param bool $exclude Whether to exclude.
  * @param int  $post_id Post ID.
@@ -107,6 +117,8 @@ $exclude = apply_filters( 'lw_seo_sitemap_exclude_post', false, $post_id );
  * IDs of posts left out of the sitemap. Holds the WooCommerce cart,
  * checkout and my account pages (noindex by WooCommerce) when WooCommerce
  * is active.
+ *
+ * @since 1.6.2
  *
  * @param int[]  $ids       Post IDs.
  * @param string $post_type Post type of the sitemap being built.
@@ -123,6 +135,8 @@ $ids = apply_filters( 'lw_seo_sitemap_excluded_ids', $ids, $post_type );
  * noindex). Can remove a post from the sitemap, llms.txt and the
  * Markdown endpoint, but can never add an otherwise-ineligible one.
  *
+ * @since 1.6.0
+ *
  * @param bool    $eligible Always true when this filter runs.
  * @param WP_Post $post     The post.
  */
@@ -130,6 +144,8 @@ $eligible = apply_filters( 'lw_seo_post_is_eligible', true, $post );
 
 /**
  * Post types listed in llms.txt, one section per entry.
+ *
+ * @since 1.6.0
  *
  * @param array<string, string> $types Post type name => section heading.
  */
@@ -139,6 +155,8 @@ $types = apply_filters( 'lw_seo_llms_txt_post_types', $types );
  * The AI crawler registry: key => {name, company, agent, purposes}.
  * `purposes` is a list of 'training' | 'search' | 'user'; the first
  * entry is the crawler's primary purpose for grouping in the admin UI.
+ *
+ * @since 1.6.0
  *
  * @param array<string, array{name: string, company: string, agent: string, purposes: array<int, string>}> $crawlers Crawlers.
  */
@@ -162,6 +180,10 @@ The Markdown endpoint filters (`lw_seo_markdown_is_supported`,
 `lw_seo_markdown_frontmatter`, `lw_seo_markdown_body`,
 `lw_seo_markdown_output`) are documented in
 [markdown-endpoint.md](markdown-endpoint.md).
+`lw_seo_markdown_frontmatter` and `lw_seo_markdown_body` receive
+`WP_Post|WP_Term $object` as their second argument: a `WP_Term` when `/md`
+renders a category, tag or other term archive. Don't type-hint it as
+`WP_Post`, or the callback throws a `TypeError` on term archives.
 
 Examples:
 
