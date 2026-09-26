@@ -10,7 +10,7 @@ Use these variables in title templates to dynamically generate page titles.
 | `%%sitedesc%%` | Site tagline from Settings → General | Just another WordPress site |
 | `%%title%%` | Post/page title; on a post type archive (e.g. the WooCommerce shop) the archive title | How to Configure SEO |
 | `%%sep%%` | Separator character (configured in settings) | \| |
-| `%%excerpt%%` | Post excerpt (first 155 chars) | This post explains... |
+| `%%excerpt%%` | Post excerpt via `get_the_excerpt()` (manual excerpt, or the automatic one cut to 30 words; empty for password-protected posts) | This post explains... |
 | `%%author%%` | Post author display name | John Doe |
 | `%%category%%` | Primary category name | WordPress |
 | `%%term_title%%` | Current taxonomy term title | Tutorials |

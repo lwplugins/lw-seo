@@ -61,6 +61,25 @@ final class ProductRendererTest extends MonkeyTestCase {
 		$this->assertSame( "# Mug\n\n## Description\n\nBuilt with Bricks\n\n", ( new ProductRenderer( $post ) )->body() );
 	}
 
+	public function test_body_short_description_uses_the_masked_excerpt(): void {
+		Functions\when( 'get_post_meta' )->justReturn( '' );
+		Functions\when( 'wc_get_product' )->justReturn( false );
+		Functions\when( 'get_the_title' )->justReturn( 'Mug' );
+		Functions\when( 'wp_strip_all_tags' )->alias( static fn( string $text ): string => trim( strip_tags( $text ) ) );
+		Functions\when( 'post_password_required' )->justReturn( false );
+		Functions\when( 'get_the_excerpt' )->justReturn( 'Members teaser' );
+
+		$post = new \WP_Post(
+			[
+				'ID'           => 9,
+				'post_excerpt' => 'Secret summary',
+				'post_content' => '',
+			]
+		);
+
+		$this->assertSame( "# Mug\n\nMembers teaser\n\n", ( new ProductRenderer( $post ) )->body() );
+	}
+
 	/**
 	 * @return array<string, array{0: string, 1: array<int, string>, 2: string}>
 	 */

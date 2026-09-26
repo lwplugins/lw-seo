@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace LightweightPlugins\SEO\Markdown;
 
+use LightweightPlugins\SEO\Content\PostDescription;
 use LightweightPlugins\SEO\Helpers\HtmlToMarkdown;
 use LightweightPlugins\SEO\Options;
 
@@ -66,14 +67,15 @@ final class PostRenderer implements RendererInterface {
 			$data['featured_image'] = $thumbnail;
 		}
 
-		// Manual excerpt or SEO description only: get_the_excerpt() would run
-		// the_content a second time to auto-generate one.
-		$excerpt = (string) $this->post->post_excerpt;
+		// Manual excerpt or SEO description only: an automatic excerpt would
+		// run the_content a second time.
+		$excerpt = PostDescription::manual_excerpt( $this->post );
 		if ( '' === $excerpt ) {
 			$excerpt = (string) Options::get_post_meta( (int) $this->post->ID, 'description' );
 		}
+		$excerpt = PostDescription::filter( wp_strip_all_tags( $excerpt ), $this->post, 'markdown' );
 		if ( '' !== $excerpt ) {
-			$data['excerpt'] = wp_strip_all_tags( $excerpt );
+			$data['excerpt'] = $excerpt;
 		}
 
 		/**

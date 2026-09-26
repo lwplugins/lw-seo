@@ -19,13 +19,14 @@ final class TagRenderer {
 	/**
 	 * Render meta tags.
 	 *
-	 * @param string $title          The page title.
-	 * @param string $description    The meta description.
-	 * @param string $canonical      The canonical URL.
-	 * @param string $og_title       The OG title.
-	 * @param string $og_description The OG description.
-	 * @param string $og_image       The OG image URL.
-	 * @param string $og_type        The OG type.
+	 * @param string      $title               The page title.
+	 * @param string      $description         The meta description.
+	 * @param string      $canonical           The canonical URL.
+	 * @param string      $og_title            The OG title.
+	 * @param string      $og_description      The OG description.
+	 * @param string      $og_image            The OG image URL.
+	 * @param string      $og_type             The OG type.
+	 * @param string|null $twitter_description The Twitter description (null = the OG description).
 	 * @return void
 	 */
 	public function render(
@@ -35,7 +36,8 @@ final class TagRenderer {
 		string $og_title,
 		string $og_description,
 		string $og_image,
-		string $og_type
+		string $og_type,
+		?string $twitter_description = null
 	): void {
 		echo "\n<!-- LW SEO -->\n";
 
@@ -76,8 +78,9 @@ final class TagRenderer {
 			printf( '<meta name="twitter:card" content="%s" />' . "\n", esc_attr( Options::get( 'twitter_card_type' ) ) );
 			printf( '<meta name="twitter:title" content="%s" />' . "\n", esc_attr( $og_title ) );
 
-			if ( ! empty( $og_description ) ) {
-				printf( '<meta name="twitter:description" content="%s" />' . "\n", esc_attr( $og_description ) );
+			$twitter_description = $twitter_description ?? $og_description;
+			if ( ! empty( $twitter_description ) ) {
+				printf( '<meta name="twitter:description" content="%s" />' . "\n", esc_attr( $twitter_description ) );
 			}
 
 			if ( ! empty( $og_image ) ) {

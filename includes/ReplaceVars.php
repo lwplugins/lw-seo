@@ -9,6 +9,8 @@ declare(strict_types=1);
 
 namespace LightweightPlugins\SEO;
 
+use LightweightPlugins\SEO\Content\PostDescription;
+
 /**
  * Handles replacement of %%variables%% in titles and descriptions.
  */
@@ -145,22 +147,13 @@ final class ReplaceVars {
 	}
 
 	/**
-	 * Get the excerpt.
+	 * Get the excerpt, through get_the_excerpt() so content restriction
+	 * plugins can mask it ('' for a password-protected post).
 	 *
 	 * @return string
 	 */
 	private static function get_excerpt(): string {
-		if ( ! self::$post instanceof \WP_Post ) {
-			return '';
-		}
-
-		$excerpt = self::$post->post_excerpt;
-
-		if ( empty( $excerpt ) ) {
-			$excerpt = wp_trim_words( wp_strip_all_tags( self::$post->post_content ), 30, '...' );
-		}
-
-		return $excerpt;
+		return self::$post instanceof \WP_Post ? PostDescription::generated( self::$post ) : '';
 	}
 
 	/**

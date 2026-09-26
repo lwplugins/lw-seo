@@ -8,9 +8,10 @@ Navigate to **LW Plugins → SEO → Content** to configure content-related SEO 
 
 When enabled, the plugin automatically creates meta descriptions from post content when no custom description is set.
 
-- Extracts the first ~155 characters from post content
-- Strips HTML tags and shortcodes
-- Falls back to excerpt if available
+- Uses the manual excerpt, or WordPress's automatic excerpt cut to 30 words
+- Reads it through `get_the_excerpt()`, so membership/paywall plugins that mask the excerpt mask the description too
+- Strips HTML tags; password-protected posts get no generated description
+- Every description (custom or generated) passes the `lw_seo_meta_description` filter (see [developers.md](developers.md))
 
 ### Custom Meta Descriptions
 

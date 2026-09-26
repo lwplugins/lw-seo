@@ -37,6 +37,45 @@ $url = apply_filters( 'lw_seo_canonical_url', $url, $object );
 LW SEO also filters core's `get_canonical_url`, so `wp_get_canonical_url()`
 returns a post's custom canonical from the meta box.
 
+### Description Filter (content restriction)
+
+```php
+/**
+ * A post description, right before LW SEO outputs it.
+ *
+ * Runs for descriptions typed in the meta box and for generated ones, so a
+ * membership / paywall plugin can replace or empty it (return '' to print
+ * no description).
+ *
+ * Contexts:
+ *  - 'meta'     <meta name="description"> (also the REST API `description`)
+ *  - 'og'       og:description (also the REST API `og.description`)
+ *  - 'twitter'  twitter:description (also the REST API `twitter.description`)
+ *  - 'schema'   WooCommerce Product JSON-LD `description`
+ *  - 'markdown' `excerpt` in the Markdown endpoint (/md) frontmatter
+ *  - 'llms'     the post's description in llms.txt and llms-full.txt
+ *               (the only context that is not plain text yet: llms.txt
+ *               makes it inert Markdown afterwards)
+ *
+ * @param string  $description Description.
+ * @param WP_Post $post        The post.
+ * @param string  $context     'meta'|'og'|'twitter'|'schema'|'markdown'|'llms'.
+ */
+$description = apply_filters( 'lw_seo_meta_description', $description, $post, $context );
+```
+
+Generated text never comes from the raw `post_content`: LW SEO reads the
+excerpt through `get_the_excerpt()`, so a restriction plugin that masks the
+excerpt (via the `get_the_excerpt` filter) masks the descriptions and the
+`%%excerpt%%` template variable too. A manual excerpt is used as is; an
+automatic one is cut to 30 words (50 in the product schema). The Markdown
+frontmatter, llms.txt and the product short description in `/md` only use a
+manual excerpt, still through `get_the_excerpt()`. A password-protected post
+gets no generated description. The Markdown body is built with `the_content`
+(restriction plugins that filter it apply); a Bricks page's body is rendered
+by Bricks directly, so mask it with `lw_seo_markdown_body` or remove the
+post with `lw_seo_post_is_eligible`.
+
 ### Sitemap Filters
 
 ```php
@@ -137,6 +176,11 @@ add_filter( 'lw_seo_canonical_url', function ( string $url, $object ): string {
 add_filter( 'lw_seo_post_is_eligible', function ( bool $eligible, WP_Post $post ): bool {
 	return 'internal_doc' === $post->post_type ? false : $eligible;
 }, 10, 2 );
+
+// Keep members-only posts' teaser out of every description.
+add_filter( 'lw_seo_meta_description', function ( string $description, WP_Post $post, string $context ): string {
+	return has_term( 'members-only', 'category', $post ) ? '' : $description;
+}, 10, 3 );
 
 // Add a crawler the built-in registry doesn't know about yet.
 add_filter( 'lw_seo_ai_crawlers', function ( array $crawlers ): array {

@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace LightweightPlugins\SEO\Tests\Unit\LlmsTxt;
 
+use Brain\Monkey\Filters;
 use Brain\Monkey\Functions;
 use LightweightPlugins\SEO\LlmsTxt\SectionCollector;
 use LightweightPlugins\SEO\Options;
@@ -18,6 +19,13 @@ use LightweightPlugins\SEO\Tests\Unit\OptionsStubTrait;
 final class SectionCollectorTest extends MonkeyTestCase {
 
 	use OptionsStubTrait;
+
+	protected function setUp(): void {
+		parent::setUp();
+
+		Functions\when( 'post_password_required' )->justReturn( false );
+		Functions\when( 'get_the_excerpt' )->alias( static fn( \WP_Post $post ): string => (string) $post->post_excerpt );
+	}
 
 	protected function tearDown(): void {
 		Options::clear_cache();
@@ -201,6 +209,28 @@ final class SectionCollectorTest extends MonkeyTestCase {
 		Functions\when( 'get_post_meta' )->justReturn( '' );
 
 		$this->assertSame( $long, SectionCollector::description( $this->post( [ 'post_excerpt' => $long ] ) ) );
+	}
+
+	public function test_description_runs_through_the_description_filter_with_llms_context(): void {
+		Functions\when( 'get_post_meta' )->justReturn( '' );
+		$post = $this->post();
+		Filters\expectApplied( 'lw_seo_meta_description' )->once()->with( 'Fallback excerpt', $post, 'llms' )->andReturn( '' );
+
+		$this->assertSame( '', SectionCollector::description( $post ) );
+	}
+
+	public function test_description_uses_the_masked_excerpt(): void {
+		Functions\when( 'get_post_meta' )->justReturn( '' );
+		Functions\when( 'get_the_excerpt' )->justReturn( 'Members teaser' );
+
+		$this->assertSame( 'Members teaser', SectionCollector::description( $this->post() ) );
+	}
+
+	public function test_description_skips_the_excerpt_of_a_password_protected_post(): void {
+		Functions\when( 'get_post_meta' )->justReturn( '' );
+		Functions\when( 'post_password_required' )->justReturn( true );
+
+		$this->assertSame( '', SectionCollector::description( $this->post() ) );
 	}
 
 	public function test_link_uses_markdown_url_when_requested(): void {

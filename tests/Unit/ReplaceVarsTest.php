@@ -136,12 +136,16 @@ final class ReplaceVarsTest extends MonkeyTestCase {
 				'post_content' => 'Teljes tartalom, aminek nem szabad megjelennie',
 			]
 		);
+		Functions\when( 'wp_strip_all_tags' )->alias( 'strip_tags' );
+		Functions\when( 'post_password_required' )->justReturn( false );
+		Functions\when( 'get_the_excerpt' )->alias( static fn( \WP_Post $post ): string => (string) $post->post_excerpt );
 
 		$this->assertSame( 'Kivonat szöveg', ReplaceVars::replace( '%%excerpt%%', $post ) );
 	}
 
 	/**
-	 * Empty excerpt falls back to the trimmed, tag-stripped post content.
+	 * Empty excerpt falls back to the automatic excerpt of get_the_excerpt(),
+	 * tag-stripped and trimmed.
 	 */
 	public function test_excerpt_falls_back_to_trimmed_content_when_excerpt_empty(): void {
 		$post = new \WP_Post(
@@ -151,6 +155,8 @@ final class ReplaceVarsTest extends MonkeyTestCase {
 			]
 		);
 		Functions\when( 'wp_strip_all_tags' )->alias( 'strip_tags' );
+		Functions\when( 'post_password_required' )->justReturn( false );
+		Functions\when( 'get_the_excerpt' )->alias( static fn( \WP_Post $post ): string => (string) $post->post_content );
 		Functions\when( 'wp_trim_words' )->alias(
 			static function ( $text, $num_words = 55, $more = null ) {
 				$words = preg_split( '/\s+/', trim( $text ) );
@@ -162,6 +168,33 @@ final class ReplaceVarsTest extends MonkeyTestCase {
 		);
 
 		$this->assertSame( 'Első második harmadik', ReplaceVars::replace( '%%excerpt%%', $post ) );
+	}
+
+	public function test_excerpt_uses_the_masked_excerpt_of_a_restricted_post(): void {
+		$post = new \WP_Post(
+			[
+				'post_excerpt' => '',
+				'post_content' => 'Members only secret text',
+			]
+		);
+		Functions\when( 'wp_strip_all_tags' )->alias( 'strip_tags' );
+		Functions\when( 'wp_trim_words' )->returnArg( 1 );
+		Functions\when( 'post_password_required' )->justReturn( false );
+		Functions\when( 'get_the_excerpt' )->justReturn( 'Join to read' );
+
+		$this->assertSame( 'Join to read', ReplaceVars::replace( '%%excerpt%%', $post ) );
+	}
+
+	public function test_excerpt_is_empty_for_a_password_protected_post(): void {
+		$post = new \WP_Post(
+			[
+				'post_excerpt' => 'Secret summary',
+				'post_content' => 'Secret text',
+			]
+		);
+		Functions\when( 'post_password_required' )->justReturn( true );
+
+		$this->assertSame( '', ReplaceVars::replace( '%%excerpt%%', $post ) );
 	}
 
 	public function test_excerpt_is_empty_without_post(): void {

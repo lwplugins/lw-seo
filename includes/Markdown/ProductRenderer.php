@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace LightweightPlugins\SEO\Markdown;
 
+use LightweightPlugins\SEO\Content\PostDescription;
 use LightweightPlugins\SEO\Helpers\HtmlToMarkdown;
 use LightweightPlugins\SEO\Helpers\Markdown\InlineRenderer;
 use LightweightPlugins\SEO\Options;
@@ -90,8 +91,8 @@ final class ProductRenderer implements RendererInterface {
 		$product = wc_get_product( $this->post->ID );
 		$body    = '# ' . HtmlToMarkdown::plain_text( get_the_title( $this->post ) ) . "\n\n";
 
-		// Short description.
-		$short_desc = $this->post->post_excerpt;
+		// Short description, through get_the_excerpt() so restriction plugins can mask it.
+		$short_desc = PostDescription::manual_excerpt( $this->post );
 		if ( ! empty( $short_desc ) ) {
 			$body .= HtmlToMarkdown::convert( $short_desc ) . "\n";
 		}

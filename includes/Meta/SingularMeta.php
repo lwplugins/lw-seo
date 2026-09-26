@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace LightweightPlugins\SEO\Meta;
 
+use LightweightPlugins\SEO\Content\PostDescription;
 use LightweightPlugins\SEO\Helpers\MetaCoerce;
 use LightweightPlugins\SEO\Options;
 
@@ -50,17 +51,15 @@ final class SingularMeta {
 		// Get meta values.
 		$custom_title = Options::get_post_meta( $post->ID, 'title' );
 		$title        = ! empty( $custom_title ) ? $custom_title : get_the_title( $post );
-		$description  = $this->description( $post );
+		$descriptions = PostDescription::for_head( $post );
 		$canonical    = Canonical::for_post( $post );
 
 		// Get OG specific values.
 		$custom_og_title = Options::get_post_meta( $post->ID, 'og_title' );
 		$og_title        = ! empty( $custom_og_title ) ? $custom_og_title : $title;
-		$custom_og_desc  = Options::get_post_meta( $post->ID, 'og_description' );
-		$og_description  = ! empty( $custom_og_desc ) ? $custom_og_desc : $description;
 		$og_image        = $this->og_image( $post );
 
-		$this->renderer->render( $title, $description, $canonical, $og_title, $og_description, $og_image, 'article' );
+		$this->renderer->render( $title, $descriptions['meta'], $canonical, $og_title, $descriptions['og'], $og_image, 'article', $descriptions['twitter'] );
 	}
 
 	/**
@@ -82,22 +81,6 @@ final class SingularMeta {
 		}
 
 		$this->renderer->render_robots( $robots );
-	}
-
-	/**
-	 * Get meta description for a post.
-	 *
-	 * @param \WP_Post $post The post object.
-	 * @return string
-	 */
-	public function description( \WP_Post $post ): string {
-		$description = Options::get_post_meta( $post->ID, 'description' );
-
-		if ( empty( $description ) ) {
-			$description = ! empty( $post->post_excerpt ) ? $post->post_excerpt : wp_trim_words( wp_strip_all_tags( $post->post_content ), 30, '...' );
-		}
-
-		return wp_strip_all_tags( $description );
 	}
 
 	/**

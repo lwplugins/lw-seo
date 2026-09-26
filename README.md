@@ -13,7 +13,7 @@ Lightweight SEO plugin for WordPress - minimal footprint, maximum impact.
 
 ### Meta Tags & Titles
 - **Custom Titles** - Per-post/page title override with template variables
-- **Meta Descriptions** - Auto-generated from excerpt or content
+- **Meta Descriptions** - Auto-generated from the excerpt (through `get_the_excerpt()`, so membership/paywall plugins can mask it), filterable via `lw_seo_meta_description`
 - **Title Separator** - Customizable separator character
 - **Canonical URLs** - One self-referencing canonical per page (also on `/page/2/` of archives), filterable via `lw_seo_canonical_url`
 - **Robots Control** - noindex/nofollow per post

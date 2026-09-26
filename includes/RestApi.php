@@ -16,6 +16,7 @@ use WP_Error;
 use WP_Post;
 use WP_Term;
 use WP_User;
+use LightweightPlugins\SEO\Content\PostDescription;
 use LightweightPlugins\SEO\Helpers\MetaCoerce;
 
 /**
@@ -298,15 +299,15 @@ class RestApi {
 	 */
 	private function build_post_seo_data( WP_Post $post ): array {
 		$title       = $this->get_post_title( $post );
-		$description = $this->get_post_description( $post );
+		$description = PostDescription::for_head( $post );
 		$canonical   = $this->get_post_canonical( $post );
 		$robots      = $this->get_post_robots( $post );
-		$og          = $this->get_post_og( $post, $title, $description );
-		$twitter     = $this->get_post_twitter( $post, $title, $description );
+		$og          = $this->get_post_og( $post, $title, $description['og'] );
+		$twitter     = $this->get_post_twitter( $post, $title, $description['twitter'] );
 
 		return [
 			'title'       => $title,
-			'description' => $description,
+			'description' => $description['meta'],
 			'canonical'   => $canonical,
 			'robots'      => $robots,
 			'og'          => $og,
@@ -404,28 +405,6 @@ class RestApi {
 	}
 
 	/**
-	 * Get meta description for a post.
-	 *
-	 * @param WP_Post $post Post object.
-	 * @return string
-	 */
-	private function get_post_description( WP_Post $post ): string {
-		// Check for custom description.
-		$custom = Options::get_post_meta( $post->ID, 'description' );
-		if ( ! empty( $custom ) ) {
-			return wp_strip_all_tags( $custom );
-		}
-
-		// Auto-generate from excerpt or content.
-		$text = ! empty( $post->post_excerpt ) ? $post->post_excerpt : $post->post_content;
-		$text = wp_strip_all_tags( strip_shortcodes( $text ) );
-		$text = preg_replace( '/\s+/', ' ', $text );
-		$text = trim( $text );
-
-		return mb_substr( $text, 0, 160 );
-	}
-
-	/**
 	 * Get canonical URL for a post.
 	 *
 	 * @param WP_Post $post Post object.
@@ -474,21 +453,17 @@ class RestApi {
 	 *
 	 * @param WP_Post $post        Post object.
 	 * @param string  $title       SEO title.
-	 * @param string  $description SEO description.
+	 * @param string  $description Filtered og:description.
 	 * @return array
 	 */
 	private function get_post_og( WP_Post $post, string $title, string $description ): array {
 		// Check for custom OG data.
 		$og_title = Options::get_post_meta( $post->ID, 'og_title' );
-		$og_desc  = Options::get_post_meta( $post->ID, 'og_description' );
 		$og_image = MetaCoerce::as_url( Options::get_post_meta( $post->ID, 'og_image' ) );
 
-		// Fallback to SEO title/description.
+		// Fallback to SEO title.
 		if ( empty( $og_title ) ) {
 			$og_title = $title;
-		}
-		if ( empty( $og_desc ) ) {
-			$og_desc = $description;
 		}
 
 		// Get image.
@@ -506,7 +481,7 @@ class RestApi {
 			'locale'      => get_locale(),
 			'type'        => $type,
 			'title'       => $og_title,
-			'description' => $og_desc,
+			'description' => $description,
 			'url'         => get_permalink( $post ),
 			'site_name'   => get_bloginfo( 'name' ),
 			'image'       => $og_image,
@@ -517,7 +492,7 @@ class RestApi {
 			$data['article:published_time'] = get_the_date( 'c', $post );
 			$data['article:modified_time']  = get_the_modified_date( 'c', $post );
 
-			$author = get_userdata( $post->post_author );
+			$author = get_userdata( (int) $post->post_author );
 			if ( $author ) {
 				$data['article:author'] = $author->display_name;
 			}
@@ -531,20 +506,16 @@ class RestApi {
 	 *
 	 * @param WP_Post $post        Post object.
 	 * @param string  $title       SEO title.
-	 * @param string  $description SEO description.
+	 * @param string  $description Filtered twitter:description.
 	 * @return array
 	 */
 	private function get_post_twitter( WP_Post $post, string $title, string $description ): array {
 		// Check for custom OG data (Twitter falls back to OG).
 		$tw_title = Options::get_post_meta( $post->ID, 'og_title' );
-		$tw_desc  = Options::get_post_meta( $post->ID, 'og_description' );
 		$tw_image = MetaCoerce::as_url( Options::get_post_meta( $post->ID, 'og_image' ) );
 
 		if ( empty( $tw_title ) ) {
 			$tw_title = $title;
-		}
-		if ( empty( $tw_desc ) ) {
-			$tw_desc = $description;
 		}
 		if ( '' === $tw_image ) {
 			if ( has_post_thumbnail( $post->ID ) ) {
@@ -557,7 +528,7 @@ class RestApi {
 		return [
 			'card'        => 'summary_large_image',
 			'title'       => $tw_title,
-			'description' => $tw_desc,
+			'description' => $description,
 			'image'       => $tw_image,
 		];
 	}

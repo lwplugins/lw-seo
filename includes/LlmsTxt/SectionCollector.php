@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace LightweightPlugins\SEO\LlmsTxt;
 
 use LightweightPlugins\SEO\Content\Eligibility;
+use LightweightPlugins\SEO\Content\PostDescription;
 use LightweightPlugins\SEO\Content\PostTypes;
 use LightweightPlugins\SEO\Markdown\Url;
 use LightweightPlugins\SEO\Options;
@@ -125,7 +126,8 @@ final class SectionCollector {
 	}
 
 	/**
-	 * A post's summary: the SEO description, falling back to the excerpt.
+	 * A post's summary: the SEO description, falling back to the manual
+	 * excerpt (through get_the_excerpt()), then the public description filter.
 	 *
 	 * @param \WP_Post $post Post object.
 	 * @return string Untrimmed, as the author wrote it.
@@ -133,7 +135,11 @@ final class SectionCollector {
 	public static function description( \WP_Post $post ): string {
 		$description = (string) Options::get_post_meta( (int) $post->ID, 'description' );
 
-		return '' !== $description ? $description : (string) $post->post_excerpt;
+		if ( '' === $description ) {
+			$description = PostDescription::manual_excerpt( $post );
+		}
+
+		return PostDescription::filter( $description, $post, 'llms' );
 	}
 
 	/**

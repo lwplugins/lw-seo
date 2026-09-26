@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace LightweightPlugins\SEO\WooCommerce;
 
+use LightweightPlugins\SEO\Content\PostDescription;
 use LightweightPlugins\SEO\Options;
 
 /**
@@ -115,22 +116,23 @@ final class Schema {
 	}
 
 	/**
-	 * Get product description.
+	 * Get product description: the short description, falling back to the
+	 * product content, read through get_the_excerpt() so content
+	 * restriction plugins can mask it.
 	 *
 	 * @param \WC_Product $product The product.
 	 * @return string
 	 */
 	private function get_product_description( \WC_Product $product ): string {
-		$description = $product->get_short_description();
+		$post = get_post( $product->get_id() );
 
-		if ( empty( $description ) ) {
-			$description = $product->get_description();
+		if ( ! $post instanceof \WP_Post ) {
+			return '';
 		}
 
-		$description = wp_strip_all_tags( $description );
-		$description = wp_trim_words( $description, 50, '...' );
+		$description = wp_trim_words( PostDescription::generated( $post, 50 ), 50, '...' );
 
-		return $description;
+		return PostDescription::filter( $description, $post, 'schema' );
 	}
 
 	/**

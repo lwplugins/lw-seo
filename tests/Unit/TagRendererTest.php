@@ -181,6 +181,8 @@ final class TagRendererTest extends MonkeyTestCase {
 		);
 		Functions\when( 'wp_strip_all_tags' )->alias( static fn( $value ) => (string) $value );
 		Functions\when( 'has_post_thumbnail' )->justReturn( false );
+		Functions\when( 'post_password_required' )->justReturn( false );
+		Functions\when( 'get_the_excerpt' )->alias( static fn( \WP_Post $post ): string => (string) $post->post_excerpt );
 
 		$html = $this->capture(
 			static function () use ( $post ): void {
@@ -287,6 +289,8 @@ final class TagRendererTest extends MonkeyTestCase {
 		Functions\when( 'has_post_thumbnail' )->justReturn( false );
 		Functions\when( 'get_permalink' )->justReturn( 'https://example.com/post/' );
 		Functions\when( 'wp_get_canonical_url' )->justReturn( 'https://example.com/post/2/' );
+		Functions\when( 'post_password_required' )->justReturn( false );
+		Functions\when( 'get_the_excerpt' )->alias( static fn( \WP_Post $post ): string => (string) $post->post_excerpt );
 
 		$html = $this->capture(
 			static function (): void {

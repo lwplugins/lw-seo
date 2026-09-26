@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace LightweightPlugins\SEO\Meta;
 
+use LightweightPlugins\SEO\Content\PostDescription;
 use LightweightPlugins\SEO\Helpers\MetaCoerce;
 use LightweightPlugins\SEO\Options;
 use LightweightPlugins\SEO\ReplaceVars;
@@ -76,7 +77,7 @@ final class ArchiveMeta {
 		$singular     = new SingularMeta( $this->renderer );
 		$custom_title = Options::get_post_meta( $page_id, 'title' );
 		$title        = ! empty( $custom_title ) ? $custom_title : get_the_title( $post );
-		$description  = $singular->description( $post );
+		$descriptions = PostDescription::for_head( $post );
 
 		$custom_canon = Canonical::custom_for_post( $page_id );
 		$canonical    = '' !== $custom_canon
@@ -85,10 +86,8 @@ final class ArchiveMeta {
 
 		$custom_og_title = Options::get_post_meta( $page_id, 'og_title' );
 		$og_title        = ! empty( $custom_og_title ) ? $custom_og_title : $title;
-		$custom_og_desc  = Options::get_post_meta( $page_id, 'og_description' );
-		$og_description  = ! empty( $custom_og_desc ) ? $custom_og_desc : $description;
 
-		$this->renderer->render( $title, $description, $canonical, $og_title, $og_description, $singular->og_image( $post ), 'website' );
+		$this->renderer->render( $title, $descriptions['meta'], $canonical, $og_title, $descriptions['og'], $singular->og_image( $post ), 'website', $descriptions['twitter'] );
 	}
 
 	/**
