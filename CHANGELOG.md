@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.7.3] - 2026-09-26
+
+### Fixed
+- Descriptions and other generated outputs no longer bypass content restriction plugins. The meta, Open Graph and Twitter descriptions (also in the REST API), the product schema description, the `%%excerpt%%` variable, the Markdown (`/md`) excerpt and product short description, and the llms.txt descriptions now read the excerpt through `get_the_excerpt()` instead of the raw post content, so a membership or paywall plugin that hides the excerpt hides it there too. Password-protected posts get no generated description.
+
+### Added
+- Developer filter `lw_seo_meta_description` (`$description`, `$post`, `$context`) to change or empty any post description before output, including ones typed in the editor. Contexts: `meta`, `og`, `twitter`, `schema`, `markdown`, `llms`.
+
+### Changed
+- The REST API post description is now the same as the head meta description (the excerpt, cut to 30 words when automatic) instead of the first 160 characters of the content.
+
 ## [1.7.2] - 2026-09-25
 
 ### Fixed

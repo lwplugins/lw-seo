@@ -3,7 +3,7 @@ Contributors: lwplugins
 Tags: seo, sitemap, schema, opengraph, breadcrumbs
 Requires at least: 6.6
 Tested up to: 7.1
-Stable tag: 1.7.2
+Stable tag: 1.7.3
 Requires PHP: 8.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -135,6 +135,11 @@ Your sitemap is available at `yoursite.com/sitemap.xml`
 6. Settings page - Advanced tab
 
 == Changelog ==
+
+= 1.7.3 =
+* Fix: Descriptions and other generated outputs no longer bypass content restriction plugins. The meta, Open Graph and Twitter descriptions (also in the REST API), the product schema description, the %%excerpt%% variable, the Markdown (/md) excerpt and product short description, and the llms.txt descriptions now read the excerpt the standard WordPress way, so a membership or paywall plugin that hides the excerpt hides it there too. Password-protected posts get no generated description.
+* New: Developer filter `lw_seo_meta_description` ($description, $post, $context) to change or empty any post description before output, including ones typed in the editor. Contexts: meta, og, twitter, schema, markdown, llms.
+* Change: The REST API post description is now the same as the head meta description (the excerpt, cut to 30 words when automatic) instead of the first 160 characters of the content.
 
 = 1.7.2 =
 * Fix: "Requires at least" raised to WordPress 6.6 - the React settings screen needs the react-jsx-runtime script core registers from 6.6; on older versions the page stayed blank.
