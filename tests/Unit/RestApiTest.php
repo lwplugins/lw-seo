@@ -143,6 +143,58 @@ final class RestApiTest extends MonkeyTestCase {
 	}
 
 	/**
+	 * Get the REST SEO data of a public post with the given LW SEO meta.
+	 *
+	 * @param array<string, string> $meta Field => value.
+	 * @return array<string, mixed>
+	 */
+	private function post_seo_data( array $meta ): array {
+		$this->stub_options( [ 'separator' => '|' ] );
+		Functions\when( 'get_post' )->justReturn( self::post( 'page' ) );
+		Functions\when( 'post_password_required' )->justReturn( false );
+		Functions\when( 'is_post_type_viewable' )->justReturn( true );
+		Functions\when( 'get_post_meta' )->alias( static fn( int $id, string $key ): string => $meta[ substr( $key, strlen( '_lw_seo_' ) ) ] ?? '' );
+		Functions\when( 'get_the_title' )->justReturn( 'About' );
+		Functions\when( 'get_bloginfo' )->justReturn( 'Site' );
+		Functions\when( 'wp_strip_all_tags' )->alias( static fn( string $text ): string => trim( strip_tags( $text ) ) );
+		Functions\when( 'get_permalink' )->justReturn( 'https://example.com/about/' );
+		Functions\when( 'get_locale' )->justReturn( 'hu_HU' );
+		Functions\when( 'has_post_thumbnail' )->justReturn( false );
+
+		$result = ( new RestApi() )->get_post_meta( new \WP_REST_Request( [ 'id' => 422 ] ) );
+		$this->assertInstanceOf( \WP_REST_Response::class, $result );
+
+		return $result->get_data();
+	}
+
+	public function test_post_route_fills_in_variables_of_the_post_seo_texts(): void {
+		$data = $this->post_seo_data(
+			[
+				'title'          => 'Custom %%title%% %%sep%% %%sitename%%',
+				'description'    => '%%title%% on %%sitename%%',
+				'og_title'       => '%%title%% shared',
+				'og_description' => '%%sitename%% social',
+			]
+		);
+
+		$this->assertSame(
+			[ 'Custom About | Site', 'About on Site', 'About shared', 'Site social', 'About shared', 'Site social' ],
+			[ $data['title'], $data['description'], $data['og']['title'], $data['og']['description'], $data['twitter']['title'], $data['twitter']['description'] ]
+		);
+	}
+
+	public function test_post_route_returns_post_seo_texts_without_variables_as_saved(): void {
+		$data = $this->post_seo_data(
+			[
+				'title'       => 'Plain  title',
+				'description' => 'Plain description',
+			]
+		);
+
+		$this->assertSame( [ 'Plain  title', 'Plain description', 'Plain  title' ], [ $data['title'], $data['description'], $data['og']['title'] ] );
+	}
+
+	/**
 	 * A published post of the given type.
 	 *
 	 * @param string $post_type Post type.

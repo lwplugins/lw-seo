@@ -1,6 +1,8 @@
 # Template Variables
 
 Use these variables in title templates to dynamically generate page titles.
+They also work in a post's, page's or term's own SEO title, meta description
+and social title/description, and in the home meta description.
 
 ## Available Variables
 
@@ -106,6 +108,7 @@ Override the template for individual posts/pages:
 2. Find the **LW SEO** meta box
 3. Enter a custom title in the "SEO Title" field
 4. This replaces the template entirely, site name included: add your brand to the custom title if you want it there
+5. Variables work here too: `%%title%% %%sep%% %%sitename%%` shows the post title, the separator and the site name
 
 ## Tips
 

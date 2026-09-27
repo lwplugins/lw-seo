@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace LightweightPlugins\SEO\LlmsTxt;
 
 use LightweightPlugins\SEO\Content\Eligibility;
+use LightweightPlugins\SEO\Content\ObjectText;
 use LightweightPlugins\SEO\Content\PostDescription;
 use LightweightPlugins\SEO\Content\PostTypes;
 use LightweightPlugins\SEO\Markdown\Url;
@@ -135,7 +136,7 @@ final class SectionCollector {
 	 * @return string Untrimmed, as the author wrote it.
 	 */
 	public static function description( \WP_Post $post ): string {
-		$description = (string) Options::get_post_meta( (int) $post->ID, 'description' );
+		$description = ObjectText::post( $post, 'description' );
 
 		if ( '' === $description ) {
 			$description = PostDescription::manual_excerpt( $post );

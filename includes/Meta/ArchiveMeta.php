@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace LightweightPlugins\SEO\Meta;
 
+use LightweightPlugins\SEO\Content\ObjectText;
 use LightweightPlugins\SEO\Content\PostDescription;
 use LightweightPlugins\SEO\Helpers\MetaCoerce;
 use LightweightPlugins\SEO\Options;
@@ -43,7 +44,7 @@ final class ArchiveMeta {
 	public function output_home(): void {
 		$title_template = Options::get( 'title_home' );
 		$title          = ! empty( $title_template ) ? ReplaceVars::replace( $title_template ) : get_bloginfo( 'name' );
-		$custom_desc    = Options::get( 'desc_home' );
+		$custom_desc    = ObjectText::home_description();
 		$description    = ! empty( $custom_desc ) ? $custom_desc : get_bloginfo( 'description' );
 		$url            = ArchiveContext::paged_url( home_url( '/' ) );
 		$og_image       = (string) Options::get( 'default_og_image' );
@@ -75,7 +76,7 @@ final class ArchiveMeta {
 		}
 
 		$singular     = new SingularMeta( $this->renderer );
-		$custom_title = Options::get_post_meta( $page_id, 'title' );
+		$custom_title = ObjectText::post( $post, 'title' );
 		$title        = ! empty( $custom_title ) ? $custom_title : get_the_title( $post );
 		$descriptions = PostDescription::for_head( $post );
 
@@ -84,7 +85,7 @@ final class ArchiveMeta {
 			? $custom_canon
 			: ArchiveContext::paged_url( (string) get_permalink( $post ) );
 
-		$custom_og_title = Options::get_post_meta( $page_id, 'og_title' );
+		$custom_og_title = ObjectText::post( $post, 'og_title' );
 		$og_title        = ! empty( $custom_og_title ) ? $custom_og_title : $title;
 
 		$this->renderer->render( $title, $descriptions['meta'], $canonical, $og_title, $descriptions['og'], $singular->og_image( $post ), 'website', $descriptions['twitter'] );
@@ -137,21 +138,21 @@ final class ArchiveMeta {
 		}
 
 		// Title: per-term meta > template > term name.
-		$custom_title = Options::get_term_meta( $term->term_id, 'title' );
+		$custom_title = ObjectText::term( $term, 'title' );
 		$term_title   = single_term_title( '', false );
 		$title        = ! empty( $custom_title ) ? $custom_title : ( ! empty( $term_title ) ? $term_title : $term->name );
 
 		// Description: per-term meta > term description.
-		$custom_desc = Options::get_term_meta( $term->term_id, 'description' );
+		$custom_desc = ObjectText::term( $term, 'description' );
 		$term_desc   = term_description( $term->term_id );
 		$description = ! empty( $custom_desc ) ? $custom_desc : ( ! empty( $term_desc ) ? wp_strip_all_tags( $term_desc ) : '' );
 
 		$url = get_term_link( $term );
 
 		// Social: per-term meta > defaults.
-		$og_title = Options::get_term_meta( $term->term_id, 'og_title' );
+		$og_title = ObjectText::term( $term, 'og_title' );
 		$og_title = ! empty( $og_title ) ? $og_title : $title;
-		$og_desc  = Options::get_term_meta( $term->term_id, 'og_description' );
+		$og_desc  = ObjectText::term( $term, 'og_description' );
 		$og_desc  = ! empty( $og_desc ) ? $og_desc : $description;
 		$og_image = MetaCoerce::as_url( Options::get_term_meta( $term->term_id, 'og_image' ) );
 		if ( '' === $og_image ) {

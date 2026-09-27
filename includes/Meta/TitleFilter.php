@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace LightweightPlugins\SEO\Meta;
 
+use LightweightPlugins\SEO\Content\ObjectText;
 use LightweightPlugins\SEO\Options;
 use LightweightPlugins\SEO\ReplaceVars;
 
@@ -88,19 +89,19 @@ final class TitleFilter {
 			return $this->apply_template( $title_parts, (string) Options::get( 'title_home' ) );
 		}
 
-		$custom_title = Options::get_post_meta( $page_id, 'title' );
-
-		if ( ! empty( $custom_title ) ) {
-			return $this->custom_title( $title_parts, (string) $custom_title );
-		}
-
 		$post = get_post( $page_id );
 
-		if ( $post instanceof \WP_Post ) {
-			return $this->apply_template( $title_parts, (string) Options::get( 'title_page' ), $post );
+		if ( ! $post instanceof \WP_Post ) {
+			return $title_parts;
 		}
 
-		return $title_parts;
+		$custom_title = ObjectText::post( $post, 'title' );
+
+		if ( ! empty( $custom_title ) ) {
+			return $this->custom_title( $title_parts, $custom_title );
+		}
+
+		return $this->apply_template( $title_parts, (string) Options::get( 'title_page' ), $post );
 	}
 
 	/**
@@ -116,10 +117,10 @@ final class TitleFilter {
 			return $title_parts;
 		}
 
-		$custom_title = Options::get_post_meta( $post->ID, 'title' );
+		$custom_title = ObjectText::post( $post, 'title' );
 
 		if ( ! empty( $custom_title ) ) {
-			return $this->custom_title( $title_parts, (string) $custom_title );
+			return $this->custom_title( $title_parts, $custom_title );
 		}
 
 		return $this->apply_template( $title_parts, (string) Options::get( 'title_' . $post->post_type ), $post );
@@ -138,10 +139,10 @@ final class TitleFilter {
 			return $title_parts;
 		}
 
-		$custom_title = Options::get_term_meta( $term->term_id, 'title' );
+		$custom_title = ObjectText::term( $term, 'title' );
 
 		if ( ! empty( $custom_title ) ) {
-			return $this->custom_title( $title_parts, (string) $custom_title );
+			return $this->custom_title( $title_parts, $custom_title );
 		}
 
 		return $this->apply_template( $title_parts, (string) Options::get( 'title_' . $term->taxonomy ), null, $term );

@@ -9,8 +9,6 @@ declare(strict_types=1);
 
 namespace LightweightPlugins\SEO\Content;
 
-use LightweightPlugins\SEO\Options;
-
 /**
  * Builds the description LW SEO prints for a post (meta, Open Graph,
  * Twitter, schema, Markdown, llms.txt).
@@ -41,8 +39,8 @@ final class PostDescription {
 	 * @return array{meta: string, og: string, twitter: string}
 	 */
 	public static function for_head( \WP_Post $post ): array {
-		$source    = self::source( $post, (string) Options::get_post_meta( (int) $post->ID, 'description' ) );
-		$custom_og = wp_strip_all_tags( (string) Options::get_post_meta( (int) $post->ID, 'og_description' ) );
+		$source    = self::source( $post, ObjectText::post( $post, 'description' ) );
+		$custom_og = wp_strip_all_tags( ObjectText::post( $post, 'og_description' ) );
 		$og_source = '' !== trim( $custom_og ) ? $custom_og : $source;
 
 		return [

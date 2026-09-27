@@ -12,12 +12,16 @@ namespace LightweightPlugins\SEO\Migration\Support;
 use LightweightPlugins\SEO\ReplaceVars;
 
 /**
- * LW SEO shows a post's or term's own SEO title, description and social text
- * exactly as saved: variables are only replaced in the global templates. Other
- * plugins allow variables in those per-object fields ("%%post_title%% - Shop"),
- * so the importers fill them in with the object's values at import time,
- * after converting them to LW SEO variables. The home meta description is
- * shown as saved too.
+ * Other plugins allow variables in a post's or term's own SEO fields
+ * ("%%post_title%% - Shop"). Since 1.8.0 LW SEO fills in the variables of
+ * those fields (and of the home meta description) when it displays them
+ * (Content\ObjectText), but the SEOPress and All in One SEO importers still
+ * fill them in at import time, after converting them to LW SEO variables.
+ * Deliberately: the stored text is then final wherever raw meta is read
+ * (the editor fields, the Site Manager abilities, third-party code), and
+ * text without variables passes the display-time step unchanged, so nothing
+ * is replaced twice. The trade-off is that an imported title does not follow
+ * a later change of the post title; the editor can type the variable again.
  */
 final class TextResolver {
 
@@ -45,8 +49,8 @@ final class TextResolver {
 	}
 
 	/**
-	 * Resolve the variables of a site-wide text LW SEO shows as saved (the
-	 * home meta description), with the separator the import is setting.
+	 * Resolve the variables of a site-wide text (the home meta description),
+	 * with the separator the import is setting.
 	 *
 	 * @param string|null $text      Text with LW SEO variables.
 	 * @param string      $separator Separator to use for %%sep%%.

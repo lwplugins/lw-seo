@@ -256,4 +256,15 @@ final class SectionCollectorTest extends MonkeyTestCase {
 
 		$this->assertSame( 'https://x.test/a/', $link['url'] );
 	}
+
+	public function test_description_fills_in_variables_of_the_description_meta(): void {
+		$this->stub_options( [ 'separator' => '|' ] );
+		Functions\when( 'get_the_title' )->justReturn( 'A post' );
+		Functions\when( 'get_bloginfo' )->justReturn( 'Site' );
+		Functions\when( 'get_post_meta' )->alias(
+			static fn( int $id, string $key ): string => '_lw_seo_description' === $key ? 'Read %%title%% %%sep%% %%sitename%%' : ''
+		);
+
+		$this->assertSame( 'Read A post | Site', SectionCollector::description( $this->post() ) );
+	}
 }

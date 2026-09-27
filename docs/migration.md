@@ -24,11 +24,15 @@ The same rules apply to every import:
 - **Running an import twice is safe.** The second run imports nothing, and
   redirects are not added twice.
 - **Variables are converted.** In title templates, the source plugin's
-  variables become LW SEO variables (tables below). LW SEO shows a post's or
-  term's own SEO title, description and social text, and the home meta
-  description, exactly as saved. Variables in those texts are therefore
-  filled in at import time with that post's or term's values, for example
-  `%%post_title%% | Shop` becomes `My post | Shop`.
+  variables become LW SEO variables (tables below). LW SEO fills in the
+  variables of a post's or term's own SEO title, description and social
+  text, and of the home meta description, when it displays them (since
+  1.8.0). The Yoast SEO and Rank Math importers keep the converted variables
+  in those texts. The SEOPress and All in One SEO importers fill them in at
+  import time with that post's or term's values, for example
+  `%%post_title%% | Shop` becomes `My post | Shop`, so the saved text is
+  final in the editor too. Such text then no longer follows a later change
+  of the post title.
 - **Data with no LW SEO equivalent is reported, not dropped silently.** The
   import result lists it as warnings. This covers meta keys, robots flags,
   schema, keyphrases, and template variables that were removed from titles.

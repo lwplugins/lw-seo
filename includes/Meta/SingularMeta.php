@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace LightweightPlugins\SEO\Meta;
 
+use LightweightPlugins\SEO\Content\ObjectText;
 use LightweightPlugins\SEO\Content\PostDescription;
 use LightweightPlugins\SEO\Helpers\MetaCoerce;
 use LightweightPlugins\SEO\Options;
@@ -49,13 +50,13 @@ final class SingularMeta {
 		$this->render_robots( $post );
 
 		// Get meta values.
-		$custom_title = Options::get_post_meta( $post->ID, 'title' );
+		$custom_title = ObjectText::post( $post, 'title' );
 		$title        = ! empty( $custom_title ) ? $custom_title : get_the_title( $post );
 		$descriptions = PostDescription::for_head( $post );
 		$canonical    = Canonical::for_post( $post );
 
 		// Get OG specific values.
-		$custom_og_title = Options::get_post_meta( $post->ID, 'og_title' );
+		$custom_og_title = ObjectText::post( $post, 'og_title' );
 		$og_title        = ! empty( $custom_og_title ) ? $custom_og_title : $title;
 		$og_image        = $this->og_image( $post );
 

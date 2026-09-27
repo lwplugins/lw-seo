@@ -375,9 +375,9 @@ class RestApi {
 	 */
 	private function get_post_title( WP_Post $post ): string {
 		// Check for custom title.
-		$custom_title = Options::get_post_meta( $post->ID, 'title' );
+		$custom_title = Content\ObjectText::post( $post, 'title' );
 		if ( ! empty( $custom_title ) ) {
-			return ReplaceVars::replace( $custom_title, $post, null, null );
+			return $custom_title;
 		}
 
 		// Use template.
@@ -439,7 +439,7 @@ class RestApi {
 	 */
 	private function get_post_og( WP_Post $post, string $title, string $description ): array {
 		// Check for custom OG data.
-		$og_title = Options::get_post_meta( $post->ID, 'og_title' );
+		$og_title = Content\ObjectText::post( $post, 'og_title' );
 		$og_image = MetaCoerce::as_url( Options::get_post_meta( $post->ID, 'og_image' ) );
 
 		// Fallback to SEO title.
@@ -492,7 +492,7 @@ class RestApi {
 	 */
 	private function get_post_twitter( WP_Post $post, string $title, string $description ): array {
 		// Check for custom OG data (Twitter falls back to OG).
-		$tw_title = Options::get_post_meta( $post->ID, 'og_title' );
+		$tw_title = Content\ObjectText::post( $post, 'og_title' );
 		$tw_image = MetaCoerce::as_url( Options::get_post_meta( $post->ID, 'og_image' ) );
 
 		if ( empty( $tw_title ) ) {

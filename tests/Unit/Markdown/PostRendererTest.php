@@ -14,12 +14,14 @@ use Brain\Monkey\Functions;
 use Bricks\Database;
 use Bricks\Helpers;
 use LightweightPlugins\SEO\Markdown\PostRenderer;
+use LightweightPlugins\SEO\Options;
 use LightweightPlugins\SEO\Tests\Unit\MonkeyTestCase;
 
 final class PostRendererTest extends MonkeyTestCase {
 
 	protected function tearDown(): void {
 		Database::test_reset();
+		Options::clear_cache();
 		parent::tearDown();
 	}
 
@@ -113,5 +115,26 @@ final class PostRendererTest extends MonkeyTestCase {
 		);
 
 		$this->assertSame( "# About\n\nBuilt with Bricks\n", ( new PostRenderer( $post ) )->body() );
+	}
+
+	public function test_frontmatter_excerpt_fills_in_variables_of_the_seo_description(): void {
+		Options::clear_cache();
+		$this->stub_frontmatter_basics();
+		Functions\when( 'get_bloginfo' )->justReturn( 'Site' );
+		Functions\when( 'get_option' )->justReturn( [] );
+		Functions\when( 'wp_parse_args' )->alias( static fn( $args, $defaults ) => array_merge( $defaults, (array) $args ) );
+		Functions\when( 'get_post_meta' )->alias(
+			static fn( int $id, string $key ): string => '_lw_seo_description' === $key ? 'Custom %%title%% %%sep%% %%sitename%%' : ''
+		);
+
+		$post = new \WP_Post(
+			[
+				'ID'           => 7,
+				'post_author'  => 1,
+				'post_excerpt' => '',
+			]
+		);
+
+		$this->assertSame( 'Custom Post - Site', ( new PostRenderer( $post ) )->frontmatter()['excerpt'] );
 	}
 }

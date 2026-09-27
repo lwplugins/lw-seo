@@ -69,6 +69,7 @@ final class TitleFilterTest extends MonkeyTestCase {
 
 	public function test_posts_page_custom_title_replaces_the_whole_title(): void {
 		Functions\when( 'is_home' )->justReturn( true );
+		Functions\when( 'get_post' )->justReturn( new \WP_Post( [ 'ID' => 12 ] ) );
 		Functions\when( 'get_post_meta' )->justReturn( 'Blog SEO title' );
 
 		$parts = ( new TitleFilter() )->filter_title(
@@ -149,5 +150,37 @@ final class TitleFilterTest extends MonkeyTestCase {
 
 	public function test_separator_falls_back_to_wordpress_default(): void {
 		$this->assertSame( '-', ( new TitleFilter() )->filter_separator( '-' ) );
+	}
+
+	public function test_variables_in_a_singular_custom_title_are_filled_in(): void {
+		Functions\when( 'is_singular' )->justReturn( true );
+		Functions\when( 'get_queried_object' )->justReturn( new \WP_Post( [ 'ID' => 7, 'post_type' => 'post' ] ) );
+		Functions\when( 'get_post_meta' )->justReturn( 'Custom %%title%% %%sep%% %%sitename%%' );
+		Functions\when( 'get_the_title' )->justReturn( 'Hello' );
+
+		$parts = ( new TitleFilter() )->filter_title( [ 'title' => 'Hello', 'site' => 'Site' ] );
+
+		$this->assertSame( [ 'title' => 'Custom Hello - Site' ], $parts );
+	}
+
+	public function test_variables_in_a_posts_page_custom_title_are_filled_in(): void {
+		Functions\when( 'is_home' )->justReturn( true );
+		Functions\when( 'get_post' )->justReturn( new \WP_Post( [ 'ID' => 12 ] ) );
+		Functions\when( 'get_post_meta' )->justReturn( '%%title%% %%sep%% %%sitename%%' );
+		Functions\when( 'get_the_title' )->justReturn( 'Blog' );
+
+		$parts = ( new TitleFilter() )->filter_title( [ 'title' => 'Blog', 'site' => 'Site' ] );
+
+		$this->assertSame( [ 'title' => 'Blog - Site' ], $parts );
+	}
+
+	public function test_variables_in_a_term_custom_title_are_filled_in(): void {
+		Functions\when( 'is_category' )->justReturn( true );
+		Functions\when( 'get_queried_object' )->justReturn( new \WP_Term( [ 'term_id' => 5, 'taxonomy' => 'category', 'name' => 'News' ] ) );
+		Functions\when( 'get_term_meta' )->justReturn( '%%term_title%% archive %%sep%% %%sitename%%' );
+
+		$parts = ( new TitleFilter() )->filter_title( [ 'title' => 'News', 'site' => 'Site' ] );
+
+		$this->assertSame( [ 'title' => 'News archive - Site' ], $parts );
 	}
 }

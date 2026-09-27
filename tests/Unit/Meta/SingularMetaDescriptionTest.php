@@ -119,4 +119,55 @@ final class SingularMetaDescriptionTest extends MonkeyTestCase {
 		$this->assertStringNotContainsString( 'secret', $html );
 		$this->assertStringNotContainsString( 'description', $html );
 	}
+
+	/**
+	 * Stub the post's LW SEO meta.
+	 *
+	 * @param array<string, string> $meta Field => value.
+	 */
+	private function stub_meta( array $meta ): void {
+		Functions\when( 'get_post_meta' )->alias(
+			static fn( int $id, string $key ): string => $meta[ substr( $key, strlen( '_lw_seo_' ) ) ] ?? ''
+		);
+	}
+
+	public function test_variables_in_the_post_seo_texts_are_filled_in(): void {
+		$this->stub_meta(
+			[
+				'title'          => 'Custom %%title%% %%sep%% %%sitename%%',
+				'description'    => '%%title%% on %%sitename%%',
+				'og_description' => '%%sitename%% social',
+			]
+		);
+
+		$html = $this->render_head();
+
+		$this->assertStringNotContainsString( '%%', $html );
+		$this->assertStringContainsString( '<meta property="og:title" content="Custom Post - Site" />', $html );
+		$this->assertStringContainsString( '<meta name="twitter:title" content="Custom Post - Site" />', $html );
+		$this->assertStringContainsString( '<meta name="description" content="Post on Site" />', $html );
+		$this->assertStringContainsString( '<meta property="og:description" content="Site social" />', $html );
+		$this->assertStringContainsString( '<meta name="twitter:description" content="Site social" />', $html );
+	}
+
+	public function test_variables_in_the_social_title_are_filled_in(): void {
+		$this->stub_meta( [ 'og_title' => '%%title%% | shared' ] );
+		Functions\when( 'get_the_excerpt' )->justReturn( 'Excerpt' );
+
+		$this->assertStringContainsString( '<meta property="og:title" content="Post | shared" />', $this->render_head() );
+	}
+
+	public function test_post_seo_text_without_variables_is_printed_as_saved(): void {
+		$this->stub_meta(
+			[
+				'title'       => 'Plain  title',
+				'description' => 'Plain description',
+			]
+		);
+
+		$html = $this->render_head();
+
+		$this->assertStringContainsString( '<meta property="og:title" content="Plain  title" />', $html );
+		$this->assertStringContainsString( '<meta name="description" content="Plain description" />', $html );
+	}
 }
