@@ -82,12 +82,31 @@ final class RedirectsMigrator {
 			return;
 		}
 
+		$is_regex = isset( $entry['format'] ) && 'regex' === $entry['format'];
+		$origin   = (string) $entry['origin'];
+
 		$outcome = $this->writer->add(
-			(string) $entry['origin'],
+			$is_regex ? self::anchor_regex( $origin ) : $origin,
 			(string) ( $entry['url'] ?? '' ),
 			(int) ( $entry['type'] ?? 301 ),
-			isset( $entry['format'] ) && 'regex' === $entry['format']
+			$is_regex
 		);
 		RedirectWriter::tally( $outcome, $result );
+	}
+
+	/**
+	 * Yoast stores regex origins without the leading slash ("^blog/(\d+)$"),
+	 * while LW SEO matches against paths that start with "/". Put the slash
+	 * after an opening anchor so the imported pattern can match.
+	 *
+	 * @param string $origin Yoast regex origin.
+	 * @return string
+	 */
+	public static function anchor_regex( string $origin ): string {
+		if ( str_starts_with( $origin, '^' ) && ! str_starts_with( $origin, '^/' ) ) {
+			return '^/' . substr( $origin, 1 );
+		}
+
+		return $origin;
 	}
 }

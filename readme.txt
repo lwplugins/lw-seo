@@ -150,6 +150,7 @@ Your sitemap is available at `yoursite.com/sitemap.xml`
 * Change: a source can have only one redirect: adding one for a source that already has a redirect (in the Redirects tab, the REST API, `wp lw-seo redirect add` or a CSV import) is rejected with a message instead of creating a second redirect that could never match.
 * Fix: per-post, per-term and home descriptions that contain variables such as %%title%% (common after importing from Yoast or Rank Math) are now filled in when displayed instead of being shown literally.
 * Fix: running an import again no longer duplicates redirects.
+* Fix: Yoast regex redirects that start with ^ (for example ^blog/(\d+)$) now match after import; the importer adds the leading slash LW SEO's paths have.
 
 = 1.7.5 =
 * Security: the public LW SEO REST endpoints no longer return SEO data for posts of non-public post types (for example LW LMS courses and lessons), password-protected posts or terms of private taxonomies to visitors who may not read them.

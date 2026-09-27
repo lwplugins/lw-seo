@@ -11,6 +11,7 @@ namespace LightweightPlugins\SEO\Tests\Unit\Migration\Yoast;
 
 use Brain\Monkey\Functions;
 use LightweightPlugins\SEO\Migration\Yoast\RedirectsMigrator;
+use LightweightPlugins\SEO\Redirects\Manager;
 use LightweightPlugins\SEO\Tests\Unit\Migration\MigrationStoreTrait;
 use LightweightPlugins\SEO\Tests\Unit\MonkeyTestCase;
 
@@ -39,7 +40,7 @@ final class RedirectsMigratorTest extends MonkeyTestCase {
 		$result = ( new RedirectsMigrator() )->migrate();
 
 		$this->assertSame( [ 3, 0 ], [ $result['migrated'], $result['skipped'] ] );
-		$this->assertSame( [ '/old-page', '^blog/(\d+)$', '/gone' ], array_column( $this->options['lw_seo_redirects'], 'source' ) );
+		$this->assertSame( [ '/old-page', '^/blog/(\d+)$', '/gone' ], array_column( $this->options['lw_seo_redirects'], 'source' ) );
 	}
 
 	public function test_running_the_import_again_adds_no_duplicates(): void {
@@ -57,5 +58,13 @@ final class RedirectsMigratorTest extends MonkeyTestCase {
 		$result = ( new RedirectsMigrator( true ) )->migrate();
 
 		$this->assertSame( [ 0, 3 ], [ $result['migrated'], $result['skipped_already_present'] ] );
+	}
+
+	public function test_anchored_regex_origin_gets_a_leading_slash_and_matches(): void {
+		$this->assertSame( '^/blog/(\d+)$', RedirectsMigrator::anchor_regex( '^blog/(\d+)$' ) );
+		$this->assertSame( '^/blog/(\d+)$', RedirectsMigrator::anchor_regex( '^/blog/(\d+)$' ) );
+		$this->assertSame( 'blog/(\d+)', RedirectsMigrator::anchor_regex( 'blog/(\d+)' ) );
+		$this->assertSame( 1, preg_match( Manager::regex_pattern( RedirectsMigrator::anchor_regex( '^blog/(\d+)$' ) ), '/blog/5' ) );
+		$this->assertSame( 0, preg_match( Manager::regex_pattern( '^blog/(\d+)$' ), '/blog/5' ) );
 	}
 }

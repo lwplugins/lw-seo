@@ -15,6 +15,7 @@
 ### Fixed
 - Per-post, per-term and home descriptions that contain variables such as %%title%% (common after importing from Yoast or Rank Math) are now filled in when displayed instead of being shown literally.
 - Running an import again no longer duplicates redirects.
+- Yoast regex redirects that start with ^ (for example ^blog/(\d+)$) now match after import; the importer adds the leading slash LW SEO's paths have.
 
 ## [1.7.5] - 2026-09-27
 
