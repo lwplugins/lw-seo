@@ -18,6 +18,7 @@ use WP_Term;
 use WP_User;
 use LightweightPlugins\SEO\Content\PostDescription;
 use LightweightPlugins\SEO\Helpers\MetaCoerce;
+use LightweightPlugins\SEO\Rest\PublicObjectAccess;
 
 /**
  * REST API class for headless SEO data.
@@ -159,20 +160,12 @@ class RestApi {
 		$post    = get_post( $post_id );
 
 		if ( ! $post instanceof WP_Post ) {
-			return new WP_Error(
-				'post_not_found',
-				__( 'Post not found.', 'lw-seo' ),
-				[ 'status' => 404 ]
-			);
+			return PublicObjectAccess::post_not_found();
 		}
 
-		// Check if post is publicly viewable.
-		if ( 'publish' !== $post->post_status && ! current_user_can( 'read_post', $post_id ) ) {
-			return new WP_Error(
-				'post_not_accessible',
-				__( 'Post is not accessible.', 'lw-seo' ),
-				[ 'status' => 403 ]
-			);
+		$denied = PublicObjectAccess::post_error( $post );
+		if ( null !== $denied ) {
+			return $denied;
 		}
 
 		$data = $this->build_post_seo_data( $post );
@@ -191,12 +184,13 @@ class RestApi {
 		$taxonomy = $request->get_param( 'taxonomy' );
 		$term     = get_term( $term_id, $taxonomy );
 
-		if ( ! $term instanceof WP_Term || is_wp_error( $term ) ) {
-			return new WP_Error(
-				'term_not_found',
-				__( 'Term not found.', 'lw-seo' ),
-				[ 'status' => 404 ]
-			);
+		if ( ! $term instanceof WP_Term ) {
+			return PublicObjectAccess::term_not_found();
+		}
+
+		$denied = PublicObjectAccess::term_error( $term );
+		if ( null !== $denied ) {
+			return $denied;
 		}
 
 		$data = $this->build_term_seo_data( $term );
@@ -215,11 +209,12 @@ class RestApi {
 		$user      = get_user_by( 'id', $author_id );
 
 		if ( ! $user instanceof WP_User ) {
-			return new WP_Error(
-				'author_not_found',
-				__( 'Author not found.', 'lw-seo' ),
-				[ 'status' => 404 ]
-			);
+			return PublicObjectAccess::author_not_found();
+		}
+
+		$denied = PublicObjectAccess::author_error( $user );
+		if ( null !== $denied ) {
+			return $denied;
 		}
 
 		$data = $this->build_author_seo_data( $user );
@@ -238,19 +233,12 @@ class RestApi {
 		$post    = get_post( $post_id );
 
 		if ( ! $post instanceof WP_Post ) {
-			return new WP_Error(
-				'post_not_found',
-				__( 'Post not found.', 'lw-seo' ),
-				[ 'status' => 404 ]
-			);
+			return PublicObjectAccess::post_not_found();
 		}
 
-		if ( 'publish' !== $post->post_status && ! current_user_can( 'read_post', $post_id ) ) {
-			return new WP_Error(
-				'post_not_accessible',
-				__( 'Post is not accessible.', 'lw-seo' ),
-				[ 'status' => 403 ]
-			);
+		$denied = PublicObjectAccess::post_error( $post );
+		if ( null !== $denied ) {
+			return $denied;
 		}
 
 		$schema = new Schema\Schema();
@@ -270,19 +258,12 @@ class RestApi {
 		$post    = get_post( $post_id );
 
 		if ( ! $post instanceof WP_Post ) {
-			return new WP_Error(
-				'post_not_found',
-				__( 'Post not found.', 'lw-seo' ),
-				[ 'status' => 404 ]
-			);
+			return PublicObjectAccess::post_not_found();
 		}
 
-		if ( 'publish' !== $post->post_status && ! current_user_can( 'read_post', $post_id ) ) {
-			return new WP_Error(
-				'post_not_accessible',
-				__( 'Post is not accessible.', 'lw-seo' ),
-				[ 'status' => 403 ]
-			);
+		$denied = PublicObjectAccess::post_error( $post );
+		if ( null !== $denied ) {
+			return $denied;
 		}
 
 		$breadcrumbs = new Breadcrumbs();

@@ -1,7 +1,2 @@
 parameters:
 	ignoreErrors:
-		-
-			message: '#^Call to function is_wp_error\(\) with WP_Term will always evaluate to false\.$#'
-			identifier: function.impossibleType
-			count: 1
-			path: includes/RestApi.php
