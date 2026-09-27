@@ -3,7 +3,7 @@ Contributors: lwplugins
 Tags: seo, sitemap, schema, opengraph, breadcrumbs
 Requires at least: 6.6
 Tested up to: 7.1
-Stable tag: 1.7.4
+Stable tag: 1.7.5
 Requires PHP: 8.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -135,6 +135,10 @@ Your sitemap is available at `yoursite.com/sitemap.xml`
 6. Settings page - Advanced tab
 
 == Changelog ==
+
+= 1.7.5 =
+* Security: the public LW SEO REST endpoints no longer return SEO data for posts of non-public post types (for example LW LMS courses and lessons), password-protected posts or terms of private taxonomies to visitors who may not read them.
+* Security: the public author endpoint (`lw-seo/v1/meta/author/{id}`) now only returns data for users who have published posts in a public post type, like the WordPress users endpoint; other users require the list_users capability.
 
 = 1.7.4 =
 * Change: the LW Plugins overview page is now a searchable table showing each LW plugin's status and version, with one-click activation for installed plugins; it always uses the newest version shipped by any active LW plugin.

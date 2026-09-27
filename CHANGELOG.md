@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.7.5] - 2026-09-27
+
+### Security
+- The public LW SEO REST endpoints no longer return SEO data for posts of non-public post types (for example LW LMS courses and lessons), password-protected posts or terms of private taxonomies to visitors who may not read them.
+- The public author endpoint (`lw-seo/v1/meta/author/{id}`) now only returns data for users who have published posts in a public post type, like the WordPress users endpoint; other users require the list_users capability.
+
 ## [1.7.4] - 2026-09-26
 
 ### Changed
