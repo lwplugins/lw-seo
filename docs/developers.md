@@ -366,15 +366,24 @@ if ( class_exists( 'LightweightPlugins\SEO\WooCommerce\Integration' ) ) {
 
 ## Conflict Detection
 
-The plugin checks for other SEO plugins:
+LW SEO skips its head output while another SEO plugin is active.
+`LightweightPlugins\SEO\Meta\HeadMeta::conflicting_plugin_name()` returns the
+name of the active one ('' when none):
+
+| Plugin | Detected by |
+|---|---|
+| Yoast SEO | `WPSEO_VERSION` constant |
+| Rank Math | `RankMath` class |
+| All in One SEO | `AIOSEO_VERSION` constant |
+| SEOPress | `SEOPRESS_VERSION` constant |
 
 ```php
-// Detected plugins that disable LW SEO output
-$conflicting_plugins = [
-    'wordpress-seo/wp-seo.php',           // Yoast SEO
-    'seo-by-rank-math/rank-math.php',     // Rank Math
-    'all-in-one-seo-pack/all_in_one_seo_pack.php', // AIOSEO
-];
+use LightweightPlugins\SEO\Meta\HeadMeta;
+
+if ( HeadMeta::is_conflicting_plugin_active() ) {
+    // e.g. 'SEOPress'
+    $name = HeadMeta::conflicting_plugin_name();
+}
 ```
 
 ## File Structure

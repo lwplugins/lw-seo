@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.8.0] - 2026-09-27
+
+### Added
+- Import SEO data from SEOPress and All in One SEO (post and term titles, descriptions, canonical URLs, robots, social data, title templates and more), from the Import tab or `wp lw-seo migrate seopress|aioseo` (`--dry-run`, `--yes`). SEOPress: post and term SEO titles and descriptions, post canonical URLs, noindex (posts and terms) and nofollow (posts), Facebook/Twitter titles, descriptions and images, primary categories (product categories for products), per-post and per-term redirects and SEOPress PRO redirects (including regex, 410 and 451), the separator, home title and description, post/page/product, category/tag, product archive, author, date, search and 404 title templates, per-type noindex, Open Graph and Twitter Card on/off, card size, default social image, social profiles (the Twitter handle becomes an X profile URL), knowledge graph type, name and logo, and sitemap settings. All in One SEO: post SEO titles and descriptions, canonical URLs, noindex/nofollow (when the post does not use the default robots settings), Open Graph and Twitter titles, descriptions and custom images, primary terms, the separator, home title and description, post/page/product, category/tag, product archive, author, date and search title templates, per-type noindex, Open Graph and Twitter on/off, Twitter card type, default social image, social profiles, knowledge graph name and logo, and sitemap settings. All in One SEO's data is read from its own tables, so it works while All in One SEO is inactive.
+- Template variables and smart tags are converted to LW SEO variables (`%%sitetitle%%` and `#site_title` become `%%sitename%%`, `#separator_sa` becomes `%%sep%%`, and so on). In a post's or term's own SEO title, description and social text, and in the home meta description, the variables are filled in with that post's or term's values at import time, because LW SEO shows that text as saved. Variables LW SEO has no equivalent for are removed and listed in the import warnings, together with data that has no LW SEO field (keyphrases, extra robots flags, per-post schema).
+
+### Changed
+- The Import tab looks for data from all four supported plugins when it opens and shows a block only for the plugins it found data for.
+- An active SEOPress now counts as a conflicting SEO plugin, like Yoast SEO, Rank Math and All in One SEO: LW SEO skips its head tags while SEOPress is active. The notice on the settings screen names the active plugin and points to the Import tab.
+- `wp lw-seo migrate` also reports skipped posts, terms and redirects.
+
 ## [1.7.5] - 2026-09-27
 
 ### Security

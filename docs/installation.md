@@ -41,6 +41,9 @@ LW SEO automatically detects and disables its output when the following SEO plug
 - Yoast SEO
 - Rank Math
 - All in One SEO
+- SEOPress
+
+Their data can be imported into LW SEO first, see [Importing from Other SEO Plugins](migration.md).
 
 This prevents duplicate meta tags and conflicts.
 

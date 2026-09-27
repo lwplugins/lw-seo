@@ -76,7 +76,7 @@ Lightweight SEO plugin for WordPress - minimal footprint, maximum impact.
 - **404 to homepage** - Optional redirect of 404s to the homepage, as a last resort after your redirect rules and WordPress's own redirects (renamed slugs, guessed URLs)
 
 ### Migration
-- **Import from Rank Math and Yoast SEO** - Options, post and term meta, primary categories and redirects (admin Import tab or `wp lw-seo migrate`)
+- **Import from Yoast SEO, Rank Math, SEOPress and All in One SEO** - Options and title templates, post and term SEO data, primary categories and redirects, with a dry-run preview; never overwrites LW SEO data (admin Import tab or `wp lw-seo migrate`, see [docs/migration.md](docs/migration.md))
 
 ### Cleanup
 - Remove shortlinks
@@ -147,6 +147,7 @@ LW SEO skips its head meta output (and shows a notice on its settings page) when
 - Yoast SEO
 - Rank Math
 - All in One SEO
+- SEOPress
 
 ## Development
 

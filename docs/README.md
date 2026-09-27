@@ -17,6 +17,7 @@ Lightweight SEO plugin for WordPress - minimal footprint, maximum impact.
 11. [Template Variables](template-variables.md)
 12. [For Developers](developers.md)
 13. [WP-CLI](cli.md)
+14. [Importing from Other SEO Plugins](migration.md)
 
 ## Quick Start
 

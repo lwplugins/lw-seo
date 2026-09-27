@@ -202,7 +202,15 @@ wp lw-seo redirect export [<file>]
 ```
 wp lw-seo migrate rankmath [--dry-run] [--yes]
 wp lw-seo migrate yoast [--dry-run] [--yes]
+wp lw-seo migrate seopress [--dry-run] [--yes]
+wp lw-seo migrate aioseo [--dry-run] [--yes]
 ```
+
+`--dry-run` reports what would be imported without writing anything. The
+result table lists migrated and skipped posts, terms and redirects; warnings
+list data with no LW SEO equivalent. Existing LW SEO values are never
+overwritten, and a second run imports nothing. Field mappings:
+[Importing from Other SEO Plugins](migration.md).
 
 ## Other 1.6.0 option keys worth toggling
 
