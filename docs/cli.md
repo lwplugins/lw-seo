@@ -197,6 +197,9 @@ wp lw-seo redirect import <file>
 wp lw-seo redirect export [<file>]
 ```
 
+`redirect add` and `redirect import` skip a source that already has a
+redirect.
+
 ## `wp lw-seo migrate`
 
 ```

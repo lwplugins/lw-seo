@@ -9,20 +9,21 @@ declare(strict_types=1);
 
 namespace LightweightPlugins\SEO\Migration\Yoast;
 
-use LightweightPlugins\SEO\Redirects\Manager;
+use LightweightPlugins\SEO\Migration\Support\RedirectWriter;
 
 /**
  * Migrates Yoast Premium redirects (wpseo-premium-redirects-base) into LW SEO.
- * Yoast free has no redirects, so this is a no-op there.
+ * Yoast free has no redirects, so this is a no-op there. Sources LW SEO
+ * already redirects are skipped, so a repeated import adds no duplicates.
  */
 final class RedirectsMigrator {
 
 	/**
-	 * Whether this is a dry run.
+	 * Redirect writer.
 	 *
-	 * @var bool
+	 * @var RedirectWriter
 	 */
-	private bool $dry_run;
+	private RedirectWriter $writer;
 
 	/**
 	 * Constructor.
@@ -30,7 +31,7 @@ final class RedirectsMigrator {
 	 * @param bool $dry_run Whether to simulate without making changes.
 	 */
 	public function __construct( bool $dry_run = false ) {
-		$this->dry_run = $dry_run;
+		$this->writer = new RedirectWriter( $dry_run );
 	}
 
 	/**
@@ -46,13 +47,14 @@ final class RedirectsMigrator {
 	/**
 	 * Run redirects migration.
 	 *
-	 * @return array{migrated: int, skipped: int, errors: array<string>}
+	 * @return array{migrated: int, skipped: int, skipped_already_present: int, errors: array<string>}
 	 */
 	public function migrate(): array {
 		$result = [
-			'migrated' => 0,
-			'skipped'  => 0,
-			'errors'   => [],
+			'migrated'                => 0,
+			'skipped'                 => 0,
+			'skipped_already_present' => 0,
+			'errors'                  => [],
 		];
 
 		$data = get_option( 'wpseo-premium-redirects-base', [] );
@@ -70,8 +72,8 @@ final class RedirectsMigrator {
 	/**
 	 * Migrate a single redirect entry.
 	 *
-	 * @param mixed                                                     $entry  Redirect entry.
-	 * @param array{migrated: int, skipped: int, errors: array<string>} $result Accumulator (by reference).
+	 * @param mixed                                                                                   $entry  Redirect entry.
+	 * @param array{migrated: int, skipped: int, skipped_already_present: int, errors: array<string>} $result Accumulator (by reference).
 	 * @return void
 	 */
 	private function migrate_entry( mixed $entry, array &$result ): void {
@@ -80,20 +82,12 @@ final class RedirectsMigrator {
 			return;
 		}
 
-		$source = (string) $entry['origin'];
-		$dest   = (string) ( $entry['url'] ?? '' );
-		$type   = (int) ( $entry['type'] ?? 301 );
-		$regex  = isset( $entry['format'] ) && 'regex' === $entry['format'];
-
-		if ( $this->dry_run ) {
-			++$result['migrated'];
-			return;
-		}
-
-		if ( false !== Manager::add( $source, $dest, $type, $regex ) ) {
-			++$result['migrated'];
-		} else {
-			++$result['skipped'];
-		}
+		$outcome = $this->writer->add(
+			(string) $entry['origin'],
+			(string) ( $entry['url'] ?? '' ),
+			(int) ( $entry['type'] ?? 301 ),
+			isset( $entry['format'] ) && 'regex' === $entry['format']
+		);
+		RedirectWriter::tally( $outcome, $result );
 	}
 }

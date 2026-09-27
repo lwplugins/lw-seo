@@ -64,15 +64,8 @@ final class RedirectsMigrator {
 			}
 
 			$outcome = $this->writer->add( $entry['source'], $entry['destination'], $entry['type'], $entry['regex'] );
-			if ( RedirectWriter::ADDED === $outcome ) {
-				++$result['migrated'];
-				continue;
-			}
-
-			++$result['skipped'];
-			if ( RedirectWriter::PRESENT === $outcome ) {
-				++$result['skipped_already_present'];
-			} else {
+			RedirectWriter::tally( $outcome, $result );
+			if ( RedirectWriter::INVALID === $outcome ) {
 				$result['errors'][] = $entry['label'];
 			}
 		}

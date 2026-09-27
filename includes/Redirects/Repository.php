@@ -61,6 +61,18 @@ final class Repository {
 	}
 
 	/**
+	 * Whether another redirect already has this source.
+	 *
+	 * @param string $source    Source path or pattern.
+	 * @param bool   $regex     Regex source.
+	 * @param string $except_id Id of the redirect being updated ('' when adding).
+	 * @return bool
+	 */
+	public static function source_taken( string $source, bool $regex, string $except_id = '' ): bool {
+		return null !== DuplicateSource::find( self::stored(), $source, $regex, self::index_of( $except_id ) );
+	}
+
+	/**
 	 * Update a redirect (input already validated). An unchanged update
 	 * succeeds.
 	 *

@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace LightweightPlugins\SEO\CLI;
 
+use LightweightPlugins\SEO\Redirects\DuplicateSource;
 use LightweightPlugins\SEO\Redirects\Manager;
 
 /**
@@ -66,7 +67,11 @@ final class RedirectCommand {
 	 * @return void
 	 */
 	public function add( array $args, array $assoc_args ): void {
-		$type   = (int) ( $assoc_args['type'] ?? 301 );
+		$type = (int) ( $assoc_args['type'] ?? 301 );
+		if ( null !== DuplicateSource::find( Manager::get_all(), $args[0], isset( $assoc_args['regex'] ) ) ) {
+			\WP_CLI::error( 'A redirect for this source already exists. Delete or edit it first.' );
+		}
+
 		$result = Manager::add( $args[0], $args[1] ?? '', $type, isset( $assoc_args['regex'] ) );
 
 		if ( false === $result ) {

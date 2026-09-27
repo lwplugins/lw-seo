@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace LightweightPlugins\SEO\Rest\Admin;
 
+use LightweightPlugins\SEO\Redirects\DuplicateSource;
 use LightweightPlugins\SEO\Redirects\Manager;
 use LightweightPlugins\SEO\Redirects\Repository;
 use LightweightPlugins\SEO\Redirects\Validator;
@@ -74,7 +75,7 @@ final class RedirectsController {
 	 */
 	public function create_item( WP_REST_Request $request ) {
 		$input = $this->input( $request );
-		$error = Validator::error( ...$input );
+		$error = $this->input_error( $input );
 		if ( null !== $error ) {
 			return $this->invalid( $error );
 		}
@@ -100,7 +101,7 @@ final class RedirectsController {
 		}
 
 		$input = $this->input( $request );
-		$error = Validator::error( ...$input );
+		$error = $this->input_error( $input, $id );
 		if ( null !== $error ) {
 			return $this->invalid( $error );
 		}
@@ -174,6 +175,23 @@ final class RedirectsController {
 			Validator::normalize_type( (int) $request->get_param( 'type' ) ),
 			rest_sanitize_boolean( $request->get_param( 'regex' ) ?? false ),
 		];
+	}
+
+	/**
+	 * The first problem with the input: invalid, or a source another
+	 * redirect already has.
+	 *
+	 * @param array{0: string, 1: string, 2: int, 3: bool} $input     Sanitized input.
+	 * @param string                                       $except_id Id of the redirect being updated.
+	 * @return string|null Translated error message.
+	 */
+	private function input_error( array $input, string $except_id = '' ): ?string {
+		$error = Validator::error( ...$input );
+		if ( null === $error && Repository::source_taken( $input[0], $input[3], $except_id ) ) {
+			$error = DuplicateSource::message();
+		}
+
+		return $error;
 	}
 
 	/**

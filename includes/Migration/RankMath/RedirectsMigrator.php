@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace LightweightPlugins\SEO\Migration\RankMath;
 
-use LightweightPlugins\SEO\Redirects\Manager;
+use LightweightPlugins\SEO\Migration\Support\RedirectWriter;
 
 /**
  * Migrates {prefix}rank_math_redirections rows into the LW SEO redirects option.
@@ -20,16 +20,17 @@ use LightweightPlugins\SEO\Redirects\Manager;
  * each source becomes a separate LW SEO redirect entry.
  *
  * Trashed rows are skipped; inactive rows are migrated (with a note in the
- * source field) so users can re-enable them later.
+ * source field) so users can re-enable them later. Sources LW SEO already
+ * redirects are skipped, so a repeated import adds no duplicates.
  */
 final class RedirectsMigrator {
 
 	/**
-	 * Whether this is a dry run.
+	 * Redirect writer.
 	 *
-	 * @var bool
+	 * @var RedirectWriter
 	 */
-	private bool $dry_run;
+	private RedirectWriter $writer;
 
 	/**
 	 * Constructor.
@@ -37,7 +38,7 @@ final class RedirectsMigrator {
 	 * @param bool $dry_run Whether to simulate without making changes.
 	 */
 	public function __construct( bool $dry_run = false ) {
-		$this->dry_run = $dry_run;
+		$this->writer = new RedirectWriter( $dry_run );
 	}
 
 	/**
@@ -72,13 +73,14 @@ final class RedirectsMigrator {
 	/**
 	 * Run redirects migration.
 	 *
-	 * @return array{migrated: int, skipped: int, errors: array<string>}
+	 * @return array{migrated: int, skipped: int, skipped_already_present: int, errors: array<string>}
 	 */
 	public function migrate(): array {
 		$result = [
-			'migrated' => 0,
-			'skipped'  => 0,
-			'errors'   => [],
+			'migrated'                => 0,
+			'skipped'                 => 0,
+			'skipped_already_present' => 0,
+			'errors'                  => [],
 		];
 
 		if ( ! $this->table_exists() ) {
@@ -109,8 +111,8 @@ final class RedirectsMigrator {
 	/**
 	 * Migrate a single redirect row into one or more LW SEO redirects.
 	 *
-	 * @param array<string, mixed>                                      $row    Row from rank_math_redirections.
-	 * @param array{migrated: int, skipped: int, errors: array<string>} $result Result accumulator (by reference).
+	 * @param array<string, mixed>                                                                    $row    Row from rank_math_redirections.
+	 * @param array{migrated: int, skipped: int, skipped_already_present: int, errors: array<string>} $result Result accumulator (by reference).
 	 * @return void
 	 */
 	private function migrate_row( array $row, array &$result ): void {
@@ -131,11 +133,7 @@ final class RedirectsMigrator {
 				continue;
 			}
 
-			if ( $this->insert_redirect( $converted['pattern'], $dest, $type, $converted['regex'] ) ) {
-				++$result['migrated'];
-			} else {
-				++$result['skipped'];
-			}
+			RedirectWriter::tally( $this->writer->add( $converted['pattern'], $dest, $type, $converted['regex'] ), $result );
 		}
 	}
 
@@ -175,21 +173,5 @@ final class RedirectsMigrator {
 			'pattern' => $pattern,
 			'regex'   => $regex,
 		];
-	}
-
-	/**
-	 * Insert a single redirect via the LW SEO Manager (unless dry run).
-	 *
-	 * @param string $source      Source pattern.
-	 * @param string $destination Destination URL.
-	 * @param int    $type        HTTP code (301/302/307/410/451).
-	 * @param bool   $regex       Whether the source is a regex pattern.
-	 * @return bool True if inserted (or would have been, in dry run).
-	 */
-	private function insert_redirect( string $source, string $destination, int $type, bool $regex ): bool {
-		if ( $this->dry_run ) {
-			return ! empty( $source );
-		}
-		return false !== Manager::add( $source, $destination, $type, $regex );
 	}
 }

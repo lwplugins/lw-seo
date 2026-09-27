@@ -104,4 +104,68 @@ final class ManagerTest extends MonkeyTestCase {
 
 		$this->assertSame( '/new/5', $result );
 	}
+
+	/**
+	 * Sources that are the same stored source as the plain "/old".
+	 *
+	 * @return array<string, array{0: string}>
+	 */
+	public static function same_plain_source_provider(): array {
+		return [
+			'identical'      => [ '/old' ],
+			'trailing slash' => [ '/old/' ],
+			'no slash'       => [ 'old' ],
+			'full URL'       => [ 'https://example.test/old/' ],
+		];
+	}
+
+	/**
+	 * @dataProvider same_plain_source_provider
+	 *
+	 * @param string $source Source that normalizes to "/old".
+	 */
+	public function test_add_rejects_a_source_that_already_has_a_redirect( string $source ): void {
+		Manager::add( '/old', '/new' );
+
+		$this->assertFalse( Manager::add( $source, '/other' ) );
+		$this->assertCount( 1, $this->options[ Manager::OPTION_NAME ] );
+	}
+
+	public function test_add_rejects_a_duplicate_regex_source(): void {
+		Manager::add( '^/old/(\d+)$', '/new/$1', 301, true );
+
+		$this->assertFalse( Manager::add( ' ^/old/(\d+)$ ', '/other/$1', 302, true ) );
+	}
+
+	public function test_add_accepts_the_same_text_as_plain_and_as_regex_source(): void {
+		Manager::add( '/old', '/new' );
+
+		$this->assertSame( 1, Manager::add( '/old', '/other', 301, true ) );
+	}
+
+	public function test_update_rejects_the_source_of_another_redirect(): void {
+		Manager::add( '/a', '/new-a' );
+		Manager::add( '/b', '/new-b' );
+
+		$this->assertFalse( Manager::update( 1, '/a/', '/new-b' ) );
+		$this->assertSame( '/b', $this->options[ Manager::OPTION_NAME ][1]['source'] );
+	}
+
+	public function test_update_keeps_its_own_source(): void {
+		Manager::add( '/a', '/new-a' );
+
+		$this->assertTrue( Manager::update( 0, '/a', '/changed' ) );
+		$this->assertSame( '/changed', $this->options[ Manager::OPTION_NAME ][0]['destination'] );
+	}
+
+	public function test_import_skips_rows_whose_source_already_has_a_redirect(): void {
+		Manager::add( '/a', '/b' );
+
+		$result = Manager::import_csv( "/a,/c,301,false\n/d,/e,301,false\n/d/,/f,301,false\n" );
+
+		$this->assertSame(
+			[ 1, 2, [ 'Line 1: A redirect for this source already exists.', 'Line 3: A redirect for this source already exists.' ] ],
+			[ $result['imported'], $result['skipped'], $result['errors'] ]
+		);
+	}
 }

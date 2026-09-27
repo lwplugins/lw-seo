@@ -26,6 +26,11 @@ The old URL path that should redirect. Enter just the path without domain:
 /products/discontinued-item/
 ```
 
+Each source can have one redirect: only the first matching redirect is ever
+used. Adding a redirect for a source that already has one (`/old-page`,
+`/old-page/` and the full URL count as the same source) shows an error; edit
+the existing redirect instead. A regex source is compared as written.
+
 ### Destination URL
 
 The new URL to redirect to. Can be:
@@ -126,6 +131,8 @@ source,destination,type,regex
 1. Prepare a CSV file with columns: `source`, `destination`, `type`, `regex`
 2. Select the file
 3. Click **Import CSV**
+
+Rows whose source already has a redirect are skipped and listed in the result.
 
 **CSV Format:**
 

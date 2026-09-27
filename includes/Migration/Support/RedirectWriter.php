@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace LightweightPlugins\SEO\Migration\Support;
 
+use LightweightPlugins\SEO\Redirects\DuplicateSource;
 use LightweightPlugins\SEO\Redirects\Manager;
 use LightweightPlugins\SEO\Redirects\Validator;
 
@@ -41,7 +42,7 @@ final class RedirectWriter {
 	private bool $dry_run;
 
 	/**
-	 * Known sources ("r:" / "p:" + stored source), filled lazily.
+	 * Known source keys (DuplicateSource::key()), filled lazily.
 	 *
 	 * @var array<string, true>|null
 	 */
@@ -70,7 +71,7 @@ final class RedirectWriter {
 			return self::INVALID;
 		}
 
-		$key = $this->key( $source, $regex );
+		$key = DuplicateSource::key( $source, $regex );
 		if ( isset( $this->known()[ $key ] ) ) {
 			return self::PRESENT;
 		}
@@ -85,6 +86,25 @@ final class RedirectWriter {
 	}
 
 	/**
+	 * Count an outcome of add() in an importer's redirect result.
+	 *
+	 * @param string                                                                                  $outcome One of the result constants.
+	 * @param array{migrated: int, skipped: int, skipped_already_present: int, errors: array<string>} $result  Result (by reference).
+	 * @return void
+	 */
+	public static function tally( string $outcome, array &$result ): void {
+		if ( self::ADDED === $outcome ) {
+			++$result['migrated'];
+			return;
+		}
+
+		++$result['skipped'];
+		if ( self::PRESENT === $outcome ) {
+			++$result['skipped_already_present'];
+		}
+	}
+
+	/**
 	 * Sources LW SEO already redirects.
 	 *
 	 * @return array<string, true>
@@ -93,21 +113,10 @@ final class RedirectWriter {
 		if ( null === $this->known ) {
 			$this->known = [];
 			foreach ( Manager::get_all() as $redirect ) {
-				$this->known[ $this->key( $redirect['source'], $redirect['regex'] ) ] = true;
+				$this->known[ DuplicateSource::key( $redirect['source'], $redirect['regex'] ) ] = true;
 			}
 		}
 
 		return $this->known;
-	}
-
-	/**
-	 * Comparable key of a source, as Manager stores it.
-	 *
-	 * @param string $source Source.
-	 * @param bool   $regex  Whether it is a regex.
-	 * @return string
-	 */
-	private function key( string $source, bool $regex ): string {
-		return $regex ? 'r:' . trim( $source ) : 'p:' . Manager::normalize_source( trim( $source ) );
 	}
 }

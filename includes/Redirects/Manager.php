@@ -52,7 +52,8 @@ final class Manager {
 	}
 
 	/**
-	 * Add a new redirect.
+	 * Add a new redirect. A source that already has a redirect is rejected
+	 * (see DuplicateSource): only the first one could ever match.
 	 *
 	 * @param string $source      Source URL/path.
 	 * @param string $destination Destination URL (empty for 410/451).
@@ -75,7 +76,11 @@ final class Manager {
 			return false;
 		}
 
-		$redirects   = self::get_all();
+		$redirects = self::get_all();
+		if ( null !== DuplicateSource::find( $redirects, $source, $regex ) ) {
+			return false;
+		}
+
 		$redirects[] = [
 			'id'            => wp_generate_uuid4(),
 			'source'        => self::prepare_source( $source, $regex ),
@@ -101,7 +106,7 @@ final class Manager {
 	 * @param string $destination Destination URL.
 	 * @param int    $type        Redirect type.
 	 * @param bool   $regex       Whether source is a regex pattern.
-	 * @return bool Success.
+	 * @return bool Success; false also when another redirect has the source.
 	 */
 	public static function update( int $id, string $source, string $destination, int $type = 301, bool $regex = false ): bool {
 		$redirects = self::get_all();
@@ -110,7 +115,7 @@ final class Manager {
 			return false;
 		}
 
-		if ( empty( $source ) ) {
+		if ( empty( $source ) || null !== DuplicateSource::find( $redirects, $source, $regex, $id ) ) {
 			return false;
 		}
 
@@ -295,6 +300,9 @@ final class Manager {
 				$type        = isset( $parts[2] ) ? (int) $parts[2] : 301;
 				$regex       = self::csv_flag( (string) ( $parts[3] ?? '' ) );
 				$error       = Validator::error( $source, $destination, $type, $regex );
+				if ( null === $error && null !== DuplicateSource::find( self::get_all(), $source, $regex ) ) {
+					$error = DuplicateSource::message();
+				}
 
 				if ( null === $error && false !== self::add( $source, $destination, $type, $regex ) ) {
 					++$result['imported'];

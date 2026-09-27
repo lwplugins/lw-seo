@@ -10,9 +10,11 @@
 - The Import tab looks for data from all four supported plugins when it opens and shows a block only for the plugins it found data for.
 - An active SEOPress now counts as a conflicting SEO plugin, like Yoast SEO, Rank Math and All in One SEO: LW SEO skips its head tags while SEOPress is active. The notice on the settings screen names the active plugin and points to the Import tab.
 - `wp lw-seo migrate` also reports skipped posts, terms and redirects.
+- A source can have only one redirect: adding one for a source that already has a redirect (in the Redirects tab, the REST API, `wp lw-seo redirect add` or a CSV import) is rejected with a message instead of creating a second redirect that could never match.
 
 ### Fixed
 - Per-post, per-term and home descriptions that contain variables such as %%title%% (common after importing from Yoast or Rank Math) are now filled in when displayed instead of being shown literally.
+- Running an import again no longer duplicates redirects.
 
 ## [1.7.5] - 2026-09-27
 
