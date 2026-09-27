@@ -2,7 +2,7 @@
  * WordPress dependencies
  */
 import { Notice } from '@wordpress/components';
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
@@ -73,9 +73,13 @@ export default function App() {
 			<>
 				{ store.data.meta.conflict_plugin && (
 					<Notice status="warning" isDismissible={ false }>
-						{ __(
-							'Another SEO plugin (Yoast SEO, Rank Math or All in One SEO) is active. LW SEO skips its meta tags to avoid duplicates. Deactivate the other plugin to use LW SEO fully.',
-							'lw-seo'
+						{ sprintf(
+							/* translators: %s: name of the other active SEO plugin, e.g. Yoast SEO. */
+							__(
+								'Another SEO plugin (%s) is active. LW SEO skips its meta tags to avoid duplicates. You can import its data on the Import tab, then deactivate it to use LW SEO fully.',
+								'lw-seo'
+							),
+							store.data.meta.conflict_plugin
 						) }
 					</Notice>
 				) }

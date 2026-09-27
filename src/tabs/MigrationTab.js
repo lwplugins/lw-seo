@@ -6,14 +6,20 @@ import {
 	__experimentalConfirmDialog as ConfirmDialog,
 	Notice,
 } from '@wordpress/components';
-import { useState } from '@wordpress/element';
+import { useEffect, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
  */
 import Callout from '../components/Callout';
+import LoadError from '../components/LoadError';
 import Section from '../components/Section';
+import {
+	SkeletonRegion,
+	SkeletonRows,
+	SkeletonSection,
+} from '../components/skeleton';
 import StatusBadge from '../components/StatusBadge';
 import { api, errorMessage } from '../data/api';
 import { formatNumber } from '../data/format';
@@ -22,18 +28,22 @@ const PROVIDERS = [
 	{
 		id: 'rankmath',
 		name: 'RankMath SEO',
-		help: __(
-			'Detect RankMath SEO data in your database for migration.',
-			'lw-seo'
-		),
+		help: __( 'RankMath SEO data was found in your database.', 'lw-seo' ),
 	},
 	{
 		id: 'yoast',
 		name: 'Yoast SEO',
-		help: __(
-			'Detect Yoast SEO data in your database for migration.',
-			'lw-seo'
-		),
+		help: __( 'Yoast SEO data was found in your database.', 'lw-seo' ),
+	},
+	{
+		id: 'seopress',
+		name: 'SEOPress',
+		help: __( 'SEOPress data was found in your database.', 'lw-seo' ),
+	},
+	{
+		id: 'aioseo',
+		name: 'All in One SEO',
+		help: __( 'All in One SEO data was found in your database.', 'lw-seo' ),
 	},
 ];
 
@@ -68,8 +78,8 @@ function Warnings( { warnings = [] } ) {
 	) );
 }
 
-function Provider( { provider } ) {
-	const [ detect, setDetect ] = useState( null );
+function Provider( { provider, detected } ) {
+	const [ detect, setDetect ] = useState( detected );
 	const [ result, setResult ] = useState( null );
 	const [ busy, setBusy ] = useState( '' );
 	const [ error, setError ] = useState( '' );
@@ -106,7 +116,7 @@ function Provider( { provider } ) {
 						)
 					}
 				>
-					{ __( 'Detect Data', 'lw-seo' ) }
+					{ __( 'Detect Again', 'lw-seo' ) }
 				</Button>
 				{ detect?.found && (
 					<>
@@ -173,10 +183,14 @@ function Provider( { provider } ) {
 								n( detect.user_count ),
 							],
 							[
-								__( 'Redirects (DB table)', 'lw-seo' ),
+								__( 'Redirects', 'lw-seo' ),
 								n( detect.redirects_count ),
 							],
-						] }
+						].filter(
+							( [ label ] ) =>
+								detect.user_count > 0 ||
+								label !== __( 'Users with SEO meta', 'lw-seo' )
+						) }
 					/>
 					<Warnings warnings={ detect.warnings } />
 				</>
@@ -291,7 +305,78 @@ function Provider( { provider } ) {
 	);
 }
 
+function DetectSkeleton() {
+	return (
+		<SkeletonRegion label={ __( 'Looking for SEO plugin data', 'lw-seo' ) }>
+			<SkeletonSection>
+				<SkeletonRows count={ 4 } />
+			</SkeletonSection>
+		</SkeletonRegion>
+	);
+}
+
+/**
+ * Detection result of every provider; only providers with data are listed.
+ *
+ * @return {{found: Array|null, error: string, reload: () => void}} State.
+ */
+function useDetectedProviders() {
+	const [ found, setFound ] = useState( null );
+	const [ error, setError ] = useState( '' );
+	const [ attempt, setAttempt ] = useState( 0 );
+
+	useEffect( () => {
+		let active = true;
+		setFound( null );
+		setError( '' );
+		Promise.all(
+			PROVIDERS.map( ( provider ) =>
+				api
+					.detectMigration( provider.id )
+					.then( ( detected ) => ( { provider, detected } ) )
+			)
+		)
+			.then( ( results ) => {
+				if ( active ) {
+					setFound( results.filter( ( r ) => r.detected?.found ) );
+				}
+			} )
+			.catch( ( e ) => active && setError( errorMessage( e ) ) );
+		return () => {
+			active = false;
+		};
+	}, [ attempt ] );
+
+	return { found, error, reload: () => setAttempt( ( n ) => n + 1 ) };
+}
+
 export default function MigrationTab() {
+	const { found, error, reload } = useDetectedProviders();
+
+	let content;
+	if ( error ) {
+		content = <LoadError message={ error } onRetry={ reload } />;
+	} else if ( null === found ) {
+		content = <DetectSkeleton />;
+	} else if ( ! found.length ) {
+		content = (
+			<Callout>
+				{ __(
+					'No data from Yoast SEO, RankMath, SEOPress or All in One SEO was found in the database, so there is nothing to import.',
+					'lw-seo'
+				) }
+			</Callout>
+		);
+	} else {
+		content = found.map( ( { provider, detected } ) => (
+			<Provider
+				key={ provider.id }
+				provider={ provider }
+				detected={ detected }
+			/>
+		) );
+	}
+
 	return (
 		<>
 			<Callout>
@@ -300,9 +385,7 @@ export default function MigrationTab() {
 					'lw-seo'
 				) }
 			</Callout>
-			{ PROVIDERS.map( ( provider ) => (
-				<Provider key={ provider.id } provider={ provider } />
-			) ) }
+			{ content }
 		</>
 	);
 }

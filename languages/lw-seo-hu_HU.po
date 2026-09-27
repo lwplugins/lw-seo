@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LW SEO 1.6.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/lw-seo\n"
-"POT-Creation-Date: 2026-09-26T13:51:00+00:00\n"
+"POT-Creation-Date: 2026-09-27T08:16:39+00:00\n"
 "PO-Revision-Date: 2026-09-24 18:50+0000\n"
 "Last-Translator: Claude AI <ai@anthropic.com>\n"
 "Language-Team: LW Plugins <info@lwplugins.com>\n"
@@ -825,6 +825,40 @@ msgid "Override the global Content Signals settings for this content."
 msgstr ""
 "Felülírja a globális Tartalmi jelzések beállításait ennél a tartalomnál."
 
+#. translators: %d: number of posts.
+#: includes/Migration/AIOSEO/WarningCollector.php:62
+#, php-format
+msgid ""
+"%d post(s) use All in One SEO robots settings LW SEO has no per-post option "
+"for (noarchive, nosnippet, noimageindex, noodp, notranslate). Only noindex "
+"and nofollow are imported."
+msgstr "%d bejegyzés olyan All in One SEO robots beállítást használ, amihez az LW SEO-ban nincs bejegyzésenkénti opció (noarchive, nosnippet, noimageindex, noodp, notranslate). Csak a noindex és a nofollow kerül át."
+
+#. translators: %d: number of posts.
+#: includes/Migration/AIOSEO/WarningCollector.php:68
+#, php-format
+msgid ""
+"%d post(s) have All in One SEO focus keyphrases. LW SEO has no content "
+"analysis, so they are not imported."
+msgstr "%d bejegyzésnél van All in One SEO fókusz kulcskifejezés. Az LW SEO nem végez tartalomelemzést, ezért ezek nem kerülnek át."
+
+#. translators: %d: number of posts.
+#: includes/Migration/AIOSEO/WarningCollector.php:74
+#, php-format
+msgid ""
+"%d post(s) have schema added in All in One SEO. LW SEO generates schema "
+"automatically and does not import per-post schema."
+msgstr "%d bejegyzéshez adtál hozzá schemát az All in One SEO-ban. Az LW SEO automatikusan állítja elő a schemát, a bejegyzésenkénti schemát nem veszi át."
+
+#. translators: %s: comma-separated table names.
+#: includes/Migration/AIOSEO/WarningCollector.php:119
+#, php-format
+msgid ""
+"All in One SEO Pro tables were found (%s). Term SEO and redirects from the "
+"Pro version are not imported; re-create them in LW SEO (term fields, "
+"Redirects tab)."
+msgstr "All in One SEO Pro táblákat találtunk (%s). A Pro verzió kifejezés-SEO adatai és átirányításai nem kerülnek át; hozd létre őket újra az LW SEO-ban (kifejezés mezők, Átirányítások fül)."
+
 #. translators: %s: comma-separated list of RankMath WooCommerce permalink features without an LW SEO equivalent enabled.
 #: includes/Migration/RankMath/WarningCollector.php:77
 #, php-format
@@ -862,6 +896,30 @@ msgid ""
 msgstr ""
 "A következő RankMath meta kulcsoknak nincs LW SEO megfelelője, és nem "
 "lesznek migrálva: %s"
+
+#. translators: %s: comma-separated list of SEOPress meta keys with counts.
+#: includes/Migration/SEOPress/WarningCollector.php:72
+#, php-format
+msgid ""
+"The following SEOPress meta keys have no LW SEO equivalent and will not be "
+"migrated: %s"
+msgstr "Ezeknek a SEOPress meta kulcsoknak nincs LW SEO megfelelője, ezért nem kerülnek át: %s"
+
+#. translators: %d: number of term settings.
+#: includes/Migration/SEOPress/WarningCollector.php:94
+#, php-format
+msgid ""
+"%d SEOPress term setting(s) (canonical URL or nofollow) have no LW SEO term "
+"field and will not be migrated."
+msgstr "%d SEOPress kifejezés-beállításnak (kanonikus URL vagy nofollow) nincs LW SEO kifejezés mezője, ezért nem kerül át."
+
+#. translators: 1: source SEO plugin name, 2: comma-separated list of template variables with occurrence counts.
+#: includes/Migration/Support/VariableLog.php:66
+#, php-format
+msgid ""
+"These %1$s template variables have no LW SEO equivalent and were left out of "
+"the imported titles and descriptions: %2$s"
+msgstr "Ezeknek a(z) %1$s sablonváltozóknak nincs LW SEO megfelelője, ezért kimaradtak az átvett címekből és leírásokból: %2$s"
 
 #. translators: %d: number of posts with custom Yoast schema settings.
 #: includes/Migration/Yoast/WarningCollector.php:55
@@ -1012,7 +1070,7 @@ msgstr "Oldalszám"
 msgid "Page X of Y"
 msgstr "X/Y. oldal"
 
-#: includes/Rest/Admin/MigrationController.php:92
+#: includes/Rest/Admin/MigrationController.php:96
 msgid "Unknown migration source."
 msgstr "Ismeretlen migrációs forrás."
 
@@ -1032,75 +1090,72 @@ msgstr "Átirányítás nem található."
 msgid "Other"
 msgstr "Egyéb"
 
-#: includes/RestApi.php:62 includes/RestApi.php:125 includes/RestApi.php:144
-msgid "Post ID"
-msgstr "Bejegyzés ID"
-
-#: includes/RestApi.php:81
-msgid "Term ID"
-msgstr "Kifejezés ID"
-
-#: includes/RestApi.php:87
-msgid "Taxonomy name"
-msgstr "Taxonómia neve"
-
-#: includes/RestApi.php:106
-msgid "Author ID"
-msgstr "Szerző ID"
-
-#: includes/RestApi.php:164 includes/RestApi.php:243 includes/RestApi.php:275
+#: includes/Rest/PublicObjectAccess.php:130
 #: includes/SiteManager/SeoService.php:146
 #: includes/SiteManager/SeoService.php:207
 msgid "Post not found."
 msgstr "A bejegyzés nem található."
 
-#: includes/RestApi.php:173 includes/RestApi.php:251 includes/RestApi.php:283
-msgid "Post is not accessible."
-msgstr "A bejegyzés nem érhető el."
-
-#: includes/RestApi.php:197 includes/SiteManager/SeoService.php:176
+#: includes/Rest/PublicObjectAccess.php:139
+#: includes/SiteManager/SeoService.php:176
 #: includes/SiteManager/SeoService.php:227
 msgid "Term not found."
 msgstr "A kifejezés nem található."
 
-#: includes/RestApi.php:220
+#: includes/Rest/PublicObjectAccess.php:148
 msgid "Author not found."
 msgstr "A szerző nem található."
+
+#: includes/RestApi.php:63 includes/RestApi.php:126 includes/RestApi.php:145
+msgid "Post ID"
+msgstr "Bejegyzés ID"
+
+#: includes/RestApi.php:82
+msgid "Term ID"
+msgstr "Kifejezés ID"
+
+#: includes/RestApi.php:88
+msgid "Taxonomy name"
+msgstr "Taxonómia neve"
+
+#: includes/RestApi.php:107
+msgid "Author ID"
+msgstr "Szerző ID"
 
 #: includes/SiteManager/Integration.php:39
 msgid "Search engine optimization abilities"
 msgstr "Keresőoptimalizálási képességek"
 
-#: includes/SiteManager/SeoAbilities.php:40
+#: includes/SiteManager/SeoAbilities.php:51
 msgid "Get SEO Meta"
 msgstr "SEO Meta lekérése"
 
-#: includes/SiteManager/SeoAbilities.php:41
+#: includes/SiteManager/SeoAbilities.php:52
 msgid ""
 "Get SEO metadata for a post or term (title, description, social, signals)."
 msgstr ""
 "SEO metaadatok lekérése egy bejegyzéshez vagy kifejezéshez (cím, leírás, "
 "social, jelzések)."
 
-#: includes/SiteManager/SeoAbilities.php:51
-#: includes/SiteManager/SeoAbilities.php:84
+#: includes/SiteManager/SeoAbilities.php:62
+#: includes/SiteManager/SeoAbilities.php:95
 msgid "Post ID. Provide post_id or term_id."
 msgstr "Bejegyzés ID. Adj meg post_id-t vagy term_id-t."
 
-#: includes/SiteManager/SeoAbilities.php:55
-#: includes/SiteManager/SeoAbilities.php:88
+#: includes/SiteManager/SeoAbilities.php:66
+#: includes/SiteManager/SeoAbilities.php:99
 msgid "Term ID. Provide post_id or term_id."
 msgstr "Kifejezés ID. Adj meg post_id-t vagy term_id-t."
 
-#: includes/SiteManager/SeoAbilities.php:73
+#: includes/SiteManager/SeoAbilities.php:84
 msgid "Set SEO Meta"
 msgstr "SEO Meta beállítása"
 
-#: includes/SiteManager/SeoAbilities.php:74
+#: includes/SiteManager/SeoAbilities.php:85
 msgid "Set SEO metadata for a post or term."
 msgstr "SEO metaadatok beállítása egy bejegyzéshez vagy kifejezéshez."
 
-#: includes/SiteManager/SeoAbilities.php:92
+#: includes/SiteManager/SeoAbilities.php:103
 msgid ""
 "SEO fields: title, description, noindex, og_title, og_description, og_image, "
 "ai_train, ai_input, search, markdown_content. markdown_content requires the "
@@ -1112,29 +1167,29 @@ msgstr ""
 "unfiltered_html jogosultság kell; enélkül a mező változatlan marad, és a "
 "\"skipped\" listában lesz feltüntetve."
 
-#: includes/SiteManager/SeoAbilities.php:126
+#: includes/SiteManager/SeoAbilities.php:137
 msgid "Get Content Signals"
 msgstr "Tartalmi jelzések lekérése"
 
-#: includes/SiteManager/SeoAbilities.php:127
+#: includes/SiteManager/SeoAbilities.php:138
 msgid "Get resolved AI content signals for a post or term."
 msgstr ""
 "Feloldott AI tartalomjelzések lekérése egy bejegyzéshez vagy kifejezéshez."
 
-#: includes/SiteManager/SeoAbilities.php:161
+#: includes/SiteManager/SeoAbilities.php:172
 msgid "Get Markdown"
 msgstr "Markdown lekérése"
 
-#: includes/SiteManager/SeoAbilities.php:162
+#: includes/SiteManager/SeoAbilities.php:173
 msgid "Get the markdown representation of a post, product, or term."
 msgstr ""
 "Egy bejegyzés, termék vagy kifejezés markdown reprezentációjának lekérése."
 
-#: includes/SiteManager/SeoAbilities.php:197
+#: includes/SiteManager/SeoAbilities.php:208
 msgid "Get SEO Options"
 msgstr "SEO opciók lekérése"
 
-#: includes/SiteManager/SeoAbilities.php:198
+#: includes/SiteManager/SeoAbilities.php:209
 msgid "Get global LW SEO settings."
 msgstr "Globális LW SEO beállítások lekérése."
 
@@ -1573,16 +1628,24 @@ msgid "Close"
 msgstr "Zárás"
 
 #: build/index.js:1
-msgid "Detect RankMath SEO data in your database for migration."
-msgstr "RankMath SEO adatok észlelése az adatbázisodban a migrációhoz."
+msgid "RankMath SEO data was found in your database."
+msgstr "RankMath SEO adatokat találtunk az adatbázisban."
 
 #: build/index.js:1
-msgid "Detect Yoast SEO data in your database for migration."
-msgstr "Yoast SEO adatok felismerése az adatbázisodban migrációhoz."
+msgid "Yoast SEO data was found in your database."
+msgstr "Yoast SEO adatokat találtunk az adatbázisban."
 
 #: build/index.js:1
-msgid "Detect Data"
-msgstr "Adatok észlelése"
+msgid "SEOPress data was found in your database."
+msgstr "SEOPress adatokat találtunk az adatbázisban."
+
+#: build/index.js:1
+msgid "All in One SEO data was found in your database."
+msgstr "All in One SEO adatokat találtunk az adatbázisban."
+
+#: build/index.js:1
+msgid "Detect Again"
+msgstr "Újraellenőrzés"
 
 #: build/index.js:1
 msgid "Preview Migration"
@@ -1619,10 +1682,6 @@ msgstr "Kifejezések SEO meta adatokkal"
 #: build/index.js:1
 msgid "Users with SEO meta"
 msgstr "Felhasználók SEO meta adatokkal"
-
-#: build/index.js:1
-msgid "Redirects (DB table)"
-msgstr "Átirányítások (DB tábla)"
 
 #: build/index.js:1
 msgid "Preview Results (Dry Run)"
@@ -1691,6 +1750,10 @@ msgid ""
 msgstr ""
 "Biztos, hogy lefuttatod a migrációt? A meglévő LW SEO adatok nem lesznek "
 "felülírva."
+
+#: build/index.js:1
+msgid "Looking for SEO plugin data"
+msgstr "SEO bővítmény adatok keresése"
 
 #: build/index.js:1
 msgid "Import / Export"
@@ -2665,21 +2728,25 @@ msgstr "WLW manifest"
 
 #: build/index.js:5
 msgid ""
+"No data from Yoast SEO, RankMath, SEOPress or All in One SEO was found in "
+"the database, so there is nothing to import."
+msgstr "Nem találtunk Yoast SEO, RankMath, SEOPress vagy All in One SEO adatot az adatbázisban, így nincs mit átvenni."
+
+#: build/index.js:5
+msgid ""
 "Import SEO data from other SEO plugins. Existing LW SEO data will not be "
 "overwritten."
 msgstr ""
 "SEO adatok importálása más SEO bővítményekből. A meglévő LW SEO adatok nem "
 "lesznek felülírva."
 
-#: build/index.js:5
+#. translators: %s: name of the other active SEO plugin, e.g. Yoast SEO.
+#: build/index.js:6
 msgid ""
-"Another SEO plugin (Yoast SEO, Rank Math or All in One SEO) is active. LW "
-"SEO skips its meta tags to avoid duplicates. Deactivate the other plugin to "
+"Another SEO plugin (%s) is active. LW SEO skips its meta tags to avoid "
+"duplicates. You can import its data on the Import tab, then deactivate it to "
 "use LW SEO fully."
-msgstr ""
-"Egy másik SEO bővítmény (Yoast SEO, Rank Math vagy All in One SEO) aktív. Az "
-"LW SEO kihagyja a meta tagjeit, hogy elkerülje a duplikációt. Kapcsold ki a "
-"másik bővítményt az LW SEO teljes használatához."
+msgstr "Egy másik SEO bővítmény (%s) aktív. Az LW SEO kihagyja a meta tagjeit, hogy elkerülje a duplikációt. Az adatait átveheted az Importálás fülön, utána kapcsold ki az LW SEO teljes használatához."
 
 #: build/term.js:2
 msgid "noindex this archive"

@@ -1,0 +1,222 @@
+{
+	"_source": "SEOPress 10.2 + SEOPress PRO 10.2.1, data created through SEOPress REST routes / term save handler on a WordPress 7.1.2 test site, 2026-09-27; home URL replaced by https://example.test",
+	"posts": {
+		"seo-import-test-post-a": {
+			"post_type": "post",
+			"meta": {
+				"_seopress_analysis_target_kw": "import test,seopress",
+				"_seopress_robots_canonical": "https://example.test/seo-import-canonical-a/",
+				"_seopress_robots_follow": "yes",
+				"_seopress_robots_index": "yes",
+				"_seopress_robots_primary_cat": "35",
+				"_seopress_robots_snippet": "yes",
+				"_seopress_social_fb_desc": "FB description A",
+				"_seopress_social_fb_img": "https://example.test/wp-content/uploads/2026/09/0772b10b61c54a83ca1d77f32fa5779f.webp",
+				"_seopress_social_fb_title": "FB title A",
+				"_seopress_social_twitter_title": "Twitter title A (not used, FB wins)",
+				"_seopress_titles_desc": "SEOPress description of post A (%%sitetitle%%)",
+				"_seopress_titles_title": "Custom A %%post_title%% %%sep%% %%sitetitle%%"
+			}
+		},
+		"seo-import-test-post-b": {
+			"post_type": "post",
+			"meta": {
+				"_lw_seo_title": "LW SEO title kept on B",
+				"_seopress_social_twitter_desc": "Twitter description B",
+				"_seopress_social_twitter_img": "https://example.test/wp-content/uploads/2026/09/0772b10b61c54a83ca1d77f32fa5779f.webp",
+				"_seopress_social_twitter_title": "Twitter title B",
+				"_seopress_titles_desc": "SEOPress description of post B",
+				"_seopress_titles_title": "SEOPress title B (LW keeps its own)"
+			}
+		},
+		"seo-import-test-page-c": {
+			"post_type": "page",
+			"meta": {
+				"_seopress_robots_follow": "yes",
+				"_seopress_robots_primary_cat": "none",
+				"_seopress_titles_desc": "Page C description %%currentyear%%",
+				"_seopress_titles_title": "Page C %%sep%% %%wc_single_price%% %%_cf_color%% %%sitetitle%%"
+			}
+		},
+		"seo-import-test-post-d": {
+			"post_type": "post",
+			"meta": {
+				"_seopress_redirections_enabled": "yes",
+				"_seopress_redirections_logged_status": "both",
+				"_seopress_redirections_type": "301",
+				"_seopress_redirections_value": "https://example.test/seo-import-test-post-a/"
+			}
+		},
+		"seo-import-test-product-e": {
+			"post_type": "product",
+			"meta": {
+				"_seopress_robots_primary_cat": "37",
+				"_seopress_titles_title": "Product E %%sep%% %%sitetitle%%"
+			}
+		}
+	},
+	"terms": {
+		"seo-import-test-category": {
+			"taxonomy": "category",
+			"meta": {
+				"_seopress_robots_canonical": "https://example.test/seo-import-canonical-cat/",
+				"_seopress_robots_follow": "yes",
+				"_seopress_robots_index": "yes",
+				"_seopress_social_fb_img": "https://example.test/wp-content/uploads/2026/09/0772b10b61c54a83ca1d77f32fa5779f.webp",
+				"_seopress_social_fb_title": "FB category title",
+				"_seopress_titles_desc": "SEOPress category description",
+				"_seopress_titles_title": "Category %%term_title%% %%sep%% %%sitetitle%%"
+			}
+		},
+		"seo-import-test-tag": {
+			"taxonomy": "post_tag",
+			"meta": {
+				"_seopress_social_twitter_desc": "Twitter tag description",
+				"_seopress_social_twitter_title": "Twitter tag title"
+			}
+		},
+		"seo-import-test-product-cat": {
+			"taxonomy": "product_cat",
+			"meta": []
+		}
+	},
+	"redirects": [
+		{
+			"post_title": "seo-import-test-old",
+			"post_status": "publish",
+			"meta": {
+				"_seopress_redirections_enabled": "yes",
+				"_seopress_redirections_logged_status": "both",
+				"_seopress_redirections_param": "exact_match",
+				"_seopress_redirections_type": "301",
+				"_seopress_redirections_value": "https://example.test/seo-import-test-post-a/"
+			}
+		},
+		{
+			"post_title": "^/seo-import-test-regex/(.*)$",
+			"post_status": "publish",
+			"meta": {
+				"_seopress_redirections_enabled": "yes",
+				"_seopress_redirections_enabled_regex": "yes",
+				"_seopress_redirections_logged_status": "both",
+				"_seopress_redirections_param": "exact_match",
+				"_seopress_redirections_type": "302",
+				"_seopress_redirections_value": "https://example.test/seo-import-test-post-b/"
+			}
+		},
+		{
+			"post_title": "seo-import-test-gone",
+			"post_status": "publish",
+			"meta": {
+				"_seopress_redirections_enabled": "yes",
+				"_seopress_redirections_logged_status": "both",
+				"_seopress_redirections_param": "exact_match",
+				"_seopress_redirections_type": "410"
+			}
+		},
+		{
+			"post_title": "seo-import-test-disabled",
+			"post_status": "publish",
+			"meta": {
+				"_seopress_redirections_logged_status": "both",
+				"_seopress_redirections_param": "exact_match",
+				"_seopress_redirections_type": "301",
+				"_seopress_redirections_value": "https://example.test/"
+			}
+		},
+		{
+			"post_title": "seo-import-test-members",
+			"post_status": "publish",
+			"meta": {
+				"_seopress_redirections_enabled": "yes",
+				"_seopress_redirections_logged_status": "only_logged_in",
+				"_seopress_redirections_param": "exact_match",
+				"_seopress_redirections_type": "307",
+				"_seopress_redirections_value": "https://example.test/"
+			}
+		}
+	],
+	"options": {
+		"seopress_titles_option_name": {
+			"seopress_titles_home_site_title": "%%sitetitle%%",
+			"seopress_titles_home_site_desc": "Home description from SEOPress %%sep%% %%sitetitle%%",
+			"seopress_titles_sep": "|",
+			"seopress_titles_single_titles": {
+				"post": {
+					"title": "%%post_title%% %%sep%% %%sitetitle%% %%wc_sku%%",
+					"description": "%%post_excerpt%%"
+				},
+				"page": {
+					"title": "%%post_title%% %%sep%% %%sitetitle%%",
+					"description": "%%post_excerpt%%",
+					"noindex": "1"
+				},
+				"product": {
+					"title": "%%post_title%% %%sep%% %%sitetitle%%",
+					"description": "%%post_excerpt%%"
+				}
+			},
+			"seopress_titles_tax_titles": {
+				"category": {
+					"title": "%%_category_title%% %%current_pagination%% %%sep%% %%sitetitle%%",
+					"description": "%%_category_description%%"
+				},
+				"post_tag": {
+					"title": "%%tag_title%% %%current_pagination%% %%sep%% %%sitetitle%%",
+					"description": "%%tag_description%%",
+					"noindex": "1"
+				},
+				"product_cat": {
+					"title": "%%term_title%% %%current_pagination%% %%sep%% %%sitetitle%%",
+					"description": "%%term_description%%"
+				}
+			},
+			"seopress_titles_archive_titles": {
+				"product": {
+					"title": "%%cpt_plural%% %%current_pagination%% %%sep%%"
+				}
+			},
+			"seopress_titles_archives_author_title": "%%post_author%% %%sep%% %%sitetitle%%",
+			"seopress_titles_archives_author_noindex": "",
+			"seopress_titles_archives_date_title": "%%archive_date%% %%sep%% %%sitetitle%%",
+			"seopress_titles_archives_date_noindex": "1",
+			"seopress_titles_archives_search_title": "Search %%search_keywords%% %%sep%% %%sitetitle%%",
+			"seopress_titles_archives_search_title_noindex": "1",
+			"seopress_titles_archives_404_title": "Not found %%sep%% %%sitetitle%%",
+			"seopress_titles_paged_rel": "1",
+			"seopress_titles_attachments_noindex": "1"
+		},
+		"seopress_social_option_name": {
+			"seopress_social_facebook_og": "1",
+			"seopress_social_twitter_card": "1",
+			"seopress_social_knowledge_type": "Organization",
+			"seopress_social_knowledge_name": "Croco Demo Kft.",
+			"seopress_social_knowledge_img": "https://example.test/wp-content/uploads/2026/09/0772b10b61c54a83ca1d77f32fa5779f.webp",
+			"seopress_social_accounts_facebook": "https://www.facebook.com/crocodemo",
+			"seopress_social_accounts_twitter": "@crocodemo",
+			"seopress_social_accounts_linkedin": "https://www.linkedin.com/company/crocodemo",
+			"seopress_social_facebook_img": "https://example.test/wp-content/uploads/2026/09/0772b10b61c54a83ca1d77f32fa5779f.webp",
+			"seopress_social_twitter_card_img_size": "large"
+		},
+		"seopress_xml_sitemap_option_name": {
+			"seopress_xml_sitemap_general_enable": "1",
+			"seopress_xml_sitemap_img_enable": "1",
+			"seopress_xml_sitemap_post_types_list": {
+				"post": {
+					"include": "1"
+				},
+				"page": {
+					"include": "1"
+				},
+				"product": {
+					"include": "1"
+				}
+			},
+			"seopress_xml_sitemap_taxonomies_list": {
+				"category": {
+					"include": "1"
+				}
+			}
+		}
+	}
+}

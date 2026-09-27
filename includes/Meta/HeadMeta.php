@@ -102,6 +102,10 @@ final class HeadMeta {
 			return 'All in One SEO';
 		}
 
+		if ( defined( 'SEOPRESS_VERSION' ) ) {
+			return 'SEOPress';
+		}
+
 		return '';
 	}
 }

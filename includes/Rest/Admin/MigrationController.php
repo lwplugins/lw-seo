@@ -9,8 +9,10 @@ declare(strict_types=1);
 
 namespace LightweightPlugins\SEO\Rest\Admin;
 
+use LightweightPlugins\SEO\Migration\AIOSEO\Migrator as AioseoMigrator;
 use LightweightPlugins\SEO\Migration\MigratorInterface;
 use LightweightPlugins\SEO\Migration\RankMath\Migrator as RankMathMigrator;
+use LightweightPlugins\SEO\Migration\SEOPress\Migrator as SeopressMigrator;
 use LightweightPlugins\SEO\Migration\Yoast\Migrator as YoastMigrator;
 use WP_Error;
 use WP_REST_Request;
@@ -28,6 +30,8 @@ final class MigrationController {
 	private const PROVIDERS = [
 		'rankmath' => RankMathMigrator::class,
 		'yoast'    => YoastMigrator::class,
+		'seopress' => SeopressMigrator::class,
+		'aioseo'   => AioseoMigrator::class,
 	];
 
 	/**
