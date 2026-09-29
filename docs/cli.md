@@ -215,6 +215,20 @@ list data with no LW SEO equivalent. Existing LW SEO values are never
 overwritten, and a second run imports nothing. Field mappings:
 [Importing from Other SEO Plugins](migration.md).
 
+## `wp lw-seo bricks`
+
+```
+wp lw-seo bricks import [--dry-run]
+```
+
+Copies the SEO settings saved in Bricks (Page settings → SEO and Social
+media: document title, meta description, noindex/nofollow, social title,
+description and image) into the LW SEO fields that are still empty. Existing
+LW SEO values are never overwritten. Updating LW SEO does not run it: saves
+made from 1.8.1 on are synced automatically, and settings saved in Bricks
+before are copied only when you run this command. `--dry-run` shows how many
+fields it would fill.
+
 ## Other 1.6.0 option keys worth toggling
 
 Beyond the tables above, these are the other 1.6.0 options most useful

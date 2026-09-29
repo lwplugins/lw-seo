@@ -16,7 +16,9 @@ use LightweightPlugins\SEO\Options;
  * Bricks prints its own meta description/robots, document title and Open
  * Graph tags in `wp_head`, which duplicates ours (an empty og:title on
  * pages without Bricks sharing settings). Its filters turn them off while
- * LW SEO renders the head; the filters are inert on other themes.
+ * LW SEO renders the head; the filters are inert on other themes. The
+ * values saved in Bricks are not lost: BricksSeoSync copies them into the
+ * LW SEO fields (and LW SEO saves back into Bricks).
  */
 final class Bricks {
 
@@ -28,6 +30,7 @@ final class Bricks {
 	public function register(): void {
 		add_filter( 'bricks/frontend/disable_seo', [ $this, 'disable_seo' ] );
 		add_filter( 'bricks/frontend/disable_opengraph', [ $this, 'disable_opengraph' ] );
+		( new BricksSeoSync() )->register();
 	}
 
 	/**
