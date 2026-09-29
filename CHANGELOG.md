@@ -1,5 +1,10 @@
 # Changelog
 
+## [1.8.2] - 2026-09-29
+
+### Fixed
+- The product category sitemap on WooCommerce shops left out most categories (every category with term meta but no WooCommerce sort order), because WooCommerce's menu-order sorting clashed with LW SEO's noindex filter. Taxonomy sitemaps now list terms by ID.
+
 ## [1.8.1] - 2026-09-29
 
 ### Added

@@ -3,7 +3,7 @@ Contributors: lwplugins
 Tags: seo, sitemap, schema, opengraph, breadcrumbs
 Requires at least: 6.6
 Tested up to: 7.1
-Stable tag: 1.8.1
+Stable tag: 1.8.2
 Requires PHP: 8.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -140,6 +140,9 @@ Your sitemap is available at `yoursite.com/sitemap.xml`
 6. Settings page - Advanced tab
 
 == Changelog ==
+
+= 1.8.2 =
+* Fix: the product category sitemap on WooCommerce shops left out most categories (every category with term meta but no WooCommerce sort order), because WooCommerce's menu-order sorting clashed with LW SEO's noindex filter. Taxonomy sitemaps now list terms by ID.
 
 = 1.8.1 =
 * New: SEO settings saved in Bricks (Page settings → SEO and Social media) are kept in sync with the LW SEO fields both ways: the document title, meta description, noindex/nofollow, and the social title, description and image. Saving in Bricks copies the values you changed into LW SEO, and saving in LW SEO copies them into Bricks on pages edited with Bricks. Cleared text is never copied, so neither side loses a value because the other one is empty; the noindex/nofollow switches follow both on and off. Bricks tags with an LW SEO counterpart are converted ({post_title} ↔ %%title%%, {site_title} ↔ %%sitename%% and so on); text with other tags is left alone.
