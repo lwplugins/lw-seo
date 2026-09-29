@@ -82,6 +82,11 @@ final class TaxonomyProvider implements ProviderInterface {
 				'hide_empty' => true,
 				'number'     => self::PER_PAGE,
 				'offset'     => ( $page - 1 ) * self::PER_PAGE,
+				// Explicit order: with the default one WooCommerce sorts product
+				// taxonomies by `order` meta, and its termmeta join combined with
+				// the noindex meta_query drops terms without that meta.
+				'orderby'    => 'term_id',
+				'order'      => 'ASC',
 				'meta_query' => Eligibility::noindex_meta_query(),
 			]
 		);
