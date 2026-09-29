@@ -3,7 +3,7 @@ Contributors: lwplugins
 Tags: seo, sitemap, schema, opengraph, breadcrumbs
 Requires at least: 6.6
 Tested up to: 7.1
-Stable tag: 1.8.0
+Stable tag: 1.8.1
 Requires PHP: 8.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -141,16 +141,21 @@ Your sitemap is available at `yoursite.com/sitemap.xml`
 
 == Changelog ==
 
+= 1.8.1 =
+* New: SEO settings saved in Bricks (Page settings → SEO and Social media) are kept in sync with the LW SEO fields both ways: the document title, meta description, noindex/nofollow, and the social title, description and image. Saving in Bricks copies the values you changed into LW SEO, and saving in LW SEO copies them into Bricks on pages edited with Bricks. Cleared text is never copied, so neither side loses a value because the other one is empty; the noindex/nofollow switches follow both on and off. Bricks tags with an LW SEO counterpart are converted ({post_title} ↔ %%title%%, {site_title} ↔ %%sitename%% and so on); text with other tags is left alone.
+* New: `wp lw-seo bricks import [--dry-run]` copies SEO settings saved in Bricks before into the LW SEO fields that are still empty. It only runs when you run it: updating does not change existing pages.
+* Fix: SEO titles and descriptions entered in Bricks' page settings were ignored since 1.7.0 (LW SEO turns Bricks' own SEO tags off to avoid duplicates), so those pages lost their title, description and noindex.
+* Change: a source can have only one redirect: adding one for a source that already has a redirect (in the Redirects tab, the REST API, `wp lw-seo redirect add` or a CSV import) is rejected with a message instead of creating a second redirect that could never match.
+* Fix: per-post, per-term and home descriptions that contain variables such as %%title%% (common after importing from Yoast or Rank Math) are now filled in when displayed instead of being shown literally.
+* Fix: running an import again no longer duplicates redirects.
+* Fix: Yoast regex redirects that start with ^ (for example ^blog/(\d+)$) now match after import; the importer adds the leading slash LW SEO's paths have.
+
 = 1.8.0 =
 * New: import SEO data from SEOPress and All in One SEO (post and term titles, descriptions, canonical URLs, robots, social data, title templates and more), from the Import tab or `wp lw-seo migrate seopress|aioseo` (`--dry-run`, `--yes`). SEOPress: post and term SEO titles and descriptions, post canonical URLs, noindex (posts and terms) and nofollow (posts), Facebook/Twitter titles, descriptions and images, primary categories (product categories for products), per-post and per-term redirects and SEOPress PRO redirects (including regex, 410 and 451), the separator, home title and description, post/page/product, category/tag, product archive, author, date, search and 404 title templates, per-type noindex, Open Graph and Twitter Card on/off, card size, default social image, social profiles (the Twitter handle becomes an X profile URL), knowledge graph type, name and logo, and sitemap settings. All in One SEO: post SEO titles and descriptions, canonical URLs, noindex/nofollow (when the post does not use the default robots settings), Open Graph and Twitter titles, descriptions and custom images, primary terms, the separator, home title and description, post/page/product, category/tag, product archive, author, date and search title templates, per-type noindex, Open Graph and Twitter on/off, Twitter card type, default social image, social profiles, knowledge graph name and logo, and sitemap settings. All in One SEO's data is read from its own tables, so it works while All in One SEO is inactive.
 * New: Template variables and smart tags are converted to LW SEO variables (`%%sitetitle%%` and `#site_title` become `%%sitename%%`, `#separator_sa` becomes `%%sep%%`, and so on). In a post's or term's own SEO title, description and social text, and in the home meta description, the SEOPress and All in One SEO importers fill in the variables with that post's or term's values at import time, so the saved text is final in the editor too. Variables LW SEO has no equivalent for are removed and listed in the import warnings, together with data that has no LW SEO field (keyphrases, extra robots flags, per-post schema).
 * Change: The Import tab looks for data from all four supported plugins when it opens and shows a block only for the plugins it found data for.
 * Change: An active SEOPress now counts as a conflicting SEO plugin, like Yoast SEO, Rank Math and All in One SEO: LW SEO skips its head tags while SEOPress is active. The notice on the settings screen names the active plugin and points to the Import tab.
 * Change: `wp lw-seo migrate` also reports skipped posts, terms and redirects.
-* Change: a source can have only one redirect: adding one for a source that already has a redirect (in the Redirects tab, the REST API, `wp lw-seo redirect add` or a CSV import) is rejected with a message instead of creating a second redirect that could never match.
-* Fix: per-post, per-term and home descriptions that contain variables such as %%title%% (common after importing from Yoast or Rank Math) are now filled in when displayed instead of being shown literally.
-* Fix: running an import again no longer duplicates redirects.
-* Fix: Yoast regex redirects that start with ^ (for example ^blog/(\d+)$) now match after import; the importer adds the leading slash LW SEO's paths have.
 
 = 1.7.5 =
 * Security: the public LW SEO REST endpoints no longer return SEO data for posts of non-public post types (for example LW LMS courses and lessons), password-protected posts or terms of private taxonomies to visitors who may not read them.
@@ -491,6 +496,9 @@ Your sitemap is available at `yoursite.com/sitemap.xml`
 * llms.txt generation
 
 == Upgrade Notice ==
+
+= 1.8.1 =
+SEO settings saved in Bricks are synced with LW SEO both ways from now on. Settings saved in Bricks before are not copied on update; run `wp lw-seo bricks import` to copy them into the empty LW SEO fields.
 
 = 1.8.0 =
 New SEOPress and All in One SEO importers (Import tab or WP-CLI). SEOPress is now detected as a conflicting SEO plugin: while it is active, LW SEO does not output its head tags.

@@ -1,5 +1,20 @@
 # Changelog
 
+## [1.8.1] - 2026-09-29
+
+### Added
+- SEO settings saved in Bricks (Page settings → SEO and Social media) are kept in sync with the LW SEO fields both ways: the document title, meta description, noindex/nofollow, and the social title, description and image. Saving in Bricks copies the values you changed into LW SEO, and saving in LW SEO copies them into Bricks on pages edited with Bricks. Cleared text is never copied, so neither side loses a value because the other one is empty; the noindex/nofollow switches follow both on and off. Bricks tags with an LW SEO counterpart are converted ({post_title} ↔ %%title%%, {site_title} ↔ %%sitename%% and so on); text with other tags is left alone.
+- `wp lw-seo bricks import [--dry-run]` copies SEO settings saved in Bricks before into the LW SEO fields that are still empty. It only runs when you run it: updating does not change existing pages.
+
+### Changed
+- A source can have only one redirect: adding one for a source that already has a redirect (in the Redirects tab, the REST API, `wp lw-seo redirect add` or a CSV import) is rejected with a message instead of creating a second redirect that could never match.
+
+### Fixed
+- SEO titles and descriptions entered in Bricks' page settings were ignored since 1.7.0 (LW SEO turns Bricks' own SEO tags off to avoid duplicates), so those pages lost their title, description and noindex.
+- Per-post, per-term and home descriptions that contain variables such as %%title%% (common after importing from Yoast or Rank Math) are now filled in when displayed instead of being shown literally.
+- Running an import again no longer duplicates redirects.
+- Yoast regex redirects that start with ^ (for example ^blog/(\d+)$) now match after import; the importer adds the leading slash LW SEO's paths have.
+
 ## [1.8.0] - 2026-09-27
 
 ### Added
@@ -10,12 +25,6 @@
 - The Import tab looks for data from all four supported plugins when it opens and shows a block only for the plugins it found data for.
 - An active SEOPress now counts as a conflicting SEO plugin, like Yoast SEO, Rank Math and All in One SEO: LW SEO skips its head tags while SEOPress is active. The notice on the settings screen names the active plugin and points to the Import tab.
 - `wp lw-seo migrate` also reports skipped posts, terms and redirects.
-- A source can have only one redirect: adding one for a source that already has a redirect (in the Redirects tab, the REST API, `wp lw-seo redirect add` or a CSV import) is rejected with a message instead of creating a second redirect that could never match.
-
-### Fixed
-- Per-post, per-term and home descriptions that contain variables such as %%title%% (common after importing from Yoast or Rank Math) are now filled in when displayed instead of being shown literally.
-- Running an import again no longer duplicates redirects.
-- Yoast regex redirects that start with ^ (for example ^blog/(\d+)$) now match after import; the importer adds the leading slash LW SEO's paths have.
 
 ## [1.7.5] - 2026-09-27
 
