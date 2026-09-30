@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace LightweightPlugins\SEO\Sitemap;
 
 use LightweightPlugins\SEO\Content\Eligibility;
+use LightweightPlugins\SEO\Content\QueryArgs;
 
 /**
  * Provides the published, indexable posts of one post type.
@@ -65,19 +66,20 @@ final class PostProvider implements ProviderInterface {
 	 */
 	public function get_items( int $page ): array {
 		$posts = get_posts(
-			[
-				'post_type'      => $this->post_type,
-				'post_status'    => 'publish',
-				'has_password'   => false,
-				'posts_per_page' => self::PER_PAGE,
-				'offset'         => ( $page - 1 ) * self::PER_PAGE,
-				'orderby'        => 'modified',
-				'order'          => 'DESC',
-				'no_found_rows'  => true,
-				// Every language: Polylang limits queries to the current one.
-				'lang'           => '',
-				'meta_query'     => Eligibility::noindex_meta_query(),
-			]
+			QueryArgs::filter(
+				[
+					'post_type'      => $this->post_type,
+					'post_status'    => 'publish',
+					'has_password'   => false,
+					'posts_per_page' => self::PER_PAGE,
+					'offset'         => ( $page - 1 ) * self::PER_PAGE,
+					'orderby'        => 'modified',
+					'order'          => 'DESC',
+					'no_found_rows'  => true,
+					'meta_query'     => Eligibility::noindex_meta_query(),
+				],
+				QueryArgs::SITEMAP_POSTS
+			)
 		);
 
 		$excluded = ExcludedPosts::ids( $this->post_type );

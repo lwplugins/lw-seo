@@ -95,6 +95,6 @@ final class Loader {
 	 * @return array<int, IntegrationInterface>
 	 */
 	private static function defaults(): array {
-		return [ new Bricks\Integration() ];
+		return [ new Bricks\Integration(), new Polylang\Integration() ];
 	}
 }

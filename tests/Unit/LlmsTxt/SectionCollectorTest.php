@@ -136,9 +136,18 @@ final class SectionCollectorTest extends MonkeyTestCase {
 		);
 	}
 
-	public function test_posts_are_queried_in_every_language(): void {
+	public function test_posts_query_has_no_language_argument_and_runs_through_the_query_args_filter(): void {
 		$this->stub_listed_types( [ 'post' => 'Posts' ], [] );
-		$args = [];
+		$args    = [];
+		$context = '';
+		Functions\when( 'apply_filters' )->alias(
+			static function ( string $hook, $value, ...$rest ) use ( &$context ) {
+				if ( 'lw_seo_query_args' === $hook ) {
+					$context = $rest[0];
+				}
+				return $value;
+			}
+		);
 		Functions\when( 'get_posts' )->alias(
 			static function ( array $query ) use ( &$args ): array {
 				$args = $query;
@@ -148,7 +157,8 @@ final class SectionCollectorTest extends MonkeyTestCase {
 
 		( new SectionCollector() )->posts();
 
-		$this->assertSame( '', $args['lang'] ?? null );
+		$this->assertArrayNotHasKey( 'lang', $args );
+		$this->assertSame( 'llms_posts', $context );
 	}
 
 	public function test_posts_leaves_a_heading_alone_when_its_twin_type_has_nothing_listed(): void {
