@@ -621,7 +621,7 @@ msgid "SEO Settings"
 msgstr ""
 
 #: includes/Admin/SettingsPage.php:62
-#: includes/SiteManager/Integration.php:38
+#: includes/Integrations/SiteManager/Integration.php:59
 msgid "SEO"
 msgstr ""
 
@@ -1083,14 +1083,14 @@ msgid "Other"
 msgstr ""
 
 #: includes/Rest/PublicObjectAccess.php:130
-#: includes/SiteManager/SeoService.php:146
-#: includes/SiteManager/SeoService.php:207
+#: includes/Integrations/SiteManager/SeoService.php:146
+#: includes/Integrations/SiteManager/SeoService.php:207
 msgid "Post not found."
 msgstr ""
 
 #: includes/Rest/PublicObjectAccess.php:139
-#: includes/SiteManager/SeoService.php:176
-#: includes/SiteManager/SeoService.php:227
+#: includes/Integrations/SiteManager/SeoService.php:176
+#: includes/Integrations/SiteManager/SeoService.php:227
 msgid "Term not found."
 msgstr ""
 
@@ -1116,88 +1116,88 @@ msgstr ""
 msgid "Author ID"
 msgstr ""
 
-#: includes/SiteManager/Integration.php:39
+#: includes/Integrations/SiteManager/Integration.php:60
 msgid "Search engine optimization abilities"
 msgstr ""
 
-#: includes/SiteManager/SeoAbilities.php:51
+#: includes/Integrations/SiteManager/SeoAbilities.php:51
 msgid "Get SEO Meta"
 msgstr ""
 
-#: includes/SiteManager/SeoAbilities.php:52
+#: includes/Integrations/SiteManager/SeoAbilities.php:52
 msgid "Get SEO metadata for a post or term (title, description, social, signals)."
 msgstr ""
 
-#: includes/SiteManager/SeoAbilities.php:62
-#: includes/SiteManager/SeoAbilities.php:95
+#: includes/Integrations/SiteManager/SeoAbilities.php:62
+#: includes/Integrations/SiteManager/SeoAbilities.php:95
 msgid "Post ID. Provide post_id or term_id."
 msgstr ""
 
-#: includes/SiteManager/SeoAbilities.php:66
-#: includes/SiteManager/SeoAbilities.php:99
+#: includes/Integrations/SiteManager/SeoAbilities.php:66
+#: includes/Integrations/SiteManager/SeoAbilities.php:99
 msgid "Term ID. Provide post_id or term_id."
 msgstr ""
 
-#: includes/SiteManager/SeoAbilities.php:84
+#: includes/Integrations/SiteManager/SeoAbilities.php:84
 msgid "Set SEO Meta"
 msgstr ""
 
-#: includes/SiteManager/SeoAbilities.php:85
+#: includes/Integrations/SiteManager/SeoAbilities.php:85
 msgid "Set SEO metadata for a post or term."
 msgstr ""
 
-#: includes/SiteManager/SeoAbilities.php:103
+#: includes/Integrations/SiteManager/SeoAbilities.php:103
 msgid "SEO fields: title, description, noindex, og_title, og_description, og_image, ai_train, ai_input, search, markdown_content. markdown_content requires the unfiltered_html capability; without it the field is left unchanged and listed in \"skipped\"."
 msgstr ""
 
-#: includes/SiteManager/SeoAbilities.php:137
+#: includes/Integrations/SiteManager/SeoAbilities.php:137
 msgid "Get Content Signals"
 msgstr ""
 
-#: includes/SiteManager/SeoAbilities.php:138
+#: includes/Integrations/SiteManager/SeoAbilities.php:138
 msgid "Get resolved AI content signals for a post or term."
 msgstr ""
 
-#: includes/SiteManager/SeoAbilities.php:172
+#: includes/Integrations/SiteManager/SeoAbilities.php:172
 msgid "Get Markdown"
 msgstr ""
 
-#: includes/SiteManager/SeoAbilities.php:173
+#: includes/Integrations/SiteManager/SeoAbilities.php:173
 msgid "Get the markdown representation of a post, product, or term."
 msgstr ""
 
-#: includes/SiteManager/SeoAbilities.php:208
+#: includes/Integrations/SiteManager/SeoAbilities.php:208
 msgid "Get SEO Options"
 msgstr ""
 
-#: includes/SiteManager/SeoAbilities.php:209
+#: includes/Integrations/SiteManager/SeoAbilities.php:209
 msgid "Get global LW SEO settings."
 msgstr ""
 
-#: includes/SiteManager/SeoService.php:54
-#: includes/SiteManager/SeoService.php:74
+#: includes/Integrations/SiteManager/SeoService.php:54
+#: includes/Integrations/SiteManager/SeoService.php:74
 msgid "Provide post_id or term_id."
 msgstr ""
 
-#: includes/SiteManager/SeoService.php:107
+#: includes/Integrations/SiteManager/SeoService.php:107
 msgid "Post or term not found."
 msgstr ""
 
-#: includes/SiteManager/SeoService.php:211
+#: includes/Integrations/SiteManager/SeoService.php:211
 msgid "You are not allowed to edit this post."
 msgstr ""
 
-#: includes/SiteManager/SeoService.php:231
+#: includes/Integrations/SiteManager/SeoService.php:231
 msgid "You are not allowed to edit this term."
 msgstr ""
 
 #. translators: %d: number of fields updated
-#: includes/SiteManager/SeoService.php:275
+#: includes/Integrations/SiteManager/SeoService.php:275
 #, php-format
 msgid "%d SEO fields updated."
 msgstr ""
 
-#: includes/SiteManager/SeoService.php:303
+#: includes/Integrations/SiteManager/SeoService.php:303
 msgid "You are not allowed to read this post or term."
 msgstr ""
 
