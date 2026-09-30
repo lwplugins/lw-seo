@@ -92,6 +92,10 @@ final class Plugin {
 	 * @return void
 	 */
 	private function init_components(): void {
+		// Integrations (Bricks, Polylang, WooCommerce, LW Site Manager): each
+		// is registered only when its theme or plugin is present.
+		( new Integrations\Loader() )->register();
+
 		// Admin components.
 		if ( is_admin() ) {
 			new MetaBox();
