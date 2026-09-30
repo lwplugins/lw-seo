@@ -34,13 +34,14 @@ final class Integration implements IntegrationInterface {
 	}
 
 	/**
-	 * Bricks is the active theme (a Bricks child theme counts too:
-	 * get_template() is the parent).
+	 * Bricks is the active theme: its folder is the template (a Bricks
+	 * child theme counts too: get_template() is the parent), or Bricks'
+	 * functions.php ran from a folder with another name.
 	 *
 	 * @return bool
 	 */
 	public function is_available(): bool {
-		return 'bricks' === get_template();
+		return 'bricks' === get_template() || defined( 'BRICKS_VERSION' );
 	}
 
 	/**

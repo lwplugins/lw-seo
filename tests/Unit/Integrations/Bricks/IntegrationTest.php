@@ -15,6 +15,8 @@ use LightweightPlugins\SEO\Integrations\Bricks\MarkdownContent;
 use LightweightPlugins\SEO\Options;
 use LightweightPlugins\SEO\Tests\Unit\MonkeyTestCase;
 use LightweightPlugins\SEO\Tests\Unit\OptionsStubTrait;
+use PHPUnit\Framework\Attributes\PreserveGlobalState;
+use PHPUnit\Framework\Attributes\RunInSeparateProcess;
 
 final class IntegrationTest extends MonkeyTestCase {
 
@@ -56,6 +58,18 @@ final class IntegrationTest extends MonkeyTestCase {
 
 	public function test_is_available_with_the_bricks_theme_or_a_child_theme(): void {
 		Functions\when( 'get_template' )->justReturn( 'bricks' );
+
+		$this->assertTrue( ( new Integration() )->is_available() );
+	}
+
+	/**
+	 * Bricks in a folder not named "bricks": its functions.php defines BRICKS_VERSION.
+	 */
+	#[RunInSeparateProcess]
+	#[PreserveGlobalState( false )]
+	public function test_is_available_when_bricks_runs_from_another_folder(): void {
+		Functions\when( 'get_template' )->justReturn( 'bricks-2' );
+		define( 'BRICKS_VERSION', '2.4.2' );
 
 		$this->assertTrue( ( new Integration() )->is_available() );
 	}

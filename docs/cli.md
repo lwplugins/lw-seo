@@ -221,7 +221,9 @@ overwritten, and a second run imports nothing. Field mappings:
 wp lw-seo bricks import [--dry-run]
 ```
 
-Available while Bricks (or a Bricks child theme) is the active theme.
+Available while Bricks (or a Bricks child theme) is the active theme, so
+not with `--skip-themes`. The Bricks ↔ LW SEO sync runs only then too: an LW
+SEO change saved while Bricks is inactive does not reach Bricks.
 
 Copies the SEO settings saved in Bricks (Page settings → SEO and Social
 media: document title, meta description, noindex/nofollow, social title,
