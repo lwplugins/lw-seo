@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.8.4] - 2026-09-30
+
+### Changed
+- The code that works with Bricks, Polylang, WooCommerce and LW Site Manager is loaded only while that theme or plugin is active.
+- `wp lw-seo bricks import` is available only while Bricks (or a Bricks child theme) is the active theme.
+
 ## [1.8.3] - 2026-09-30
 
 ### Fixed

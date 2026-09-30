@@ -357,12 +357,9 @@ The plugin automatically detects WooCommerce and adds:
 - Product Open Graph tags (price, availability)
 - Product sitemap entries
 
-```php
-// Check if WooCommerce integration is active
-if ( class_exists( 'LightweightPlugins\SEO\WooCommerce\Integration' ) ) {
-    // WooCommerce features available
-}
-```
+The integration is loaded only while WooCommerce is active; with the
+WooCommerce SEO setting off, the product Open Graph tags, product schema
+and product permalinks are skipped.
 
 ## Conflict Detection
 

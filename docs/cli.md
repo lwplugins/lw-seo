@@ -221,6 +221,8 @@ overwritten, and a second run imports nothing. Field mappings:
 wp lw-seo bricks import [--dry-run]
 ```
 
+Available while Bricks (or a Bricks child theme) is the active theme.
+
 Copies the SEO settings saved in Bricks (Page settings → SEO and Social
 media: document title, meta description, noindex/nofollow, social title,
 description and image) into the LW SEO fields that are still empty. Existing

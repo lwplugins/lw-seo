@@ -3,7 +3,7 @@ Contributors: lwplugins
 Tags: seo, sitemap, schema, opengraph, breadcrumbs
 Requires at least: 6.6
 Tested up to: 7.1
-Stable tag: 1.8.3
+Stable tag: 1.8.4
 Requires PHP: 8.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -140,6 +140,10 @@ Your sitemap is available at `yoursite.com/sitemap.xml`
 6. Settings page - Advanced tab
 
 == Changelog ==
+
+= 1.8.4 =
+* Change: the code that works with Bricks, Polylang, WooCommerce and LW Site Manager is loaded only while that theme or plugin is active.
+* Change: `wp lw-seo bricks import` is available only while Bricks (or a Bricks child theme) is the active theme.
 
 = 1.8.3 =
 * Fix: a page set as the front page now uses its own SEO title, meta description, canonical URL, social title, description and image, and noindex/nofollow; the homepage title template and description are the fallback. Before, a static front page always got the homepage settings, so its own description and canonical were ignored.
