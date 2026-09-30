@@ -138,7 +138,7 @@ Full reference: [docs/template-variables.md](docs/template-variables.md)
 
 ## Requirements
 
-- PHP 8.2+
+- PHP 8.0+
 - WordPress 6.6+
 
 ## Conflict Detection

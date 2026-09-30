@@ -81,6 +81,16 @@ final class OptionValueParserTest extends MonkeyTestCase {
 		OptionValueParser::parse_map( '[true,false]' );
 	}
 
+	public function test_parse_map_accepts_an_object_with_non_sequential_numeric_keys(): void {
+		$this->assertSame( [ 1 => true ], OptionValueParser::parse_map( '{"1":true}' ) );
+	}
+
+	public function test_parse_map_rejects_an_object_whose_keys_form_a_list(): void {
+		$this->expectException( \InvalidArgumentException::class );
+
+		OptionValueParser::parse_map( '{"0":true,"1":false}' );
+	}
+
 	public function test_parse_map_rejects_json_scalar(): void {
 		$this->expectException( \InvalidArgumentException::class );
 

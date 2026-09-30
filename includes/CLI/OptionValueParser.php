@@ -147,7 +147,7 @@ final class OptionValueParser {
 	public static function parse_map( string $raw ): array {
 		$decoded = json_decode( $raw, true );
 
-		if ( JSON_ERROR_NONE !== json_last_error() || ! is_array( $decoded ) || ( [] !== $decoded && array_is_list( $decoded ) ) ) {
+		if ( JSON_ERROR_NONE !== json_last_error() || ! is_array( $decoded ) || ( [] !== $decoded && array_values( $decoded ) === $decoded ) ) {
 			// phpcs:ignore WordPress.Security.EscapeOutput.ExceptionNotEscaped -- CLI-only message; WP_CLI::error() prints it as plain text, never rendered as HTML.
 			throw new \InvalidArgumentException( sprintf( 'Invalid JSON object: %s', $raw ) );
 		}

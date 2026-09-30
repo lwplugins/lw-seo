@@ -5,6 +5,13 @@ includes:
 parameters:
 	level: 5
 
+	# Guards the PHP 8.0 floor: analyses with 8.0 grammar, so 8.1+ syntax
+	# (readonly, enum, never, first-class callables) and 8.1+ functions
+	# (array_is_list()) fail. Do not remove (see the workspace CLAUDE.md).
+	phpVersion:
+		min: 80000
+		max: 80599
+
 	paths:
 		- lw-seo.php
 		- includes/
