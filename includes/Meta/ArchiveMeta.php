@@ -48,6 +48,12 @@ final class ArchiveMeta {
 		$description    = ! empty( $custom_desc ) ? $custom_desc : get_bloginfo( 'description' );
 		$url            = ArchiveContext::paged_url( home_url( '/' ) );
 		$og_image       = (string) Options::get( 'default_og_image' );
+		$front_page     = FrontPageMeta::page();
+
+		if ( null !== $front_page ) {
+			( new FrontPageMeta( $this->renderer ) )->output( $front_page, $title, $description );
+			return;
+		}
 
 		$this->renderer->render( $title, $description, $url, $title, $description, $og_image, 'website' );
 	}

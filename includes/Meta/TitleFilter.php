@@ -36,7 +36,7 @@ final class TitleFilter {
 	 */
 	public function filter_title( array $title_parts ): array {
 		if ( is_front_page() ) {
-			return $this->apply_template( $title_parts, (string) Options::get( 'title_home' ) );
+			return $this->front_page_title( $title_parts );
 		}
 
 		if ( is_home() ) {
@@ -74,6 +74,24 @@ final class TitleFilter {
 		}
 
 		return $title_parts;
+	}
+
+	/**
+	 * Title for the front page: a static front page's own SEO title, else
+	 * the home template.
+	 *
+	 * @param array<string, string> $title_parts Title parts.
+	 * @return array<string, string>
+	 */
+	private function front_page_title( array $title_parts ): array {
+		$page         = FrontPageMeta::page();
+		$custom_title = null !== $page ? ObjectText::post( $page, 'title' ) : '';
+
+		if ( '' !== $custom_title ) {
+			return $this->custom_title( $title_parts, $custom_title );
+		}
+
+		return $this->apply_template( $title_parts, (string) Options::get( 'title_home' ) );
 	}
 
 	/**

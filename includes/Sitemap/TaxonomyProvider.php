@@ -87,6 +87,8 @@ final class TaxonomyProvider implements ProviderInterface {
 				// the noindex meta_query drops terms without that meta.
 				'orderby'    => 'term_id',
 				'order'      => 'ASC',
+				// Every language: Polylang limits queries to the current one.
+				'lang'       => '',
 				'meta_query' => Eligibility::noindex_meta_query(),
 			]
 		);

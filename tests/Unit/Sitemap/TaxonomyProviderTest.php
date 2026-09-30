@@ -37,5 +37,6 @@ final class TaxonomyProviderTest extends MonkeyTestCase {
 		$this->assertSame( 'term_id', $args['orderby'] ?? null );
 		$this->assertSame( 'ASC', $args['order'] ?? null );
 		$this->assertSame( 1000, $args['offset'] );
+		$this->assertSame( '', $args['lang'] ?? null, 'Polylang: terms of every language.' );
 	}
 }

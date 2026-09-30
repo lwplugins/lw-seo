@@ -67,6 +67,28 @@ final class TitleFilterTest extends MonkeyTestCase {
 		$this->assertSame( [ 'title' => 'Site - Tagline' ], $parts );
 	}
 
+	public function test_static_front_page_custom_title_replaces_the_home_template(): void {
+		Functions\when( 'is_front_page' )->justReturn( true );
+		Functions\when( 'get_option' )->alias(
+			static fn( string $key, $default_value = false ) => match ( $key ) {
+				'lw_seo_options' => [],
+				'show_on_front'  => 'page',
+				default          => $default_value,
+			}
+		);
+		Functions\when( 'get_queried_object' )->justReturn( new \WP_Post( [ 'ID' => 494, 'post_type' => 'page' ] ) );
+		Functions\when( 'get_post_meta' )->justReturn( 'EN home title' );
+
+		$parts = ( new TitleFilter() )->filter_title(
+			[
+				'title' => 'Home',
+				'site'  => 'Site',
+			]
+		);
+
+		$this->assertSame( [ 'title' => 'EN home title' ], $parts );
+	}
+
 	public function test_posts_page_custom_title_replaces_the_whole_title(): void {
 		Functions\when( 'is_home' )->justReturn( true );
 		Functions\when( 'get_post' )->justReturn( new \WP_Post( [ 'ID' => 12 ] ) );

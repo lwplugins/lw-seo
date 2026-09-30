@@ -136,6 +136,21 @@ final class SectionCollectorTest extends MonkeyTestCase {
 		);
 	}
 
+	public function test_posts_are_queried_in_every_language(): void {
+		$this->stub_listed_types( [ 'post' => 'Posts' ], [] );
+		$args = [];
+		Functions\when( 'get_posts' )->alias(
+			static function ( array $query ) use ( &$args ): array {
+				$args = $query;
+				return [];
+			}
+		);
+
+		( new SectionCollector() )->posts();
+
+		$this->assertSame( '', $args['lang'] ?? null );
+	}
+
 	public function test_posts_leaves_a_heading_alone_when_its_twin_type_has_nothing_listed(): void {
 		$this->stub_listed_types(
 			[

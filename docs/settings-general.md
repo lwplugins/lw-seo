@@ -22,6 +22,13 @@ Template for your site's front page.
 
 **Example output:** "My Website | Your tagline here"
 
+**Static front page:** when a page is set as the front page (Settings →
+Reading), the SEO title, meta description, canonical URL, social title,
+description and image, and noindex/nofollow saved on that page win; the
+homepage title template and homepage description are the fallback. With
+Polylang or WPML each translation of the front page uses its own values,
+and its default canonical is its own URL (for example `/en/`).
+
 ### Post Title
 
 Template for single blog posts.

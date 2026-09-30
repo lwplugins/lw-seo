@@ -74,6 +74,8 @@ final class PostProvider implements ProviderInterface {
 				'orderby'        => 'modified',
 				'order'          => 'DESC',
 				'no_found_rows'  => true,
+				// Every language: Polylang limits queries to the current one.
+				'lang'           => '',
 				'meta_query'     => Eligibility::noindex_meta_query(),
 			]
 		);

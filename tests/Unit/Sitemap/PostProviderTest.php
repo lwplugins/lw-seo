@@ -79,6 +79,24 @@ final class PostProviderTest extends MonkeyTestCase {
 		$this->assertSame( [ 'https://example.com/?page_id=10' ], $this->listed() );
 	}
 
+	/**
+	 * Polylang limits queries to the current language, and the sitemap is
+	 * requested in the default one; `lang => ''` lists every language.
+	 */
+	public function test_queries_posts_of_every_language(): void {
+		$args = [];
+		Functions\when( 'get_posts' )->alias(
+			static function ( array $query ) use ( &$args ): array {
+				$args = $query;
+				return [];
+			}
+		);
+
+		$this->listed();
+
+		$this->assertSame( '', $args['lang'] ?? null );
+	}
+
 	public function test_unassigned_woocommerce_pages_leave_every_page_listed(): void {
 		$this->wc_pages = [];
 
