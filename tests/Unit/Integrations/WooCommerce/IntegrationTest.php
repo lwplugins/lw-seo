@@ -15,6 +15,8 @@ use LightweightPlugins\SEO\Integrations\WooCommerce\ProductRenderer;
 use LightweightPlugins\SEO\Options;
 use LightweightPlugins\SEO\Tests\Unit\MonkeyTestCase;
 use LightweightPlugins\SEO\Tests\Unit\OptionsStubTrait;
+use PHPUnit\Framework\Attributes\PreserveGlobalState;
+use PHPUnit\Framework\Attributes\RunInSeparateProcess;
 
 final class IntegrationTest extends MonkeyTestCase {
 
@@ -65,19 +67,26 @@ final class IntegrationTest extends MonkeyTestCase {
 	}
 
 	/**
-	 * User filters at the default priority must still receive the WooCommerce pages.
+	 * The pages go into the default list, so every lw_seo_sitemap_excluded_ids
+	 * callback, at any priority, receives them and can remove them.
 	 */
-	public function test_hooks_the_exclusion_before_default_priority_filters(): void {
+	public function test_adds_the_pages_to_the_default_exclusions(): void {
 		$this->stub_options( [ 'woo_enabled' => false ] );
 		$integration = new Integration();
 
 		$integration->register();
 
-		$this->assertSame( 5, has_filter( 'lw_seo_sitemap_excluded_ids', [ $integration, 'exclude_pages' ] ) );
+		$this->assertSame( 10, has_filter( 'lw_seo_sitemap_default_excluded_ids', [ $integration, 'exclude_pages' ] ) );
+		$this->assertFalse( has_filter( 'lw_seo_sitemap_excluded_ids', [ $integration, 'exclude_pages' ] ) );
 	}
 
 	public function test_keeps_exclusion_markdown_and_permalink_flush_when_woo_seo_is_off(): void {
-		$this->stub_options( [ 'woo_enabled' => false ] );
+		$this->stub_options(
+			[
+				'woo_enabled'            => false,
+				'wc_remove_product_base' => true,
+			]
+		);
 		$integration = new Integration();
 
 		$integration->register();
@@ -85,5 +94,31 @@ final class IntegrationTest extends MonkeyTestCase {
 		$this->assertNotFalse( has_filter( 'lw_seo_markdown_renderer', [ $integration, 'markdown_renderer' ] ) );
 		$this->assertNotFalse( has_action( 'update_option_lw_seo_options' ) );
 		$this->assertFalse( has_action( 'wp_head' ) );
+		$this->assertFalse( has_filter( 'lw_seo_og_type' ) );
+		$this->assertFalse( has_filter( 'post_type_link' ) );
+	}
+
+	public function test_registers_product_head_output_and_permalinks_when_woo_seo_is_on(): void {
+		$this->stub_options(
+			[
+				'woo_enabled'            => true,
+				'wc_remove_product_base' => true,
+			]
+		);
+
+		( new Integration() )->register();
+
+		$this->assertNotFalse( has_action( 'wp_head' ) );
+		$this->assertNotFalse( has_filter( 'lw_seo_og_type' ) );
+		$this->assertNotFalse( has_filter( 'post_type_link' ) );
+	}
+
+	/**
+	 * Without WooCommerce's page functions (a partial load) nothing is added.
+	 */
+	#[RunInSeparateProcess]
+	#[PreserveGlobalState( false )]
+	public function test_excludes_nothing_without_the_woocommerce_page_function(): void {
+		$this->assertSame( [ 5 ], ( new Integration() )->exclude_pages( [ 5 ] ) );
 	}
 }

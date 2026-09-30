@@ -93,6 +93,13 @@ final class PostProviderTest extends MonkeyTestCase {
 		$this->assertSame( 'sitemap_posts', $context );
 	}
 
+	public function test_excluded_ids_filter_receives_the_integrations_default_exclusions(): void {
+		Filters\expectApplied( 'lw_seo_sitemap_default_excluded_ids' )->once()->with( [], 'page' )->andReturn( [ 20, 21, 22 ] );
+		Filters\expectApplied( 'lw_seo_sitemap_excluded_ids' )->once()->with( [ 20, 21, 22 ], 'page' )->andReturnFirstArg();
+
+		$this->assertSame( [ 'https://example.com/?page_id=10' ], $this->listed() );
+	}
+
 	public function test_excluded_ids_filter_leaves_out_extra_posts(): void {
 		Filters\expectApplied( 'lw_seo_sitemap_excluded_ids' )
 			->once()

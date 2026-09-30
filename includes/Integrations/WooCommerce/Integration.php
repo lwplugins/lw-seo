@@ -50,8 +50,7 @@ final class Integration implements IntegrationInterface {
 	 */
 	public function register(): void {
 		( new PermalinkFlagFlusher() )->register();
-		// Priority 5: filters at the default priority see these pages, as before.
-		add_filter( 'lw_seo_sitemap_excluded_ids', [ $this, 'exclude_pages' ], 5 );
+		add_filter( 'lw_seo_sitemap_default_excluded_ids', [ $this, 'exclude_pages' ] );
 		add_filter( 'lw_seo_markdown_renderer', [ $this, 'markdown_renderer' ], 10, 2 );
 
 		if ( ! Options::get( 'woo_enabled', true ) ) {
@@ -71,6 +70,10 @@ final class Integration implements IntegrationInterface {
 	 */
 	public function exclude_pages( $ids ): array {
 		$ids = is_array( $ids ) ? $ids : [];
+
+		if ( ! function_exists( 'wc_get_page_id' ) ) {
+			return $ids;
+		}
 
 		foreach ( self::EXCLUDED_PAGES as $page ) {
 			$id = (int) wc_get_page_id( $page );
