@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.8.3] - 2026-09-30
+
+### Fixed
+- A page set as the front page now uses its own SEO title, meta description, canonical URL, social title, description and image, and noindex/nofollow; the homepage title template and description are the fallback. Before, a static front page always got the homepage settings, so its own description and canonical were ignored.
+- With Polylang, each translation of the front page uses its own values, and its default canonical is its own URL (for example /en/) instead of the default language's home page.
+- With Polylang, the XML sitemaps and llms.txt list the content of every language; translations were missing because the queries were limited to the default language.
+
 ## [1.8.2] - 2026-09-29
 
 ### Fixed

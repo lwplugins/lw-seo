@@ -3,7 +3,7 @@ Contributors: lwplugins
 Tags: seo, sitemap, schema, opengraph, breadcrumbs
 Requires at least: 6.6
 Tested up to: 7.1
-Stable tag: 1.8.2
+Stable tag: 1.8.3
 Requires PHP: 8.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -140,6 +140,11 @@ Your sitemap is available at `yoursite.com/sitemap.xml`
 6. Settings page - Advanced tab
 
 == Changelog ==
+
+= 1.8.3 =
+* Fix: a page set as the front page now uses its own SEO title, meta description, canonical URL, social title, description and image, and noindex/nofollow; the homepage title template and description are the fallback. Before, a static front page always got the homepage settings, so its own description and canonical were ignored.
+* Fix: with Polylang, each translation of the front page uses its own values, and its default canonical is its own URL (for example /en/) instead of the default language's home page.
+* Fix: with Polylang, the XML sitemaps and llms.txt list the content of every language; translations were missing because the queries were limited to the default language.
 
 = 1.8.2 =
 * Fix: the product category sitemap on WooCommerce shops left out most categories (every category with term meta but no WooCommerce sort order), because WooCommerce's menu-order sorting clashed with LW SEO's noindex filter. Taxonomy sitemaps now list terms by ID.
@@ -499,6 +504,9 @@ Your sitemap is available at `yoursite.com/sitemap.xml`
 * llms.txt generation
 
 == Upgrade Notice ==
+
+= 1.8.3 =
+A static front page now uses its own SEO fields (description, canonical and so on) instead of only the homepage settings. Polylang translations are listed in the sitemaps.
 
 = 1.8.1 =
 SEO settings saved in Bricks are synced with LW SEO both ways from now on. Settings saved in Bricks before are not copied on update; run `wp lw-seo bricks import` to copy them into the empty LW SEO fields.
