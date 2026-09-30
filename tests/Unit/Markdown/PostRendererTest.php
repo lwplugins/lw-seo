@@ -11,8 +11,6 @@ namespace LightweightPlugins\SEO\Tests\Unit\Markdown;
 
 use Brain\Monkey\Filters;
 use Brain\Monkey\Functions;
-use Bricks\Database;
-use Bricks\Helpers;
 use LightweightPlugins\SEO\Markdown\PostRenderer;
 use LightweightPlugins\SEO\Options;
 use LightweightPlugins\SEO\Tests\Unit\MonkeyTestCase;
@@ -20,7 +18,6 @@ use LightweightPlugins\SEO\Tests\Unit\MonkeyTestCase;
 final class PostRendererTest extends MonkeyTestCase {
 
 	protected function tearDown(): void {
-		Database::test_reset();
 		Options::clear_cache();
 		parent::tearDown();
 	}
@@ -100,12 +97,11 @@ final class PostRendererTest extends MonkeyTestCase {
 		$this->assertArrayNotHasKey( 'excerpt', ( new PostRenderer( $post ) )->frontmatter() );
 	}
 
-	public function test_body_renders_the_bricks_content_of_a_bricks_page(): void {
+	public function test_body_renders_html_a_source_filter_supplies(): void {
 		Functions\when( 'get_post_meta' )->justReturn( '' );
 		Functions\when( 'get_the_title' )->justReturn( 'About' );
 		Functions\when( 'wp_strip_all_tags' )->alias( static fn( string $text ): string => trim( strip_tags( $text ) ) );
-		Helpers::$test_bricks_posts = [ 7 ];
-		Database::$test_content[7]  = [ [ 'id' => 'abc123', 'settings' => [ 'text' => 'Built with Bricks' ] ] ];
+		Filters\expectApplied( 'lw_seo_markdown_source_html' )->andReturn( '<p>Built with Bricks</p>' );
 
 		$post = new \WP_Post(
 			[

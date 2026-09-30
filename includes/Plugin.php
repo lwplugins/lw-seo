@@ -16,7 +16,6 @@ use LightweightPlugins\SEO\Editor\PostRestField;
 use LightweightPlugins\SEO\Rest\Admin\Routes as AdminRoutes;
 use LightweightPlugins\SEO\WooCommerce\PermalinkFlagFlusher;
 use LightweightPlugins\SEO\Blocks\FAQ\Block as FAQBlock;
-use LightweightPlugins\SEO\Compat\Bricks as BricksCompat;
 use LightweightPlugins\SEO\Schema\Schema;
 use LightweightPlugins\SEO\Sitemap\Sitemap;
 use LightweightPlugins\SEO\WooCommerce\WooCommerce;
@@ -136,9 +135,6 @@ final class Plugin {
 
 		// WooCommerce integration (self-checks if WooCommerce is active).
 		new WooCommerce();
-
-		// Bricks theme: its own SEO / Open Graph tags would duplicate ours.
-		( new BricksCompat() )->register();
 
 		// Local SEO.
 		new LocalSchema();

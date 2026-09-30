@@ -1,31 +1,47 @@
 <?php
 /**
- * BricksContent unit tests.
+ * MarkdownContent unit tests.
  *
  * @package LightweightPlugins\SEO
  */
 
 declare(strict_types=1);
 
-namespace LightweightPlugins\SEO\Tests\Unit\Markdown;
+namespace LightweightPlugins\SEO\Tests\Unit\Integrations\Bricks;
 
 use Bricks\Database;
 use Bricks\Frontend;
 use Bricks\Helpers;
-use LightweightPlugins\SEO\Markdown\BricksContent;
+use LightweightPlugins\SEO\Integrations\Bricks\MarkdownContent;
 use LightweightPlugins\SEO\Tests\Unit\MonkeyTestCase;
 
-final class BricksContentTest extends MonkeyTestCase {
+final class MarkdownContentTest extends MonkeyTestCase {
 
 	protected function tearDown(): void {
 		Database::test_reset();
 		parent::tearDown();
 	}
 
+	public function test_filter_keeps_html_another_source_supplied(): void {
+		$this->assertSame( '<p>Other</p>', MarkdownContent::filter( '<p>Other</p>', $this->post( 7 ) ) );
+	}
+
+	public function test_filter_supplies_the_bricks_content(): void {
+		$this->bricks_post( 7, 'Hello' );
+
+		$this->assertSame( '<p>Hello</p>', MarkdownContent::filter( '', $this->post( 7 ) ) );
+	}
+
+	public function test_filter_ignores_a_non_string_value(): void {
+		$this->bricks_post( 7, 'Hello' );
+
+		$this->assertSame( '<p>Hello</p>', MarkdownContent::filter( null, $this->post( 7 ) ) );
+	}
+
 	public function test_renders_the_posts_own_bricks_content(): void {
 		$this->bricks_post( 7, 'Hello' );
 
-		$this->assertSame( '<p>Hello</p>', BricksContent::html( $this->post( 7 ) ) );
+		$this->assertSame( '<p>Hello</p>', MarkdownContent::html( $this->post( 7 ) ) );
 	}
 
 	/**
@@ -35,7 +51,7 @@ final class BricksContentTest extends MonkeyTestCase {
 	public function test_returns_empty_when_the_post_does_not_render_with_bricks(): void {
 		Database::$test_content[7] = [ $this->element( 'Stale Bricks data' ) ];
 
-		$this->assertSame( '', BricksContent::html( $this->post( 7 ) ) );
+		$this->assertSame( '', MarkdownContent::html( $this->post( 7 ) ) );
 	}
 
 	/**
@@ -44,7 +60,7 @@ final class BricksContentTest extends MonkeyTestCase {
 	public function test_returns_empty_when_the_post_has_no_bricks_content(): void {
 		Helpers::$test_bricks_posts = [ 7 ];
 
-		$this->assertSame( '', BricksContent::html( $this->post( 7 ) ) );
+		$this->assertSame( '', MarkdownContent::html( $this->post( 7 ) ) );
 	}
 
 	/**
@@ -55,7 +71,7 @@ final class BricksContentTest extends MonkeyTestCase {
 		$this->bricks_post( 7, 'Hello' );
 		Database::$page_data['preview_or_post_id'] = 99;
 
-		BricksContent::html( $this->post( 7 ) );
+		MarkdownContent::html( $this->post( 7 ) );
 
 		$this->assertSame( [ [ 7 ], 99 ], [ Frontend::$test_seen_preview_ids, Database::$page_data['preview_or_post_id'] ] );
 	}

@@ -7,17 +7,17 @@
 
 declare(strict_types=1);
 
-namespace LightweightPlugins\SEO\Tests\Unit\Compat;
+namespace LightweightPlugins\SEO\Tests\Unit\Integrations\Bricks;
 
 use Brain\Monkey\Functions;
-use LightweightPlugins\SEO\Compat\BricksSeoSync;
+use LightweightPlugins\SEO\Integrations\Bricks\SeoSync;
 use LightweightPlugins\SEO\Tests\Unit\MonkeyTestCase;
 
-final class BricksSeoSyncTest extends MonkeyTestCase {
+final class SeoSyncTest extends MonkeyTestCase {
 
 	private const POST = 5;
 
-	private const KEY = BricksSeoSync::BRICKS_KEY;
+	private const KEY = SeoSync::BRICKS_KEY;
 
 	/**
 	 * Post meta by post ID and key.
@@ -26,11 +26,11 @@ final class BricksSeoSyncTest extends MonkeyTestCase {
 	 */
 	private array $meta = [];
 
-	private BricksSeoSync $sync;
+	private SeoSync $sync;
 
 	protected function setUp(): void {
 		parent::setUp();
-		$this->sync = new BricksSeoSync();
+		$this->sync = new SeoSync();
 		$this->meta = [];
 
 		Functions\when( 'wp_is_post_revision' )->justReturn( false );
@@ -163,7 +163,7 @@ final class BricksSeoSyncTest extends MonkeyTestCase {
 	public function test_paused_writes_are_not_synced(): void {
 		$this->meta[ self::POST ] = [ '_bricks_editor_mode' => 'bricks' ];
 
-		BricksSeoSync::paused( fn() => $this->lw_save( 'title', 'Imported' ) );
+		SeoSync::paused( fn() => $this->lw_save( 'title', 'Imported' ) );
 
 		$this->assertArrayNotHasKey( self::KEY, $this->meta[ self::POST ] );
 	}

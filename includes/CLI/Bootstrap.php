@@ -27,6 +27,5 @@ final class Bootstrap {
 		\WP_CLI::add_command( 'lw-seo llms', LlmsCommand::class );
 		\WP_CLI::add_command( 'lw-seo robots', RobotsCommand::class );
 		\WP_CLI::add_command( 'lw-seo crawlers', CrawlersCommand::class );
-		\WP_CLI::add_command( 'lw-seo bricks', BricksCommand::class );
 	}
 }

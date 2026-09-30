@@ -1,14 +1,15 @@
 <?php
 /**
- * Bricks theme compatibility.
+ * Bricks theme integration.
  *
  * @package LightweightPlugins\SEO
  */
 
 declare(strict_types=1);
 
-namespace LightweightPlugins\SEO\Compat;
+namespace LightweightPlugins\SEO\Integrations\Bricks;
 
+use LightweightPlugins\SEO\Integrations\IntegrationInterface;
 use LightweightPlugins\SEO\Meta\HeadMeta;
 use LightweightPlugins\SEO\Options;
 
@@ -16,21 +17,46 @@ use LightweightPlugins\SEO\Options;
  * Bricks prints its own meta description/robots, document title and Open
  * Graph tags in `wp_head`, which duplicates ours (an empty og:title on
  * pages without Bricks sharing settings). Its filters turn them off while
- * LW SEO renders the head; the filters are inert on other themes. The
- * values saved in Bricks are not lost: BricksSeoSync copies them into the
- * LW SEO fields (and LW SEO saves back into Bricks).
+ * LW SEO renders the head. The values saved in Bricks are not lost:
+ * SeoSync copies them into the LW SEO fields (and LW SEO saves back into
+ * Bricks). Bricks pages' content reaches the Markdown output and
+ * llms-full.txt through MarkdownContent.
  */
-final class Bricks {
+final class Integration implements IntegrationInterface {
 
 	/**
-	 * Register the Bricks filters.
+	 * Integration ID.
+	 *
+	 * @return string
+	 */
+	public function id(): string {
+		return 'bricks';
+	}
+
+	/**
+	 * Bricks is the active theme (a Bricks child theme counts too:
+	 * get_template() is the parent).
+	 *
+	 * @return bool
+	 */
+	public function is_available(): bool {
+		return 'bricks' === get_template();
+	}
+
+	/**
+	 * Register the Bricks hooks.
 	 *
 	 * @return void
 	 */
 	public function register(): void {
 		add_filter( 'bricks/frontend/disable_seo', [ $this, 'disable_seo' ] );
 		add_filter( 'bricks/frontend/disable_opengraph', [ $this, 'disable_opengraph' ] );
-		( new BricksSeoSync() )->register();
+		add_filter( 'lw_seo_markdown_source_html', [ MarkdownContent::class, 'filter' ], 10, 2 );
+		( new SeoSync() )->register();
+
+		if ( defined( 'WP_CLI' ) && \WP_CLI ) {
+			\WP_CLI::add_command( 'lw-seo bricks', Command::class );
+		}
 	}
 
 	/**

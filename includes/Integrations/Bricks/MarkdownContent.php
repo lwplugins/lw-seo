@@ -1,13 +1,13 @@
 <?php
 /**
- * Bricks Builder content.
+ * Bricks Builder content for the Markdown output.
  *
  * @package LightweightPlugins\SEO
  */
 
 declare(strict_types=1);
 
-namespace LightweightPlugins\SEO\Markdown;
+namespace LightweightPlugins\SEO\Integrations\Bricks;
 
 /**
  * Renders the content of a page built with Bricks. Bricks keeps it in its
@@ -18,7 +18,7 @@ namespace LightweightPlugins\SEO\Markdown;
  * (add_bricks_content_for_parse_html_images), which renders another
  * post's Bricks data the same way.
  */
-final class BricksContent {
+final class MarkdownContent {
 
 	/**
 	 * Rendered HTML of the post's own Bricks content.
@@ -49,5 +49,19 @@ final class BricksContent {
 		} finally {
 			\Bricks\Database::$page_data['preview_or_post_id'] = $previous;
 		}
+	}
+
+	/**
+	 * `lw_seo_markdown_source_html` callback: the Bricks content of a
+	 * Bricks page, unless another source already supplied HTML.
+	 *
+	 * @param mixed    $html HTML supplied so far ('' = none).
+	 * @param \WP_Post $post Post object.
+	 * @return string
+	 */
+	public static function filter( $html, \WP_Post $post ): string {
+		$html = is_string( $html ) ? $html : '';
+
+		return '' !== $html ? $html : self::html( $post );
 	}
 }

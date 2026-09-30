@@ -7,14 +7,12 @@
 
 declare(strict_types=1);
 
-namespace LightweightPlugins\SEO\CLI;
-
-use LightweightPlugins\SEO\Compat\BricksBackfill;
+namespace LightweightPlugins\SEO\Integrations\Bricks;
 
 /**
  * Bricks page SEO settings.
  */
-final class BricksCommand {
+final class Command {
 
 	/**
 	 * Copy the SEO settings saved in Bricks (Page settings → SEO / Social
@@ -37,7 +35,7 @@ final class BricksCommand {
 	 */
 	public function import( array $args, array $assoc_args ): void {
 		$dry_run = (bool) \WP_CLI\Utils\get_flag_value( $assoc_args, 'dry-run', false );
-		$tally   = BricksBackfill::run( $dry_run );
+		$tally   = Backfill::run( $dry_run );
 
 		\WP_CLI::success(
 			sprintf(

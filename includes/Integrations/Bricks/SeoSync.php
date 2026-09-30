@@ -7,7 +7,7 @@
 
 declare(strict_types=1);
 
-namespace LightweightPlugins\SEO\Compat;
+namespace LightweightPlugins\SEO\Integrations\Bricks;
 
 use LightweightPlugins\SEO\Editor\MetaFields;
 use LightweightPlugins\SEO\Options;
@@ -23,9 +23,9 @@ use LightweightPlugins\SEO\Options;
  *   edited with Bricks.
  *
  * Cleared text is never copied, so neither side loses text because the
- * other side is empty; robots flags follow both on and off (BricksSeoMap).
+ * other side is empty; robots flags follow both on and off (SeoMap).
  */
-final class BricksSeoSync {
+final class SeoSync {
 
 	/**
 	 * Bricks page settings meta key (BRICKS_DB_PAGE_SETTINGS).
@@ -140,7 +140,7 @@ final class BricksSeoSync {
 
 		$field = str_starts_with( $key, Options::META_PREFIX ) ? substr( $key, strlen( Options::META_PREFIX ) ) : '';
 
-		if ( in_array( $field, BricksSeoMap::FIELDS, true ) && ( ! $deleted || isset( BricksSeoMap::FLAGS[ $field ] ) ) ) {
+		if ( in_array( $field, SeoMap::FIELDS, true ) && ( ! $deleted || isset( SeoMap::FLAGS[ $field ] ) ) ) {
 			self::paused( fn() => $this->to_bricks( $post_id, $field, is_scalar( $value ) ? (string) $value : '' ) );
 		}
 	}
@@ -154,7 +154,7 @@ final class BricksSeoSync {
 	 * @return void
 	 */
 	private function to_lw( int $post_id, array $old, array $new ): void {
-		foreach ( BricksSeoMap::changes( $old, $new ) as $field => $value ) {
+		foreach ( SeoMap::changes( $old, $new ) as $field => $value ) {
 			Options::set_post_meta( $post_id, $field, MetaFields::sanitize( MetaFields::POST[ $field ], $value ) );
 		}
 	}
@@ -175,7 +175,7 @@ final class BricksSeoSync {
 		}
 
 		$image_id = 'og_image' === $field && '' !== $value ? (int) attachment_url_to_postid( $value ) : 0;
-		$updated  = BricksSeoMap::apply( $settings, $field, $value, $image_id );
+		$updated  = SeoMap::apply( $settings, $field, $value, $image_id );
 
 		if ( null === $updated || $updated === $settings ) {
 			return;

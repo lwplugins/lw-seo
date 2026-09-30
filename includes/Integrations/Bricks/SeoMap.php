@@ -7,15 +7,15 @@
 
 declare(strict_types=1);
 
-namespace LightweightPlugins\SEO\Compat;
+namespace LightweightPlugins\SEO\Integrations\Bricks;
 
 /**
  * Maps the SEO part of a Bricks page settings array (`_bricks_page_settings`)
  * to LW SEO post fields and back. Text only ever travels when it is not
- * empty and can be converted (see BricksTags), so neither side's text is
+ * empty and can be converted (see Tags), so neither side's text is
  * cleared by the other; robots flags travel both ways, as on/off.
  */
-final class BricksSeoMap {
+final class SeoMap {
 
 	/**
 	 * Bricks text setting => LW SEO field.
@@ -52,7 +52,7 @@ final class BricksSeoMap {
 
 		foreach ( self::TEXT as $key => $field ) {
 			$text = isset( $settings[ $key ] ) && is_string( $settings[ $key ] ) ? trim( $settings[ $key ] ) : '';
-			$text = '' === $text ? null : BricksTags::to_lw( $text );
+			$text = '' === $text ? null : Tags::to_lw( $text );
 
 			if ( null !== $text ) {
 				$values[ $field ] = $text;
@@ -127,7 +127,7 @@ final class BricksSeoMap {
 			return $settings;
 		}
 
-		$text = BricksTags::to_bricks( $value );
+		$text = Tags::to_bricks( $value );
 		if ( null === $text ) {
 			return null;
 		}

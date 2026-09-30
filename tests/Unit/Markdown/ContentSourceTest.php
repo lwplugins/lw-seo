@@ -10,23 +10,22 @@ declare(strict_types=1);
 namespace LightweightPlugins\SEO\Tests\Unit\Markdown;
 
 use Brain\Monkey\Filters;
-use Bricks\Database;
-use Bricks\Helpers;
 use LightweightPlugins\SEO\Markdown\ContentSource;
 use LightweightPlugins\SEO\Tests\Unit\MonkeyTestCase;
 
 final class ContentSourceTest extends MonkeyTestCase {
 
-	protected function tearDown(): void {
-		Database::test_reset();
-		parent::tearDown();
+	public function test_uses_the_html_a_source_filter_supplies(): void {
+		Filters\expectApplied( 'lw_seo_markdown_source_html' )->once()->andReturn( '<p>Built with a builder</p>' );
+
+		$this->assertSame( '<p>Built with a builder</p>', ContentSource::html( $this->post() ) );
 	}
 
-	public function test_uses_the_bricks_content_of_a_bricks_page(): void {
-		Helpers::$test_bricks_posts = [ 7 ];
-		Database::$test_content[7]  = [ [ 'id' => 'abc123', 'settings' => [ 'text' => 'Built with Bricks' ] ] ];
+	public function test_ignores_a_non_string_source_value(): void {
+		Filters\expectApplied( 'lw_seo_markdown_source_html' )->andReturn( [ 'bad' ] );
+		Filters\expectApplied( 'the_content' )->andReturn( '<p>Hi</p>' );
 
-		$this->assertSame( '<p>Built with Bricks</p>', ContentSource::html( $this->post() ) );
+		$this->assertSame( '<p>Hi</p>', ContentSource::html( $this->post() ) );
 	}
 
 	public function test_runs_post_content_through_the_content_otherwise(): void {

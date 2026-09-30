@@ -95,6 +95,6 @@ final class Loader {
 	 * @return array<int, IntegrationInterface>
 	 */
 	private static function defaults(): array {
-		return [];
+		return [ new Bricks\Integration() ];
 	}
 }

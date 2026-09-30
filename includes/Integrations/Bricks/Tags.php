@@ -7,7 +7,7 @@
 
 declare(strict_types=1);
 
-namespace LightweightPlugins\SEO\Compat;
+namespace LightweightPlugins\SEO\Integrations\Bricks;
 
 /**
  * Translates the Bricks dynamic data tags that have an LW SEO variable
@@ -16,7 +16,7 @@ namespace LightweightPlugins\SEO\Compat;
  * convertible: both methods return null so the caller leaves that field
  * alone instead of copying text the other side would print literally.
  */
-final class BricksTags {
+final class Tags {
 
 	/**
 	 * Bricks tag => LW SEO variable name.
