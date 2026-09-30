@@ -5,6 +5,10 @@
 ### Changed
 - The code that works with Bricks, Polylang, WooCommerce and LW Site Manager is loaded only while that theme or plugin is active.
 - `wp lw-seo bricks import` is available only while Bricks (or a Bricks child theme) is the active theme.
+- LW SEO requires PHP 8.0 (was 8.2), like the other LW plugins.
+
+### Fixed
+- Product pages printed two og:type tags (article and product) and article publish times; with the WooCommerce SEO setting on they now print one og:type product.
 
 ## [1.8.3] - 2026-09-30
 
