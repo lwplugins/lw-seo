@@ -23,6 +23,19 @@ final class OpenGraph {
 	 */
 	public function __construct() {
 		add_action( 'wp_head', [ $this, 'output_product_opengraph' ], 30 );
+		add_filter( 'lw_seo_og_type', [ $this, 'og_type' ], 10, 2 );
+	}
+
+	/**
+	 * `lw_seo_og_type` callback: products are og:type product. LW SEO's head
+	 * prints the one og:type tag.
+	 *
+	 * @param mixed    $type og:type so far.
+	 * @param \WP_Post $post The post.
+	 * @return mixed
+	 */
+	public function og_type( $type, \WP_Post $post ) {
+		return 'product' === $post->post_type ? 'product' : $type;
 	}
 
 	/**
@@ -46,9 +59,6 @@ final class OpenGraph {
 		}
 
 		echo "\n<!-- LW SEO WooCommerce OpenGraph -->\n";
-
-		// Product type.
-		echo '<meta property="og:type" content="product" />' . "\n";
 
 		// Price.
 		$this->output_price_tags( $product );

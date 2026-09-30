@@ -60,7 +60,28 @@ final class SingularMeta {
 		$og_title        = ! empty( $custom_og_title ) ? $custom_og_title : $title;
 		$og_image        = $this->og_image( $post );
 
-		$this->renderer->render( $title, $descriptions['meta'], $canonical, $og_title, $descriptions['og'], $og_image, 'article', $descriptions['twitter'] );
+		$this->renderer->render( $title, $descriptions['meta'], $canonical, $og_title, $descriptions['og'], $og_image, $this->og_type( $post ), $descriptions['twitter'] );
+	}
+
+	/**
+	 * The og:type of a post: article, unless an integration knows better
+	 * (WooCommerce: product).
+	 *
+	 * @param \WP_Post $post The post object.
+	 * @return string
+	 */
+	private function og_type( \WP_Post $post ): string {
+		/**
+		 * The og:type of a singular post.
+		 *
+		 * @internal Used by the WooCommerce integration; not a public API yet.
+		 *
+		 * @param mixed    $type 'article' by default; anything but a non-empty string is ignored.
+		 * @param \WP_Post $post The post.
+		 */
+		$type = apply_filters( 'lw_seo_og_type', 'article', $post );
+
+		return is_string( $type ) && '' !== $type ? $type : 'article';
 	}
 
 	/**
