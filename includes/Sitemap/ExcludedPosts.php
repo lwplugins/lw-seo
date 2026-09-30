@@ -16,11 +16,6 @@ namespace LightweightPlugins\SEO\Sitemap;
 final class ExcludedPosts {
 
 	/**
-	 * WooCommerce pages WooCommerce itself marks noindex (wc_page_no_robots()).
-	 */
-	private const WOOCOMMERCE_PAGES = [ 'cart', 'checkout', 'myaccount' ];
-
-	/**
 	 * Post IDs to leave out of a post type's sitemap.
 	 *
 	 * @param string $post_type Post type of the sitemap being built.
@@ -38,30 +33,8 @@ final class ExcludedPosts {
 		 * @param int[]  $ids       Post IDs.
 		 * @param string $post_type Post type of the sitemap being built.
 		 */
-		$ids = (array) apply_filters( 'lw_seo_sitemap_excluded_ids', self::woocommerce_page_ids(), $post_type );
+		$ids = (array) apply_filters( 'lw_seo_sitemap_excluded_ids', [], $post_type );
 
 		return array_values( array_filter( array_map( 'intval', $ids ), static fn( int $id ): bool => $id > 0 ) );
-	}
-
-	/**
-	 * IDs of the assigned WooCommerce cart, checkout and my account pages.
-	 *
-	 * @return array<int, int>
-	 */
-	private static function woocommerce_page_ids(): array {
-		if ( ! function_exists( 'wc_get_page_id' ) ) {
-			return [];
-		}
-
-		$ids = [];
-		foreach ( self::WOOCOMMERCE_PAGES as $page ) {
-			$id = (int) wc_get_page_id( $page );
-
-			if ( $id > 0 ) {
-				$ids[] = $id;
-			}
-		}
-
-		return $ids;
 	}
 }

@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace LightweightPlugins\SEO\Migration\Yoast;
 
 use LightweightPlugins\SEO\Migration\MigratorInterface;
-use LightweightPlugins\SEO\WooCommerce\SlugCollisionDetector;
+use LightweightPlugins\SEO\Integrations\WooCommerce\SlugCollisionDetector;
 
 /**
  * Wires together all Yoast sub-migrators and surfaces detection counts +

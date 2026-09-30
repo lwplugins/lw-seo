@@ -7,7 +7,7 @@
 
 declare(strict_types=1);
 
-namespace LightweightPlugins\SEO\WooCommerce;
+namespace LightweightPlugins\SEO\Integrations\WooCommerce;
 
 /**
  * Builds the set of root-level slugs that would shadow another piece of content.

@@ -7,16 +7,16 @@
 
 declare(strict_types=1);
 
-namespace LightweightPlugins\SEO\Tests\Unit\WooCommerce;
+namespace LightweightPlugins\SEO\Tests\Unit\Integrations\WooCommerce;
 
 use Brain\Monkey\Functions;
 use LightweightPlugins\SEO\Options;
 use LightweightPlugins\SEO\Tests\Unit\MonkeyTestCase;
 use LightweightPlugins\SEO\Tests\Unit\OptionsStubTrait;
-use LightweightPlugins\SEO\WooCommerce\ReviewSchema;
+use LightweightPlugins\SEO\Integrations\WooCommerce\ReviewSchema;
 
 /**
- * @covers \LightweightPlugins\SEO\WooCommerce\ReviewSchema
+ * @covers \LightweightPlugins\SEO\Integrations\WooCommerce\ReviewSchema
  */
 final class ReviewSchemaTest extends MonkeyTestCase {
 

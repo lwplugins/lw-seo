@@ -7,11 +7,11 @@
 
 declare(strict_types=1);
 
-namespace LightweightPlugins\SEO\Tests\Unit\WooCommerce;
+namespace LightweightPlugins\SEO\Tests\Unit\Integrations\WooCommerce;
 
 use Brain\Monkey\Functions;
 use LightweightPlugins\SEO\Tests\Unit\MonkeyTestCase;
-use LightweightPlugins\SEO\WooCommerce\PermalinkFlagFlusher;
+use LightweightPlugins\SEO\Integrations\WooCommerce\PermalinkFlagFlusher;
 
 final class PermalinkFlagFlusherTest extends MonkeyTestCase {
 

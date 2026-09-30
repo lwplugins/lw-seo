@@ -54,10 +54,17 @@ final class Dispatcher {
 			return new TaxonomyRenderer( $object );
 		}
 
-		if ( 'product' === $object->post_type && class_exists( 'WooCommerce' ) ) {
-			return new ProductRenderer( $object );
-		}
+		/**
+		 * Renderer of a post type with its own Markdown layout.
+		 *
+		 * @internal Used by the WooCommerce integration; not a public API yet.
+		 *
+		 * @param mixed    $renderer Null by default (the post renderer); anything
+		 *                           but a RendererInterface is ignored.
+		 * @param \WP_Post $post     Post object.
+		 */
+		$renderer = apply_filters( 'lw_seo_markdown_renderer', null, $object );
 
-		return new PostRenderer( $object );
+		return $renderer instanceof RendererInterface ? $renderer : new PostRenderer( $object );
 	}
 }

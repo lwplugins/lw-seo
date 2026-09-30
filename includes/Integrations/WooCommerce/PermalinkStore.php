@@ -7,7 +7,7 @@
 
 declare(strict_types=1);
 
-namespace LightweightPlugins\SEO\WooCommerce;
+namespace LightweightPlugins\SEO\Integrations\WooCommerce;
 
 /**
  * Thin storage adapter: fetches product_cat terms in a shape the rule builder

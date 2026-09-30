@@ -7,9 +7,11 @@
 
 declare(strict_types=1);
 
-namespace LightweightPlugins\SEO\Markdown;
+namespace LightweightPlugins\SEO\Integrations\WooCommerce;
 
 use LightweightPlugins\SEO\Content\PostDescription;
+use LightweightPlugins\SEO\Markdown\ContentSource;
+use LightweightPlugins\SEO\Markdown\RendererInterface;
 use LightweightPlugins\SEO\Helpers\HtmlToMarkdown;
 use LightweightPlugins\SEO\Helpers\Markdown\InlineRenderer;
 use LightweightPlugins\SEO\Options;

@@ -1,20 +1,16 @@
 <?php
 /**
- * WooCommerce integration main class.
+ * WooCommerce state helpers.
  *
  * @package LightweightPlugins\SEO
  */
 
 declare(strict_types=1);
 
-namespace LightweightPlugins\SEO\WooCommerce;
-
-use LightweightPlugins\SEO\Options;
+namespace LightweightPlugins\SEO\Integrations\WooCommerce;
 
 /**
- * Main WooCommerce integration class.
- *
- * Handles detection and coordinates WooCommerce-specific SEO features.
+ * WooCommerce state helpers (active, current product, WooCommerce pages).
  */
 final class WooCommerce {
 
@@ -24,21 +20,6 @@ final class WooCommerce {
 	 * @var bool|null
 	 */
 	private static ?bool $is_active = null;
-
-	/**
-	 * Constructor.
-	 */
-	public function __construct() {
-		if ( ! self::is_active() ) {
-			return;
-		}
-
-		if ( ! Options::get( 'woo_enabled', true ) ) {
-			return;
-		}
-
-		$this->init_components();
-	}
 
 	/**
 	 * Check if WooCommerce is active.
@@ -51,17 +32,6 @@ final class WooCommerce {
 		}
 
 		return self::$is_active;
-	}
-
-	/**
-	 * Initialize WooCommerce SEO components.
-	 *
-	 * @return void
-	 */
-	private function init_components(): void {
-		new OpenGraph();
-		new Schema();
-		new PermalinkWatcher();
 	}
 
 	/**

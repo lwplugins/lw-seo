@@ -7,7 +7,7 @@
 
 declare(strict_types=1);
 
-namespace LightweightPlugins\SEO\WooCommerce;
+namespace LightweightPlugins\SEO\Integrations\WooCommerce;
 
 /**
  * Pure-data helper that turns a {term_id, slug, parent} category set into the

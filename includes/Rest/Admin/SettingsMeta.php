@@ -17,8 +17,8 @@ use LightweightPlugins\SEO\Options;
 use LightweightPlugins\SEO\ReplaceVars;
 use LightweightPlugins\SEO\RobotsTxt;
 use LightweightPlugins\SEO\Sitemap\ProviderRegistry;
-use LightweightPlugins\SEO\WooCommerce\PermalinkWatcher;
-use LightweightPlugins\SEO\WooCommerce\WooCommerce;
+use LightweightPlugins\SEO\Integrations\Loader;
+use LightweightPlugins\SEO\Integrations\WooCommerce\PermalinkWatcher;
 
 /**
  * Builds the `meta` block of the settings response: choices, URLs and
@@ -36,7 +36,7 @@ final class SettingsMeta {
 		$post_types = PostTypes::post_types();
 
 		return [
-			'woo_active'             => WooCommerce::is_active(),
+			'woo_active'             => Loader::is_active( 'woocommerce' ),
 			'conflict_plugin'        => HeadMeta::conflicting_plugin_name(),
 			'urls'                   => [
 				'sitemap' => home_url( '/sitemap.xml' ),

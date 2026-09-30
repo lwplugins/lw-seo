@@ -7,11 +7,11 @@
 
 declare(strict_types=1);
 
-namespace LightweightPlugins\SEO\Tests\Unit\Markdown;
+namespace LightweightPlugins\SEO\Tests\Unit\Integrations\WooCommerce;
 
 use Brain\Monkey\Filters;
 use Brain\Monkey\Functions;
-use LightweightPlugins\SEO\Markdown\ProductRenderer;
+use LightweightPlugins\SEO\Integrations\WooCommerce\ProductRenderer;
 use LightweightPlugins\SEO\Tests\Unit\MonkeyTestCase;
 
 final class ProductRendererTest extends MonkeyTestCase {

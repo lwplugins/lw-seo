@@ -14,11 +14,9 @@ use LightweightPlugins\SEO\Admin\SettingsPage;
 use LightweightPlugins\SEO\Editor\BlockEditorAssets;
 use LightweightPlugins\SEO\Editor\PostRestField;
 use LightweightPlugins\SEO\Rest\Admin\Routes as AdminRoutes;
-use LightweightPlugins\SEO\WooCommerce\PermalinkFlagFlusher;
 use LightweightPlugins\SEO\Blocks\FAQ\Block as FAQBlock;
 use LightweightPlugins\SEO\Schema\Schema;
 use LightweightPlugins\SEO\Sitemap\Sitemap;
-use LightweightPlugins\SEO\WooCommerce\WooCommerce;
 use LightweightPlugins\SEO\Local\Schema as LocalSchema;
 use LightweightPlugins\SEO\Local\Shortcodes as LocalShortcodes;
 use LightweightPlugins\SEO\Redirects\Handler as RedirectHandler;
@@ -106,7 +104,6 @@ final class Plugin {
 		// Admin REST API (React settings screen) and the block editor field.
 		( new AdminRoutes() )->register();
 		( new PostRestField() )->register();
-		( new PermalinkFlagFlusher() )->register();
 
 		// Frontend/shared components.
 		new Sitemap();
@@ -132,9 +129,6 @@ final class Plugin {
 
 		// Gutenberg blocks.
 		new FAQBlock();
-
-		// WooCommerce integration (self-checks if WooCommerce is active).
-		new WooCommerce();
 
 		// Local SEO.
 		new LocalSchema();

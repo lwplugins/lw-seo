@@ -7,7 +7,7 @@
 
 declare(strict_types=1);
 
-namespace LightweightPlugins\SEO\WooCommerce;
+namespace LightweightPlugins\SEO\Integrations\WooCommerce;
 
 use LightweightPlugins\SEO\Options;
 
