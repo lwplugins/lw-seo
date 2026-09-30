@@ -7,7 +7,7 @@
 
 declare(strict_types=1);
 
-namespace LightweightPlugins\SEO\SiteManager;
+namespace LightweightPlugins\SEO\Integrations\SiteManager;
 
 use LightweightPlugins\SEO\Admin\MarkdownOverrideField;
 use LightweightPlugins\SEO\ContentSignals;

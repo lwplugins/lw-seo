@@ -7,7 +7,7 @@
 
 declare(strict_types=1);
 
-namespace LightweightPlugins\SEO\SiteManager;
+namespace LightweightPlugins\SEO\Integrations\SiteManager;
 
 /**
  * Registers SEO-specific abilities with the WordPress Abilities API.

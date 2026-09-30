@@ -124,9 +124,6 @@ final class Plugin {
 		new CanonicalGuard();
 		new RewriteFlusher();
 
-		// LW Site Manager integration (no-op if Site Manager is not active).
-		SiteManager\Integration::init();
-
 		// Gutenberg blocks.
 		new FAQBlock();
 

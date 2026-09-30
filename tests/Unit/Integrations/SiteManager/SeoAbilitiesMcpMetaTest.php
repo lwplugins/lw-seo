@@ -7,10 +7,10 @@
 
 declare(strict_types=1);
 
-namespace LightweightPlugins\SEO\Tests\Unit\SiteManager;
+namespace LightweightPlugins\SEO\Tests\Unit\Integrations\SiteManager;
 
 use Brain\Monkey\Functions;
-use LightweightPlugins\SEO\SiteManager\SeoAbilities;
+use LightweightPlugins\SEO\Integrations\SiteManager\SeoAbilities;
 use LightweightPlugins\SEO\Tests\Unit\MonkeyTestCase;
 
 /**
@@ -18,7 +18,7 @@ use LightweightPlugins\SEO\Tests\Unit\MonkeyTestCase;
  * Site Manager's MCP server (which only auto-exposes site-manager/*) never
  * listed them.
  *
- * @covers \LightweightPlugins\SEO\SiteManager\SeoAbilities
+ * @covers \LightweightPlugins\SEO\Integrations\SiteManager\SeoAbilities
  */
 final class SeoAbilitiesMcpMetaTest extends MonkeyTestCase {
 

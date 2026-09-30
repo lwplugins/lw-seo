@@ -2,26 +2,47 @@
 /**
  * LW Site Manager Integration.
  *
- * Registers SEO abilities when LW Site Manager is active.
+ * Registers SEO abilities with LW Site Manager.
  *
  * @package LightweightPlugins\SEO
  */
 
 declare(strict_types=1);
 
-namespace LightweightPlugins\SEO\SiteManager;
+namespace LightweightPlugins\SEO\Integrations\SiteManager;
+
+use LightweightPlugins\SEO\Integrations\IntegrationInterface;
 
 /**
  * Hooks into LW Site Manager to register SEO abilities.
  */
-final class Integration {
+final class Integration implements IntegrationInterface {
 
 	/**
-	 * Initialize hooks. Safe to call even if Site Manager is not active.
+	 * Integration ID.
+	 *
+	 * @return string
+	 */
+	public function id(): string {
+		return 'site-manager';
+	}
+
+	/**
+	 * LW Site Manager is active. Its registration actions run on init
+	 * (wp_abilities_api_*_init), after the Loader.
+	 *
+	 * @return bool
+	 */
+	public function is_available(): bool {
+		return defined( 'LW_SITE_MANAGER_VERSION' );
+	}
+
+	/**
+	 * Hook into LW Site Manager's registration actions.
 	 *
 	 * @return void
 	 */
-	public static function init(): void {
+	public function register(): void {
 		add_action( 'lw_site_manager_register_categories', [ self::class, 'register_category' ] );
 		add_action( 'lw_site_manager_register_abilities', [ self::class, 'register_abilities' ] );
 	}

@@ -7,10 +7,10 @@
 
 declare(strict_types=1);
 
-namespace LightweightPlugins\SEO\Tests\Unit\SiteManager;
+namespace LightweightPlugins\SEO\Tests\Unit\Integrations\SiteManager;
 
 use Brain\Monkey\Functions;
-use LightweightPlugins\SEO\SiteManager\SeoService;
+use LightweightPlugins\SEO\Integrations\SiteManager\SeoService;
 use LightweightPlugins\SEO\Tests\Unit\MonkeyTestCase;
 
 final class SeoServiceTest extends MonkeyTestCase {
