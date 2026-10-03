@@ -3,7 +3,7 @@ Contributors: lwplugins
 Tags: seo, sitemap, schema, opengraph, breadcrumbs
 Requires at least: 6.6
 Tested up to: 7.1
-Stable tag: 1.8.4
+Stable tag: 1.8.5
 Requires PHP: 8.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -140,6 +140,9 @@ Your sitemap is available at `yoursite.com/sitemap.xml`
 6. Settings page - Advanced tab
 
 == Changelog ==
+
+= 1.8.5 =
+* Fix: The admin Docs link now opens the plugin's page on docs.lwplugins.com, in Hungarian for Hungarian admin users.
 
 = 1.8.4 =
 * Change: the code that works with Bricks, Polylang, WooCommerce and LW Site Manager is loaded only while that theme or plugin is active.
