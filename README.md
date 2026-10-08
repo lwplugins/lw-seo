@@ -170,6 +170,10 @@ composer test
 
 Full documentation: [docs/](docs/README.md) · Changelog: [CHANGELOG.md](CHANGELOG.md)
 
+## Special Thanks
+
+Special thanks to [PixelDesigns](https://github.com/pixeldesigns) for the countless hours of testing and the advice that shaped LW SEO.
+
 ## License
 
 GPL-2.0-or-later
