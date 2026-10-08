@@ -680,6 +680,27 @@ $canvas: var(--wpds-color-background-surface-neutral-weak, #f6f7f7);
 
 // Feed ---------------------------------------------------------------------
 
+// Shared row layout for the feed and the check lists (e.g. migration results):
+// each list sets only its own grid-template-columns.
+.lw-admin-feed,
+.lw-admin-checks {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+
+	li {
+		display: grid;
+		gap: $gap-md;
+		align-items: center;
+		margin: 0;
+		padding: 10px 0;
+
+		+ li {
+			border-top: 1px solid $stroke-weak;
+		}
+	}
+}
+
 .lw-admin-feed {
 	li {
 		grid-template-columns: 96px minmax(0, 1fr) auto;
@@ -747,17 +768,15 @@ $canvas: var(--wpds-color-background-surface-neutral-weak, #f6f7f7);
 
 .lw-admin-checks {
 	li {
-		grid-template-columns: minmax(140px, 30%) minmax(0, 1fr) auto;
+		grid-template-columns: minmax(0, 1fr) auto;
 	}
 
 	&__label {
 		font-weight: 500;
 	}
 
-	&__detail {
-		overflow: hidden;
-		color: $muted;
-		text-overflow: ellipsis;
+	strong {
+		font-variant-numeric: tabular-nums;
 	}
 }
 
@@ -773,7 +792,6 @@ $canvas: var(--wpds-color-background-surface-neutral-weak, #f6f7f7);
 }
 
 @media (max-width: 782px) {
-	.lw-admin-checks li,
 	.lw-admin-feed li {
 		grid-template-columns: 1fr auto;
 

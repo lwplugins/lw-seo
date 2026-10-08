@@ -1,5 +1,10 @@
 # Changelog
 
+## [1.8.7] - 2026-10-08
+
+### Fixed
+- The migration results list shows each label and its number in separate columns again, instead of running them together.
+
 ## [1.8.6] - 2026-10-08
 
 ### Fixed

@@ -55,7 +55,6 @@ function Rows( { rows } ) {
 			{ rows.map( ( [ label, value ] ) => (
 				<li key={ label }>
 					<span className="lw-admin-checks__label">{ label }</span>
-					<span className="lw-admin-checks__detail" />
 					<strong>{ value }</strong>
 				</li>
 			) ) }

@@ -3,7 +3,7 @@ Contributors: lwplugins
 Tags: seo, sitemap, schema, opengraph, breadcrumbs
 Requires at least: 6.6
 Tested up to: 7.1
-Stable tag: 1.8.6
+Stable tag: 1.8.7
 Requires PHP: 8.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -140,6 +140,9 @@ Your sitemap is available at `yoursite.com/sitemap.xml`
 6. Settings page - Advanced tab
 
 == Changelog ==
+
+= 1.8.7 =
+* Fix: The migration results list shows each label and its number in separate columns again, instead of running them together.
 
 = 1.8.6 =
 * Fix: Running a Rank Math or Yoast migration no longer leaves a blank admin page when only some of the migration warnings apply.
