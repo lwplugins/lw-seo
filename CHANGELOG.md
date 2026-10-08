@@ -1,5 +1,10 @@
 # Changelog
 
+## [1.8.6] - 2026-10-08
+
+### Fixed
+- Running a Rank Math or Yoast migration no longer leaves a blank admin page when only some of the migration warnings apply.
+
 ## [1.8.5] - 2026-10-03
 
 ### Fixed

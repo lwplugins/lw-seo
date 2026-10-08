@@ -63,8 +63,9 @@ function Rows( { rows } ) {
 	);
 }
 
-function Warnings( { warnings = [] } ) {
-	return warnings.map( ( w ) => (
+function Warnings( { warnings } ) {
+	// A PHP array with a key gap arrives as an object; never crash the page.
+	return Object.values( warnings || {} ).map( ( w ) => (
 		<Notice
 			key={ w.code + w.message }
 			status={ w.severity === 'error' ? 'error' : w.severity }

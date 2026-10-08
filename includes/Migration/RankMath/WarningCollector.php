@@ -28,12 +28,15 @@ final class WarningCollector {
 	 * @return array<array{code: string, severity: string, message: string}>
 	 */
 	public function collect(): array {
-		return array_filter(
-			[
-				$this->woo_permalink_warning(),
-				$this->schema_warning(),
-				$this->non_migratable_warning(),
-			]
+		// array_values: a gap in the keys would reach the admin UI as a JSON object.
+		return array_values(
+			array_filter(
+				[
+					$this->woo_permalink_warning(),
+					$this->schema_warning(),
+					$this->non_migratable_warning(),
+				]
+			)
 		);
 	}
 
