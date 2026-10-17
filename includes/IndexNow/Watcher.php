@@ -1,6 +1,6 @@
 <?php
 /**
- * Queues IndexNow URLs when content changes.
+ * Queues IndexNow changes when content changes.
  *
  * @package LightweightPlugins\SEO
  */
@@ -14,7 +14,7 @@ use LightweightPlugins\SEO\Options;
 use LightweightPlugins\SEO\Sitemap\ExcludedPosts;
 
 /**
- * Never sends anything itself: URLs go to the queue.
+ * Never sends anything itself: changes go to the queue.
  */
 final class Watcher {
 
@@ -66,23 +66,23 @@ final class Watcher {
 
 		$id = (int) $post->ID;
 
-		if ( in_array( $id, ExcludedPosts::ids( (string) $post->post_type ), true ) ) {
+		if ( 'publish' === $new_status ) {
+			// Resolved and checked at flush time, once the noindex meta and
+			// product visibility saved after this hook are in place.
+			unset( $this->published_urls[ $id ] );
+			Queue::add_posts( [ $id ] );
 			return;
 		}
 
-		if ( 'publish' === $new_status ) {
-			if ( ! Eligibility::is_post_eligible( $post ) ) {
-				return;
-			}
-			$url = get_permalink( $post );
-		} else {
-			// Removal: the status is no longer publish, so only these checks apply.
-			if ( '' !== (string) $post->post_password || ! Eligibility::is_type_indexable( (string) $post->post_type ) || Options::get_post_meta( $id, 'noindex' ) ) {
-				return;
-			}
-			$url = $this->published_url( $post );
+		// Removal: the status is no longer publish, so only these checks apply.
+		if ( in_array( $id, ExcludedPosts::ids( (string) $post->post_type ), true )
+			|| '' !== (string) $post->post_password
+			|| ! Eligibility::is_type_indexable( (string) $post->post_type )
+			|| Options::get_post_meta( $id, 'noindex' ) ) {
+			return;
 		}
 
+		$url = $this->published_url( $post );
 		unset( $this->published_urls[ $id ] );
 
 		if ( $url ) {
@@ -155,11 +155,13 @@ final class Watcher {
 	 * @return void
 	 */
 	public function on_term_edited( int $term_id, int $tt_id, string $taxonomy ): void {
-		$url = $this->eligible_term_url( $term_id, $taxonomy );
-
-		if ( null !== $url ) {
-			Queue::add( [ $url ] );
+		// The term meta box saves its noindex meta after this hook, so the
+		// term is checked at flush time.
+		if ( $this->is_ignored_request( 0 ) || ! is_taxonomy_viewable( $taxonomy ) ) {
+			return;
 		}
+
+		Queue::add_terms( [ $term_id ] );
 	}
 
 	/**

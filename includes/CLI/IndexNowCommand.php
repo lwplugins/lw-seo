@@ -81,7 +81,7 @@ final class IndexNowCommand {
 	public function status( array $args, array $assoc_args ): void {
 		\WP_CLI::line( 'Enabled: ' . ( Options::get( 'indexnow_enabled' ) ? 'yes' : 'no' ) );
 		\WP_CLI::line( 'Key file: ' . ( '' === Key::get() ? '(none yet)' : Key::location() ) );
-		\WP_CLI::line( 'Queued URLs: ' . count( Queue::pending() ) );
+		\WP_CLI::line( 'Queued changes: ' . Queue::size() );
 
 		$rows = [];
 		foreach ( array_reverse( Log::all() ) as $entry ) {

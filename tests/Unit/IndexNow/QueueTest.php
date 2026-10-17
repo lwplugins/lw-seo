@@ -60,7 +60,47 @@ final class QueueTest extends MonkeyTestCase {
 		Queue::add( [ 'https://e.com/a/', 'https://e.com/b/' ] );
 		Queue::add( [ 'https://e.com/a/' ] );
 
-		$this->assertSame( [ 'https://e.com/a/', 'https://e.com/b/' ], $this->store['lw_seo_indexnow_queue'] );
+		$this->assertSame( [ 'https://e.com/a/', 'https://e.com/b/' ], $this->store['lw_seo_indexnow_queue']['urls'] );
+	}
+
+	public function test_posts_and_terms_are_queued_by_id(): void {
+		$this->stub_store( true );
+		Functions\when( 'wp_schedule_single_event' )->justReturn( true );
+
+		Queue::add_posts( [ 5, 6 ] );
+		Queue::add_posts( [ 5 ] );
+		Queue::add_terms( [ 3 ] );
+
+		$this->assertSame( [ 5, 6 ], $this->store['lw_seo_indexnow_queue']['posts'] );
+		$this->assertSame( [ 3 ], $this->store['lw_seo_indexnow_queue']['terms'] );
+		$this->assertSame( 3, Queue::size() );
+	}
+
+	public function test_flat_url_list_from_earlier_build_is_read_as_urls(): void {
+		$this->stub_store( true, true );
+		$this->store['lw_seo_indexnow_queue'] = [ 'https://e.com/old/' ];
+
+		Queue::add_posts( [ 5 ] );
+
+		$this->assertSame( [ 'https://e.com/old/' ], $this->store['lw_seo_indexnow_queue']['urls'] );
+		$this->assertSame( [ 5 ], $this->store['lw_seo_indexnow_queue']['posts'] );
+	}
+
+	public function test_cap_drops_newest_additions_and_logs_once(): void {
+		$this->stub_store( true, true );
+		$this->store['lw_seo_indexnow_queue'] = [
+			'posts' => [],
+			'terms' => [],
+			'urls'  => array_map( static fn( int $i ): string => 'https://e.com/' . $i . '/', range( 1, Queue::MAX - 1 ) ),
+		];
+
+		Queue::add_posts( [ 7, 8, 9 ] );
+		Queue::add_posts( [ 10 ] );
+
+		$this->assertSame( [ 7 ], $this->store['lw_seo_indexnow_queue']['posts'] );
+		$this->assertSame( Queue::MAX, Queue::size() );
+		$this->assertCount( 1, $this->store['lw_seo_indexnow_log'], 'overflow is logged once' );
+		$this->assertSame( 2, $this->store['lw_seo_indexnow_log'][0]['count'] );
 	}
 
 	public function test_single_event_scheduled(): void {
@@ -99,6 +139,37 @@ final class QueueTest extends MonkeyTestCase {
 
 		$this->assertSame( 1, $sent );
 		$this->assertArrayNotHasKey( 'lw_seo_indexnow_queue', $this->store );
+	}
+
+	public function test_flush_resolves_queued_posts_at_send_time(): void {
+		$this->stub_store( true );
+		$this->store['lw_seo_indexnow_queue'] = [
+			'posts' => [ 5, 6 ],
+			'terms' => [],
+			'urls'  => [ 'https://e.com/removed/' ],
+		];
+		$sent = [];
+		Functions\when( '_prime_post_caches' )->justReturn( null );
+		Functions\when( 'get_post' )->alias( static fn( int $id ): \WP_Post => new \WP_Post( [ 'ID' => $id, 'post_status' => 'publish', 'post_password' => '', 'post_type' => 'post' ] ) );
+		Functions\when( 'is_post_type_viewable' )->justReturn( true );
+		// Post 6 got its noindex meta after it was queued.
+		Functions\when( 'get_post_meta' )->alias( static fn( int $id ) => 6 === $id ? '1' : '' );
+		Functions\when( 'get_permalink' )->alias( static fn( \WP_Post $post ): string => 'https://e.com/p' . $post->ID . '/' );
+		Functions\when( 'home_url' )->alias( static fn( string $path = '' ): string => 'https://e.com' . $path );
+		Functions\when( 'wp_parse_url' )->alias( static fn( string $url, int $component = -1 ) => parse_url( $url, $component ) );
+		Functions\when( 'wp_json_encode' )->alias( static fn( $data ) => json_encode( $data ) );
+		Functions\when( 'wp_remote_post' )->alias(
+			static function ( string $endpoint, array $args ) use ( &$sent ) {
+				$sent = json_decode( $args['body'], true )['urlList'];
+				return [];
+			}
+		);
+		Functions\when( 'is_wp_error' )->justReturn( false );
+		Functions\when( 'wp_remote_retrieve_response_code' )->justReturn( 200 );
+
+		Queue::flush();
+
+		$this->assertSame( [ 'https://e.com/removed/', 'https://e.com/p5/' ], $sent );
 	}
 
 	public function test_flush_when_disabled_clears_without_sending(): void {

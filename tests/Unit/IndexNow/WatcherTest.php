@@ -19,7 +19,7 @@ final class WatcherTest extends MonkeyTestCase {
 
 	use OptionsStubTrait;
 
-	/** @var array<int, string> */
+	/** @var array<string, mixed> Last stored queue. */
 	private array $queued = [];
 
 	protected function setUp(): void {
@@ -56,34 +56,41 @@ final class WatcherTest extends MonkeyTestCase {
 		return new \WP_Post( array_merge( [ 'ID' => 5, 'post_status' => 'publish', 'post_password' => '', 'post_type' => 'post', 'post_name' => 'slug' ], $props ) );
 	}
 
-	public function test_publish_queues_url(): void {
+	/**
+	 * Queued URLs of the last stored queue.
+	 *
+	 * @return array<int, string>
+	 */
+	private function urls(): array {
+		return $this->queued['urls'] ?? [];
+	}
+
+	public function test_publish_queues_post_id_not_url(): void {
+		Functions\expect( 'get_permalink' )->never();
+
 		$this->enabled()->on_transition( 'publish', 'draft', $this->post() );
 
-		$this->assertSame( [ 'https://e.com/p5/' ], $this->queued );
+		$this->assertSame( [ 5 ], $this->queued['posts'] );
+		$this->assertSame( [], $this->urls() );
+	}
+
+	public function test_publish_defers_noindex_and_exclusion_checks_to_flush(): void {
+		// Meta saved later in the request decides; the transition only queues the ID.
+		$this->enabled( [ 'noindex_post' => true ] )->on_transition( 'publish', 'draft', $this->post() );
+
+		$this->assertSame( [ 5 ], $this->queued['posts'] );
 	}
 
 	public function test_trash_queues_url(): void {
 		$this->enabled()->on_transition( 'trash', 'publish', $this->post( [ 'post_status' => 'trash' ] ) );
 
-		$this->assertSame( [ 'https://e.com/p5/' ], $this->queued );
+		$this->assertSame( [ 'https://e.com/p5/' ], $this->urls() );
 	}
 
 	public function test_draft_to_draft_ignored(): void {
 		$this->enabled()->on_transition( 'draft', 'pending', $this->post( [ 'post_status' => 'draft' ] ) );
 
 		$this->assertSame( [], $this->queued );
-	}
-
-	public function test_skips_noindex_excluded_password(): void {
-		$this->enabled( [ 'noindex_post' => true ] )->on_transition( 'publish', 'draft', $this->post() );
-		$this->assertSame( [], $this->queued, 'type noindex' );
-
-		$this->enabled()->on_transition( 'publish', 'draft', $this->post( [ 'post_password' => 'x' ] ) );
-		$this->assertSame( [], $this->queued, 'password' );
-
-		Functions\when( 'apply_filters' )->alias( static fn( string $tag, $value ) => 'lw_seo_sitemap_excluded_ids' === $tag ? [ 5 ] : $value );
-		$this->enabled()->on_transition( 'publish', 'draft', $this->post() );
-		$this->assertSame( [], $this->queued, 'excluded id' );
 	}
 
 	public function test_removal_queues_url_captured_before_update(): void {
@@ -95,7 +102,7 @@ final class WatcherTest extends MonkeyTestCase {
 
 		$watcher->on_transition( 'trash', 'publish', $this->post( [ 'post_status' => 'trash' ] ) );
 
-		$this->assertSame( [ 'https://e.com/pretty/' ], $this->queued );
+		$this->assertSame( [ 'https://e.com/pretty/' ], $this->urls() );
 	}
 
 	public function test_capture_restores_slug_from_trash_suffix(): void {
@@ -108,7 +115,7 @@ final class WatcherTest extends MonkeyTestCase {
 
 		$watcher->on_transition( 'trash', 'publish', $this->post( [ 'post_status' => 'trash', 'post_name' => 'slug__trashed' ] ) );
 
-		$this->assertSame( [ 'https://e.com/slug/' ], $this->queued );
+		$this->assertSame( [ 'https://e.com/slug/' ], $this->urls() );
 	}
 
 	public function test_removal_fallback_uses_published_copy_without_trash_suffix(): void {
@@ -118,7 +125,7 @@ final class WatcherTest extends MonkeyTestCase {
 
 		$this->enabled()->on_transition( 'trash', 'publish', $this->post( [ 'post_status' => 'trash', 'post_name' => 'hello__trashed' ] ) );
 
-		$this->assertSame( [ 'https://e.com/hello/publish' ], $this->queued );
+		$this->assertSame( [ 'https://e.com/hello/publish' ], $this->urls() );
 	}
 
 	public function test_skips_removal_of_password_or_excluded_post(): void {
@@ -168,14 +175,20 @@ final class WatcherTest extends MonkeyTestCase {
 		$this->addToAssertionCount( 1 );
 	}
 
-	public function test_term_edited_queues_link(): void {
-		Functions\when( 'get_term' )->justReturn( new \WP_Term( [ 'term_id' => 3, 'taxonomy' => 'category' ] ) );
-		Functions\when( 'get_term_link' )->justReturn( 'https://e.com/category/x/' );
-		Functions\when( 'is_wp_error' )->justReturn( false );
+	public function test_term_edited_queues_term_id(): void {
+		Functions\expect( 'get_term_link' )->never();
 
 		$this->enabled()->on_term_edited( 3, 3, 'category' );
 
-		$this->assertSame( [ 'https://e.com/category/x/' ], $this->queued );
+		$this->assertSame( [ 3 ], $this->queued['terms'] );
+	}
+
+	public function test_term_of_non_viewable_taxonomy_ignored(): void {
+		Functions\when( 'is_taxonomy_viewable' )->justReturn( false );
+
+		$this->enabled()->on_term_edited( 3, 3, 'secret' );
+
+		$this->assertSame( [], $this->queued );
 	}
 
 	public function test_term_delete_uses_link_captured_before_deletion(): void {
@@ -187,6 +200,6 @@ final class WatcherTest extends MonkeyTestCase {
 		Functions\when( 'get_term' )->justReturn( false );
 		$watcher->on_term_deleted( 3 );
 
-		$this->assertSame( [ 'https://e.com/category/x/' ], $this->queued );
+		$this->assertSame( [ 'https://e.com/category/x/' ], $this->urls() );
 	}
 }

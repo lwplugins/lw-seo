@@ -84,7 +84,7 @@ final class IndexNowCommandTest extends MonkeyTestCase {
 		( new IndexNowCommand() )->submit( [ 'https://example.com/a' ], [ 'queue' => true ] );
 
 		$this->assertSame( 0, $this->posts );
-		$this->assertSame( [ 'https://example.com/a' ], $this->store['lw_seo_indexnow_queue'] );
+		$this->assertSame( [ 'https://example.com/a' ], $this->store['lw_seo_indexnow_queue']['urls'] );
 		$this->assertSame( [ 'success: Queued 1 URL(s).' ], \WP_CLI::$log );
 	}
 
