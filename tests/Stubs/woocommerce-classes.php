@@ -70,6 +70,54 @@ if ( ! class_exists( 'WC_Product' ) ) {
 			return $this->id;
 		}
 
+		public function get_type() {
+			return $this->prop( 'type', 'simple' );
+		}
+
+		public function is_type( $type ) {
+			return in_array( $this->get_type(), (array) $type, true );
+		}
+
+		public function get_children( $context = 'view' ) {
+			return $this->prop( 'children', [] );
+		}
+
+		public function get_attributes( $context = 'view' ) {
+			return $this->prop( 'attributes', [] );
+		}
+
+		public function get_variation_attributes() {
+			return $this->prop( 'variation_attributes', [] );
+		}
+
+		public function get_date_on_sale_to( $context = 'view' ) {
+			return $this->prop( 'date_on_sale_to', null );
+		}
+
+		public function get_catalog_visibility( $context = 'view' ) {
+			return $this->prop( 'catalog_visibility', 'visible' );
+		}
+
+		public function get_stock_status( $context = 'view' ) {
+			return $this->prop( 'stock_status', 'instock' );
+		}
+
+		public function get_status( $context = 'view' ) {
+			return $this->prop( 'status', 'publish' );
+		}
+
+		public function get_parent_id( $context = 'view' ) {
+			return $this->prop( 'parent_id', 0 );
+		}
+
+		public function get_permalink() {
+			return $this->prop( 'permalink' );
+		}
+
+		public function is_purchasable() {
+			return $this->prop( 'purchasable', true );
+		}
+
 		public function get_rating_count( $value = null ) {
 			return $this->rating_count;
 		}
@@ -78,6 +126,43 @@ if ( ! class_exists( 'WC_Product' ) ) {
 			return $this->average_rating;
 		}
 	}
+}
+
+if ( ! class_exists( 'WC_Product_Variable' ) ) {
+	/**
+	 * WC_Product_Variable double: variation_attributes are attribute name => values.
+	 */
+	class WC_Product_Variable extends WC_Product {
+		public function get_type() {
+			return 'variable';
+		}
+
+		public function get_variation_attributes() {
+			return parent::get_variation_attributes();
+		}
+	}
+}
+
+if ( ! class_exists( 'WC_Product_Variation' ) ) {
+	/**
+	 * WC_Product_Variation double: variation_attributes are attribute_* => value.
+	 */
+	class WC_Product_Variation extends WC_Product {
+		public function get_type() {
+			return 'variation';
+		}
+
+		public function get_variation_attributes( $with_prefix = true ) {
+			return parent::get_variation_attributes();
+		}
+	}
+}
+
+if ( ! class_exists( 'WC_DateTime' ) ) {
+	/**
+	 * WC_DateTime double.
+	 */
+	class WC_DateTime extends DateTime {}
 }
 
 if ( ! class_exists( 'WC_Comments' ) ) {

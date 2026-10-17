@@ -115,6 +115,34 @@ final class SchemaTest extends MonkeyTestCase {
 		$this->assertSame( [], $this->structured_data->test_generated );
 	}
 
+	public function test_product_group_counts_as_product_node(): void {
+		Functions\when( 'has_action' )->justReturn( 10 );
+		$this->structured_data->test_data = [ [ '@type' => 'ProductGroup' ] + $this->woocommerce_markup() ];
+
+		ob_start();
+		( new Schema() )->ensure_product_node( $this->product() );
+
+		$this->assertSame( '', ob_get_clean() );
+		$this->assertSame( [], $this->structured_data->test_generated );
+	}
+
+	public function test_variable_product_markup_becomes_a_product_group_when_enabled(): void {
+		$this->stub_options( [ 'schema_enabled' => true, 'woo_product_group' => true ] );
+		Functions\when( 'add_query_arg' )->alias( static fn( array $args, string $url ) => $url . '?' . http_build_query( $args ) );
+		Functions\when( 'wc_get_price_to_display' )->alias( static fn( \WC_Product $product ) => (float) $product->get_price() );
+		Functions\when( 'get_term_by' )->justReturn( false );
+		Functions\when( 'sanitize_title' )->alias( static fn( string $title ) => strtolower( $title ) );
+		$variation = new \WC_Product_Variation( 43, 0, 0.0, [ 'price' => '950', 'variation_attributes' => [ 'attribute_pa_color' => 'blue' ] ] );
+		Functions\when( 'wc_get_product' )->justReturn( $variation );
+		$product = new \WC_Product_Variable( 42, 0, 0.0, [ 'name' => 'Áfonyás alkonyat', 'children' => [ 43 ], 'variation_attributes' => [ 'pa_color' => [ 'blue' ] ] ] );
+
+		$markup = ( new Schema() )->enrich_woocommerce_markup( $this->woocommerce_markup(), $product );
+
+		$this->assertSame( 'ProductGroup', $markup['@type'] );
+		$this->assertSame( 'blue', $markup['hasVariant'][0]['color'] );
+		$this->assertArrayNotHasKey( 'offers', $markup );
+	}
+
 	public function test_has_woocommerce_build_the_product_when_the_template_skipped_it(): void {
 		Functions\when( 'has_action' )->justReturn( 10 );
 		$product = $this->product();

@@ -137,6 +137,17 @@ export default function WooTab( { store } ) {
 					) }
 					offText={ __( 'Off', 'lw-seo' ) }
 				/>
+				<SwitchRow
+					title={ __( 'Product variants as ProductGroup', 'lw-seo' ) }
+					help={ __(
+						'Each variation gets its own price and availability in the structured data.',
+						'lw-seo'
+					) }
+					store={ store }
+					name="woo_product_group"
+					onText={ __( 'Enabled', 'lw-seo' ) }
+					offText={ __( 'Off', 'lw-seo' ) }
+				/>
 				<TextRow
 					title={ __( 'Default brand', 'lw-seo' ) }
 					help={ __(

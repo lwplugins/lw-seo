@@ -58,7 +58,7 @@ final class Schema {
 		 * @param array<string, mixed> $markup  Product markup.
 		 * @param \WC_Product          $product The product.
 		 */
-		return apply_filters( 'lw_seo_woo_product_schema', $this->product_schema->enrich( $markup, $product ), $product );
+		return apply_filters( 'lw_seo_woo_product_schema', $this->as_group( $this->product_schema->enrich( $markup, $product ), $product ), $product );
 	}
 
 	/**
@@ -96,7 +96,7 @@ final class Schema {
 		}
 
 		/** This filter is documented in includes/Integrations/WooCommerce/Schema.php */
-		$schema = apply_filters( 'lw_seo_woo_product_schema', $this->product_schema->build( $product ), $product );
+		$schema = apply_filters( 'lw_seo_woo_product_schema', $this->as_group( $this->product_schema->build( $product ), $product ), $product );
 
 		if ( ! is_array( $schema ) || empty( $schema ) ) {
 			return;
@@ -136,14 +136,25 @@ final class Schema {
 	}
 
 	/**
-	 * Whether WooCommerce's collected data holds a Product node.
+	 * A variable product's node as a ProductGroup, when that is on.
+	 *
+	 * @param array<string, mixed> $node    The Product node.
+	 * @param \WC_Product          $product The product.
+	 * @return array<string, mixed>
+	 */
+	private function as_group( array $node, \WC_Product $product ): array {
+		return ProductGroupSchema::applies( $product ) ? ProductGroupSchema::convert( $node, $product ) : $node;
+	}
+
+	/**
+	 * Whether WooCommerce's collected data holds a Product (or ProductGroup) node.
 	 *
 	 * @param mixed $data WooCommerce's structured data.
 	 * @return bool
 	 */
 	private function has_product_node( $data ): bool {
 		foreach ( is_array( $data ) ? $data : [] as $node ) {
-			if ( is_array( $node ) && in_array( 'Product', (array) ( $node['@type'] ?? [] ), true ) ) {
+			if ( is_array( $node ) && array_intersect( [ 'Product', 'ProductGroup' ], (array) ( $node['@type'] ?? [] ) ) ) {
 				return true;
 			}
 		}

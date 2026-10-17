@@ -55,7 +55,7 @@ final class ProductSchema {
 		unset( $markup['aggregateRating'], $markup['review'] );
 		$markup += ( new ReviewSchema() )->properties( $product );
 
-		$seller = $this->get_seller();
+		$seller = self::get_seller();
 		if ( $seller && ! empty( $markup['offers'] ) && is_array( $markup['offers'] ) ) {
 			foreach ( $markup['offers'] as $key => $offer ) {
 				if ( is_array( $offer ) ) {
@@ -183,7 +183,7 @@ final class ProductSchema {
 			'priceValidUntil' => gmdate( 'Y-12-31' ),
 		];
 
-		$seller = $this->get_seller();
+		$seller = self::get_seller();
 		if ( $seller ) {
 			$offer['seller'] = $seller;
 		}
@@ -234,7 +234,7 @@ final class ProductSchema {
 	 *
 	 * @return array<string, string>|null
 	 */
-	private function get_seller(): ?array {
+	public static function get_seller(): ?array {
 		$knowledge_type = Options::get( 'knowledge_type' );
 
 		if ( ! $knowledge_type ) {

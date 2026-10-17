@@ -130,6 +130,7 @@ final class Options {
 			'noindex_product'                 => false,
 			'woo_schema_enabled'              => true,
 			'woo_schema_reviews'              => true,
+			'woo_product_group'               => false,
 			'sitemap_products'                => true,
 			'sitemap_product_cat'             => true,
 			'sitemap_product_tag'             => false,
