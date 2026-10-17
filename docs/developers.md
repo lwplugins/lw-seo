@@ -124,6 +124,96 @@ $exclude = apply_filters( 'lw_seo_sitemap_exclude_post', false, $post_id );
  * @param string $post_type Post type of the sitemap being built.
  */
 $ids = apply_filters( 'lw_seo_sitemap_excluded_ids', $ids, $post_type );
+
+/**
+ * Filter the image URLs listed for a post in the image sitemap.
+ *
+ * @since 1.9.0
+ *
+ * @param array<int, string> $urls Absolute image URLs.
+ * @param \WP_Post           $post Post.
+ */
+$urls = apply_filters( 'lw_seo_sitemap_images', $urls, $post );
+
+/**
+ * Whether the images inside the post content (and integration galleries)
+ * may be listed. Return false to list the featured image only.
+ *
+ * @since 1.9.0
+ *
+ * @param bool     $include Default true.
+ * @param \WP_Post $post    Post.
+ */
+$include = apply_filters( 'lw_seo_sitemap_content_images', true, $post );
+
+/**
+ * Fires once per sitemap page with its posts, before the image lists are built.
+ *
+ * @since 1.9.0
+ *
+ * @param \WP_Post[] $posts Posts of the page.
+ */
+do_action( 'lw_seo_sitemap_posts', $posts );
+
+/**
+ * Filter the HTML sitemap sections (shortcode and block).
+ *
+ * @since 1.9.0
+ *
+ * @param array<int, array<string, mixed>> $sections Sections: label, type, items, archive_url.
+ * @param array<string, mixed>             $args     Resolved arguments.
+ */
+$sections = apply_filters( 'lw_seo_html_sitemap_sections', $sections, $args );
+
+/**
+ * Filter the HTML sitemap markup.
+ *
+ * @since 1.9.0
+ *
+ * @param string               $html Markup.
+ * @param array<string, mixed> $args Resolved arguments.
+ */
+$html = apply_filters( 'lw_seo_html_sitemap_output', $html, $args );
+
+/**
+ * Filter the IndexNow endpoint.
+ *
+ * @since 1.9.0
+ *
+ * @param string $endpoint Endpoint URL.
+ */
+$endpoint = apply_filters( 'lw_seo_indexnow_endpoint', $endpoint );
+
+/**
+ * Fires when the site's public content or the plugin settings changed and
+ * cached documents built from them (llms.txt, HTML sitemap, ...) are stale.
+ *
+ * @since 1.9.0
+ */
+do_action( 'lw_seo_content_changed' );
+```
+
+### Indexing & 404 Log Filters
+
+```php
+/**
+ * Whether a post is noindex by its meta or post type setting.
+ *
+ * @since 1.9.0
+ *
+ * @param bool     $noindex Current value.
+ * @param \WP_Post $post    The post.
+ */
+$noindex = apply_filters( 'lw_seo_post_noindex', $noindex, $post );
+
+/**
+ * File extensions the 404 log ignores (lowercase, without the dot).
+ * Default: php, env, ini, log, sql, bak, map, js, css, png, jpg, jpeg, gif,
+ * webp, svg, ico, woff, woff2, ttf.
+ *
+ * @param string[] $extensions Extensions.
+ */
+$extensions = apply_filters( 'lw_seo_404_log_skip_extensions', $extensions );
 ```
 
 ### Content & AI Filters
@@ -360,6 +450,34 @@ The plugin automatically detects WooCommerce and adds:
 The integration is loaded only while WooCommerce is active; with the
 WooCommerce SEO setting off, the product Open Graph tags, product schema
 and product permalinks are skipped.
+
+```php
+/**
+ * Filter the product page's Product markup, built by WooCommerce or by LW SEO
+ * (a ProductGroup for variable products when that setting is on).
+ *
+ * @param array<string, mixed> $markup  Product markup.
+ * @param \WC_Product          $product The product.
+ */
+$markup = apply_filters( 'lw_seo_woo_product_schema', $markup, $product );
+
+/**
+ * Filter one Offer of LW SEO's product markup (the variation for variants).
+ * A non-array return is ignored.
+ *
+ * @param mixed       $offer   The Offer.
+ * @param \WC_Product $product The product it offers.
+ */
+$offer = apply_filters( 'lw_seo_woo_offer', $offer, $product );
+
+/**
+ * Filter which attribute slugs (without `pa_`) map to which schema.org
+ * property in ProductGroup markup. A non-array return is ignored.
+ *
+ * @param mixed $map Attribute slug => schema.org property name.
+ */
+$map = apply_filters( 'lw_seo_woo_varies_by_map', $map );
+```
 
 ## Conflict Detection
 

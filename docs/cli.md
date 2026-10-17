@@ -200,6 +200,45 @@ wp lw-seo redirect export [<file>]
 `redirect add` and `redirect import` skip a source that already has a
 redirect.
 
+```
+wp lw-seo redirect test <url> [--format=<table|json>]
+```
+
+`redirect test` shows which redirect a path or full URL would hit; the query
+string is ignored. The table lists every rule with its verdict.
+
+## `wp lw-seo not-found`
+
+Works with the 404 log (**404** tab, off by default).
+
+```
+wp lw-seo not-found list [--search=<text>] [--orderby=<column>] [--limit=<number>] [--format=<format>]
+wp lw-seo not-found clear [--yes]
+wp lw-seo not-found prune
+```
+
+- `list` shows `id`, `url`, `hits`, `referrer` and `last_seen`; `--limit` is
+  1-100 (default 20), `--orderby` defaults to `last_seen`.
+- `clear` empties the log (asks for confirmation unless `--yes`).
+- `prune` applies the saved retention days and maximum entries now.
+
+## `wp lw-seo indexnow`
+
+IndexNow is off by default (**Sitemap → IndexNow**); `submit` and `key` need it
+turned on. Submitting sends the URLs to api.indexnow.org.
+
+```
+wp lw-seo indexnow submit <url>... [--queue]
+wp lw-seo indexnow status [--format=<table|csv|json>]
+wp lw-seo indexnow key [--regenerate]
+```
+
+- `submit` sends one or more URLs of this site now; with `--queue` they are
+  added to the queue and sent by the next scheduled flush.
+- `status` shows whether IndexNow is enabled, the key file, the queued changes
+  and the last submissions.
+- `key` shows the key file URL; `--regenerate` replaces the key.
+
 ## `wp lw-seo migrate`
 
 ```
