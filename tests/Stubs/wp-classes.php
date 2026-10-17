@@ -26,6 +26,16 @@ if ( ! class_exists( 'WP_Post' ) ) {
 	}
 }
 
+if ( ! class_exists( 'WP_Query' ) ) {
+	#[AllowDynamicProperties]
+	class WP_Query {
+		/**
+		 * @var array<int, mixed>
+		 */
+		public $posts = [];
+	}
+}
+
 if ( ! class_exists( 'WP_Term' ) ) {
 	#[AllowDynamicProperties]
 	class WP_Term {

@@ -90,6 +90,8 @@ final class Options {
 			'sitemap_tags'                    => false,
 			'sitemap_post_types'              => [],
 			'sitemap_taxonomies'              => [],
+			'sitemap_images'                  => true,
+			'sitemap_stylesheet'              => true,
 
 			// Advanced.
 			'breadcrumbs_enabled'             => true,

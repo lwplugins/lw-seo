@@ -36,6 +36,7 @@ final class PostProviderTest extends MonkeyTestCase {
 					'post_type'     => 'page',
 					'post_status'   => 'publish',
 					'post_password' => '',
+					'post_content'  => '',
 				]
 			);
 		}
@@ -45,6 +46,10 @@ final class PostProviderTest extends MonkeyTestCase {
 		Functions\when( 'get_post_meta' )->justReturn( '' );
 		Functions\when( 'get_permalink' )->alias( static fn( \WP_Post $post ): string => 'https://example.com/?page_id=' . $post->ID );
 		Functions\when( 'get_the_modified_date' )->justReturn( '' );
+		Functions\when( 'update_post_thumbnail_cache' )->justReturn( null );
+		Functions\when( 'home_url' )->alias( static fn( $path = '' ) => 'https://example.com' . $path );
+		Functions\when( 'wp_parse_url' )->alias( static fn( $url, $component = -1 ) => parse_url( $url, $component ) );
+		Functions\when( 'get_the_post_thumbnail_url' )->justReturn( false );
 	}
 
 	protected function tearDown(): void {
@@ -107,5 +112,23 @@ final class PostProviderTest extends MonkeyTestCase {
 			->andReturn( [ 20, 21, 22, 10 ] );
 
 		$this->assertSame( [], $this->listed() );
+	}
+
+	public function test_images_key_when_enabled(): void {
+		$this->stub_options( [ 'sitemap_images' => true ] );
+		Functions\when( 'get_the_post_thumbnail_url' )->justReturn( 'https://example.com/f.jpg' );
+
+		$items = ( new PostProvider( 'page' ) )->get_items( 1 );
+
+		$this->assertSame( [ 'https://example.com/f.jpg' ], $items[0]['images'] );
+	}
+
+	public function test_no_images_key_when_disabled(): void {
+		$this->stub_options( [ 'sitemap_images' => false ] );
+		Functions\expect( 'get_the_post_thumbnail_url' )->never();
+
+		$items = ( new PostProvider( 'page' ) )->get_items( 1 );
+
+		$this->assertArrayNotHasKey( 'images', $items[0] );
 	}
 }

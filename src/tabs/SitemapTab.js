@@ -38,6 +38,24 @@ export default function SitemapTab( { store } ) {
 				offText={ __( 'Off', 'lw-seo' ) }
 			/>
 			<SwitchRow
+				title={ __( 'Include images', 'lw-seo' ) }
+				store={ store }
+				name="sitemap_images"
+				onText={ __( 'Included', 'lw-seo' ) }
+				offText={ __( 'Off', 'lw-seo' ) }
+			/>
+			<SwitchRow
+				title={ __( 'Readable view in browsers (XSL)', 'lw-seo' ) }
+				store={ store }
+				name="sitemap_stylesheet"
+				onText={ __( 'Enabled', 'lw-seo' ) }
+				offText={ __( 'Off', 'lw-seo' ) }
+				help={ __(
+					'Browsers that dropped XSLT show the raw XML; search engines are not affected.',
+					'lw-seo'
+				) }
+			/>
+			<SwitchRow
 				title={ __( 'Posts', 'lw-seo' ) }
 				store={ store }
 				name="sitemap_posts"

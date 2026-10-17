@@ -11,6 +11,7 @@ namespace LightweightPlugins\SEO\Sitemap;
 
 use LightweightPlugins\SEO\Content\Eligibility;
 use LightweightPlugins\SEO\Content\QueryArgs;
+use LightweightPlugins\SEO\Options;
 
 /**
  * Provides the published, indexable posts of one post type.
@@ -62,7 +63,7 @@ final class PostProvider implements ProviderInterface {
 	 * Get items for a page.
 	 *
 	 * @param int $page Page number.
-	 * @return array<array{loc: string, lastmod?: string, changefreq?: string, priority?: string}>
+	 * @return array<array{loc: string, lastmod?: string, changefreq?: string, priority?: string, images?: string[]}>
 	 */
 	public function get_items( int $page ): array {
 		$posts = get_posts(
@@ -81,6 +82,14 @@ final class PostProvider implements ProviderInterface {
 				QueryArgs::SITEMAP_POSTS
 			)
 		);
+
+		$images = (bool) Options::get( 'sitemap_images' );
+		if ( $images && function_exists( 'update_post_thumbnail_cache' ) ) {
+			// Primes the featured-image meta of all posts in one query.
+			$query        = new \WP_Query(); // No arguments: nothing is queried.
+			$query->posts = $posts;
+			update_post_thumbnail_cache( $query );
+		}
 
 		$excluded = ExcludedPosts::ids( $this->post_type );
 
@@ -102,12 +111,18 @@ final class PostProvider implements ProviderInterface {
 				continue;
 			}
 
-			$items[] = [
+			$item = [
 				'loc'        => (string) get_permalink( $post ),
 				'lastmod'    => (string) get_the_modified_date( 'c', $post ),
 				'changefreq' => 'weekly',
 				'priority'   => '0.8',
 			];
+
+			if ( $images ) {
+				$item['images'] = ImageCollector::for_post( $post );
+			}
+
+			$items[] = $item;
 		}
 
 		return $items;

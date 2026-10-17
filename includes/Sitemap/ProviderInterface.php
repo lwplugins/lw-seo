@@ -32,7 +32,7 @@ interface ProviderInterface {
 	 * Get items for a specific page.
 	 *
 	 * @param int $page Page number.
-	 * @return array<array{loc: string, lastmod?: string, changefreq?: string, priority?: string}>
+	 * @return array<array{loc: string, lastmod?: string, changefreq?: string, priority?: string, images?: string[]}>
 	 */
 	public function get_items( int $page ): array;
 }

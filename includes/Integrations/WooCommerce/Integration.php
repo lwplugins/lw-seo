@@ -60,6 +60,7 @@ final class Integration implements IntegrationInterface {
 		new OpenGraph();
 		new Schema();
 		new PermalinkWatcher();
+		new SitemapImages();
 	}
 
 	/**

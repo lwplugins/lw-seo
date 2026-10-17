@@ -34,6 +34,7 @@ final class Sitemap {
 		add_action( 'init', [ $this, 'add_rewrite_rules' ] );
 		add_action( 'template_redirect', [ $this, 'handle_sitemap_request' ] );
 		add_filter( 'query_vars', [ $this, 'add_query_vars' ] );
+		Stylesheet::register();
 
 		// Disable core sitemaps.
 		add_filter( 'wp_sitemaps_enabled', '__return_false' );
@@ -163,8 +164,7 @@ final class Sitemap {
 	 * @return void
 	 */
 	private function render_index(): void {
-		echo '<?xml version="1.0" encoding="UTF-8"?>' . "\n";
-		echo '<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' . "\n";
+		$sitemaps = [];
 
 		foreach ( $this->providers() as $name => $provider ) {
 			if ( ! $provider->is_enabled() ) {
@@ -174,15 +174,14 @@ final class Sitemap {
 			$count = $provider->get_total_pages();
 
 			for ( $page = 1; $page <= $count; $page++ ) {
-				$url = $this->get_sitemap_url( $name, $page );
-				echo "\t<sitemap>\n";
-				echo "\t\t<loc>" . esc_url( $url ) . "</loc>\n";
-				echo "\t\t<lastmod>" . esc_html( wp_date( 'c' ) ) . "</lastmod>\n";
-				echo "\t</sitemap>\n";
+				$sitemaps[] = [
+					'loc'     => $this->get_sitemap_url( $name, $page ),
+					'lastmod' => wp_date( 'c' ),
+				];
 			}
 		}
 
-		echo '</sitemapindex>';
+		echo UrlRenderer::index( $sitemaps ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped in UrlRenderer.
 	}
 
 	/**
@@ -213,29 +212,7 @@ final class Sitemap {
 		 */
 		$items = (array) apply_filters( 'lw_seo_sitemap_urls', $items, $name, $page );
 
-		echo '<?xml version="1.0" encoding="UTF-8"?>' . "\n";
-		echo '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' . "\n";
-
-		foreach ( $items as $item ) {
-			echo "\t<url>\n";
-			echo "\t\t<loc>" . esc_url( $item['loc'] ) . "</loc>\n";
-
-			if ( ! empty( $item['lastmod'] ) ) {
-				echo "\t\t<lastmod>" . esc_html( $item['lastmod'] ) . "</lastmod>\n";
-			}
-
-			if ( ! empty( $item['changefreq'] ) ) {
-				echo "\t\t<changefreq>" . esc_html( $item['changefreq'] ) . "</changefreq>\n";
-			}
-
-			if ( ! empty( $item['priority'] ) ) {
-				echo "\t\t<priority>" . esc_html( $item['priority'] ) . "</priority>\n";
-			}
-
-			echo "\t</url>\n";
-		}
-
-		echo '</urlset>';
+		echo UrlRenderer::urlset( $items, (bool) Options::get( 'sitemap_images' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped in UrlRenderer.
 	}
 
 	/**
@@ -270,6 +247,7 @@ final class Sitemap {
 	public static function activate(): void {
 		$sitemap = new self();
 		$sitemap->add_rewrite_rules();
+		Stylesheet::add_rewrite_rule();
 		flush_rewrite_rules();
 	}
 
