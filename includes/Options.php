@@ -115,6 +115,9 @@ final class Options {
 			'llms_txt_markdown_links'         => false,
 			'llms_full_txt_enabled'           => false,
 
+			// IndexNow.
+			'indexnow_enabled'                => false,
+
 			// Content Signals.
 			'content_signals_ai_train'        => '',
 			'content_signals_ai_input'        => '',

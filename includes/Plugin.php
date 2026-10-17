@@ -27,6 +27,10 @@ use LightweightPlugins\SEO\NotFound\Logger as NotFoundLogger;
 use LightweightPlugins\SEO\NotFound\LogRepository as NotFoundLogRepository;
 use LightweightPlugins\SEO\NotFound\Pruner as NotFoundPruner;
 use LightweightPlugins\SEO\HtmlSitemap\Shortcode as HtmlSitemapShortcode;
+use LightweightPlugins\SEO\IndexNow\Key as IndexNowKey;
+use LightweightPlugins\SEO\IndexNow\KeyFile as IndexNowKeyFile;
+use LightweightPlugins\SEO\IndexNow\Queue as IndexNowQueue;
+use LightweightPlugins\SEO\IndexNow\Watcher as IndexNowWatcher;
 use LightweightPlugins\SEO\LlmsTxt\Endpoint as LlmsTxtEndpoint;
 use LightweightPlugins\SEO\Markdown\Endpoint as MarkdownEndpoint;
 use LightweightPlugins\SEO\Markdown\Discovery as MarkdownDiscovery;
@@ -116,6 +120,14 @@ final class Plugin {
 		new Breadcrumbs();
 		new RobotsTxt();
 		new LlmsTxtEndpoint();
+
+		// IndexNow (opt-in): the flush handler is always hooked so a stale queue is dropped.
+		IndexNowQueue::register();
+		if ( Options::get( 'indexnow_enabled' ) ) {
+			IndexNowKey::ensure();
+		}
+		new IndexNowKeyFile();
+		new IndexNowWatcher();
 
 		// Content Signals.
 		new ContentSignals();

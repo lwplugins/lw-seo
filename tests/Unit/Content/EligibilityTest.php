@@ -109,4 +109,22 @@ final class EligibilityTest extends MonkeyTestCase {
 	public function test_ai_visible_accepts_eligible_posts_without_override(): void {
 		$this->assertTrue( Eligibility::is_ai_visible( $this->post() ) );
 	}
+
+	public function test_term_noindex_option_and_meta(): void {
+		Functions\when( 'is_taxonomy_viewable' )->alias( static fn( string $tax ): bool => 'hidden' !== $tax );
+		Functions\when( 'get_term_meta' )->justReturn( '' );
+		$term = new \WP_Term( [ 'term_id' => 4, 'taxonomy' => 'category' ] );
+
+		$this->assertTrue( Eligibility::is_term_eligible( $term ) );
+
+		$this->stub_options( [ 'noindex_category' => true ] );
+		$this->assertFalse( Eligibility::is_term_eligible( $term ) );
+
+		$this->stub_options();
+		Functions\when( 'get_term_meta' )->justReturn( '1' );
+		$this->assertFalse( Eligibility::is_term_eligible( $term ) );
+
+		Functions\when( 'get_term_meta' )->justReturn( '' );
+		$this->assertFalse( Eligibility::is_term_eligible( new \WP_Term( [ 'term_id' => 5, 'taxonomy' => 'hidden' ] ) ) );
+	}
 }

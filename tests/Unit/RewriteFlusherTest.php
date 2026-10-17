@@ -31,6 +31,7 @@ final class RewriteFlusherTest extends MonkeyTestCase {
 			'robots toggle adds no rewrite rules'  => [ [ 'robots_txt_enabled' => true ], [ 'robots_txt_enabled' => false ], false ],
 			'llms turned on'                       => [ [], [ 'llms_txt_enabled' => true ], true ],
 			'llms full turned on'                  => [ [], [ 'llms_full_txt_enabled' => true ], true ],
+			'indexnow turned on'                    => [ [], [ 'indexnow_enabled' => true ], true ],
 			'llms unchanged (absent)'               => [ [], [], false ],
 			'truthiness unchanged'                  => [ [ 'sitemap_enabled' => 1 ], [ 'sitemap_enabled' => true ], false ],
 			'unrelated key changed'                 => [ [ 'separator' => '-' ], [ 'separator' => '|' ], false ],

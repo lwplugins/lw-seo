@@ -59,6 +59,19 @@ final class Eligibility {
 	}
 
 	/**
+	 * Whether a term archive may be exposed: viewable taxonomy, not noindex
+	 * by the taxonomy setting or the term's own meta.
+	 *
+	 * @param \WP_Term $term Term object.
+	 * @return bool
+	 */
+	public static function is_term_eligible( \WP_Term $term ): bool {
+		return is_taxonomy_viewable( $term->taxonomy )
+			&& ! Options::get( 'noindex_' . $term->taxonomy )
+			&& ! Options::get_term_meta( (int) $term->term_id, 'noindex' );
+	}
+
+	/**
 	 * Whether a post may be handed to AI agents: eligible and not opted out
 	 * via the ai-input content signal.
 	 *

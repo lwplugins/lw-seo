@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace LightweightPlugins\SEO;
 
+use LightweightPlugins\SEO\IndexNow\KeyFile;
 use LightweightPlugins\SEO\LlmsTxt\Endpoint as LlmsTxtEndpoint;
 use LightweightPlugins\SEO\Markdown\Endpoint as MarkdownEndpoint;
 use LightweightPlugins\SEO\Sitemap\Sitemap;
@@ -28,6 +29,7 @@ final class Activator {
 	private const GATED_PROVIDERS = [
 		'sitemap_enabled'  => Sitemap::class,
 		'llms_txt_enabled' => LlmsTxtEndpoint::class,
+		'indexnow_enabled' => KeyFile::class,
 	];
 
 	/**
