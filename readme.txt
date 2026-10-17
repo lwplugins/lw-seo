@@ -130,6 +130,10 @@ Your sitemap is available at `yoursite.com/sitemap.xml`
 * robots.txt: `yoursite.com/robots.txt`
 * llms.txt: `yoursite.com/llms.txt`
 
+== External services ==
+
+**IndexNow** (off by default). When you turn it on under Sitemap → IndexNow, LW SEO sends the address of public, indexable content to api.indexnow.org when it is published, updated or deleted, so participating search engines can recrawl it. Sent: your site's host name, the page URLs, a verification key generated on your site and the key file's URL. No personal data is sent. Terms: https://www.indexnow.org/terms , privacy: https://privacy.microsoft.com/privacystatement
+
 == Screenshots ==
 
 1. SEO meta box in post editor

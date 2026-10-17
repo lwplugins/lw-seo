@@ -32,6 +32,9 @@ export const api = {
 	deleteNotFound: ( id ) => send( `/404-log/${ Number( id ) }`, 'DELETE' ),
 	clearNotFound: () => send( '/404-log', 'DELETE' ),
 
+	indexNowSubmit: ( urls ) => send( '/indexnow/submit', 'POST', { urls } ),
+	indexNowRegenerateKey: () => send( '/indexnow/regenerate-key', 'POST' ),
+
 	detectMigration: ( provider ) =>
 		apiFetch( { path: path( `/migration/${ provider }` ) } ),
 	runMigration: ( provider, dryRun ) =>

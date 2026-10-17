@@ -10,6 +10,7 @@ import { __ } from '@wordpress/i18n';
 import CopyField from '../components/CopyField';
 import { SelectRow, SwitchRow, TextRow } from '../components/Fields';
 import Section from '../components/Section';
+import IndexNowSection from './sitemap/IndexNowSection';
 import SettingRow from '../components/SettingRow';
 import TypeToggles from '../components/TypeToggles';
 
@@ -195,6 +196,7 @@ export default function SitemapTab( { store } ) {
 					] }
 				/>
 			</Section>
+			<IndexNowSection store={ store } />
 		</>
 	);
 }

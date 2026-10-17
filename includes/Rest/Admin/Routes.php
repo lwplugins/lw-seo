@@ -41,6 +41,7 @@ final class Routes {
 		( new RedirectTestController() )->register_routes();
 		( new NotFoundLogController() )->register_routes();
 		( new MigrationController() )->register_routes();
+		( new IndexNowController() )->register_routes();
 	}
 
 	/**
