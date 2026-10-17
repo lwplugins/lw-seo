@@ -44,6 +44,9 @@ final class Activator {
 
 		( new MarkdownEndpoint() )->add_rewrite_rules();
 
+		NotFound\LogTable::install();
+		NotFound\Pruner::schedule();
+
 		flush_rewrite_rules();
 	}
 
@@ -58,5 +61,9 @@ final class Activator {
 	 */
 	public static function deactivate(): void {
 		delete_option( 'rewrite_rules' );
+
+		NotFound\Pruner::unschedule();
+		// Created by the IndexNow queue; clearing a hook that never ran is harmless.
+		wp_clear_scheduled_hook( 'lw_seo_indexnow_flush' );
 	}
 }

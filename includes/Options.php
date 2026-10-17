@@ -159,6 +159,10 @@ final class Options {
 
 			// 404.
 			'redirect_404_to_home'            => false,
+			'not_found_log_enabled'           => false,
+			'not_found_log_max_rows'          => 1000,
+			'not_found_log_retention_days'    => 30,
+			'not_found_log_store_ua'          => false,
 		] + Registry::option_defaults() + OpeningHours::option_defaults();
 	}
 

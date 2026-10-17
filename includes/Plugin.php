@@ -23,6 +23,9 @@ use LightweightPlugins\SEO\Local\Shortcodes as LocalShortcodes;
 use LightweightPlugins\SEO\Redirects\Handler as RedirectHandler;
 use LightweightPlugins\SEO\Migration\CleanupV1314;
 use LightweightPlugins\SEO\NotFoundHandler;
+use LightweightPlugins\SEO\NotFound\Logger as NotFoundLogger;
+use LightweightPlugins\SEO\NotFound\LogRepository as NotFoundLogRepository;
+use LightweightPlugins\SEO\NotFound\Pruner as NotFoundPruner;
 use LightweightPlugins\SEO\HtmlSitemap\Shortcode as HtmlSitemapShortcode;
 use LightweightPlugins\SEO\LlmsTxt\Endpoint as LlmsTxtEndpoint;
 use LightweightPlugins\SEO\Markdown\Endpoint as MarkdownEndpoint;
@@ -142,6 +145,11 @@ final class Plugin {
 
 		// 404 handler.
 		new NotFoundHandler();
+
+		// 404 log (opt-in) and its daily pruning.
+		$not_found_log = new NotFoundLogRepository();
+		( new NotFoundLogger( $not_found_log ) )->register();
+		( new NotFoundPruner( $not_found_log ) )->register();
 
 		// One-time v1.3.13 og_image cleanup.
 		( new CleanupV1314() )->register();

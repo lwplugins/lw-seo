@@ -30,6 +30,10 @@ final class ActivatorTest extends MonkeyTestCase {
 			define( 'EP_ALL', 8191 );
 		}
 
+		if ( ! defined( 'HOUR_IN_SECONDS' ) ) {
+			define( 'HOUR_IN_SECONDS', 3600 );
+		}
+
 		$this->rules     = [];
 		$this->endpoints = [];
 		$this->flushes   = 0;
@@ -43,6 +47,10 @@ final class ActivatorTest extends MonkeyTestCase {
 		Functions\when( 'add_rewrite_endpoint' )->alias( function ( string $name ): void {
 			$this->endpoints[] = $name;
 		} );
+		$GLOBALS['wpdb'] = new \wpdb();
+		Functions\when( 'dbDelta' )->justReturn( [] );
+		Functions\when( 'update_option' )->justReturn( true );
+		Functions\when( 'wp_next_scheduled' )->justReturn( 1234 );
 		Functions\when( 'flush_rewrite_rules' )->alias( function (): void {
 			++$this->flushes;
 		} );
@@ -83,8 +91,35 @@ final class ActivatorTest extends MonkeyTestCase {
 		$this->assertSame( 1, $this->flushes );
 	}
 
+	public function test_activate_installs_the_404_table_and_schedules_the_prune(): void {
+		Functions\when( 'get_option' )->justReturn( [] );
+		Options::clear_cache();
+		Functions\when( 'wp_next_scheduled' )->justReturn( false );
+		Functions\expect( 'wp_schedule_event' )->once()->with( \Mockery::type( 'int' ), 'daily', 'lw_seo_404_prune' );
+
+		Activator::activate();
+
+		$this->assertSame( 1, $this->flushes );
+	}
+
+	public function test_deactivate_clears_the_prune_and_indexnow_events(): void {
+		Functions\when( 'delete_option' )->justReturn( true );
+		$cleared = [];
+		Functions\when( 'wp_clear_scheduled_hook' )->alias(
+			static function ( string $hook ) use ( &$cleared ): int {
+				$cleared[] = $hook;
+				return 1;
+			}
+		);
+
+		Activator::deactivate();
+
+		$this->assertSame( [ 'lw_seo_404_prune', 'lw_seo_indexnow_flush' ], $cleared );
+	}
+
 	public function test_deactivate_drops_stored_rules_instead_of_regenerating_them(): void {
 		Functions\expect( 'delete_option' )->once()->with( 'rewrite_rules' );
+		Functions\when( 'wp_clear_scheduled_hook' )->justReturn( 1 );
 
 		Activator::deactivate();
 

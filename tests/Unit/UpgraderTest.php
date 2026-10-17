@@ -24,6 +24,11 @@ final class UpgraderTest extends MonkeyTestCase {
 		if ( ! defined( 'HOUR_IN_SECONDS' ) ) {
 			define( 'HOUR_IN_SECONDS', 3600 );
 		}
+
+		// The 404 log table install and prune schedule run on every version change.
+		$GLOBALS['wpdb'] = new \wpdb();
+		Functions\when( 'dbDelta' )->justReturn( [] );
+		Functions\when( 'wp_next_scheduled' )->justReturn( 1234 );
 	}
 
 	/**
@@ -53,8 +58,44 @@ final class UpgraderTest extends MonkeyTestCase {
 	public function test_records_version_and_schedules_rewrite_flush_on_change(): void {
 		$this->stub_stored( '1.5.1' );
 		Functions\when( 'delete_transient' )->justReturn( true );
-		Functions\expect( 'update_option' )->once()->with( Upgrader::VERSION_OPTION, LW_SEO_VERSION );
+		Functions\expect( 'update_option' )->twice();
 		Functions\expect( 'set_transient' )->once()->with( RewriteFlusher::FLAG, 1, 3600 );
+
+		( new Upgrader() )->maybe_upgrade();
+
+		$this->addToAssertionCount( 1 );
+	}
+
+	public function test_installs_the_404_table_and_schedules_the_prune_on_change(): void {
+		$this->stub_stored( '1.8.8' );
+		$writes = [];
+		Functions\when( 'update_option' )->alias(
+			static function ( string $name, $value ) use ( &$writes ): bool {
+				$writes[ $name ] = $value;
+				return true;
+			}
+		);
+		Functions\when( 'set_transient' )->justReturn( true );
+		Functions\when( 'delete_transient' )->justReturn( true );
+		Functions\when( 'wp_next_scheduled' )->justReturn( false );
+		$tables = 0;
+		Functions\when( 'dbDelta' )->alias(
+			static function () use ( &$tables ): array {
+				++$tables;
+				return [];
+			}
+		);
+		Functions\expect( 'wp_schedule_event' )->once()->with( \Mockery::type( 'int' ), 'daily', 'lw_seo_404_prune' );
+
+		( new Upgrader() )->maybe_upgrade();
+
+		$this->assertSame( 1, $tables );
+		$this->assertSame( '1', $writes['lw_seo_404_table_version'] );
+	}
+
+	public function test_does_not_touch_the_404_table_when_version_is_current(): void {
+		$this->stub_stored( LW_SEO_VERSION );
+		Functions\expect( 'wp_schedule_event' )->never();
 
 		( new Upgrader() )->maybe_upgrade();
 

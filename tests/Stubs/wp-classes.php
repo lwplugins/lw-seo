@@ -186,3 +186,63 @@ if ( ! class_exists( 'WP_REST_Server' ) ) {
 		public const DELETABLE = 'DELETE';
 	}
 }
+
+if ( ! class_exists( 'wpdb' ) ) {
+	/**
+	 * Recording $wpdb stand-in: keeps every executed SQL string and returns
+	 * canned results. prepare() mimics the %s / %d / %% placeholders.
+	 */
+	#[AllowDynamicProperties]
+	class wpdb {
+		public $prefix = 'wp_';
+
+		/** @var array<int, string> */
+		public array $queries = [];
+
+		/** @var array<int, array<string, mixed>> */
+		public array $rows = [];
+
+		public $var = 0;
+
+		public $query_result = 1;
+
+		public function prepare( $query, ...$args ) {
+			if ( isset( $args[0] ) && is_array( $args[0] ) ) {
+				$args = $args[0];
+			}
+			$query = str_replace( '%%', "\0", $query );
+			$query = (string) preg_replace_callback(
+				'/%([sd])/',
+				static function ( array $m ) use ( &$args ): string {
+					$value = array_shift( $args );
+					return 'd' === $m[1] ? (string) (int) $value : "'" . addslashes( (string) $value ) . "'";
+				},
+				$query
+			);
+			return str_replace( "\0", '%', $query );
+		}
+
+		public function esc_like( $text ) {
+			return addcslashes( (string) $text, '_%\\' );
+		}
+
+		public function query( $sql ) {
+			$this->queries[] = $sql;
+			return $this->query_result;
+		}
+
+		public function get_results( $sql, $output = 'OBJECT' ) {
+			$this->queries[] = $sql;
+			return $this->rows;
+		}
+
+		public function get_var( $sql ) {
+			$this->queries[] = $sql;
+			return $this->var;
+		}
+
+		public function get_charset_collate() {
+			return 'DEFAULT CHARACTER SET utf8mb4';
+		}
+	}
+}

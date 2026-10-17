@@ -54,6 +54,10 @@ final class Upgrader {
 
 		update_option( self::VERSION_OPTION, LW_SEO_VERSION );
 
+		// 404 log table (dbDelta is idempotent) and its daily prune.
+		NotFound\LogTable::install();
+		NotFound\Pruner::schedule();
+
 		// A new version can build llms.txt / llms-full.txt differently.
 		LlmsTxt\Cache::flush();
 
