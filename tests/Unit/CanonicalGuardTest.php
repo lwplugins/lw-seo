@@ -37,6 +37,7 @@ final class CanonicalGuardTest extends MonkeyTestCase {
 			'sitemap index'         => [ [ 'lw_sitemap' => 'index' ], true ],
 			'sitemap sub-page'      => [ [ 'lw_sitemap' => 'post', 'lw_sitemap_page' => '2' ], true ],
 			'llms.txt'              => [ [ 'lw_llms_txt' => '1' ], true ],
+			'sitemap stylesheet'    => [ [ 'lw_sitemap_xsl' => '1' ], true ],
 			'indexnow key file'     => [ [ 'lw_indexnow_key' => str_repeat( 'a', 32 ) ], true ],
 			'md endpoint (empty)'   => [ [ 'name' => 'hello-world', 'md' => '' ], true ],
 			'markdown endpoint'     => [ [ 'name' => 'hello-world', 'markdown' => '' ], true ],

@@ -98,11 +98,13 @@ final class Watcher {
 	 * @return void
 	 */
 	public function before_post_update( int $post_id ): void {
-		if ( 'publish' !== get_post_status( $post_id ) ) {
+		$post = get_post( $post_id );
+
+		if ( ! $post instanceof \WP_Post || 'publish' !== $post->post_status ) {
 			return;
 		}
 
-		$url = get_permalink( $post_id );
+		$url = $this->public_url( $post );
 
 		if ( $url ) {
 			$this->published_urls[ $post_id ] = $url;
@@ -118,14 +120,28 @@ final class Watcher {
 	private function published_url( \WP_Post $post ) {
 		$id = (int) $post->ID;
 
-		if ( isset( $this->published_urls[ $id ] ) ) {
-			return $this->published_urls[ $id ];
-		}
+		return $this->published_urls[ $id ] ?? $this->public_url( $post );
+	}
 
-		// Nothing captured: rebuild from a published copy with the trash suffix dropped.
+	/**
+	 * Permalink of a published copy of the post. WordPress writes the
+	 * `__trashed` slug before pre_post_update fires and keeps the original in
+	 * `_wp_desired_post_slug`, so the slug is restored from there.
+	 *
+	 * @param \WP_Post $post Post.
+	 * @return string
+	 */
+	private function public_url( \WP_Post $post ) {
 		$copy              = clone $post;
 		$copy->post_status = 'publish';
-		$copy->post_name   = (string) preg_replace( '/__trashed(-\d+)?$/', '', (string) $post->post_name );
+		$name              = (string) $post->post_name;
+
+		if ( 1 === preg_match( '/__trashed(-\d+)?$/', $name ) ) {
+			$desired         = get_post_meta( (int) $post->ID, '_wp_desired_post_slug', true );
+			$copy->post_name = is_string( $desired ) && '' !== $desired
+				? $desired
+				: (string) preg_replace( '/__trashed(-\d+)?$/', '', $name );
+		}
 
 		return get_permalink( $copy );
 	}

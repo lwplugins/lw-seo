@@ -22,7 +22,7 @@ final class Stylesheet {
 	/**
 	 * Query var set by the rewrite rule.
 	 */
-	private const QUERY_VAR = 'lw_sitemap_xsl';
+	public const QUERY_VAR = 'lw_sitemap_xsl';
 
 	/**
 	 * The stylesheet: a sitemap index list and a urlset table, inline CSS only.

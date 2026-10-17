@@ -88,7 +88,7 @@ final class WatcherTest extends MonkeyTestCase {
 
 	public function test_removal_queues_url_captured_before_update(): void {
 		$watcher = $this->enabled();
-		Functions\when( 'get_post_status' )->justReturn( 'publish' );
+		Functions\when( 'get_post' )->justReturn( $this->post() );
 		Functions\when( 'get_permalink' )->justReturn( 'https://e.com/pretty/' );
 		$watcher->before_post_update( 5 );
 		Functions\when( 'get_permalink' )->justReturn( 'https://e.com/?p=5' );
@@ -96,6 +96,19 @@ final class WatcherTest extends MonkeyTestCase {
 		$watcher->on_transition( 'trash', 'publish', $this->post( [ 'post_status' => 'trash' ] ) );
 
 		$this->assertSame( [ 'https://e.com/pretty/' ], $this->queued );
+	}
+
+	public function test_capture_restores_slug_from_trash_suffix(): void {
+		$watcher = $this->enabled();
+		Functions\when( 'get_post' )->justReturn( $this->post( [ 'post_name' => 'slug__trashed' ] ) );
+		Functions\when( 'get_post_meta' )->alias( static fn( $id, $key ) => '_wp_desired_post_slug' === $key ? 'slug' : '' );
+		Functions\when( 'get_permalink' )->alias( static fn( $post ): string => 'https://e.com/' . $post->post_name . '/' );
+		$watcher->before_post_update( 5 );
+		Functions\when( 'get_permalink' )->justReturn( 'https://e.com/?p=5' );
+
+		$watcher->on_transition( 'trash', 'publish', $this->post( [ 'post_status' => 'trash', 'post_name' => 'slug__trashed' ] ) );
+
+		$this->assertSame( [ 'https://e.com/slug/' ], $this->queued );
 	}
 
 	public function test_removal_fallback_uses_published_copy_without_trash_suffix(): void {
