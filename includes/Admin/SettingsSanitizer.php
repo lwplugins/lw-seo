@@ -31,6 +31,7 @@ final class SettingsSanitizer {
 		'content_signals_search'   => [ '', 'yes', 'no' ],
 		'content_signals_ai_input' => [ '', 'yes', 'no' ],
 		'content_signals_ai_train' => [ '', 'yes', 'no' ],
+		'html_sitemap_order'       => [ 'title', 'date' ],
 	];
 
 	/**

@@ -22,6 +22,8 @@ final class Endpoint {
 	 * Constructor.
 	 */
 	public function __construct() {
+		// Registered even while llms.txt is off: the HTML sitemap cache listens too.
+		Invalidation::register();
 		Invalidation::register_settings();
 
 		if ( ! Options::get( 'llms_txt_enabled' ) ) {
@@ -31,8 +33,6 @@ final class Endpoint {
 		add_action( 'init', [ $this, 'add_rewrite_rules' ] );
 		add_action( 'template_redirect', [ $this, 'handle_request' ] );
 		add_filter( 'query_vars', [ $this, 'add_query_vars' ] );
-
-		Invalidation::register();
 	}
 
 	/**

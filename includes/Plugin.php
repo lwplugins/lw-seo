@@ -15,6 +15,7 @@ use LightweightPlugins\SEO\Editor\BlockEditorAssets;
 use LightweightPlugins\SEO\Editor\PostRestField;
 use LightweightPlugins\SEO\Rest\Admin\Routes as AdminRoutes;
 use LightweightPlugins\SEO\Blocks\FAQ\Block as FAQBlock;
+use LightweightPlugins\SEO\Blocks\HtmlSitemap\Block as HtmlSitemapBlock;
 use LightweightPlugins\SEO\Schema\Schema;
 use LightweightPlugins\SEO\Sitemap\Sitemap;
 use LightweightPlugins\SEO\Local\Schema as LocalSchema;
@@ -22,6 +23,7 @@ use LightweightPlugins\SEO\Local\Shortcodes as LocalShortcodes;
 use LightweightPlugins\SEO\Redirects\Handler as RedirectHandler;
 use LightweightPlugins\SEO\Migration\CleanupV1314;
 use LightweightPlugins\SEO\NotFoundHandler;
+use LightweightPlugins\SEO\HtmlSitemap\Shortcode as HtmlSitemapShortcode;
 use LightweightPlugins\SEO\LlmsTxt\Endpoint as LlmsTxtEndpoint;
 use LightweightPlugins\SEO\Markdown\Endpoint as MarkdownEndpoint;
 use LightweightPlugins\SEO\Markdown\Discovery as MarkdownDiscovery;
@@ -126,6 +128,10 @@ final class Plugin {
 
 		// Gutenberg blocks.
 		new FAQBlock();
+		new HtmlSitemapBlock();
+
+		// HTML sitemap shortcode.
+		new HtmlSitemapShortcode();
 
 		// Local SEO.
 		new LocalSchema();

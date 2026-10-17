@@ -60,28 +60,40 @@ final class PostProvider implements ProviderInterface {
 	}
 
 	/**
+	 * Query arguments for the published, indexable posts of a post type.
+	 * Shared by the XML sitemap and the HTML sitemap, so both list the same
+	 * posts (and an integration filtering lw_seo_query_args reaches both).
+	 *
+	 * @param string $post_type Post type name.
+	 * @param int    $limit     Posts to fetch.
+	 * @param int    $offset    Posts to skip.
+	 * @return array<string, mixed>
+	 */
+	public static function query_args( string $post_type, int $limit, int $offset ): array {
+		return QueryArgs::filter(
+			[
+				'post_type'      => $post_type,
+				'post_status'    => 'publish',
+				'has_password'   => false,
+				'posts_per_page' => $limit,
+				'offset'         => $offset,
+				'orderby'        => 'modified',
+				'order'          => 'DESC',
+				'no_found_rows'  => true,
+				'meta_query'     => Eligibility::noindex_meta_query(),
+			],
+			QueryArgs::SITEMAP_POSTS
+		);
+	}
+
+	/**
 	 * Get items for a page.
 	 *
 	 * @param int $page Page number.
 	 * @return array<array{loc: string, lastmod?: string, changefreq?: string, priority?: string, images?: string[]}>
 	 */
 	public function get_items( int $page ): array {
-		$posts = get_posts(
-			QueryArgs::filter(
-				[
-					'post_type'      => $this->post_type,
-					'post_status'    => 'publish',
-					'has_password'   => false,
-					'posts_per_page' => self::PER_PAGE,
-					'offset'         => ( $page - 1 ) * self::PER_PAGE,
-					'orderby'        => 'modified',
-					'order'          => 'DESC',
-					'no_found_rows'  => true,
-					'meta_query'     => Eligibility::noindex_meta_query(),
-				],
-				QueryArgs::SITEMAP_POSTS
-			)
-		);
+		$posts = get_posts( self::query_args( $this->post_type, self::PER_PAGE, ( $page - 1 ) * self::PER_PAGE ) );
 
 		$images = (bool) Options::get( 'sitemap_images' );
 		if ( $images && function_exists( 'update_post_thumbnail_cache' ) ) {

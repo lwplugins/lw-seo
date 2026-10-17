@@ -38,13 +38,31 @@ final class Invalidation {
 	private const META_HOOKS = [ 'added_post_meta', 'updated_post_meta', 'deleted_post_meta' ];
 
 	/**
+	 * Drop the llms.txt cache and tell other caches built from the site's
+	 * content (the HTML sitemap) to drop theirs.
+	 *
+	 * @return void
+	 */
+	public static function flush(): void {
+		Cache::flush();
+
+		/**
+		 * Fires when the site's public content or the plugin settings changed
+		 * and cached documents built from them are stale.
+		 *
+		 * @since 1.9.0
+		 */
+		do_action( 'lw_seo_content_changed' );
+	}
+
+	/**
 	 * Flush the cache whenever listed content may have changed.
 	 *
 	 * @return void
 	 */
 	public static function register(): void {
 		foreach ( self::INVALIDATING_HOOKS as $hook ) {
-			add_action( $hook, [ Cache::class, 'flush' ] );
+			add_action( $hook, [ self::class, 'flush' ] );
 		}
 
 		foreach ( self::META_HOOKS as $hook ) {
@@ -63,7 +81,7 @@ final class Invalidation {
 	 * @return void
 	 */
 	public static function register_settings(): void {
-		add_action( 'update_option_' . Options::OPTION_NAME, [ Cache::class, 'flush' ] );
+		add_action( 'update_option_' . Options::OPTION_NAME, [ self::class, 'flush' ] );
 	}
 
 	/**
@@ -75,7 +93,7 @@ final class Invalidation {
 	 */
 	public static function flush_for_post( int $post_id, mixed $post ): void {
 		if ( $post instanceof \WP_Post && self::should_flush_for_post( $post ) ) {
-			Cache::flush();
+			self::flush();
 		}
 	}
 
@@ -90,7 +108,7 @@ final class Invalidation {
 	 */
 	public static function flush_for_transition( string $new_status, string $old_status, mixed $post ): void {
 		if ( $post instanceof \WP_Post && self::should_flush_for_transition( $new_status, $old_status, $post ) ) {
-			Cache::flush();
+			self::flush();
 		}
 	}
 
@@ -105,7 +123,7 @@ final class Invalidation {
 	 */
 	public static function flush_for_meta( mixed $meta_id, mixed $object_id, mixed $meta_key ): void {
 		if ( is_string( $meta_key ) && self::is_seo_meta_key( $meta_key ) ) {
-			Cache::flush();
+			self::flush();
 		}
 	}
 

@@ -92,6 +92,10 @@ final class Options {
 			'sitemap_taxonomies'              => [],
 			'sitemap_images'                  => true,
 			'sitemap_stylesheet'              => true,
+			'html_sitemap_post_types'         => [],
+			'html_sitemap_taxonomies'         => [],
+			'html_sitemap_max_items'          => 500,
+			'html_sitemap_order'              => 'title',
 
 			// Advanced.
 			'breadcrumbs_enabled'             => true,

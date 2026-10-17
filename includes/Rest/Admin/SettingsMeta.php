@@ -45,6 +45,7 @@ final class SettingsMeta {
 			],
 			'separators'             => Options::get_separators(),
 			'post_types'             => self::pairs( $post_types ),
+			'taxonomies'             => self::pairs( PostTypes::taxonomies() ),
 			'sitemap_post_types'     => self::pairs( array_diff_key( $post_types, ProviderRegistry::POST_TYPE_TOGGLES ) ),
 			'sitemap_taxonomies'     => self::pairs( array_diff_key( PostTypes::taxonomies(), ProviderRegistry::TAXONOMY_TOGGLES ) ),
 			'business_types'         => BusinessTypeOptions::build(
