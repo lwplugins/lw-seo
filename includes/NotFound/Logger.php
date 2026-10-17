@@ -33,19 +33,14 @@ final class Logger {
 	private const SKIP_EXTENSIONS = [ 'php', 'env', 'ini', 'log', 'sql', 'bak', 'map', 'js', 'css', 'png', 'jpg', 'jpeg', 'gif', 'webp', 'svg', 'ico', 'woff', 'woff2', 'ttf' ];
 
 	/**
+	 * Cache group for the throttle (used only with a persistent object cache).
+	 */
+	private const CACHE_GROUP = 'lw_seo_404';
+
+	/**
 	 * Seconds a URL is not written again.
 	 */
-	private const THROTTLE = 60;
-
-	/**
-	 * Transient counting writes since the last inline prune.
-	 */
-	private const COUNTER = 'lw_seo_404_writes';
-
-	/**
-	 * Writes between two inline prunes (bounds how far the cap can be exceeded).
-	 */
-	private const PRUNE_EVERY = 100;
+	public const THROTTLE = 60;
 
 	/**
 	 * Constructor.
@@ -78,19 +73,19 @@ final class Logger {
 			return;
 		}
 
-		$key = 'lw_seo_404_t_' . md5( $path );
-		if ( false !== get_transient( $key ) ) {
+		// With a persistent object cache the throttle costs no DB access; without
+		// one, LogRepository::record() skips a row written in the last THROTTLE
+		// seconds (a transient per URL would create an options row per URL).
+		if ( wp_using_ext_object_cache() && ! wp_cache_add( 'lw_seo_404_t_' . md5( $path ), 1, self::CACHE_GROUP, self::THROTTLE ) ) {
 			return;
 		}
-		set_transient( $key, 1, self::THROTTLE );
 
 		$user_agent = '';
 		if ( Options::get( 'not_found_log_store_ua', false ) ) {
 			$user_agent = $this->truncate( sanitize_text_field( wp_unslash( $_SERVER['HTTP_USER_AGENT'] ?? '' ) ), 255 );
 		}
 
-		$this->repository->record( $path, $this->referrer(), $user_agent );
-		$this->maybe_prune();
+		$this->repository->record( $path, $this->referrer(), $user_agent, max( 1, absint( Options::get( 'not_found_log_max_rows', 1000 ) ) ) );
 	}
 
 	/**
@@ -121,7 +116,8 @@ final class Logger {
 	 * @return string
 	 */
 	private function request_path(): string {
-		$uri  = sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ?? '' ) );
+		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- clean() strips control characters and angle brackets; sanitize_text_field() would drop %XX octets.
+		$uri  = $this->clean( wp_unslash( $_SERVER['REQUEST_URI'] ?? '' ) );
 		$path = (string) strtok( $uri, '?#' );
 
 		return $this->truncate( $path, 2048 );
@@ -133,12 +129,26 @@ final class Logger {
 	 * @return string
 	 */
 	private function referrer(): string {
-		$referrer = sanitize_text_field( wp_unslash( $_SERVER['HTTP_REFERER'] ?? '' ) );
+		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- clean() strips control characters and angle brackets; the URL is esc_url_raw()'d below.
+		$referrer = $this->clean( wp_unslash( $_SERVER['HTTP_REFERER'] ?? '' ) );
 		if ( '' === $referrer ) {
 			return '';
 		}
 
 		return $this->truncate( esc_url_raw( (string) strtok( $referrer, '?#' ) ), 2048 );
+	}
+
+	/**
+	 * Drop control characters and angle brackets, keeping percent-encoding.
+	 *
+	 * The core sanitizer would strip %XX octets and merge distinct URLs;
+	 * the value is escaped when displayed.
+	 *
+	 * @param string $value Raw header value.
+	 * @return string
+	 */
+	private function clean( string $value ): string {
+		return trim( (string) preg_replace( '/[\x00-\x1F\x7F<>]/', '', $value ) );
 	}
 
 	/**
@@ -150,22 +160,5 @@ final class Logger {
 	 */
 	private function truncate( string $value, int $bytes ): string {
 		return function_exists( 'mb_strcut' ) ? mb_strcut( $value, 0, $bytes, 'UTF-8' ) : substr( $value, 0, $bytes );
-	}
-
-	/**
-	 * Every PRUNE_EVERY writes, enforce the cap now instead of waiting for cron.
-	 *
-	 * @return void
-	 */
-	private function maybe_prune(): void {
-		$writes = (int) get_transient( self::COUNTER ) + 1;
-
-		if ( $writes < self::PRUNE_EVERY ) {
-			set_transient( self::COUNTER, $writes, DAY_IN_SECONDS );
-			return;
-		}
-
-		delete_transient( self::COUNTER );
-		( new Pruner( $this->repository ) )->run();
 	}
 }

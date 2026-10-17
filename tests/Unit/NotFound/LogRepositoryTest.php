@@ -27,12 +27,49 @@ final class LogRepositoryTest extends MonkeyTestCase {
 	public function test_record_uses_upsert_with_prepare(): void {
 		( new LogRepository() )->record( "/o'brien", 'https://example.com/a', 'UA' );
 
-		$this->assertCount( 1, $this->db->queries );
-		$sql = $this->db->queries[0];
+		$this->assertCount( 3, $this->db->queries );
+		$this->assertStringContainsString( 'SELECT id, last_seen FROM wp_lw_seo_404_log WHERE url_hash', $this->db->queries[0] );
+		$this->assertStringContainsString( 'SELECT COUNT(*)', $this->db->queries[1] );
+		$sql = $this->db->queries[2];
 		$this->assertStringContainsString( 'INSERT INTO wp_lw_seo_404_log', $sql );
 		$this->assertStringContainsString( 'ON DUPLICATE KEY UPDATE hits = hits + 1, last_seen = VALUES(last_seen), referrer = VALUES(referrer)', $sql );
 		$this->assertStringContainsString( "'" . sha1( "/o'brien" ) . "'", $sql );
 		$this->assertStringContainsString( "'/o\\'brien'", $sql, 'values must be escaped by prepare()' );
+	}
+
+	public function test_new_url_is_skipped_at_the_row_cap(): void {
+		$this->db->var_queue = [ '5' ];
+
+		( new LogRepository() )->record( '/new', '', '', 5 );
+
+		$this->assertCount( 2, $this->db->queries, 'lookup and count only, no insert' );
+	}
+
+	public function test_new_url_is_inserted_below_the_cap(): void {
+		$this->db->var_queue = [ '4' ];
+
+		( new LogRepository() )->record( '/new', '', '', 5 );
+
+		$this->assertStringContainsString( 'INSERT INTO', $this->db->queries[2] );
+	}
+
+	public function test_existing_url_is_still_updated_at_the_cap(): void {
+		$this->db->results_queue = [ [ [ 'id' => '9', 'last_seen' => gmdate( 'Y-m-d H:i:s', time() - 600 ) ] ] ];
+		$this->db->var_queue     = [ '5' ];
+
+		( new LogRepository() )->record( '/old', 'https://example.com/r', '', 5 );
+
+		$this->assertCount( 2, $this->db->queries );
+		$this->assertStringContainsString( 'UPDATE wp_lw_seo_404_log SET hits = hits + 1', $this->db->queries[1] );
+		$this->assertStringContainsString( 'WHERE id = 9', $this->db->queries[1] );
+	}
+
+	public function test_row_seen_within_a_minute_causes_no_write(): void {
+		$this->db->results_queue = [ [ [ 'id' => '9', 'last_seen' => gmdate( 'Y-m-d H:i:s', time() - 10 ) ] ] ];
+
+		( new LogRepository() )->record( '/hot', '', '' );
+
+		$this->assertCount( 1, $this->db->queries, 'only the lookup' );
 	}
 
 	public function test_paginate_whitelists_orderby(): void {

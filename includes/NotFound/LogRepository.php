@@ -22,6 +22,11 @@ class LogRepository {
 	/**
 	 * Sortable columns (request value => column).
 	 */
+	/**
+	 * Seconds a row is not written again.
+	 */
+	private const THROTTLE = 60;
+
 	private const ORDERBY = [
 		'last_seen' => 'last_seen',
 		'hits'      => 'hits',
@@ -29,26 +34,59 @@ class LogRepository {
 	];
 
 	/**
-	 * Count a hit on a path, inserting the row on its first one.
+	 * Count a hit on a path.
+	 *
+	 * A row seen in the last 60 s is left alone, an older one gets one UPDATE,
+	 * and a new URL is inserted only while the table is below the row cap.
 	 *
 	 * @param string $path       Requested path.
 	 * @param string $referrer   Referrer URL without its query string.
 	 * @param string $user_agent User agent ('' when not stored).
+	 * @param int    $max_rows   Hard cap on stored rows (at least 1).
 	 * @return void
 	 */
-	public function record( string $path, string $referrer, string $user_agent ): void {
+	public function record( string $path, string $referrer, string $user_agent, int $max_rows = 1000 ): void {
 		global $wpdb;
 
+		$hash  = sha1( $path );
 		$now   = gmdate( 'Y-m-d H:i:s' );
 		$table = LogTable::name();
 
 		// phpcs:disable WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQLPlaceholders, WordPress.DB.DirectDatabaseQuery -- internal prefix-based table name; values are prepared.
+		$existing = $wpdb->get_results(
+			$wpdb->prepare( "SELECT id, last_seen FROM {$table} WHERE url_hash = %s", $hash ),
+			ARRAY_A
+		);
+
+		if ( is_array( $existing ) && [] !== $existing ) {
+			$seen = strtotime( (string) $existing[0]['last_seen'] . ' UTC' );
+			if ( false !== $seen && time() - $seen < self::THROTTLE ) {
+				return;
+			}
+
+			$wpdb->query(
+				$wpdb->prepare(
+					"UPDATE {$table} SET hits = hits + 1, last_seen = %s, referrer = %s WHERE id = %d",
+					$now,
+					$referrer,
+					(int) $existing[0]['id']
+				)
+			);
+			return;
+		}
+
+		// The table is capped, so counting it is cheap. A full table takes no new URLs.
+		if ( (int) $wpdb->get_var( "SELECT COUNT(*) FROM {$table}" ) >= max( 1, $max_rows ) ) {
+			return;
+		}
+
+		// ON DUPLICATE KEY covers two concurrent first hits of the same URL.
 		$wpdb->query(
 			$wpdb->prepare(
 				"INSERT INTO {$table} (url_hash, url, hits, referrer, user_agent, first_seen, last_seen)
 				VALUES (%s, %s, 1, %s, %s, %s, %s)
 				ON DUPLICATE KEY UPDATE hits = hits + 1, last_seen = VALUES(last_seen), referrer = VALUES(referrer)",
-				sha1( $path ),
+				$hash,
 				$path,
 				$referrer,
 				$user_agent,

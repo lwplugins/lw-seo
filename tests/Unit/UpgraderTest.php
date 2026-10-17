@@ -58,12 +58,24 @@ final class UpgraderTest extends MonkeyTestCase {
 	public function test_records_version_and_schedules_rewrite_flush_on_change(): void {
 		$this->stub_stored( '1.5.1' );
 		Functions\when( 'delete_transient' )->justReturn( true );
-		Functions\expect( 'update_option' )->twice();
+		$names = [];
+		Functions\when( 'update_option' )->alias(
+			static function ( string $name, $value ) use ( &$names ): bool {
+				$names[ $name ] = $value;
+				return true;
+			}
+		);
 		Functions\expect( 'set_transient' )->once()->with( RewriteFlusher::FLAG, 1, 3600 );
 
 		( new Upgrader() )->maybe_upgrade();
 
-		$this->addToAssertionCount( 1 );
+		$this->assertSame(
+			[
+				Upgrader::VERSION_OPTION   => LW_SEO_VERSION,
+				'lw_seo_404_table_version' => '1',
+			],
+			$names
+		);
 	}
 
 	public function test_installs_the_404_table_and_schedules_the_prune_on_change(): void {

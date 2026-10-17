@@ -206,6 +206,12 @@ if ( ! class_exists( 'wpdb' ) ) {
 
 		public $query_result = 1;
 
+		/** @var array<int, array<int, array<string, mixed>>> Queued get_results() answers (then $rows). */
+		public array $results_queue = [];
+
+		/** @var array<int, mixed> Queued get_var() answers (then $var). */
+		public array $var_queue = [];
+
 		public function prepare( $query, ...$args ) {
 			if ( isset( $args[0] ) && is_array( $args[0] ) ) {
 				$args = $args[0];
@@ -233,12 +239,12 @@ if ( ! class_exists( 'wpdb' ) ) {
 
 		public function get_results( $sql, $output = 'OBJECT' ) {
 			$this->queries[] = $sql;
-			return $this->rows;
+			return [] !== $this->results_queue ? array_shift( $this->results_queue ) : $this->rows;
 		}
 
 		public function get_var( $sql ) {
 			$this->queries[] = $sql;
-			return $this->var;
+			return [] !== $this->var_queue ? array_shift( $this->var_queue ) : $this->var;
 		}
 
 		public function get_charset_collate() {
