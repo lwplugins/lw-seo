@@ -29,6 +29,7 @@ import { formatNumber } from '../../data/format';
 import useRemote from '../../data/useRemote';
 import ImportExport from './ImportExport';
 import RedirectForm from './RedirectForm';
+import TestUrl from './TestUrl';
 import { tableLabels } from './tableLabels';
 
 /**
@@ -163,6 +164,8 @@ export default function RedirectsTab( { store } ) {
 					offText={ __( 'Off', 'lw-seo' ) }
 				/>
 			</Section>
+
+			<TestUrl />
 
 			<Section
 				title={ __( 'Existing Redirects', 'lw-seo' ) }

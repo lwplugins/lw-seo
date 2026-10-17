@@ -11,6 +11,7 @@ namespace LightweightPlugins\SEO\CLI;
 
 use LightweightPlugins\SEO\Redirects\DuplicateSource;
 use LightweightPlugins\SEO\Redirects\Manager;
+use LightweightPlugins\SEO\Redirects\Matcher;
 
 /**
  * Manage LW SEO redirects.
@@ -165,5 +166,58 @@ final class RedirectCommand {
 		}
 
 		\WP_CLI::line( $csv );
+	}
+
+	/**
+	 * Show which redirect a URL would hit.
+	 *
+	 * ## OPTIONS
+	 *
+	 * <url>
+	 * : Path or full URL to test (the query string is ignored).
+	 *
+	 * [--format=<format>]
+	 * : Output format. Options: table, json. Default: table.
+	 *
+	 * @param array<int, string>    $args       [url].
+	 * @param array<string, string> $assoc_args Associative args.
+	 * @return void
+	 */
+	public function test( array $args, array $assoc_args ): void {
+		$explain = Matcher::explain( $args[0] );
+
+		if ( 'json' === ( $assoc_args['format'] ?? 'table' ) ) {
+			\WP_CLI::line( (string) wp_json_encode( $explain, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES ) );
+			return;
+		}
+
+		$match = $explain['match'];
+		if ( null === $match ) {
+			\WP_CLI::line( sprintf( 'No redirect matches %s.', $explain['path'] ) );
+		} else {
+			\WP_CLI::success( sprintf( '%s -> %s [%d] (rule %s)', $explain['path'], '' === $match['destination'] ? '(none)' : $match['destination'], $match['type'], $match['id'] ) );
+		}
+
+		\WP_CLI\Utils\format_items( 'table', self::test_rows( $explain ), [ 'id', 'source', 'regex', 'result' ] );
+	}
+
+	/**
+	 * Table rows for the rule verdicts of an explain() result.
+	 *
+	 * @param array{rules: array<int, array{id: string, source: string, regex: bool, result: string}>} $explain Matcher::explain() result.
+	 * @return array<int, array{id: string, source: string, regex: string, result: string}>
+	 */
+	public static function test_rows( array $explain ): array {
+		$rows = [];
+		foreach ( $explain['rules'] as $rule ) {
+			$rows[] = [
+				'id'     => $rule['id'],
+				'source' => $rule['source'],
+				'regex'  => $rule['regex'] ? 'yes' : 'no',
+				'result' => $rule['result'],
+			];
+		}
+
+		return $rows;
 	}
 }

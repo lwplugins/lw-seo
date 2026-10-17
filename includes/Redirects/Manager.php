@@ -186,28 +186,12 @@ final class Manager {
 	 * @return array{id: int, redirect: array}|null
 	 */
 	public static function find_match( string $url ): ?array {
-		$redirects = self::get_all();
-		$path      = self::normalize_source( $url );
+		$found = Matcher::find( $url );
 
-		foreach ( $redirects as $id => $redirect ) {
-			if ( $redirect['regex'] ) {
-				// Regex match.
-				if ( preg_match( self::regex_pattern( $redirect['source'] ), $path ) ) {
-					return [
-						'id'       => $id,
-						'redirect' => $redirect,
-					];
-				}
-			} elseif ( $redirect['source'] === $path ) {
-				// Exact match.
-				return [
-					'id'       => $id,
-					'redirect' => $redirect,
-				];
-			}
-		}
-
-		return null;
+		return null === $found ? null : [
+			'id'       => $found['index'],
+			'redirect' => $found['rule'],
+		];
 	}
 
 	/**

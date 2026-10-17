@@ -24,6 +24,7 @@ export const api = {
 		send( `/redirects/${ encodeURIComponent( id ) }`, 'DELETE' ),
 	exportRedirects: () => apiFetch( { path: path( '/redirects/export' ) } ),
 	importRedirects: ( csv ) => send( '/redirects/import', 'POST', { csv } ),
+	testRedirect: ( url ) => send( '/redirects-test', 'POST', { url } ),
 
 	detectMigration: ( provider ) =>
 		apiFetch( { path: path( `/migration/${ provider }` ) } ),

@@ -46,26 +46,17 @@ final class Handler {
 			return;
 		}
 
-		// Remove query string for matching.
-		$path = strtok( $request_uri, '?' );
-		if ( ! $path ) {
-			return;
-		}
-
-		// Find matching redirect.
-		$match = Manager::find_match( $path );
+		// Find matching redirect (the matcher ignores the query string).
+		$match = Matcher::match( $request_uri );
 		if ( ! $match ) {
 			return;
 		}
 
-		$redirect = $match['redirect'];
-		$type     = (int) $redirect['type'];
-
 		// Record the hit.
-		Manager::record_hit( $match['id'] );
+		Manager::record_hit( $match['index'] );
 
 		// Handle different redirect types.
-		switch ( $type ) {
+		switch ( $match['type'] ) {
 			case 410:
 				$this->send_410();
 				break;
@@ -75,19 +66,7 @@ final class Handler {
 				break;
 
 			default:
-				$destination = $redirect['destination'];
-
-				// Handle regex replacement in destination.
-				if ( $redirect['regex'] && str_contains( $destination, '$' ) ) {
-					$destination = preg_replace( Manager::regex_pattern( $redirect['source'] ), $destination, $path );
-				}
-
-				// Make absolute URL if relative.
-				if ( ! str_starts_with( $destination, 'http' ) ) {
-					$destination = home_url( $destination );
-				}
-
-				$this->send_redirect( $destination, $type );
+				$this->send_redirect( $match['destination'], $match['type'] );
 				break;
 		}
 	}
