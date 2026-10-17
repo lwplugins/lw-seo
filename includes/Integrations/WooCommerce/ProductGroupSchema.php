@@ -41,7 +41,9 @@ final class ProductGroupSchema {
 			return $node;
 		}
 
-		$variants = self::variants( $node, $product );
+		$sku      = (string) $product->get_sku();
+		$group_id = '' !== $sku ? $sku : (string) $product->get_id();
+		$variants = self::variants( [ 'productGroupID' => $group_id ] + $node, $product );
 
 		if ( empty( $variants ) ) {
 			return $node;
@@ -55,10 +57,8 @@ final class ProductGroupSchema {
 			}
 		}
 
-		$sku = (string) $product->get_sku();
-
 		$group['@type']          = 'ProductGroup';
-		$group['productGroupID'] = '' !== $sku ? $sku : (string) $product->get_id();
+		$group['productGroupID'] = $group_id;
 
 		$varies_by = VariesBy::for_attributes( array_map( 'strval', array_keys( $product->get_variation_attributes() ) ) );
 		if ( ! empty( $varies_by ) ) {
@@ -79,10 +79,11 @@ final class ProductGroupSchema {
 	 */
 	private static function variants( array $node, \WC_Product_Variable $product ): array {
 		$variants = [];
+		$terms    = self::terms( $product );
 
 		foreach ( $product->get_children() as $child_id ) {
 			$variation = wc_get_product( $child_id );
-			$variant   = $variation instanceof \WC_Product ? VariationOffer::variant( $variation, $product, $node ) : null;
+			$variant   = $variation instanceof \WC_Product ? VariationOffer::variant( $variation, $product, $node, $terms ) : null;
 
 			if ( null !== $variant ) {
 				$variants[] = $variant;
@@ -90,5 +91,30 @@ final class ProductGroupSchema {
 		}
 
 		return $variants;
+	}
+
+	/**
+	 * The names of the product's global attribute terms, loaded once per
+	 * taxonomy (WordPress usually has them cached on the product page).
+	 *
+	 * @param \WC_Product_Variable $product The variable product.
+	 * @return array<string, array<string, string>> Taxonomy => slug => name.
+	 */
+	private static function terms( \WC_Product_Variable $product ): array {
+		$terms = [];
+
+		foreach ( array_keys( $product->get_variation_attributes() ) as $taxonomy ) {
+			$taxonomy = (string) $taxonomy;
+			if ( 0 !== strpos( $taxonomy, 'pa_' ) ) {
+				continue;
+			}
+
+			$found = get_the_terms( $product->get_id(), $taxonomy );
+			foreach ( is_array( $found ) ? $found : [] as $term ) {
+				$terms[ $taxonomy ][ $term->slug ] = $term->name;
+			}
+		}
+
+		return $terms;
 	}
 }

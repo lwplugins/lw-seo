@@ -114,6 +114,10 @@ if ( ! class_exists( 'WC_Product' ) ) {
 			return $this->prop( 'permalink' );
 		}
 
+		public function is_on_sale( $context = 'view' ) {
+			return $this->prop( 'on_sale', false );
+		}
+
 		public function is_purchasable() {
 			return $this->prop( 'purchasable', true );
 		}

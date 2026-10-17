@@ -130,7 +130,6 @@ final class SchemaTest extends MonkeyTestCase {
 		$this->stub_options( [ 'schema_enabled' => true, 'woo_product_group' => true ] );
 		Functions\when( 'add_query_arg' )->alias( static fn( array $args, string $url ) => $url . '?' . http_build_query( $args ) );
 		Functions\when( 'wc_get_price_to_display' )->alias( static fn( \WC_Product $product ) => (float) $product->get_price() );
-		Functions\when( 'get_term_by' )->justReturn( false );
 		Functions\when( 'sanitize_title' )->alias( static fn( string $title ) => strtolower( $title ) );
 		$variation = new \WC_Product_Variation( 43, 0, 0.0, [ 'price' => '950', 'variation_attributes' => [ 'attribute_pa_color' => 'blue' ] ] );
 		Functions\when( 'wc_get_product' )->justReturn( $variation );
@@ -141,6 +140,34 @@ final class SchemaTest extends MonkeyTestCase {
 		$this->assertSame( 'ProductGroup', $markup['@type'] );
 		$this->assertSame( 'blue', $markup['hasVariant'][0]['color'] );
 		$this->assertArrayNotHasKey( 'offers', $markup );
+	}
+
+	public function test_allows_the_product_group_type_when_enabled(): void {
+		$this->stub_options( [ 'schema_enabled' => true, 'woo_product_group' => true ] );
+
+		$this->assertSame(
+			[ 'product', 'website', 'productgroup' ],
+			( new Schema() )->allow_product_group_type( [ 'product', 'website' ] )
+		);
+	}
+
+	public function test_leaves_the_types_alone_when_product_group_is_off(): void {
+		$this->assertSame( [ 'product', 'website' ], ( new Schema() )->allow_product_group_type( [ 'product', 'website' ] ) );
+	}
+
+	public function test_product_group_survives_woocommerce_type_filtering(): void {
+		$this->stub_options( [ 'schema_enabled' => true, 'woo_product_group' => true ] );
+		$nodes = [ [ '@type' => 'ProductGroup', 'name' => 'Áfonyás alkonyat' ], [ '@type' => 'BreadcrumbList' ] ];
+		$types = ( new Schema() )->allow_product_group_type( [ 'product', 'website', 'review', 'breadcrumblist', 'order' ] );
+
+		// What WC_Structured_Data::get_structured_data() does with the nodes.
+		$grouped = [];
+		foreach ( $nodes as $node ) {
+			$grouped[ strtolower( $node['@type'] ) ][] = $node;
+		}
+		$kept = array_intersect_key( $grouped, array_flip( $types ) );
+
+		$this->assertSame( [ 'productgroup', 'breadcrumblist' ], array_keys( $kept ) );
 	}
 
 	public function test_has_woocommerce_build_the_product_when_the_template_skipped_it(): void {

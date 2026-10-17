@@ -9,13 +9,16 @@ declare(strict_types=1);
 
 namespace LightweightPlugins\SEO\Tests\Unit\Integrations\WooCommerce;
 
+use Brain\Monkey\Functions;
 use LightweightPlugins\SEO\Integrations\WooCommerce\ProductGroupSchema;
+use LightweightPlugins\SEO\Integrations\WooCommerce\Schema;
 use LightweightPlugins\SEO\Options;
 use LightweightPlugins\SEO\Tests\Unit\MonkeyTestCase;
 use LightweightPlugins\SEO\Tests\Unit\OptionsStubTrait;
 
 /**
  * @covers \LightweightPlugins\SEO\Integrations\WooCommerce\ProductGroupSchema
+ * @covers \LightweightPlugins\SEO\Integrations\WooCommerce\Schema
  */
 final class ProductGroupSchemaTest extends MonkeyTestCase {
 
@@ -40,9 +43,17 @@ final class ProductGroupSchemaTest extends MonkeyTestCase {
 	}
 
 	public function test_off_by_default_keeps_aggregate_offer(): void {
-		$this->stub_options();
+		$this->stub_options( [ 'schema_enabled' => true ] );
+		Functions\when( 'get_post' )->justReturn( null );
+		Functions\when( 'get_comments' )->justReturn( [] );
+
+		$markup = ( new Schema() )->enrich_woocommerce_markup( $this->group(), $this->parent() );
 
 		$this->assertFalse( ProductGroupSchema::applies( $this->parent() ) );
+		$this->assertSame( 'Product', $markup['@type'] );
+		$this->assertSame( 'AggregateOffer', $markup['offers'][0]['@type'] );
+		$this->assertSame( '2990', $markup['offers'][0]['highPrice'] );
+		$this->assertArrayNotHasKey( 'hasVariant', $markup );
 	}
 
 	public function test_applies_to_variable_products_only(): void {
@@ -59,8 +70,10 @@ final class ProductGroupSchemaTest extends MonkeyTestCase {
 		$this->assertSame( [ 'https://schema.org/color', 'https://schema.org/size' ], $group['variesBy'] );
 		$this->assertSame( [ 'POLO-KEK-XL', 'POLO-PIROS-M' ], array_column( $group['hasVariant'], 'sku' ) );
 		$this->assertSame( 'Product', $group['hasVariant'][1]['@type'] );
-		$this->assertSame( 'piros', $group['hasVariant'][1]['color'] );
 		$this->assertSame( 2990.0, $group['hasVariant'][1]['offers']['price'] );
+		$this->assertSame( 'kék', $group['hasVariant'][0]['color'] );
+		$this->assertSame( 'Piros', $group['hasVariant'][1]['color'] );
+		$this->assertSame( [ 'POLO', 'POLO' ], array_column( $group['hasVariant'], 'inProductGroupWithID' ) );
 	}
 
 	public function test_group_has_no_offers_and_has_group_id(): void {

@@ -38,6 +38,25 @@ final class Schema {
 		add_filter( 'woocommerce_structured_data_product', [ $this, 'enrich_woocommerce_markup' ], 30, 2 );
 		// Before WooCommerce prints its structured data (priority 10).
 		add_action( 'wp_footer', [ $this, 'output_product_schema' ], 5 );
+		// WooCommerce prints only the node types on this list.
+		add_filter( 'woocommerce_structured_data_type_for_page', [ $this, 'allow_product_group_type' ] );
+	}
+
+	/**
+	 * Let WooCommerce print ProductGroup nodes: it groups its nodes by
+	 * lowercased @type and drops every type missing from this list.
+	 *
+	 * @param mixed $types The node types WooCommerce prints on this page.
+	 * @return mixed
+	 */
+	public function allow_product_group_type( $types ) {
+		if ( ! is_array( $types ) || ! $this->is_enabled() || ! Options::get( 'woo_product_group' ) || in_array( 'productgroup', $types, true ) ) {
+			return $types;
+		}
+
+		$types[] = 'productgroup';
+
+		return $types;
 	}
 
 	/**

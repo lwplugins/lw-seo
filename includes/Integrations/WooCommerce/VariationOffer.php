@@ -29,30 +29,33 @@ final class VariationOffer {
 	 * The variation's Product node, or null when it is not purchasable,
 	 * has no price, or is not published.
 	 *
-	 * @param \WC_Product          $variation The variation.
-	 * @param \WC_Product          $parent    The variable product.
-	 * @param array<string, mixed> $group     The group's markup (name, image).
+	 * @param \WC_Product                          $variation The variation.
+	 * @param \WC_Product                          $parent    The variable product.
+	 * @param array<string, mixed>                 $group     The group's markup (name, image, productGroupID).
+	 * @param array<string, array<string, string>> $terms     Attribute term names: taxonomy => slug => name.
 	 * @return array<string, mixed>|null
 	 */
-	public static function variant( \WC_Product $variation, \WC_Product $parent, array $group ): ?array {
+	public static function variant( \WC_Product $variation, \WC_Product $parent, array $group, array $terms = [] ): ?array {
 		if ( ! $variation instanceof \WC_Product_Variation || ! self::is_offered( $variation ) ) {
 			return null;
 		}
 
 		$attributes = array_filter( array_map( 'strval', $variation->get_variation_attributes() ), static fn( string $value ): bool => '' !== $value );
-		$values     = [];
+		$labels     = self::attribute_labels( $attributes, $terms );
 		$variant    = [ '@type' => 'Product' ];
 
-		foreach ( $attributes as $key => $value ) {
-			$label    = self::attribute_label( (string) $key, $value );
-			$values[] = $label;
+		if ( isset( $group['productGroupID'] ) && is_string( $group['productGroupID'] ) ) {
+			$variant['inProductGroupWithID'] = $group['productGroupID'];
+		}
 
+		foreach ( $labels as $key => $label ) {
 			$property = VariesBy::property( (string) $key );
 			if ( null !== $property ) {
 				$variant[ $property ] = $label;
 			}
 		}
 
+		$values          = array_values( $labels );
 		$name            = isset( $group['name'] ) && is_string( $group['name'] ) ? $group['name'] : $parent->get_name();
 		$variant['name'] = empty( $values ) ? $name : $name . ' - ' . implode( ', ', $values );
 
@@ -108,9 +111,9 @@ final class VariationOffer {
 			'url'           => add_query_arg( array_map( 'rawurlencode', $attributes ), (string) get_permalink( $parent->get_id() ) ),
 		];
 
-		$sale_end = $variation->get_date_on_sale_to();
+		$sale_end = $variation->is_on_sale() ? $variation->get_date_on_sale_to() : null;
 		if ( $sale_end instanceof \DateTimeInterface ) {
-			$offer['priceValidUntil'] = $sale_end->format( 'Y-m-d' );
+			$offer['priceValidUntil'] = gmdate( 'Y-m-d', $sale_end->getTimestamp() );
 		}
 
 		$seller = ProductSchema::get_seller();
@@ -130,24 +133,22 @@ final class VariationOffer {
 	}
 
 	/**
-	 * The display value of a variation attribute: the term name for global
-	 * (`pa_`) attributes, the stored value otherwise.
+	 * The display values of the variation's attributes: the term name for
+	 * global (`pa_`) attributes, the stored value otherwise.
 	 *
-	 * @param string $key   The attribute_* key.
-	 * @param string $value The stored value (term slug for global attributes).
-	 * @return string
+	 * @param array<string, string>                $attributes The attribute_* => stored value (term slug for global attributes).
+	 * @param array<string, array<string, string>> $terms      Attribute term names: taxonomy => slug => name.
+	 * @return array<string, string>
 	 */
-	private static function attribute_label( string $key, string $value ): string {
-		$taxonomy = (string) preg_replace( '/^attribute_/', '', $key );
+	private static function attribute_labels( array $attributes, array $terms ): array {
+		$labels = [];
 
-		if ( 0 === strpos( $taxonomy, 'pa_' ) ) {
-			$term = get_term_by( 'slug', $value, $taxonomy );
-			if ( $term instanceof \WP_Term && '' !== $term->name ) {
-				return $term->name;
-			}
+		foreach ( $attributes as $key => $value ) {
+			$taxonomy       = (string) preg_replace( '/^attribute_/', '', (string) $key );
+			$labels[ $key ] = $terms[ $taxonomy ][ $value ] ?? $value;
 		}
 
-		return $value;
+		return $labels;
 	}
 
 	/**

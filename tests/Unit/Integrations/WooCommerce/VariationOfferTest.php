@@ -35,7 +35,7 @@ final class VariationOfferTest extends MonkeyTestCase {
 	}
 
 	public function test_url_has_attribute_args(): void {
-		$variant = VariationOffer::variant( $this->variation( 101 ), $this->parent(), $this->group() );
+		$variant = VariationOffer::variant( $this->variation( 101 ), $this->parent(), $this->group(), $this->terms() );
 
 		$this->assertSame( self::PERMALINK . '?attribute_pa_szin=kek&attribute_meret=XL', $variant['offers']['url'] );
 		$this->assertSame( 'Áfonyás póló - kék, XL', $variant['name'] );
@@ -47,21 +47,42 @@ final class VariationOfferTest extends MonkeyTestCase {
 		$this->assertSame( 'HUF', $variant['offers']['priceCurrency'] );
 	}
 
+	public function test_labels_come_from_the_term_map(): void {
+		$variant = VariationOffer::variant( $this->variation( 101 ), $this->parent(), $this->group(), [ 'pa_szin' => [ 'kek' => 'Égkék' ] ] );
+
+		$this->assertSame( 'Égkék', $variant['color'] );
+		$this->assertSame( 'kek', VariationOffer::variant( $this->variation( 101 ), $this->parent(), $this->group() )['color'] );
+	}
+
+	public function test_variant_names_its_group(): void {
+		$variant = VariationOffer::variant( $this->variation( 101 ), $this->parent(), [ 'productGroupID' => 'POLO' ] + $this->group(), $this->terms() );
+
+		$this->assertSame( 'POLO', $variant['inProductGroupWithID'] );
+	}
+
 	public function test_price_valid_until_only_with_sale_end(): void {
-		$plain = VariationOffer::variant( $this->variation( 101 ), $this->parent(), $this->group() );
-		$sale  = VariationOffer::variant(
-			$this->variation( 102, [ 'date_on_sale_to' => new \WC_DateTime( '2026-12-24 23:59:59' ) ] ),
+		$plain = VariationOffer::variant( $this->variation( 101 ), $this->parent(), $this->group(), $this->terms() );
+		$ended = VariationOffer::variant(
+			$this->variation( 103, [ 'date_on_sale_to' => new \WC_DateTime( '2026-12-24 23:59:59' ) ] ),
 			$this->parent(),
-			$this->group()
+			$this->group(),
+			$this->terms()
+		);
+		$sale  = VariationOffer::variant(
+			$this->variation( 102, [ 'on_sale' => true, 'date_on_sale_to' => new \WC_DateTime( '2026-12-24 23:59:59', new \DateTimeZone( 'UTC' ) ) ] ),
+			$this->parent(),
+			$this->group(),
+			$this->terms()
 		);
 
 		$this->assertArrayNotHasKey( 'priceValidUntil', $plain['offers'] );
+		$this->assertArrayNotHasKey( 'priceValidUntil', $ended['offers'] );
 		$this->assertSame( '2026-12-24', $sale['offers']['priceValidUntil'] );
 	}
 
 	public function test_image_falls_back_to_parent(): void {
-		$own      = VariationOffer::variant( $this->variation( 101, [ 'image_id' => 7 ] ), $this->parent(), $this->group() );
-		$fallback = VariationOffer::variant( $this->variation( 102 ), $this->parent(), $this->group() );
+		$own      = VariationOffer::variant( $this->variation( 101, [ 'image_id' => 7 ] ), $this->parent(), $this->group(), $this->terms() );
+		$fallback = VariationOffer::variant( $this->variation( 102 ), $this->parent(), $this->group(), $this->terms() );
 
 		$this->assertSame( 'https://shop.test/img/7.jpg', $own['image'] );
 		$this->assertSame( 'https://shop.test/img/parent.jpg', $fallback['image'] );
@@ -75,7 +96,7 @@ final class VariationOfferTest extends MonkeyTestCase {
 		];
 
 		foreach ( $expected as $status => $url ) {
-			$variant = VariationOffer::variant( $this->variation( 101, [ 'stock_status' => $status ] ), $this->parent(), $this->group() );
+			$variant = VariationOffer::variant( $this->variation( 101, [ 'stock_status' => $status ] ), $this->parent(), $this->group(), $this->terms() );
 			$this->assertSame( $url, $variant['offers']['availability'], $status );
 		}
 	}
@@ -86,7 +107,7 @@ final class VariationOfferTest extends MonkeyTestCase {
 			static fn( array $offer ) => $offer + [ 'shippingDetails' => [] ]
 		);
 
-		$variant = VariationOffer::variant( $this->variation( 101 ), $this->parent(), $this->group() );
+		$variant = VariationOffer::variant( $this->variation( 101 ), $this->parent(), $this->group(), $this->terms() );
 
 		$this->assertSame( 'MézVitéz Kft.', $variant['offers']['seller']['name'] );
 		$this->assertArrayHasKey( 'shippingDetails', $variant['offers'] );
@@ -94,7 +115,7 @@ final class VariationOfferTest extends MonkeyTestCase {
 
 	public function test_null_when_not_purchasable_priceless_or_private(): void {
 		foreach ( [ [ 'purchasable' => false ], [ 'price' => '' ], [ 'status' => 'private' ] ] as $props ) {
-			$this->assertNull( VariationOffer::variant( $this->variation( 101, $props ), $this->parent(), $this->group() ) );
+			$this->assertNull( VariationOffer::variant( $this->variation( 101, $props ), $this->parent(), $this->group(), $this->terms() ) );
 		}
 	}
 }

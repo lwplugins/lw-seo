@@ -26,8 +26,11 @@ trait VariationFixturesTrait {
 		Functions\when( 'home_url' )->justReturn( 'https://shop.test/' );
 		Functions\when( 'wc_get_price_to_display' )->alias( static fn( \WC_Product $product ) => (float) $product->get_price() );
 		Functions\when( 'wp_get_attachment_image_url' )->alias( static fn( $id ) => $id ? 'https://shop.test/img/' . $id . '.jpg' : false );
-		Functions\when( 'get_term_by' )->alias(
-			static fn( $field, $value, $taxonomy ) => 'pa_szin' === $taxonomy && 'kek' === $value ? new \WP_Term( [ 'name' => 'kék' ] ) : false
+		Functions\expect( 'get_term_by' )->never();
+		Functions\when( 'get_the_terms' )->alias(
+			static fn( $post_id, $taxonomy ) => 'pa_szin' === $taxonomy
+				? [ new \WP_Term( [ 'slug' => 'kek', 'name' => 'kék' ] ), new \WP_Term( [ 'slug' => 'piros', 'name' => 'Piros' ] ) ]
+				: false
 		);
 		Functions\when( 'sanitize_title' )->alias(
 			static fn( string $title ) => trim( (string) preg_replace( '/[^a-z0-9]+/', '-', strtolower( $title ) ), '-' )
@@ -72,6 +75,15 @@ trait VariationFixturesTrait {
 				],
 			]
 		);
+	}
+
+	/**
+	 * The parent's attribute terms: taxonomy => slug => name.
+	 *
+	 * @return array<string, array<string, string>>
+	 */
+	private function terms(): array {
+		return [ 'pa_szin' => [ 'kek' => 'kék', 'piros' => 'Piros' ] ];
 	}
 
 	/**
