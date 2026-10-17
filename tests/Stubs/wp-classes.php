@@ -206,6 +206,9 @@ if ( ! class_exists( 'wpdb' ) ) {
 
 		public $query_result = 1;
 
+		/** @var array<int, mixed> Queued query() answers (then $query_result). */
+		public array $query_queue = [];
+
 		/** @var array<int, array<int, array<string, mixed>>> Queued get_results() answers (then $rows). */
 		public array $results_queue = [];
 
@@ -234,7 +237,7 @@ if ( ! class_exists( 'wpdb' ) ) {
 
 		public function query( $sql ) {
 			$this->queries[] = $sql;
-			return $this->query_result;
+			return [] !== $this->query_queue ? array_shift( $this->query_queue ) : $this->query_result;
 		}
 
 		public function get_results( $sql, $output = 'OBJECT' ) {

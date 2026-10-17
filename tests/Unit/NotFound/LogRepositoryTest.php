@@ -37,14 +37,24 @@ final class LogRepositoryTest extends MonkeyTestCase {
 		$this->assertStringContainsString( "'/o\\'brien'", $sql, 'values must be escaped by prepare()' );
 	}
 
-	public function test_oldest_entry_is_evicted_before_the_insert_at_the_cap(): void {
+	public function test_oldest_one_off_entry_is_evicted_before_the_insert_at_the_cap(): void {
 		$this->db->var_queue = [ '5' ];
 
 		( new LogRepository() )->record( '/new', '', '', 5 );
 
 		$this->assertCount( 4, $this->db->queries );
-		$this->assertSame( 'DELETE FROM wp_lw_seo_404_log ORDER BY last_seen ASC LIMIT 1', $this->db->queries[2] );
+		$this->assertSame( 'DELETE FROM wp_lw_seo_404_log WHERE hits <= 1 ORDER BY last_seen ASC LIMIT 1', $this->db->queries[2] );
 		$this->assertStringContainsString( 'INSERT INTO', $this->db->queries[3] );
+	}
+
+	public function test_new_url_is_dropped_when_no_one_off_row_can_be_evicted(): void {
+		$this->db->var_queue   = [ '5' ];
+		$this->db->query_queue = [ 0 ];
+
+		( new LogRepository() )->record( '/new', '', '', 5 );
+
+		$this->assertCount( 3, $this->db->queries, 'lookup, count, DELETE only' );
+		$this->assertStringContainsString( 'DELETE FROM', $this->db->queries[2] );
 	}
 
 	public function test_eviction_is_bounded_per_request(): void {
@@ -52,7 +62,7 @@ final class LogRepositoryTest extends MonkeyTestCase {
 
 		( new LogRepository() )->record( '/new', '', '', 5 );
 
-		$this->assertStringContainsString( 'ORDER BY last_seen ASC LIMIT 10', $this->db->queries[2] );
+		$this->assertStringContainsString( 'WHERE hits <= 1 ORDER BY last_seen ASC LIMIT 10', $this->db->queries[2] );
 	}
 
 	public function test_new_url_is_inserted_below_the_cap(): void {

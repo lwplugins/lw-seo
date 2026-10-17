@@ -42,7 +42,7 @@ class LogRepository {
 	 * Count a hit on a path.
 	 *
 	 * A row seen in the last 60 s is left alone and an older one gets one UPDATE.
-	 * A new URL is inserted; at the row cap the oldest entries are evicted first.
+	 * A new URL is inserted; at the row cap the oldest one-off entries are evicted first.
 	 *
 	 * @param string $path       Requested path.
 	 * @param string $referrer   Referrer URL without its query string.
@@ -81,13 +81,18 @@ class LogRepository {
 		}
 
 		// The table is capped, so counting it is cheap. At the cap the oldest
-		// entries make room, so a flood of random URLs cannot lock real 404s out.
+		// one-off entries make room; recurring ones (hits > 1) are never evicted
+		// here, so a flood of random URLs cannot push out established 404s. With
+		// no one-off row left the new URL is dropped (the daily prune trims).
 		$max_rows = max( 1, $max_rows );
 		$excess   = (int) $wpdb->get_var( "SELECT COUNT(*) FROM {$table}" ) - $max_rows + 1;
 		if ( $excess > 0 ) {
-			$wpdb->query(
-				$wpdb->prepare( "DELETE FROM {$table} ORDER BY last_seen ASC LIMIT %d", min( $excess, self::MAX_EVICTIONS ) )
+			$evicted = (int) $wpdb->query(
+				$wpdb->prepare( "DELETE FROM {$table} WHERE hits <= 1 ORDER BY last_seen ASC LIMIT %d", min( $excess, self::MAX_EVICTIONS ) )
 			);
+			if ( 0 === $evicted ) {
+				return;
+			}
 		}
 
 		// ON DUPLICATE KEY covers two concurrent first hits of the same URL.
