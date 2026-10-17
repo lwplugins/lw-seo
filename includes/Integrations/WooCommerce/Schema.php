@@ -9,48 +9,96 @@ declare(strict_types=1);
 
 namespace LightweightPlugins\SEO\Integrations\WooCommerce;
 
-use LightweightPlugins\SEO\Content\PostDescription;
 use LightweightPlugins\SEO\Options;
 
 /**
  * Handles WooCommerce Product Schema.org JSON-LD.
+ *
+ * A product page carries one Product node. When WooCommerce prints its own
+ * structured data, LW SEO adds its data to WooCommerce's Product (and makes
+ * WooCommerce build it when the theme's template skipped that); only when
+ * WooCommerce's output is gone does LW SEO print a Product of its own.
  */
 final class Schema {
+
+	/**
+	 * Product schema data.
+	 *
+	 * @var ProductSchema
+	 */
+	private ProductSchema $product_schema;
 
 	/**
 	 * Constructor.
 	 */
 	public function __construct() {
-		add_action( 'wp_head', [ $this, 'output_product_schema' ], 100 );
+		$this->product_schema = new ProductSchema();
+
+		// After WooCommerce Brands (priority 20), which adds the brand.
+		add_filter( 'woocommerce_structured_data_product', [ $this, 'enrich_woocommerce_markup' ], 30, 2 );
+		// Before WooCommerce prints its structured data (priority 10).
+		add_action( 'wp_footer', [ $this, 'output_product_schema' ], 5 );
 	}
 
 	/**
-	 * Output product Schema.org JSON-LD.
+	 * Add LW SEO's data to WooCommerce's Product markup.
+	 *
+	 * @param mixed $markup  WooCommerce's Product markup.
+	 * @param mixed $product The product.
+	 * @return mixed
+	 */
+	public function enrich_woocommerce_markup( $markup, $product = null ) {
+		if ( ! is_array( $markup ) || ! $product instanceof \WC_Product || ! $this->is_enabled() ) {
+			return $markup;
+		}
+
+		/**
+		 * Filters the product page's Product markup, built by WooCommerce or by LW SEO.
+		 *
+		 * @param array<string, mixed> $markup  Product markup.
+		 * @param \WC_Product          $product The product.
+		 */
+		return apply_filters( 'lw_seo_woo_product_schema', $this->product_schema->enrich( $markup, $product ), $product );
+	}
+
+	/**
+	 * Make sure the product page has its Product node.
 	 *
 	 * @return void
 	 */
 	public function output_product_schema(): void {
-		if ( ! Options::get( 'schema_enabled' ) ) {
-			return;
-		}
-
-		if ( ! Options::get( 'woo_schema_enabled', true ) ) {
-			return;
-		}
-
-		if ( ! WooCommerce::is_product() ) {
+		if ( ! $this->is_enabled() || ! WooCommerce::is_product() ) {
 			return;
 		}
 
 		$product = WooCommerce::get_product();
 
-		if ( ! $product ) {
+		if ( $product ) {
+			$this->ensure_product_node( $product );
+		}
+	}
+
+	/**
+	 * Give the product page its one Product node.
+	 *
+	 * @param \WC_Product $product The product.
+	 * @return void
+	 */
+	public function ensure_product_node( \WC_Product $product ): void {
+		$structured_data = $this->woocommerce_structured_data();
+
+		if ( $structured_data ) {
+			// Templates that skip woocommerce_single_product_summary never build it.
+			if ( ! $this->has_product_node( $structured_data->get_data() ) ) {
+				$structured_data->generate_product_data( $product );
+			}
 			return;
 		}
 
-		$schema = $this->build_product_schema( $product );
+		/** This filter is documented in includes/Integrations/WooCommerce/Schema.php */
+		$schema = apply_filters( 'lw_seo_woo_product_schema', $this->product_schema->build( $product ), $product );
 
-		if ( empty( $schema ) ) {
+		if ( ! is_array( $schema ) || empty( $schema ) ) {
 			return;
 		}
 
@@ -64,176 +112,42 @@ final class Schema {
 	}
 
 	/**
-	 * Build product Schema.org data.
+	 * LW SEO's product schema is on.
 	 *
-	 * @param \WC_Product $product The product.
-	 * @return array<string, mixed>
+	 * @return bool
 	 */
-	private function build_product_schema( \WC_Product $product ): array {
-		$schema = [
-			'@context'    => 'https://schema.org',
-			'@type'       => 'Product',
-			'@id'         => get_permalink( $product->get_id() ) . '#product',
-			'name'        => $product->get_name(),
-			'description' => $this->get_product_description( $product ),
-			'url'         => get_permalink( $product->get_id() ),
-		];
-
-		// SKU.
-		$sku = $product->get_sku();
-		if ( $sku ) {
-			$schema['sku'] = $sku;
-		}
-
-		// GTIN/EAN/UPC (if set as meta).
-		$gtin = get_post_meta( $product->get_id(), '_gtin', true );
-		if ( $gtin ) {
-			$schema['gtin'] = $gtin;
-		}
-
-		// Images.
-		$images = $this->get_product_images( $product );
-		if ( ! empty( $images ) ) {
-			$schema['image'] = $images;
-		}
-
-		// Brand.
-		$brand = $this->get_product_brand( $product );
-		if ( $brand ) {
-			$schema['brand'] = [
-				'@type' => 'Brand',
-				'name'  => $brand,
-			];
-		}
-
-		// Rating and reviews.
-		$schema += ( new ReviewSchema() )->properties( $product );
-
-		// Offer(s).
-		$schema['offers'] = $this->get_product_offers( $product );
-
-		return $schema;
+	private function is_enabled(): bool {
+		return Options::get( 'schema_enabled' ) && Options::get( 'woo_schema_enabled', true );
 	}
 
 	/**
-	 * Get product description: the short description, falling back to the
-	 * product content, read through get_the_excerpt() so content
-	 * restriction plugins can mask it.
+	 * WooCommerce's structured data, when it will be printed on this page.
 	 *
-	 * @param \WC_Product $product The product.
-	 * @return string
+	 * @return \WC_Structured_Data|null
 	 */
-	private function get_product_description( \WC_Product $product ): string {
-		$post = get_post( $product->get_id() );
+	private function woocommerce_structured_data(): ?\WC_Structured_Data {
+		$structured_data = function_exists( 'WC' ) ? WC()->structured_data : null;
 
-		if ( ! $post instanceof \WP_Post ) {
-			return '';
+		if ( ! $structured_data instanceof \WC_Structured_Data ) {
+			return null;
 		}
 
-		$description = wp_trim_words( PostDescription::generated( $post, 50 ), 50, '...' );
-
-		return PostDescription::filter( $description, $post, 'schema' );
+		return false !== has_action( 'wp_footer', [ $structured_data, 'output_structured_data' ] ) ? $structured_data : null;
 	}
 
 	/**
-	 * Get product images.
+	 * Whether WooCommerce's collected data holds a Product node.
 	 *
-	 * @param \WC_Product $product The product.
-	 * @return array<string>
+	 * @param mixed $data WooCommerce's structured data.
+	 * @return bool
 	 */
-	private function get_product_images( \WC_Product $product ): array {
-		$images = [];
-
-		// Main image.
-		$main_image = wp_get_attachment_image_url( (int) $product->get_image_id(), 'large' );
-		if ( $main_image ) {
-			$images[] = $main_image;
-		}
-
-		// Gallery images.
-		$gallery_ids = $product->get_gallery_image_ids();
-		foreach ( $gallery_ids as $image_id ) {
-			$image_url = wp_get_attachment_image_url( $image_id, 'large' );
-			if ( $image_url ) {
-				$images[] = $image_url;
+	private function has_product_node( $data ): bool {
+		foreach ( is_array( $data ) ? $data : [] as $node ) {
+			if ( is_array( $node ) && in_array( 'Product', (array) ( $node['@type'] ?? [] ), true ) ) {
+				return true;
 			}
 		}
 
-		return $images;
-	}
-
-	/**
-	 * Get product brand.
-	 *
-	 * @param \WC_Product $product The product.
-	 * @return string
-	 */
-	private function get_product_brand( \WC_Product $product ): string {
-		// Try product attribute.
-		$brand = $product->get_attribute( 'brand' );
-
-		if ( $brand ) {
-			return $brand;
-		}
-
-		// Try taxonomy.
-		$brand_terms = get_the_terms( $product->get_id(), 'product_brand' );
-
-		if ( is_array( $brand_terms ) && ! empty( $brand_terms ) ) {
-			return $brand_terms[0]->name;
-		}
-
-		return '';
-	}
-
-	/**
-	 * Get product offers.
-	 *
-	 * @param \WC_Product $product The product.
-	 * @return array<string, mixed>
-	 */
-	private function get_product_offers( \WC_Product $product ): array {
-		$offer = [
-			'@type'           => 'Offer',
-			'url'             => get_permalink( $product->get_id() ),
-			'priceCurrency'   => get_woocommerce_currency(),
-			'price'           => $product->get_price(),
-			'availability'    => $this->get_availability_url( $product ),
-			'itemCondition'   => 'https://schema.org/NewCondition',
-			'priceValidUntil' => gmdate( 'Y-12-31' ),
-		];
-
-		// Seller.
-		$knowledge_type = Options::get( 'knowledge_type' );
-		$knowledge_name = Options::get( 'knowledge_name' );
-
-		if ( $knowledge_type ) {
-			$seller_name     = ! empty( $knowledge_name ) ? $knowledge_name : get_bloginfo( 'name' );
-			$offer['seller'] = [
-				'@type' => ucfirst( $knowledge_type ),
-				'name'  => $seller_name,
-				'url'   => home_url( '/' ),
-			];
-		}
-
-		return $offer;
-	}
-
-	/**
-	 * Get Schema.org availability URL.
-	 *
-	 * @param \WC_Product $product The product.
-	 * @return string
-	 */
-	private function get_availability_url( \WC_Product $product ): string {
-		if ( ! $product->is_in_stock() ) {
-			return 'https://schema.org/OutOfStock';
-		}
-
-		if ( $product->is_on_backorder() ) {
-			return 'https://schema.org/BackOrder';
-		}
-
-		return 'https://schema.org/InStock';
+		return false;
 	}
 }

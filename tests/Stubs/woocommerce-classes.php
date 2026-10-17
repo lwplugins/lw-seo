@@ -24,7 +24,47 @@ if ( ! class_exists( 'WC_Product' ) ) {
 		 * @param int   $rating_count   Cached rating count (_wc_rating_count).
 		 * @param float $average_rating Cached average rating (_wc_average_rating).
 		 */
-		public function __construct( private int $id = 0, private int $rating_count = 0, private float $average_rating = 0.0 ) {}
+		public function __construct( private int $id = 0, private int $rating_count = 0, private float $average_rating = 0.0, public array $test_props = [] ) {}
+
+		private function prop( string $key, $fallback = '' ) {
+			return $this->test_props[ $key ] ?? $fallback;
+		}
+
+		public function get_name( $context = 'view' ) {
+			return $this->prop( 'name' );
+		}
+
+		public function get_sku( $context = 'view' ) {
+			return $this->prop( 'sku' );
+		}
+
+		public function get_price( $context = 'view' ) {
+			return $this->prop( 'price' );
+		}
+
+		public function get_global_unique_id( $context = 'view' ) {
+			return $this->prop( 'global_unique_id' );
+		}
+
+		public function get_attribute( $attribute ) {
+			return $this->prop( 'attribute_' . $attribute );
+		}
+
+		public function get_image_id( $context = 'view' ) {
+			return $this->prop( 'image_id', 0 );
+		}
+
+		public function get_gallery_image_ids( $context = 'view' ) {
+			return $this->prop( 'gallery_image_ids', [] );
+		}
+
+		public function is_in_stock() {
+			return $this->prop( 'in_stock', true );
+		}
+
+		public function is_on_backorder( $qty_in_cart = 0 ) {
+			return false;
+		}
 
 		public function get_id() {
 			return $this->id;
@@ -61,5 +101,28 @@ if ( ! class_exists( 'WC_Comments' ) ) {
 		public static function get_rating_counts_for_product( &$product ) {
 			return self::$test_rating_counts[ $product->get_id() ] ?? [];
 		}
+	}
+}
+
+if ( ! class_exists( 'WC_Structured_Data' ) ) {
+	/**
+	 * WC_Structured_Data double: collects nodes like the real one.
+	 */
+	class WC_Structured_Data {
+		/** @var array<int, array<string, mixed>> */
+		public array $test_data = [];
+
+		/** @var array<int, mixed> Products generate_product_data() was called with. */
+		public array $test_generated = [];
+
+		public function get_data() {
+			return $this->test_data;
+		}
+
+		public function generate_product_data( $product = null ) {
+			$this->test_generated[] = $product;
+		}
+
+		public function output_structured_data() {}
 	}
 }

@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.8.8] - 2026-10-17
+
+### Fixed
+- WooCommerce product pages carry a single Product in their structured data. When WooCommerce prints its own, LW SEO now adds its data to that one (description, images, brand, GTIN, reviews, seller) instead of printing a second Product with the same @id, so variable products keep WooCommerce's price range rather than a conflicting single price.
+- The product GTIN is read from WooCommerce's GTIN, UPC, EAN or ISBN field as well as the older _gtin meta.
+
+### Added
+- lw_seo_woo_product_schema filter for the final Product markup, so a site can add shipping or return policy details.
+
 ## [1.8.7] - 2026-10-08
 
 ### Fixed

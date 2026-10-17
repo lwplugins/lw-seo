@@ -3,7 +3,7 @@ Contributors: lwplugins
 Tags: seo, sitemap, schema, opengraph, breadcrumbs
 Requires at least: 6.6
 Tested up to: 7.1
-Stable tag: 1.8.7
+Stable tag: 1.8.8
 Requires PHP: 8.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -140,6 +140,11 @@ Your sitemap is available at `yoursite.com/sitemap.xml`
 6. Settings page - Advanced tab
 
 == Changelog ==
+
+= 1.8.8 =
+* Fix: WooCommerce product pages carry a single Product in their structured data. When WooCommerce prints its own, LW SEO now adds its data to that one (description, images, brand, GTIN, reviews, seller) instead of printing a second Product with the same @id, so variable products keep WooCommerce's price range rather than a conflicting single price.
+* Fix: The product GTIN is read from WooCommerce's GTIN, UPC, EAN or ISBN field as well as the older _gtin meta.
+* New: lw_seo_woo_product_schema filter for the final Product markup, so a site can add shipping or return policy details.
 
 = 1.8.7 =
 * Fix: The migration results list shows each label and its number in separate columns again, instead of running them together.
