@@ -19,8 +19,8 @@ final class KeyTest extends MonkeyTestCase {
 		$saved = null;
 		Functions\when( 'get_option' )->justReturn( '' );
 		Functions\when( 'update_option' )->alias(
-			static function ( string $name, $value ) use ( &$saved ): bool {
-				$saved = [ $name, $value ];
+			static function ( string $name, $value, $autoload ) use ( &$saved ): bool {
+				$saved = [ $name, $value, $autoload ];
 				return true;
 			}
 		);
@@ -28,7 +28,7 @@ final class KeyTest extends MonkeyTestCase {
 		$key = Key::regenerate();
 
 		$this->assertMatchesRegularExpression( '/^[a-f0-9]{32}$/', $key );
-		$this->assertSame( [ 'lw_seo_indexnow_key', $key ], $saved );
+		$this->assertSame( [ 'lw_seo_indexnow_key', $key, true ], $saved );
 	}
 
 	public function test_ensure_idempotent(): void {

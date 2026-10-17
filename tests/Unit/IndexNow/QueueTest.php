@@ -110,4 +110,21 @@ final class QueueTest extends MonkeyTestCase {
 
 		$this->assertArrayNotHasKey( 'lw_seo_indexnow_queue', $this->store );
 	}
+
+	public function test_disabling_clears_queue_and_event(): void {
+		Functions\expect( 'delete_option' )->once()->with( 'lw_seo_indexnow_queue' );
+		Functions\expect( 'wp_clear_scheduled_hook' )->once()->with( 'lw_seo_indexnow_flush' );
+
+		Queue::on_options_updated( [ 'indexnow_enabled' => true ], [ 'indexnow_enabled' => false ] );
+		$this->addToAssertionCount( 1 );
+	}
+
+	public function test_other_changes_keep_queue(): void {
+		Functions\expect( 'delete_option' )->never();
+		Functions\expect( 'wp_clear_scheduled_hook' )->never();
+
+		Queue::on_options_updated( [ 'indexnow_enabled' => true ], [ 'indexnow_enabled' => true, 'x' => 1 ] );
+		Queue::on_options_updated( [], [ 'indexnow_enabled' => true ] );
+		$this->addToAssertionCount( 1 );
+	}
 }

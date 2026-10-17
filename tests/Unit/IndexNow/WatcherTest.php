@@ -53,7 +53,7 @@ final class WatcherTest extends MonkeyTestCase {
 	}
 
 	private function post( array $props = [] ): \WP_Post {
-		return new \WP_Post( array_merge( [ 'ID' => 5, 'post_status' => 'publish', 'post_password' => '', 'post_type' => 'post' ], $props ) );
+		return new \WP_Post( array_merge( [ 'ID' => 5, 'post_status' => 'publish', 'post_password' => '', 'post_type' => 'post', 'post_name' => 'slug' ], $props ) );
 	}
 
 	public function test_publish_queues_url(): void {
@@ -84,6 +84,37 @@ final class WatcherTest extends MonkeyTestCase {
 		Functions\when( 'apply_filters' )->alias( static fn( string $tag, $value ) => 'lw_seo_sitemap_excluded_ids' === $tag ? [ 5 ] : $value );
 		$this->enabled()->on_transition( 'publish', 'draft', $this->post() );
 		$this->assertSame( [], $this->queued, 'excluded id' );
+	}
+
+	public function test_removal_queues_url_captured_before_update(): void {
+		$watcher = $this->enabled();
+		Functions\when( 'get_post_status' )->justReturn( 'publish' );
+		Functions\when( 'get_permalink' )->justReturn( 'https://e.com/pretty/' );
+		$watcher->before_post_update( 5 );
+		Functions\when( 'get_permalink' )->justReturn( 'https://e.com/?p=5' );
+
+		$watcher->on_transition( 'trash', 'publish', $this->post( [ 'post_status' => 'trash' ] ) );
+
+		$this->assertSame( [ 'https://e.com/pretty/' ], $this->queued );
+	}
+
+	public function test_removal_fallback_uses_published_copy_without_trash_suffix(): void {
+		Functions\when( 'get_permalink' )->alias(
+			static fn( $post ): string => 'https://e.com/' . $post->post_name . '/' . $post->post_status
+		);
+
+		$this->enabled()->on_transition( 'trash', 'publish', $this->post( [ 'post_status' => 'trash', 'post_name' => 'hello__trashed' ] ) );
+
+		$this->assertSame( [ 'https://e.com/hello/publish' ], $this->queued );
+	}
+
+	public function test_skips_removal_of_password_or_excluded_post(): void {
+		$this->enabled()->on_transition( 'trash', 'publish', $this->post( [ 'post_status' => 'trash', 'post_password' => 'x' ] ) );
+		$this->assertSame( [], $this->queued, 'password' );
+
+		Functions\when( 'apply_filters' )->alias( static fn( string $tag, $value ) => 'lw_seo_sitemap_excluded_ids' === $tag ? [ 5 ] : $value );
+		$this->enabled()->on_transition( 'trash', 'publish', $this->post( [ 'post_status' => 'trash' ] ) );
+		$this->assertSame( [], $this->queued, 'excluded' );
 	}
 
 	public function test_skips_removal_of_noindex_type(): void {

@@ -26,6 +26,13 @@ final class Watcher {
 	private array $deleted_terms = [];
 
 	/**
+	 * Permalinks of published posts captured before an update, by post ID.
+	 *
+	 * @var array<int, string>
+	 */
+	private array $published_urls = [];
+
+	/**
 	 * Constructor.
 	 */
 	public function __construct() {
@@ -33,6 +40,7 @@ final class Watcher {
 			return;
 		}
 
+		add_action( 'pre_post_update', [ $this, 'before_post_update' ] );
 		add_action( 'transition_post_status', [ $this, 'on_transition' ], 10, 3 );
 		add_action( 'edited_term', [ $this, 'on_term_edited' ], 10, 3 );
 		add_action( 'pre_delete_term', [ $this, 'before_term_delete' ], 10, 2 );
@@ -56,21 +64,70 @@ final class Watcher {
 			return;
 		}
 
-		if ( 'publish' === $new_status ) {
-			if ( ! Eligibility::is_post_eligible( $post ) || in_array( (int) $post->ID, ExcludedPosts::ids( (string) $post->post_type ), true ) ) {
-				return;
-			}
-		} elseif ( ! Eligibility::is_type_indexable( (string) $post->post_type ) || Options::get_post_meta( (int) $post->ID, 'noindex' ) ) {
-			// Removal: the status no longer publish, so only the noindex checks apply.
+		$id = (int) $post->ID;
+
+		if ( in_array( $id, ExcludedPosts::ids( (string) $post->post_type ), true ) ) {
 			return;
 		}
 
-		$url = get_permalink( $post );
+		if ( 'publish' === $new_status ) {
+			if ( ! Eligibility::is_post_eligible( $post ) ) {
+				return;
+			}
+			$url = get_permalink( $post );
+		} else {
+			// Removal: the status is no longer publish, so only these checks apply.
+			if ( '' !== (string) $post->post_password || ! Eligibility::is_type_indexable( (string) $post->post_type ) || Options::get_post_meta( $id, 'noindex' ) ) {
+				return;
+			}
+			$url = $this->published_url( $post );
+		}
+
+		unset( $this->published_urls[ $id ] );
 
 		if ( $url ) {
-			// Trashing may already have appended the __trashed suffix to the slug.
-			Queue::add( [ str_replace( '__trashed', '', $url ) ] );
+			Queue::add( [ $url ] );
 		}
+	}
+
+	/**
+	 * Capture the public permalink while the post is still published; once it
+	 * is trashed or unpublished WordPress only returns the plain ?p=ID form.
+	 *
+	 * @param int $post_id Post ID.
+	 * @return void
+	 */
+	public function before_post_update( int $post_id ): void {
+		if ( 'publish' !== get_post_status( $post_id ) ) {
+			return;
+		}
+
+		$url = get_permalink( $post_id );
+
+		if ( $url ) {
+			$this->published_urls[ $post_id ] = $url;
+		}
+	}
+
+	/**
+	 * Permalink a removed post had while published.
+	 *
+	 * @param \WP_Post $post Post.
+	 * @return string
+	 */
+	private function published_url( \WP_Post $post ) {
+		$id = (int) $post->ID;
+
+		if ( isset( $this->published_urls[ $id ] ) ) {
+			return $this->published_urls[ $id ];
+		}
+
+		// Nothing captured: rebuild from a published copy with the trash suffix dropped.
+		$copy              = clone $post;
+		$copy->post_status = 'publish';
+		$copy->post_name   = (string) preg_replace( '/__trashed(-\d+)?$/', '', (string) $post->post_name );
+
+		return get_permalink( $copy );
 	}
 
 	/**

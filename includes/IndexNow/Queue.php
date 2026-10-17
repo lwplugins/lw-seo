@@ -34,6 +34,25 @@ final class Queue {
 	 */
 	public static function register(): void {
 		add_action( self::HOOK, [ self::class, 'flush' ] );
+		add_action( 'update_option_' . Options::OPTION_NAME, [ self::class, 'on_options_updated' ], 10, 2 );
+	}
+
+	/**
+	 * Drop the queue and the pending flush when the feature is switched off,
+	 * so stale URLs are not sent after it is enabled again.
+	 *
+	 * @param mixed $old_value Previous options.
+	 * @param mixed $new_value New options.
+	 * @return void
+	 */
+	public static function on_options_updated( $old_value, $new_value ): void {
+		$was = is_array( $old_value ) && ! empty( $old_value['indexnow_enabled'] );
+		$is  = is_array( $new_value ) && ! empty( $new_value['indexnow_enabled'] );
+
+		if ( $was && ! $is ) {
+			delete_option( self::OPTION );
+			wp_clear_scheduled_hook( self::HOOK );
+		}
 	}
 
 	/**

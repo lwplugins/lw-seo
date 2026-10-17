@@ -19,7 +19,7 @@ final class CanonicalGuard {
 	/**
 	 * Query vars that must be non-empty to mark a virtual request.
 	 */
-	private const VALUE_VARS = [ 'lw_sitemap', 'lw_llms_txt' ];
+	private const VALUE_VARS = [ 'lw_sitemap', 'lw_llms_txt', 'lw_indexnow_key' ];
 
 	/**
 	 * Rewrite endpoints: present (possibly as empty string) when matched.

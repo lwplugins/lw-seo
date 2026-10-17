@@ -48,7 +48,7 @@ final class Key {
 	 */
 	public static function regenerate(): string {
 		$key = bin2hex( random_bytes( 16 ) );
-		update_option( self::OPTION, $key, false );
+		update_option( self::OPTION, $key, true );
 
 		return $key;
 	}
