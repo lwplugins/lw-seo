@@ -3,7 +3,7 @@ Contributors: lwplugins
 Tags: seo, sitemap, schema, opengraph, breadcrumbs
 Requires at least: 6.6
 Tested up to: 7.1
-Stable tag: 1.8.8
+Stable tag: 1.9.0
 Requires PHP: 8.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -37,11 +37,23 @@ LW SEO provides essential SEO features without the bloat. No upsells, no trackin
 * Schema.org / JSON-LD structured data (Organization/Person)
 * robots.txt optimization, with a live preview and physical-file conflict warning
 * Breadcrumbs with shortcode and PHP function
-* URL Redirect Manager (301, 302, 307, 410, 451)
+* URL Redirect Manager (301, 302, 307, 410, 451), with a URL tester
 * Regex redirect support
 * CSV import/export for redirects
 * Import from Yoast SEO, Rank Math, SEOPress and All in One SEO (dry-run preview, never overwrites LW SEO data)
+* Image sitemap (featured, in-content and WooCommerce gallery images) and a browser-readable sitemap view
+* HTML sitemap with a shortcode and a block, cached
+* 404 log (off by default) with hit counts and one-click redirect creation
+* IndexNow (off by default) to notify participating search engines about changes
+* Image alt and title templates (off by default), applied at display time
 * 404 to homepage redirect option (after WordPress's own redirects for renamed slugs and guessed URLs)
+
+**WooCommerce**
+
+* Shop-wide default brand
+* ProductGroup structured data for variable products (optional)
+* Shipping details and merchant return policy in product offers
+* Hidden products get noindex and leave the sitemap; out-of-stock products can be left out
 
 **AI & LLM**
 
@@ -130,6 +142,10 @@ Your sitemap is available at `yoursite.com/sitemap.xml`
 * robots.txt: `yoursite.com/robots.txt`
 * llms.txt: `yoursite.com/llms.txt`
 
+= Does LW SEO send data anywhere? =
+
+Only if you turn on IndexNow. See External services below.
+
 == External services ==
 
 **IndexNow** (off by default). When you turn it on under Sitemap → IndexNow, LW SEO sends the address of public, indexable content to api.indexnow.org when it is published, updated or deleted, so participating search engines can recrawl it. Sent: your site's host name, the page URLs, a verification key generated on your site and the key file's URL. No personal data is sent. Terms: https://www.indexnow.org/terms , privacy: https://privacy.microsoft.com/privacystatement
@@ -144,6 +160,21 @@ Your sitemap is available at `yoursite.com/sitemap.xml`
 6. Settings page - Advanced tab
 
 == Changelog ==
+
+= 1.9.0 =
+* New: Image sitemap: featured and in-content images (and WooCommerce gallery images) are listed in the XML sitemap; content inside shortcodes and non-media blocks is skipped. Filters: lw_seo_sitemap_images and lw_seo_sitemap_content_images.
+* New: Browser-readable sitemap view (XSL stylesheet), can be turned off.
+* New: HTML sitemap: [lw_html_sitemap] shortcode and an HTML sitemap block, cached, following the XML sitemap's noindex and exclusion rules.
+* New: 404 log (off by default): records missing URLs with hit counts, an admin list with "Create redirect", and WP-CLI `wp lw-seo not-found`. Daily cleanup and a row cap.
+* New: Redirect URL tester in the Redirects screen and `wp lw-seo redirect test <url>`.
+* New: IndexNow (off by default): notifies participating search engines when public content is published, updated or deleted; the key file is served by the site; manual submit and log in the Sitemap screen; WP-CLI `wp lw-seo indexnow`.
+* New: WooCommerce: shop-wide default brand.
+* New: WooCommerce: ProductGroup structured data for variable products (optional).
+* New: WooCommerce: shipping details and merchant return policy settings added to product offers.
+* New: WooCommerce: hidden products get noindex and leave the sitemap; out-of-stock products can be left out of the sitemap.
+* New: Image alt and title templates (off by default): fill missing or empty alt/title text at display time from %%image_title%%, %%image_caption%%, %%image_filename%% and the usual variables; the media library is not modified.
+* New: Developer filters: lw_seo_post_noindex, lw_seo_woo_offer, lw_seo_woo_varies_by_map, lw_seo_html_sitemap_sections, lw_seo_html_sitemap_output.
+* Fix: Invalid regular-expression redirects no longer emit PHP warnings; they are skipped.
 
 = 1.8.8 =
 * Fix: WooCommerce product pages carry a single Product in their structured data. When WooCommerce prints its own, LW SEO now adds its data to that one (description, images, brand, GTIN, reviews, seller) instead of printing a second Product with the same @id, so variable products keep WooCommerce's price range rather than a conflicting single price.

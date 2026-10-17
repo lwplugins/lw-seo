@@ -2,21 +2,21 @@
 # This file is distributed under the GPL-2.0-or-later.
 msgid ""
 msgstr ""
-"Project-Id-Version: LW SEO 1.7.5\n"
+"Project-Id-Version: LW SEO 1.9.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/lw-seo\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-09-27T08:16:39+00:00\n"
+"POT-Creation-Date: 2026-10-17T20:57:47+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: lw-seo\n"
 
 #. Plugin Name of the plugin
 #: lw-seo.php
-#: includes/Admin/SettingsPage.php:132
+#: includes/Admin/SettingsPage.php:138
 #: includes/MetaBox.php:54
 #: assets/js/blocks/faq.js:279
 #: build/editor.js:2
@@ -495,7 +495,7 @@ msgstr ""
 
 #: includes/Admin/Data/BusinessTypes.php:137
 #: build/index.js:1
-#: build/index.js:2
+#: build/index.js:9
 msgid "General"
 msgstr ""
 
@@ -616,16 +616,16 @@ msgstr ""
 msgid "Only users allowed to post unfiltered HTML can edit the Markdown override."
 msgstr ""
 
-#: includes/Admin/SettingsPage.php:61
+#: includes/Admin/SettingsPage.php:67
 msgid "SEO Settings"
 msgstr ""
 
-#: includes/Admin/SettingsPage.php:62
+#: includes/Admin/SettingsPage.php:68
 #: includes/Integrations/SiteManager/Integration.php:59
 msgid "SEO"
 msgstr ""
 
-#: includes/Admin/SettingsPage.php:133
+#: includes/Admin/SettingsPage.php:139
 msgid "The settings screen files are missing. Re-install the plugin from a release ZIP, or run \"npm install && npm run build\" in the plugin directory."
 msgstr ""
 
@@ -656,6 +656,124 @@ msgstr ""
 
 #: includes/Editor/PostRestField.php:119
 msgid "LW SEO fields."
+msgstr ""
+
+#: includes/HtmlSitemap/Renderer.php:33
+msgid "View all"
+msgstr ""
+
+#: includes/HtmlSitemap/Renderer.php:43
+#: build/index.js:1
+msgid "Sitemap"
+msgstr ""
+
+#: includes/Images/ImageVars.php:30
+msgid "Image title"
+msgstr ""
+
+#: includes/Images/ImageVars.php:31
+msgid "Image caption"
+msgstr ""
+
+#: includes/Images/ImageVars.php:32
+msgid "Image file name"
+msgstr ""
+
+#: includes/Integrations/SiteManager/Integration.php:60
+msgid "Search engine optimization abilities"
+msgstr ""
+
+#: includes/Integrations/SiteManager/SeoAbilities.php:51
+msgid "Get SEO Meta"
+msgstr ""
+
+#: includes/Integrations/SiteManager/SeoAbilities.php:52
+msgid "Get SEO metadata for a post or term (title, description, social, signals)."
+msgstr ""
+
+#: includes/Integrations/SiteManager/SeoAbilities.php:62
+#: includes/Integrations/SiteManager/SeoAbilities.php:95
+msgid "Post ID. Provide post_id or term_id."
+msgstr ""
+
+#: includes/Integrations/SiteManager/SeoAbilities.php:66
+#: includes/Integrations/SiteManager/SeoAbilities.php:99
+msgid "Term ID. Provide post_id or term_id."
+msgstr ""
+
+#: includes/Integrations/SiteManager/SeoAbilities.php:84
+msgid "Set SEO Meta"
+msgstr ""
+
+#: includes/Integrations/SiteManager/SeoAbilities.php:85
+msgid "Set SEO metadata for a post or term."
+msgstr ""
+
+#: includes/Integrations/SiteManager/SeoAbilities.php:103
+msgid "SEO fields: title, description, noindex, og_title, og_description, og_image, ai_train, ai_input, search, markdown_content. markdown_content requires the unfiltered_html capability; without it the field is left unchanged and listed in \"skipped\"."
+msgstr ""
+
+#: includes/Integrations/SiteManager/SeoAbilities.php:137
+msgid "Get Content Signals"
+msgstr ""
+
+#: includes/Integrations/SiteManager/SeoAbilities.php:138
+msgid "Get resolved AI content signals for a post or term."
+msgstr ""
+
+#: includes/Integrations/SiteManager/SeoAbilities.php:172
+msgid "Get Markdown"
+msgstr ""
+
+#: includes/Integrations/SiteManager/SeoAbilities.php:173
+msgid "Get the markdown representation of a post, product, or term."
+msgstr ""
+
+#: includes/Integrations/SiteManager/SeoAbilities.php:208
+msgid "Get SEO Options"
+msgstr ""
+
+#: includes/Integrations/SiteManager/SeoAbilities.php:209
+msgid "Get global LW SEO settings."
+msgstr ""
+
+#: includes/Integrations/SiteManager/SeoService.php:54
+#: includes/Integrations/SiteManager/SeoService.php:74
+msgid "Provide post_id or term_id."
+msgstr ""
+
+#: includes/Integrations/SiteManager/SeoService.php:107
+msgid "Post or term not found."
+msgstr ""
+
+#: includes/Integrations/SiteManager/SeoService.php:146
+#: includes/Integrations/SiteManager/SeoService.php:207
+#: includes/Rest/PublicObjectAccess.php:130
+msgid "Post not found."
+msgstr ""
+
+#: includes/Integrations/SiteManager/SeoService.php:176
+#: includes/Integrations/SiteManager/SeoService.php:227
+#: includes/Rest/PublicObjectAccess.php:139
+msgid "Term not found."
+msgstr ""
+
+#: includes/Integrations/SiteManager/SeoService.php:211
+msgid "You are not allowed to edit this post."
+msgstr ""
+
+#: includes/Integrations/SiteManager/SeoService.php:231
+msgid "You are not allowed to edit this term."
+msgstr ""
+
+#. translators: %d: number of fields updated
+#: includes/Integrations/SiteManager/SeoService.php:275
+#, php-format
+msgid "%d SEO fields updated."
+msgstr ""
+
+#: includes/Integrations/SiteManager/SeoService.php:303
+msgid "You are not allowed to read this post or term."
 msgstr ""
 
 #: includes/Local/Shortcodes.php:45
@@ -731,7 +849,7 @@ msgstr ""
 
 #: includes/MetaBox.php:174
 #: build/index.js:1
-#: build/index.js:2
+#: build/index.js:9
 msgid "noindex"
 msgstr ""
 
@@ -841,7 +959,7 @@ msgstr ""
 
 #: includes/MetaBox.php:297
 #: build/editor.js:2
-#: build/index.js:2
+#: build/index.js:9
 #: build/term.js:2
 msgid "AI Training"
 msgstr ""
@@ -888,19 +1006,19 @@ msgid "All in One SEO Pro tables were found (%s). Term SEO and redirects from th
 msgstr ""
 
 #. translators: %s: comma-separated list of RankMath WooCommerce permalink features without an LW SEO equivalent enabled.
-#: includes/Migration/RankMath/WarningCollector.php:77
+#: includes/Migration/RankMath/WarningCollector.php:80
 #, php-format
 msgid "RankMath has active WooCommerce permalink rewrites that LW SEO is not (yet) mirroring (%s). The migrator will copy these flags into LW SEO; running the migration applies the equivalent slug-only rules. Categories whose root slug collides with a page/reserved slug are auto-skipped to avoid 404s."
 msgstr ""
 
 #. translators: %d: number of posts with custom RankMath schema markup.
-#: includes/Migration/RankMath/WarningCollector.php:106
+#: includes/Migration/RankMath/WarningCollector.php:109
 #, php-format
 msgid "%d post(s) have custom RankMath Schema markup (rank_math_schema_*). LW SEO generates schema automatically and does not import per-post schema overrides — you will need to re-create any custom schema in the LW SEO Schema module."
 msgstr ""
 
 #. translators: %s: comma-separated list of RankMath meta keys with no LW SEO equivalent.
-#: includes/Migration/RankMath/WarningCollector.php:139
+#: includes/Migration/RankMath/WarningCollector.php:142
 #, php-format
 msgid "The following RankMath meta keys have no LW SEO equivalent and will not be migrated: %s"
 msgstr ""
@@ -924,49 +1042,53 @@ msgid "These %1$s template variables have no LW SEO equivalent and were left out
 msgstr ""
 
 #. translators: %d: number of posts with custom Yoast schema settings.
-#: includes/Migration/Yoast/WarningCollector.php:55
+#: includes/Migration/Yoast/WarningCollector.php:58
 #, php-format
 msgid "%d post(s) have custom Yoast schema settings (page/article type). LW SEO generates schema automatically and does not import per-post schema overrides — you will need to re-create any custom schema in the LW SEO Schema module."
 msgstr ""
 
 #. translators: %s: comma-separated list of Yoast meta keys with no LW SEO equivalent.
-#: includes/Migration/Yoast/WarningCollector.php:87
+#: includes/Migration/Yoast/WarningCollector.php:90
 #, php-format
 msgid "The following Yoast meta keys have no LW SEO equivalent and will not be migrated: %s"
 msgstr ""
 
-#: includes/Redirects/Handler.php:130
+#: includes/Redirects/DuplicateSource.php:63
+msgid "A redirect for this source already exists."
+msgstr ""
+
+#: includes/Redirects/Handler.php:109
 msgid "Content Deleted"
 msgstr ""
 
-#: includes/Redirects/Handler.php:131
+#: includes/Redirects/Handler.php:110
 msgid "The content you are looking for has been permanently removed."
 msgstr ""
 
-#: includes/Redirects/Handler.php:153
+#: includes/Redirects/Handler.php:132
 msgid "Unavailable For Legal Reasons"
 msgstr ""
 
-#: includes/Redirects/Handler.php:154
+#: includes/Redirects/Handler.php:133
 msgid "This content is not available due to legal reasons."
 msgstr ""
 
-#: includes/Redirects/Handler.php:225
+#: includes/Redirects/Handler.php:204
 msgid "Return to homepage"
 msgstr ""
 
-#: includes/Redirects/Manager.php:290
+#: includes/Redirects/Manager.php:279
 msgid "Invalid format."
 msgstr ""
 
 #. translators: 1: CSV line number, 2: reason the line was skipped
-#: includes/Redirects/Manager.php:306
+#: includes/Redirects/Manager.php:298
 #, php-format
 msgid "Line %1$d: %2$s"
 msgstr ""
 
 #. translators: 1: CSV line number, 2: reason the line was skipped
-#: includes/Redirects/Manager.php:306
+#: includes/Redirects/Manager.php:298
 msgid "Could not be saved."
 msgstr ""
 
@@ -985,7 +1107,7 @@ msgstr ""
 #. translators: 1: current page number, 2: total page count
 #. translators: 1: current page, 2: total pages.
 #: includes/ReplaceVars.php:320
-#: build/index.js:2
+#: build/index.js:1
 #, php-format,js-format
 msgid "Page %1$d of %2$d"
 msgstr ""
@@ -1062,36 +1184,44 @@ msgstr ""
 msgid "Page X of Y"
 msgstr ""
 
+#. translators: %s: first rejected URL.
+#: includes/Rest/Admin/IndexNowController.php:76
+#, php-format
+msgid "Only addresses on this site can be submitted: %s"
+msgstr ""
+
+#: includes/Rest/Admin/IndexNowController.php:84
+msgid "Enter at least one URL."
+msgstr ""
+
+#. translators: %d: maximum number of URLs.
+#: includes/Rest/Admin/IndexNowController.php:91
+#, php-format
+msgid "Submit at most %d URLs at a time."
+msgstr ""
+
+#: includes/Rest/Admin/IndexNowController.php:132
+msgid "Turn on IndexNow first."
+msgstr ""
+
 #: includes/Rest/Admin/MigrationController.php:96
 msgid "Unknown migration source."
 msgstr ""
 
-#: includes/Rest/Admin/RedirectsController.php:84
+#: includes/Rest/Admin/RedirectsController.php:85
 msgid "Failed to add redirect."
 msgstr ""
 
-#: includes/Rest/Admin/RedirectsController.php:150
+#: includes/Rest/Admin/RedirectsController.php:151
 msgid "No CSV data provided."
 msgstr ""
 
-#: includes/Rest/Admin/RedirectsController.php:215
+#: includes/Rest/Admin/RedirectsController.php:233
 msgid "Redirect not found."
 msgstr ""
 
-#: includes/Rest/Admin/SettingsMeta.php:54
+#: includes/Rest/Admin/SettingsMeta.php:58
 msgid "Other"
-msgstr ""
-
-#: includes/Rest/PublicObjectAccess.php:130
-#: includes/Integrations/SiteManager/SeoService.php:146
-#: includes/Integrations/SiteManager/SeoService.php:207
-msgid "Post not found."
-msgstr ""
-
-#: includes/Rest/PublicObjectAccess.php:139
-#: includes/Integrations/SiteManager/SeoService.php:176
-#: includes/Integrations/SiteManager/SeoService.php:227
-msgid "Term not found."
 msgstr ""
 
 #: includes/Rest/PublicObjectAccess.php:148
@@ -1114,91 +1244,6 @@ msgstr ""
 
 #: includes/RestApi.php:107
 msgid "Author ID"
-msgstr ""
-
-#: includes/Integrations/SiteManager/Integration.php:60
-msgid "Search engine optimization abilities"
-msgstr ""
-
-#: includes/Integrations/SiteManager/SeoAbilities.php:51
-msgid "Get SEO Meta"
-msgstr ""
-
-#: includes/Integrations/SiteManager/SeoAbilities.php:52
-msgid "Get SEO metadata for a post or term (title, description, social, signals)."
-msgstr ""
-
-#: includes/Integrations/SiteManager/SeoAbilities.php:62
-#: includes/Integrations/SiteManager/SeoAbilities.php:95
-msgid "Post ID. Provide post_id or term_id."
-msgstr ""
-
-#: includes/Integrations/SiteManager/SeoAbilities.php:66
-#: includes/Integrations/SiteManager/SeoAbilities.php:99
-msgid "Term ID. Provide post_id or term_id."
-msgstr ""
-
-#: includes/Integrations/SiteManager/SeoAbilities.php:84
-msgid "Set SEO Meta"
-msgstr ""
-
-#: includes/Integrations/SiteManager/SeoAbilities.php:85
-msgid "Set SEO metadata for a post or term."
-msgstr ""
-
-#: includes/Integrations/SiteManager/SeoAbilities.php:103
-msgid "SEO fields: title, description, noindex, og_title, og_description, og_image, ai_train, ai_input, search, markdown_content. markdown_content requires the unfiltered_html capability; without it the field is left unchanged and listed in \"skipped\"."
-msgstr ""
-
-#: includes/Integrations/SiteManager/SeoAbilities.php:137
-msgid "Get Content Signals"
-msgstr ""
-
-#: includes/Integrations/SiteManager/SeoAbilities.php:138
-msgid "Get resolved AI content signals for a post or term."
-msgstr ""
-
-#: includes/Integrations/SiteManager/SeoAbilities.php:172
-msgid "Get Markdown"
-msgstr ""
-
-#: includes/Integrations/SiteManager/SeoAbilities.php:173
-msgid "Get the markdown representation of a post, product, or term."
-msgstr ""
-
-#: includes/Integrations/SiteManager/SeoAbilities.php:208
-msgid "Get SEO Options"
-msgstr ""
-
-#: includes/Integrations/SiteManager/SeoAbilities.php:209
-msgid "Get global LW SEO settings."
-msgstr ""
-
-#: includes/Integrations/SiteManager/SeoService.php:54
-#: includes/Integrations/SiteManager/SeoService.php:74
-msgid "Provide post_id or term_id."
-msgstr ""
-
-#: includes/Integrations/SiteManager/SeoService.php:107
-msgid "Post or term not found."
-msgstr ""
-
-#: includes/Integrations/SiteManager/SeoService.php:211
-msgid "You are not allowed to edit this post."
-msgstr ""
-
-#: includes/Integrations/SiteManager/SeoService.php:231
-msgid "You are not allowed to edit this term."
-msgstr ""
-
-#. translators: %d: number of fields updated
-#: includes/Integrations/SiteManager/SeoService.php:275
-#, php-format
-msgid "%d SEO fields updated."
-msgstr ""
-
-#: includes/Integrations/SiteManager/SeoService.php:303
-msgid "You are not allowed to read this post or term."
 msgstr ""
 
 #: lw-seo.php:43
@@ -1259,7 +1304,7 @@ msgid "%s on GitHub (opens in a new tab)"
 msgstr ""
 
 #: assets/hub/index.js:4
-#: build/index.js:2
+#: build/index.js:1
 msgid "All"
 msgstr ""
 
@@ -1315,7 +1360,6 @@ msgstr ""
 
 #: assets/hub/index.js:5
 #: build/index.js:1
-#: build/index.js:2
 msgid "Loading…"
 msgstr ""
 
@@ -1435,6 +1479,56 @@ msgstr ""
 msgid "Add Question"
 msgstr ""
 
+#: assets/js/blocks/html-sitemap.js:18
+msgid "Use the setting"
+msgstr ""
+
+#: assets/js/blocks/html-sitemap.js:19
+#: build/index.js:9
+msgid "Title"
+msgstr ""
+
+#: assets/js/blocks/html-sitemap.js:20
+msgid "Date"
+msgstr ""
+
+#: assets/js/blocks/html-sitemap.js:36
+#: build/index.js:9
+msgid "HTML sitemap"
+msgstr ""
+
+#: assets/js/blocks/html-sitemap.js:39
+#: build/index.js:9
+msgid "Post types"
+msgstr ""
+
+#: assets/js/blocks/html-sitemap.js:40
+msgid "Comma-separated, e.g. page,post. Empty uses the setting."
+msgstr ""
+
+#: assets/js/blocks/html-sitemap.js:44
+#: build/index.js:9
+msgid "Taxonomies"
+msgstr ""
+
+#: assets/js/blocks/html-sitemap.js:45
+msgid "Comma-separated, e.g. category. Empty uses the setting."
+msgstr ""
+
+#: assets/js/blocks/html-sitemap.js:50
+#: build/index.js:9
+msgid "Max items per section"
+msgstr ""
+
+#: assets/js/blocks/html-sitemap.js:51
+msgid "0 uses the setting; it can only lower it."
+msgstr ""
+
+#: assets/js/blocks/html-sitemap.js:61
+#: build/index.js:9
+msgid "Order"
+msgstr ""
+
 #. translators: 1: characters used, 2: recommended maximum.
 #: build/editor.js:2
 #: build/term.js:2
@@ -1513,11 +1607,7 @@ msgid "Social Media"
 msgstr ""
 
 #: build/index.js:1
-msgid "Sitemap"
-msgstr ""
-
-#: build/index.js:1
-#: build/index.js:2
+#: build/index.js:9
 msgid "XML Sitemap"
 msgstr ""
 
@@ -1534,17 +1624,17 @@ msgid "WooCommerce"
 msgstr ""
 
 #: build/index.js:1
-#: build/index.js:2
+#: build/index.js:9
 msgid "WooCommerce SEO"
 msgstr ""
 
 #: build/index.js:1
-#: build/index.js:2
+#: build/index.js:9
 msgid "Local SEO"
 msgstr ""
 
 #: build/index.js:1
-#: build/index.js:2
+#: build/index.js:9
 msgid "Redirects"
 msgstr ""
 
@@ -1553,7 +1643,7 @@ msgid "Redirect Manager"
 msgstr ""
 
 #: build/index.js:1
-#: build/index.js:4
+#: build/index.js:9
 msgid "404 Error Handling"
 msgstr ""
 
@@ -1562,6 +1652,7 @@ msgid "Advanced Settings"
 msgstr ""
 
 #: build/index.js:1
+#: build/index.js:3
 msgid "Import"
 msgstr ""
 
@@ -1570,7 +1661,7 @@ msgid "Import SEO Data"
 msgstr ""
 
 #: build/index.js:1
-#: build/index.js:2
+#: build/index.js:9
 msgid "Not specified"
 msgstr ""
 
@@ -1595,12 +1686,12 @@ msgid "User-triggered fetchers"
 msgstr ""
 
 #: build/index.js:1
-#: build/index.js:2
+#: build/index.js:9
 msgid "Blocked"
 msgstr ""
 
 #: build/index.js:1
-#: build/index.js:2
+#: build/index.js:9
 msgid "Allowed"
 msgstr ""
 
@@ -1609,7 +1700,7 @@ msgid "Variables:"
 msgstr ""
 
 #: build/index.js:1
-#: build/index.js:2
+#: build/index.js:9
 msgid "Indexed"
 msgstr ""
 
@@ -1619,6 +1710,12 @@ msgstr ""
 
 #: build/index.js:1
 msgid "Close"
+msgstr ""
+
+#. translators: %s: time of day, e.g. 14:02.
+#: build/index.js:1
+#, js-format
+msgid "today %s"
 msgstr ""
 
 #: build/index.js:1
@@ -1746,760 +1843,110 @@ msgid "Looking for SEO plugin data"
 msgstr ""
 
 #: build/index.js:1
-msgid "Import / Export"
-msgstr ""
-
-#: build/index.js:1
-msgid "Export"
-msgstr ""
-
-#: build/index.js:1
-msgid "Export all redirects as a CSV file."
-msgstr ""
-
-#: build/index.js:1
-msgid "Download CSV"
-msgstr ""
-
-#: build/index.js:1
-msgid "Import redirects from a CSV file. Format: source,destination,type,regex"
-msgstr ""
-
-#. translators: 1: imported redirects, 2: skipped rows.
-#: build/index.js:2
-#, js-format
-msgid "Imported %1$d redirects, skipped %2$d."
-msgstr ""
-
-#: build/index.js:2
-msgid "Import CSV"
-msgstr ""
-
-#: build/index.js:2
 msgid "Edit redirect"
 msgstr ""
 
-#: build/index.js:2
+#: build/index.js:1
 msgid "Add redirect"
 msgstr ""
 
-#: build/index.js:2
+#: build/index.js:1
 msgid "Source URL"
 msgstr ""
 
-#: build/index.js:2
+#: build/index.js:1
 msgid "The old URL path that should redirect (e.g., /old-page/)."
 msgstr ""
 
-#: build/index.js:2
+#: build/index.js:1
 msgid "Redirect Type"
 msgstr ""
 
-#: build/index.js:2
+#: build/index.js:1
 msgid "Destination URL"
 msgstr ""
 
-#: build/index.js:2
+#: build/index.js:1
 msgid "The new URL to redirect to."
 msgstr ""
 
-#: build/index.js:2
+#: build/index.js:1
 msgid "Not required for this type."
 msgstr ""
 
-#: build/index.js:2
+#: build/index.js:1
 msgid "Source is a regular expression"
 msgstr ""
 
-#: build/index.js:2
+#: build/index.js:1
 msgid "Advanced: use patterns like ^/category/(.*)$ with $1 in the destination."
 msgstr ""
 
-#: build/index.js:2
+#: build/index.js:1
+#: build/index.js:3
 msgid "Cancel"
 msgstr ""
 
-#: build/index.js:2
+#: build/index.js:1
 msgid "Update Redirect"
 msgstr ""
 
-#: build/index.js:2
+#: build/index.js:1
+#: build/index.js:9
 msgid "Add Redirect"
 msgstr ""
 
-#: build/index.js:2
-msgid "Included"
-msgstr ""
-
-#: build/index.js:2
-msgid "Left out"
-msgstr ""
-
-#: build/index.js:2
-msgid "Site"
-msgstr ""
-
-#: build/index.js:2
-msgid "Basic SEO settings for your site."
-msgstr ""
-
-#: build/index.js:2
-msgid "Title Separator"
-msgstr ""
-
-#: build/index.js:2
-msgid "Homepage Title"
-msgstr ""
-
-#: build/index.js:2
-msgid "Homepage Description"
-msgstr ""
-
-#: build/index.js:2
-msgid "Leave empty to use the site tagline."
-msgstr ""
-
-#: build/index.js:2
-msgid "Knowledge Graph"
-msgstr ""
-
-#: build/index.js:2
-msgid "Who the site represents in Schema.org markup."
-msgstr ""
-
-#: build/index.js:2
-msgid "Site Represents"
-msgstr ""
-
-#: build/index.js:2
-msgid "Organization"
-msgstr ""
-
-#: build/index.js:2
-msgid "Person"
-msgstr ""
-
-#: build/index.js:2
-msgid "Organization/Person Name"
-msgstr ""
-
-#: build/index.js:2
-msgid "Used in Schema.org markup."
-msgstr ""
-
-#: build/index.js:2
-msgid "Logo"
-msgstr ""
-
-#: build/index.js:2
-msgid "Organization logo for Schema.org markup."
-msgstr ""
-
-#: build/index.js:2
-msgid "Posts and pages"
-msgstr ""
-
-#: build/index.js:2
-msgid "Post Title Template"
-msgstr ""
-
-#: build/index.js:2
-msgid "Posts"
-msgstr ""
-
-#: build/index.js:2
-msgid "Set posts to noindex by default."
-msgstr ""
-
-#: build/index.js:2
-msgid "Page Title Template"
-msgstr ""
-
-#: build/index.js:2
-msgid "Pages"
-msgstr ""
-
-#: build/index.js:2
-msgid "Set pages to noindex by default."
-msgstr ""
-
-#: build/index.js:2
-msgid "Taxonomies"
-msgstr ""
-
-#: build/index.js:2
-msgid "Category Title Template"
-msgstr ""
-
-#: build/index.js:2
-msgid "Categories"
-msgstr ""
-
-#: build/index.js:2
-msgid "Set categories to noindex."
-msgstr ""
-
-#: build/index.js:2
-msgid "Tag Title Template"
-msgstr ""
-
-#: build/index.js:2
-msgid "Tags"
-msgstr ""
-
-#: build/index.js:2
-msgid "Set tags to noindex."
-msgstr ""
-
-#: build/index.js:2
-msgid "Archives and special pages"
-msgstr ""
-
-#: build/index.js:2
-msgid "Author Archive Title"
-msgstr ""
-
-#: build/index.js:2
-msgid "Author Archives"
-msgstr ""
-
-#: build/index.js:2
-msgid "Set author archives to noindex."
-msgstr ""
-
-#: build/index.js:2
-msgid "Date Archive Title"
-msgstr ""
-
-#: build/index.js:2
-msgid "Date Archives"
-msgstr ""
-
-#: build/index.js:2
-msgid "Set date archives to noindex."
-msgstr ""
-
-#: build/index.js:2
-msgid "Search Results Title"
-msgstr ""
-
-#: build/index.js:2
-msgid "404 Page Title"
-msgstr ""
-
-#: build/index.js:2
-msgid "Meta Tags"
-msgstr ""
-
-#: build/index.js:2
-msgid "Settings for Open Graph and Twitter Cards."
-msgstr ""
-
-#: build/index.js:2
-msgid "Open Graph"
-msgstr ""
-
-#: build/index.js:2
-msgid "Enable Open Graph meta tags"
-msgstr ""
-
-#: build/index.js:2
-#: build/index.js:4
-msgid "Off"
-msgstr ""
-
-#: build/index.js:2
-msgid "Twitter Cards"
-msgstr ""
-
-#: build/index.js:2
-msgid "Enable Twitter Card meta tags"
-msgstr ""
-
-#: build/index.js:2
-msgid "Default Card Type"
-msgstr ""
-
-#: build/index.js:2
-msgid "Summary with large image"
-msgstr ""
-
-#: build/index.js:2
-msgid "Summary"
-msgstr ""
-
-#: build/index.js:2
-msgid "Default Social Image"
-msgstr ""
-
-#: build/index.js:2
-msgid "Used when a post has no featured image. Recommended: 1200x630px."
-msgstr ""
-
-#: build/index.js:2
-msgid "Social Profiles"
-msgstr ""
-
-#: build/index.js:2
-msgid "Your sitemap:"
-msgstr ""
-
-#: build/index.js:2
-#: build/index.js:4
-msgid "Enabled"
-msgstr ""
-
-#: build/index.js:2
-msgid "Custom Post Types"
-msgstr ""
-
-#: build/index.js:2
-msgid "New custom post types are included automatically. Content set to noindex is always left out."
-msgstr ""
-
-#: build/index.js:2
-msgid "Custom Taxonomies"
-msgstr ""
-
-#: build/index.js:2
-msgid "Custom taxonomy archives are only listed when switched on here."
-msgstr ""
-
-#: build/index.js:2
-msgid "Content Signals"
-msgstr ""
-
-#: build/index.js:2
-msgid "Tell AI systems how they may use your content. Sent as a Content-Signal HTTP header, a meta tag and a robots.txt line. \"Not specified\" neither grants nor restricts that use."
-msgstr ""
-
-#: build/index.js:2
+#: build/index.js:1
+#: build/index.js:9
 msgid "Search"
 msgstr ""
 
-#: build/index.js:2
-msgid "AI Input (RAG, grounding)"
-msgstr ""
-
-#: build/index.js:2
-msgid "llms.txt File"
-msgstr ""
-
-#: build/index.js:2
-msgid "Your llms.txt:"
-msgstr ""
-
-#: build/index.js:2
-msgid "Learn more"
-msgstr ""
-
-#: build/index.js:2
-msgid "llms.txt"
-msgstr ""
-
-#: build/index.js:2
-msgid "Enable llms.txt for AI crawlers"
-msgstr ""
-
-#: build/index.js:2
-msgid "One sentence shown as the summary line. Empty = the site tagline."
-msgstr ""
-
-#: build/index.js:2
-msgid "Introduction"
-msgstr ""
-
-#: build/index.js:2
-msgid "Optional Markdown text shown before the page lists. Do not use headings."
-msgstr ""
-
-#: build/index.js:2
-msgid "Content types"
-msgstr ""
-
-#: build/index.js:2
-msgid "Each type becomes its own section. Noindex content and content with AI Input set to \"No\" are left out."
-msgstr ""
-
-#: build/index.js:2
-msgid "Items per section"
-msgstr ""
-
-#: build/index.js:2
-msgid "Pages are listed in menu order, other types newest first."
-msgstr ""
-
-#: build/index.js:2
-msgid "Markdown links"
-msgstr ""
-
-#: build/index.js:2
-msgid "Link to the Markdown version of each page (/md)"
-msgstr ""
-
-#: build/index.js:2
-msgid "Link to the HTML page"
-msgstr ""
-
-#: build/index.js:2
-msgid "Extra links"
-msgstr ""
-
-#: build/index.js:2
-msgid "One per line: Title | https://url | optional description. Listed under \"Optional\"."
-msgstr ""
-
-#: build/index.js:2
-msgid "llms-full.txt"
-msgstr ""
-
-#: build/index.js:2
-msgid "Built as a logged-out visitor. Content-restriction plugins that only protect the main page query may not apply here; use the lw_seo_post_is_eligible filter to leave restricted posts out."
-msgstr ""
-
-#: build/index.js:2
-msgid "Also serve /llms-full.txt with the full Markdown content (max 1 MB)"
-msgstr ""
-
-#: build/index.js:2
-msgid "AI Crawler Access"
-msgstr ""
-
-#: build/index.js:2
-msgid "Blocked crawlers get a \"Disallow: /\" rule in robots.txt."
-msgstr ""
-
-#: build/index.js:2
-msgid "All AI training crawlers"
-msgstr ""
-
-#: build/index.js:2
-msgid "Covers every crawler with that purpose, including ones added in future updates."
-msgstr ""
-
-#: build/index.js:2
-msgid "All AI search crawlers"
-msgstr ""
-
-#: build/index.js:2
-msgid "All user-triggered AI fetchers"
-msgstr ""
-
-#: build/index.js:2
-msgid "robots.txt is a request, not an enforcement. OpenAI, Perplexity, Meta and Amazon state that their user-triggered fetchers may ignore it."
-msgstr ""
-
-#: build/index.js:2
-msgid "Optimize your WooCommerce products for search engines and social media."
-msgstr ""
-
-#: build/index.js:2
-msgid "Adds product-specific OpenGraph tags, Schema.org Product markup, and more."
-msgstr ""
-
-#: build/index.js:2
-msgid "Product Title"
-msgstr ""
-
-#: build/index.js:2
-msgid "Shop Title"
-msgstr ""
-
-#: build/index.js:2
-msgid "Title of the shop page (product archive). %%title%% is the shop page title."
-msgstr ""
-
-#: build/index.js:2
-msgid "Products"
-msgstr ""
-
-#: build/index.js:2
-msgid "Add noindex to product pages."
-msgstr ""
-
-#: build/index.js:2
-msgid "Permalinks"
-msgstr ""
-
-#: build/index.js:2
-msgid "Slug-only WooCommerce permalinks. Categories whose root slug collides with a page, reserved slug, or another taxonomy/CPT base are automatically skipped to avoid breaking existing URLs."
-msgstr ""
-
-#: build/index.js:2
-msgid "Category base"
-msgstr ""
-
-#: build/index.js:2
-msgid "Remove /product-category/ from product category URLs"
-msgstr ""
-
-#: build/index.js:2
-msgid "Keep"
-msgstr ""
-
-#: build/index.js:2
-msgid "Parent slugs"
-msgstr ""
-
-#: build/index.js:2
-msgid "Remove parent category slugs (leaf-only URLs)"
-msgstr ""
-
-#: build/index.js:2
-msgid "Product base"
-msgstr ""
-
-#: build/index.js:2
-msgid "Remove /product/ from product URLs"
-msgstr ""
-
-#: build/index.js:2
-msgid "Skipped categories (slug collision):"
-msgstr ""
-
-#: build/index.js:2
-msgid "These category slugs already belong to a page, reserved WordPress slug, or another taxonomy/CPT base. They keep their default WooCommerce URL. Rename either the category or the conflicting slug to convert."
-msgstr ""
-
-#: build/index.js:2
-msgid "Schema.org and sitemap"
-msgstr ""
-
-#: build/index.js:2
-msgid "Product Schema"
-msgstr ""
-
-#: build/index.js:2
-msgid "Structured data for products including price, availability, and reviews."
-msgstr ""
-
-#: build/index.js:2
-msgid "Include Reviews"
-msgstr ""
-
-#: build/index.js:2
-msgid "Include product reviews in Schema"
-msgstr ""
-
-#: build/index.js:2
-msgid "Products in Sitemap"
-msgstr ""
-
-#: build/index.js:2
-msgid "Product Categories"
-msgstr ""
-
-#: build/index.js:2
-msgid "Product Tags"
-msgstr ""
-
-#: build/index.js:2
-msgid "Business Information"
-msgstr ""
-
-#: build/index.js:2
-msgid "Add LocalBusiness structured data to help your business appear in local search results."
-msgstr ""
-
-#: build/index.js:2
-msgid "Enable LocalBusiness schema"
-msgstr ""
-
-#: build/index.js:2
-msgid "Business Type"
-msgstr ""
-
-#: build/index.js:2
-msgid "Select the type that best describes your business."
-msgstr ""
-
-#: build/index.js:2
-msgid "Business Name"
-msgstr ""
-
-#: build/index.js:2
-msgid "Leave empty to use the site name."
-msgstr ""
-
-#: build/index.js:2
-msgid "Business Description"
-msgstr ""
-
-#: build/index.js:2
-msgid "Price Range"
-msgstr ""
-
-#: build/index.js:2
-msgid "Address and contact"
-msgstr ""
-
-#: build/index.js:2
-msgid "Street Address"
-msgstr ""
-
-#: build/index.js:2
-msgid "Address Line 2"
-msgstr ""
-
-#: build/index.js:2
-msgid "City"
-msgstr ""
-
-#: build/index.js:2
-msgid "State / Region"
-msgstr ""
-
-#: build/index.js:2
-msgid "Postal Code"
-msgstr ""
-
-#: build/index.js:2
-msgid "Country"
-msgstr ""
-
-#: build/index.js:2
-msgid "Use ISO 3166–1 alpha-2 code (e.g., HU, US, DE)."
-msgstr ""
-
-#: build/index.js:2
-msgid "Phone"
-msgstr ""
-
-#: build/index.js:2
-msgid "Email"
-msgstr ""
-
-#: build/index.js:2
-msgid "Opening Hours"
-msgstr ""
-
-#: build/index.js:2
-msgid "Opening hours"
-msgstr ""
-
-#: build/index.js:2
-msgid "Include opening hours in schema"
-msgstr ""
-
-#: build/index.js:2
-msgid "Coordinates"
-msgstr ""
-
-#: build/index.js:2
-msgid "Find coordinates on"
-msgstr ""
-
-#: build/index.js:2
-msgid "(right-click the location)."
-msgstr ""
-
-#: build/index.js:2
-msgid "Latitude"
-msgstr ""
-
-#: build/index.js:2
-msgid "Longitude"
-msgstr ""
-
-#: build/index.js:2
-msgid "Source"
-msgstr ""
-
-#: build/index.js:2
-msgid "Regex"
-msgstr ""
-
-#: build/index.js:2
-msgid "Destination"
-msgstr ""
-
-#: build/index.js:2
-msgid "N/A"
-msgstr ""
-
-#: build/index.js:2
-msgid "Type"
-msgstr ""
-
-#: build/index.js:2
-msgid "Hits"
-msgstr ""
-
-#: build/index.js:2
-msgid "Actions"
-msgstr ""
-
-#: build/index.js:2
-msgid "Edit"
-msgstr ""
-
-#: build/index.js:2
-#: build/index.js:4
-msgid "Delete"
-msgstr ""
-
-#: build/index.js:2
-msgid "Create and manage URL redirects to prevent 404 errors and preserve SEO value."
-msgstr ""
-
-#: build/index.js:2
-msgid "Process redirects"
-msgstr ""
-
-#: build/index.js:2
-msgid "Redirect rules are active"
-msgstr ""
-
-#: build/index.js:2
-msgid "Existing Redirects"
-msgstr ""
-
-#: build/index.js:2
+#: build/index.js:1
 msgid "Filter"
 msgstr ""
 
-#: build/index.js:2
+#: build/index.js:1
 msgid "Clear"
 msgstr ""
 
-#: build/index.js:2
+#: build/index.js:1
 msgid "Clear all filters"
 msgstr ""
 
-#: build/index.js:2
+#: build/index.js:1
 msgid "No redirects match these filters."
 msgstr ""
 
-#: build/index.js:2
+#: build/index.js:1
 msgid "No redirects configured yet."
 msgstr ""
 
-#: build/index.js:2
+#: build/index.js:1
 msgid "Previous page"
 msgstr ""
 
-#: build/index.js:2
+#: build/index.js:1
 msgid "Next page"
 msgstr ""
 
-#: build/index.js:2
+#: build/index.js:1
 msgid "Rows per page"
 msgstr ""
 
-#: build/index.js:2
+#: build/index.js:1
 msgid "Select all redirects on this page"
 msgstr ""
 
-#: build/index.js:2
+#: build/index.js:1
 msgid "Clear selection"
 msgstr ""
 
-#: build/index.js:2
+#: build/index.js:1
 msgid "Bulk actions"
 msgstr ""
 
 #. translators: %d: number of rows.
-#: build/index.js:2
+#: build/index.js:1
 #, js-format
 msgid "%d entry"
 msgid_plural "%d entries"
@@ -2507,7 +1954,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. translators: %d: number of results.
-#: build/index.js:2
+#: build/index.js:1
 #, js-format
 msgid "%d result"
 msgid_plural "%d results"
@@ -2515,13 +1962,13 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. translators: %s: redirect source.
-#: build/index.js:2
+#: build/index.js:1
 #, js-format
 msgid "Select: %s"
 msgstr ""
 
 #. translators: %d: number of selected redirects.
-#: build/index.js:3
+#: build/index.js:2
 #, js-format
 msgid "%d selected"
 msgid_plural "%d selected"
@@ -2529,125 +1976,1240 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. translators: 1: selected redirects, 2: of those, on this page.
-#: build/index.js:4
+#: build/index.js:3
 #, js-format
 msgid "%1$d selected, %2$d on this page"
 msgstr ""
 
 #. translators: 1: redirects the action applies to, 2: selected redirects on this page.
-#: build/index.js:4
+#: build/index.js:3
 #, js-format
 msgid "applies to %1$d of %2$d"
 msgstr ""
 
-#: build/index.js:4
-msgid "Search source or destination"
+#: build/index.js:3
+msgid "URL"
 msgstr ""
 
-#: build/index.js:4
+#: build/index.js:3
+#: build/index.js:9
+msgid "Hits"
+msgstr ""
+
+#: build/index.js:3
+msgid "Last seen"
+msgstr ""
+
+#: build/index.js:3
+msgid "Referrer"
+msgstr ""
+
+#: build/index.js:3
+#: build/index.js:9
+msgid "Actions"
+msgstr ""
+
+#: build/index.js:3
+msgid "Create redirect"
+msgstr ""
+
+#: build/index.js:3
+msgid "Log entry deleted."
+msgstr ""
+
+#: build/index.js:3
+#: build/index.js:9
+msgid "Delete"
+msgstr ""
+
+#: build/index.js:3
+msgid "Delete every logged URL?"
+msgstr ""
+
+#: build/index.js:3
+msgid "404 log cleared."
+msgstr ""
+
+#: build/index.js:3
+msgid "Yes, clear log"
+msgstr ""
+
+#: build/index.js:3
+msgid "Clear log"
+msgstr ""
+
+#: build/index.js:3
+msgid "Logged 404 URLs"
+msgstr ""
+
+#: build/index.js:3
+msgid "Missing URLs visitors and bots requested. Create a redirect to send them somewhere useful."
+msgstr ""
+
+#: build/index.js:3
+msgid "Retry"
+msgstr ""
+
+#: build/index.js:3
+msgid "Search URL"
+msgstr ""
+
+#: build/index.js:3
+msgid "No logged URLs match this search."
+msgstr ""
+
+#: build/index.js:3
+msgid "No 404 URLs logged yet."
+msgstr ""
+
+#: build/index.js:3
+#: build/index.js:9
 msgid "Redirect added."
 msgstr ""
 
+#: build/index.js:3
+msgid "Import / Export"
+msgstr ""
+
+#: build/index.js:3
+msgid "Export"
+msgstr ""
+
+#: build/index.js:3
+msgid "Export all redirects as a CSV file."
+msgstr ""
+
+#: build/index.js:3
+msgid "Download CSV"
+msgstr ""
+
+#: build/index.js:3
+msgid "Import redirects from a CSV file. Format: source,destination,type,regex"
+msgstr ""
+
+#. translators: 1: imported redirects, 2: skipped rows.
 #: build/index.js:4
+#, js-format
+msgid "Imported %1$d redirects, skipped %2$d."
+msgstr ""
+
+#: build/index.js:4
+msgid "Import CSV"
+msgstr ""
+
+#: build/index.js:4
+msgid "Matched"
+msgstr ""
+
+#: build/index.js:4
+msgid "No match"
+msgstr ""
+
+#: build/index.js:4
+msgid "Invalid regex"
+msgstr ""
+
+#: build/index.js:4
+msgid "Test a URL"
+msgstr ""
+
+#: build/index.js:4
+msgid "Check which redirect a path or URL would hit. The query string is ignored."
+msgstr ""
+
+#: build/index.js:4
+msgid "URL or path"
+msgstr ""
+
+#: build/index.js:4
+msgid "Test"
+msgstr ""
+
+#. translators: %d: HTTP status code.
+#: build/index.js:5
+#, js-format
+msgid " (%d)"
+msgstr ""
+
+#: build/index.js:5
+msgid "No redirect matches"
+msgstr ""
+
+#. translators: %d: number of redirect rules.
+#: build/index.js:6
+#, js-format
+msgid "Rules checked (%d)"
+msgstr ""
+
+#: build/index.js:6
+msgid "Copy"
+msgstr ""
+
+#: build/index.js:6
+msgid "Copied"
+msgstr ""
+
+#: build/index.js:6
+msgid "IndexNow"
+msgstr ""
+
+#: build/index.js:6
+msgid "Tell search engines about new, changed and deleted content right away instead of waiting for the next crawl."
+msgstr ""
+
+#: build/index.js:6
+#: build/index.js:8
+#: build/index.js:9
+msgid "Enabled"
+msgstr ""
+
+#: build/index.js:6
+#: build/index.js:8
+#: build/index.js:9
+msgid "Off"
+msgstr ""
+
+#: build/index.js:6
+msgid "When on, URLs of public content are sent to api.indexnow.org when they are published, updated or deleted. Bing, Yandex, Seznam, Naver and others use it; Google does not."
+msgstr ""
+
+#: build/index.js:6
+msgid "Key file"
+msgstr ""
+
+#: build/index.js:6
+msgid "Search engines fetch this file to confirm the site is yours."
+msgstr ""
+
+#: build/index.js:6
+msgid "New key generated."
+msgstr ""
+
+#: build/index.js:6
+msgid "Generate a new key"
+msgstr ""
+
+#: build/index.js:6
+msgid "Submit URLs now"
+msgstr ""
+
+#. translators: %d: maximum number of URLs.
+#: build/index.js:7
+#, js-format
+msgid "One address per line, from this site only, up to %d. Save your changes first."
+msgstr ""
+
+#: build/index.js:7
+#: build/index.js:8
+msgid "URLs"
+msgstr ""
+
+#. translators: %d: number of URLs.
+#: build/index.js:8
+#, js-format
+msgid "Submitted %d URL(s) to IndexNow."
+msgstr ""
+
+#: build/index.js:8
+msgid "Submit"
+msgstr ""
+
+#: build/index.js:8
+msgid "Recent submissions"
+msgstr ""
+
+#: build/index.js:8
+msgid "Time"
+msgstr ""
+
+#: build/index.js:8
+msgid "Result"
+msgstr ""
+
+#: build/index.js:8
+#: build/index.js:9
+msgid "Included"
+msgstr ""
+
+#: build/index.js:8
+#: build/index.js:9
+msgid "Left out"
+msgstr ""
+
+#: build/index.js:8
+msgid "Shipping"
+msgstr ""
+
+#: build/index.js:8
+msgid "Adds shipping cost and delivery time to the product offers in the structured data."
+msgstr ""
+
+#: build/index.js:8
+msgid "Shipping details"
+msgstr ""
+
+#: build/index.js:8
+msgid "Countries"
+msgstr ""
+
+#: build/index.js:8
+msgid "Two-letter country codes you ship to, separated by commas (for example HU, DE, AT)."
+msgstr ""
+
+#: build/index.js:8
+msgid "Shipping cost"
+msgstr ""
+
+#: build/index.js:8
+msgid "Flat rate"
+msgstr ""
+
+#: build/index.js:8
+msgid "Free shipping"
+msgstr ""
+
+#. translators: %s: shop currency code, e.g. EUR
+#: build/index.js:9
+#, js-format
+msgid "Rate (%s)"
+msgstr ""
+
+#: build/index.js:9
+msgid "Rate"
+msgstr ""
+
+#: build/index.js:9
+msgid "The shipping price in the shop currency, for example 1490 or 4.90."
+msgstr ""
+
+#: build/index.js:9
+msgid "Handling time, from (days)"
+msgstr ""
+
+#: build/index.js:9
+msgid "Handling time, to (days)"
+msgstr ""
+
+#: build/index.js:9
+msgid "Days from the order until the parcel is handed to the carrier."
+msgstr ""
+
+#: build/index.js:9
+msgid "Transit time, from (days)"
+msgstr ""
+
+#: build/index.js:9
+msgid "Transit time, to (days)"
+msgstr ""
+
+#: build/index.js:9
+msgid "Days the carrier needs to deliver the parcel."
+msgstr ""
+
+#: build/index.js:9
+msgid "Returns"
+msgstr ""
+
+#: build/index.js:9
+msgid "Adds your return policy to the product offers in the structured data."
+msgstr ""
+
+#: build/index.js:9
+msgid "Return policy"
+msgstr ""
+
+#: build/index.js:9
+msgid "Country"
+msgstr ""
+
+#: build/index.js:9
+msgid "Two-letter code of the country the policy applies to (for example HU)."
+msgstr ""
+
+#: build/index.js:9
+msgid "Policy"
+msgstr ""
+
+#: build/index.js:9
+msgid "Returns within a set number of days"
+msgstr ""
+
+#: build/index.js:9
+msgid "Returns without a time limit"
+msgstr ""
+
+#: build/index.js:9
+msgid "No returns"
+msgstr ""
+
+#: build/index.js:9
+msgid "Return window (days)"
+msgstr ""
+
+#: build/index.js:9
+msgid "Return method"
+msgstr ""
+
+#: build/index.js:9
+msgid "By mail"
+msgstr ""
+
+#: build/index.js:9
+msgid "In store"
+msgstr ""
+
+#: build/index.js:9
+msgid "Return costs"
+msgstr ""
+
+#: build/index.js:9
+msgid "Free return"
+msgstr ""
+
+#: build/index.js:9
+msgid "Customer pays"
+msgstr ""
+
+#: build/index.js:9
+msgid "Site"
+msgstr ""
+
+#: build/index.js:9
+msgid "Basic SEO settings for your site."
+msgstr ""
+
+#: build/index.js:9
+msgid "Title Separator"
+msgstr ""
+
+#: build/index.js:9
+msgid "Homepage Title"
+msgstr ""
+
+#: build/index.js:9
+msgid "Homepage Description"
+msgstr ""
+
+#: build/index.js:9
+msgid "Leave empty to use the site tagline."
+msgstr ""
+
+#: build/index.js:9
+msgid "Knowledge Graph"
+msgstr ""
+
+#: build/index.js:9
+msgid "Who the site represents in Schema.org markup."
+msgstr ""
+
+#: build/index.js:9
+msgid "Site Represents"
+msgstr ""
+
+#: build/index.js:9
+msgid "Organization"
+msgstr ""
+
+#: build/index.js:9
+msgid "Person"
+msgstr ""
+
+#: build/index.js:9
+msgid "Organization/Person Name"
+msgstr ""
+
+#: build/index.js:9
+msgid "Used in Schema.org markup."
+msgstr ""
+
+#: build/index.js:9
+msgid "Logo"
+msgstr ""
+
+#: build/index.js:9
+msgid "Organization logo for Schema.org markup."
+msgstr ""
+
+#: build/index.js:9
+msgid "Posts and pages"
+msgstr ""
+
+#: build/index.js:9
+msgid "Post Title Template"
+msgstr ""
+
+#: build/index.js:9
+msgid "Posts"
+msgstr ""
+
+#: build/index.js:9
+msgid "Set posts to noindex by default."
+msgstr ""
+
+#: build/index.js:9
+msgid "Page Title Template"
+msgstr ""
+
+#: build/index.js:9
+msgid "Pages"
+msgstr ""
+
+#: build/index.js:9
+msgid "Set pages to noindex by default."
+msgstr ""
+
+#: build/index.js:9
+msgid "Category Title Template"
+msgstr ""
+
+#: build/index.js:9
+msgid "Categories"
+msgstr ""
+
+#: build/index.js:9
+msgid "Set categories to noindex."
+msgstr ""
+
+#: build/index.js:9
+msgid "Tag Title Template"
+msgstr ""
+
+#: build/index.js:9
+msgid "Tags"
+msgstr ""
+
+#: build/index.js:9
+msgid "Set tags to noindex."
+msgstr ""
+
+#: build/index.js:9
+msgid "Archives and special pages"
+msgstr ""
+
+#: build/index.js:9
+msgid "Author Archive Title"
+msgstr ""
+
+#: build/index.js:9
+msgid "Author Archives"
+msgstr ""
+
+#: build/index.js:9
+msgid "Set author archives to noindex."
+msgstr ""
+
+#: build/index.js:9
+msgid "Date Archive Title"
+msgstr ""
+
+#: build/index.js:9
+msgid "Date Archives"
+msgstr ""
+
+#: build/index.js:9
+msgid "Set date archives to noindex."
+msgstr ""
+
+#: build/index.js:9
+msgid "Search Results Title"
+msgstr ""
+
+#: build/index.js:9
+msgid "404 Page Title"
+msgstr ""
+
+#: build/index.js:9
+msgid "Images"
+msgstr ""
+
+#: build/index.js:9
+msgid "Images without alt text, or with an empty alt, get one when the page is displayed. Your media library is not modified."
+msgstr ""
+
+#: build/index.js:9
+msgid "Alt text"
+msgstr ""
+
+#: build/index.js:9
+msgid "Fill in missing alt text from the template."
+msgstr ""
+
+#: build/index.js:9
+msgid "Alt Text Template"
+msgstr ""
+
+#: build/index.js:9
+msgid "Title attribute"
+msgstr ""
+
+#: build/index.js:9
+msgid "Add a title attribute to images that have none."
+msgstr ""
+
+#: build/index.js:9
+msgid "Title Attribute Template"
+msgstr ""
+
+#: build/index.js:9
+msgid "Meta Tags"
+msgstr ""
+
+#: build/index.js:9
+msgid "Settings for Open Graph and Twitter Cards."
+msgstr ""
+
+#: build/index.js:9
+msgid "Open Graph"
+msgstr ""
+
+#: build/index.js:9
+msgid "Enable Open Graph meta tags"
+msgstr ""
+
+#: build/index.js:9
+msgid "Twitter Cards"
+msgstr ""
+
+#: build/index.js:9
+msgid "Enable Twitter Card meta tags"
+msgstr ""
+
+#: build/index.js:9
+msgid "Default Card Type"
+msgstr ""
+
+#: build/index.js:9
+msgid "Summary with large image"
+msgstr ""
+
+#: build/index.js:9
+msgid "Summary"
+msgstr ""
+
+#: build/index.js:9
+msgid "Default Social Image"
+msgstr ""
+
+#: build/index.js:9
+msgid "Used when a post has no featured image. Recommended: 1200x630px."
+msgstr ""
+
+#: build/index.js:9
+msgid "Social Profiles"
+msgstr ""
+
+#: build/index.js:9
+msgid "Your sitemap:"
+msgstr ""
+
+#: build/index.js:9
+msgid "Include images"
+msgstr ""
+
+#: build/index.js:9
+msgid "Readable view in browsers (XSL)"
+msgstr ""
+
+#: build/index.js:9
+msgid "Browsers that dropped XSLT show the raw XML; search engines are not affected."
+msgstr ""
+
+#: build/index.js:9
+msgid "Custom Post Types"
+msgstr ""
+
+#: build/index.js:9
+msgid "New custom post types are included automatically. Content set to noindex is always left out."
+msgstr ""
+
+#: build/index.js:9
+msgid "Custom Taxonomies"
+msgstr ""
+
+#: build/index.js:9
+msgid "Custom taxonomy archives are only listed when switched on here."
+msgstr ""
+
+#: build/index.js:9
+msgid "A page for your visitors that links to your content. Add it with the shortcode or the \"HTML Sitemap (LW SEO)\" block."
+msgstr ""
+
+#: build/index.js:9
+msgid "Shortcode"
+msgstr ""
+
+#: build/index.js:9
+msgid "Optional attributes: post_types, taxonomies, max, order (title or date). They override the settings below."
+msgstr ""
+
+#: build/index.js:9
+msgid "Content set to noindex is always left out."
+msgstr ""
+
+#: build/index.js:9
+msgid "Longer lists are cut off and get a \"View all\" link."
+msgstr ""
+
+#: build/index.js:9
+msgid "Newest first"
+msgstr ""
+
+#: build/index.js:9
+msgid "Content Signals"
+msgstr ""
+
+#: build/index.js:9
+msgid "Tell AI systems how they may use your content. Sent as a Content-Signal HTTP header, a meta tag and a robots.txt line. \"Not specified\" neither grants nor restricts that use."
+msgstr ""
+
+#: build/index.js:9
+msgid "AI Input (RAG, grounding)"
+msgstr ""
+
+#: build/index.js:9
+msgid "llms.txt File"
+msgstr ""
+
+#: build/index.js:9
+msgid "Your llms.txt:"
+msgstr ""
+
+#: build/index.js:9
+msgid "Learn more"
+msgstr ""
+
+#: build/index.js:9
+msgid "llms.txt"
+msgstr ""
+
+#: build/index.js:9
+msgid "Enable llms.txt for AI crawlers"
+msgstr ""
+
+#: build/index.js:9
+msgid "One sentence shown as the summary line. Empty = the site tagline."
+msgstr ""
+
+#: build/index.js:9
+msgid "Introduction"
+msgstr ""
+
+#: build/index.js:9
+msgid "Optional Markdown text shown before the page lists. Do not use headings."
+msgstr ""
+
+#: build/index.js:9
+msgid "Content types"
+msgstr ""
+
+#: build/index.js:9
+msgid "Each type becomes its own section. Noindex content and content with AI Input set to \"No\" are left out."
+msgstr ""
+
+#: build/index.js:9
+msgid "Items per section"
+msgstr ""
+
+#: build/index.js:9
+msgid "Pages are listed in menu order, other types newest first."
+msgstr ""
+
+#: build/index.js:9
+msgid "Markdown links"
+msgstr ""
+
+#: build/index.js:9
+msgid "Link to the Markdown version of each page (/md)"
+msgstr ""
+
+#: build/index.js:9
+msgid "Link to the HTML page"
+msgstr ""
+
+#: build/index.js:9
+msgid "Extra links"
+msgstr ""
+
+#: build/index.js:9
+msgid "One per line: Title | https://url | optional description. Listed under \"Optional\"."
+msgstr ""
+
+#: build/index.js:9
+msgid "llms-full.txt"
+msgstr ""
+
+#: build/index.js:9
+msgid "Built as a logged-out visitor. Content-restriction plugins that only protect the main page query may not apply here; use the lw_seo_post_is_eligible filter to leave restricted posts out."
+msgstr ""
+
+#: build/index.js:9
+msgid "Also serve /llms-full.txt with the full Markdown content (max 1 MB)"
+msgstr ""
+
+#: build/index.js:9
+msgid "AI Crawler Access"
+msgstr ""
+
+#: build/index.js:9
+msgid "Blocked crawlers get a \"Disallow: /\" rule in robots.txt."
+msgstr ""
+
+#: build/index.js:9
+msgid "All AI training crawlers"
+msgstr ""
+
+#: build/index.js:9
+msgid "Covers every crawler with that purpose, including ones added in future updates."
+msgstr ""
+
+#: build/index.js:9
+msgid "All AI search crawlers"
+msgstr ""
+
+#: build/index.js:9
+msgid "All user-triggered AI fetchers"
+msgstr ""
+
+#: build/index.js:9
+msgid "robots.txt is a request, not an enforcement. OpenAI, Perplexity, Meta and Amazon state that their user-triggered fetchers may ignore it."
+msgstr ""
+
+#: build/index.js:9
+msgid "Optimize your WooCommerce products for search engines and social media."
+msgstr ""
+
+#: build/index.js:9
+msgid "Adds product-specific OpenGraph tags, Schema.org Product markup, and more."
+msgstr ""
+
+#: build/index.js:9
+msgid "Product Title"
+msgstr ""
+
+#: build/index.js:9
+msgid "Shop Title"
+msgstr ""
+
+#: build/index.js:9
+msgid "Title of the shop page (product archive). %%title%% is the shop page title."
+msgstr ""
+
+#: build/index.js:9
+msgid "Products"
+msgstr ""
+
+#: build/index.js:9
+msgid "Add noindex to product pages."
+msgstr ""
+
+#: build/index.js:9
+msgid "Permalinks"
+msgstr ""
+
+#: build/index.js:9
+msgid "Slug-only WooCommerce permalinks. Categories whose root slug collides with a page, reserved slug, or another taxonomy/CPT base are automatically skipped to avoid breaking existing URLs."
+msgstr ""
+
+#: build/index.js:9
+msgid "Category base"
+msgstr ""
+
+#: build/index.js:9
+msgid "Remove /product-category/ from product category URLs"
+msgstr ""
+
+#: build/index.js:9
+msgid "Keep"
+msgstr ""
+
+#: build/index.js:9
+msgid "Parent slugs"
+msgstr ""
+
+#: build/index.js:9
+msgid "Remove parent category slugs (leaf-only URLs)"
+msgstr ""
+
+#: build/index.js:9
+msgid "Product base"
+msgstr ""
+
+#: build/index.js:9
+msgid "Remove /product/ from product URLs"
+msgstr ""
+
+#: build/index.js:9
+msgid "Skipped categories (slug collision):"
+msgstr ""
+
+#: build/index.js:9
+msgid "These category slugs already belong to a page, reserved WordPress slug, or another taxonomy/CPT base. They keep their default WooCommerce URL. Rename either the category or the conflicting slug to convert."
+msgstr ""
+
+#: build/index.js:9
+msgid "Product schema"
+msgstr ""
+
+#: build/index.js:9
+msgid "Product Schema"
+msgstr ""
+
+#: build/index.js:9
+msgid "Structured data for products including price, availability, and reviews."
+msgstr ""
+
+#: build/index.js:9
+msgid "Include Reviews"
+msgstr ""
+
+#: build/index.js:9
+msgid "Include product reviews in Schema"
+msgstr ""
+
+#: build/index.js:9
+msgid "Product variants as ProductGroup"
+msgstr ""
+
+#: build/index.js:9
+msgid "Each variation gets its own price and availability in the structured data."
+msgstr ""
+
+#: build/index.js:9
+msgid "Default brand"
+msgstr ""
+
+#: build/index.js:9
+msgid "Used as the product brand when a product has no brand attribute or brand term."
+msgstr ""
+
+#: build/index.js:9
+msgid "Sitemap and indexing"
+msgstr ""
+
+#: build/index.js:9
+msgid "Products in Sitemap"
+msgstr ""
+
+#: build/index.js:9
+msgid "Product Categories"
+msgstr ""
+
+#: build/index.js:9
+msgid "Product Tags"
+msgstr ""
+
+#: build/index.js:9
+msgid "Hidden products"
+msgstr ""
+
+#: build/index.js:9
+msgid "Products with catalog visibility set to Hidden."
+msgstr ""
+
+#: build/index.js:9
+msgid "Noindex hidden products"
+msgstr ""
+
+#: build/index.js:9
+msgid "Out-of-stock products"
+msgstr ""
+
+#: build/index.js:9
+msgid "Business Information"
+msgstr ""
+
+#: build/index.js:9
+msgid "Add LocalBusiness structured data to help your business appear in local search results."
+msgstr ""
+
+#: build/index.js:9
+msgid "Enable LocalBusiness schema"
+msgstr ""
+
+#: build/index.js:9
+msgid "Business Type"
+msgstr ""
+
+#: build/index.js:9
+msgid "Select the type that best describes your business."
+msgstr ""
+
+#: build/index.js:9
+msgid "Business Name"
+msgstr ""
+
+#: build/index.js:9
+msgid "Leave empty to use the site name."
+msgstr ""
+
+#: build/index.js:9
+msgid "Business Description"
+msgstr ""
+
+#: build/index.js:9
+msgid "Price Range"
+msgstr ""
+
+#: build/index.js:9
+msgid "Address and contact"
+msgstr ""
+
+#: build/index.js:9
+msgid "Street Address"
+msgstr ""
+
+#: build/index.js:9
+msgid "Address Line 2"
+msgstr ""
+
+#: build/index.js:9
+msgid "City"
+msgstr ""
+
+#: build/index.js:9
+msgid "State / Region"
+msgstr ""
+
+#: build/index.js:9
+msgid "Postal Code"
+msgstr ""
+
+#: build/index.js:9
+msgid "Use ISO 3166–1 alpha-2 code (e.g., HU, US, DE)."
+msgstr ""
+
+#: build/index.js:9
+msgid "Phone"
+msgstr ""
+
+#: build/index.js:9
+msgid "Email"
+msgstr ""
+
+#: build/index.js:9
+msgid "Opening Hours"
+msgstr ""
+
+#: build/index.js:9
+msgid "Opening hours"
+msgstr ""
+
+#: build/index.js:9
+msgid "Include opening hours in schema"
+msgstr ""
+
+#: build/index.js:9
+msgid "Coordinates"
+msgstr ""
+
+#: build/index.js:9
+msgid "Find coordinates on"
+msgstr ""
+
+#: build/index.js:9
+msgid "(right-click the location)."
+msgstr ""
+
+#: build/index.js:9
+msgid "Latitude"
+msgstr ""
+
+#: build/index.js:9
+msgid "Longitude"
+msgstr ""
+
+#: build/index.js:9
+msgid "Source"
+msgstr ""
+
+#: build/index.js:9
+msgid "Regex"
+msgstr ""
+
+#: build/index.js:9
+msgid "Destination"
+msgstr ""
+
+#: build/index.js:9
+msgid "N/A"
+msgstr ""
+
+#: build/index.js:9
+msgid "Type"
+msgstr ""
+
+#: build/index.js:9
+msgid "Edit"
+msgstr ""
+
+#: build/index.js:9
+msgid "Create and manage URL redirects to prevent 404 errors and preserve SEO value."
+msgstr ""
+
+#: build/index.js:9
+msgid "Process redirects"
+msgstr ""
+
+#: build/index.js:9
+msgid "Redirect rules are active"
+msgstr ""
+
+#: build/index.js:9
+msgid "Existing Redirects"
+msgstr ""
+
+#: build/index.js:9
+msgid "Search source or destination"
+msgstr ""
+
+#: build/index.js:9
 msgid "Redirect updated."
 msgstr ""
 
-#: build/index.js:4
+#: build/index.js:9
 msgid "Redirect deleted."
 msgstr ""
 
-#: build/index.js:4
+#: build/index.js:9
 msgid "Are you sure you want to delete this redirect?"
 msgstr ""
 
-#: build/index.js:4
+#: build/index.js:9
 msgid "Configure how 404 (Not Found) errors are handled on your site."
 msgstr ""
 
-#: build/index.js:4
+#: build/index.js:9
 msgid "Redirect 404 to Homepage"
 msgstr ""
 
-#: build/index.js:4
+#: build/index.js:9
 msgid "When enabled, visitors who land on a non-existent page will be redirected to your homepage with a 302 (temporary) redirect."
 msgstr ""
 
-#: build/index.js:4
+#: build/index.js:9
 msgid "Redirect every 404 to the homepage"
 msgstr ""
 
-#: build/index.js:4
+#: build/index.js:9
+msgid "404 Log"
+msgstr ""
+
+#: build/index.js:9
+msgid "Keep a short list of missing URLs so you can redirect them. Off by default."
+msgstr ""
+
+#: build/index.js:9
+msgid "Log 404 errors"
+msgstr ""
+
+#: build/index.js:9
+msgid "Stores the requested path, a hit count and the referrer without its query string. Static files such as images are skipped."
+msgstr ""
+
+#: build/index.js:9
+msgid "Logging missing URLs"
+msgstr ""
+
+#: build/index.js:9
+msgid "Keep entries for (days)"
+msgstr ""
+
+#: build/index.js:9
+msgid "Older entries are removed daily."
+msgstr ""
+
+#: build/index.js:9
+msgid "Maximum entries"
+msgstr ""
+
+#: build/index.js:9
+msgid "When the log is full, the oldest one-off entries make room. Recurring entries are kept."
+msgstr ""
+
+#: build/index.js:9
+msgid "Store user agent"
+msgstr ""
+
+#: build/index.js:9
+msgid "Also keeps the visitor browser or bot name."
+msgstr ""
+
+#: build/index.js:9
+msgid "Storing user agents"
+msgstr ""
+
+#: build/index.js:9
 msgid "Features"
 msgstr ""
 
-#: build/index.js:4
+#: build/index.js:9
 msgid "Breadcrumbs"
 msgstr ""
 
-#: build/index.js:4
+#: build/index.js:9
 msgid "Use shortcode [lw_breadcrumbs] or function lw_seo_breadcrumbs()."
 msgstr ""
 
-#: build/index.js:4
+#: build/index.js:9
 msgid "Schema.org"
 msgstr ""
 
-#: build/index.js:4
+#: build/index.js:9
 msgid "Output Schema.org JSON-LD"
 msgstr ""
 
-#: build/index.js:4
+#: build/index.js:9
 msgid "robots.txt"
 msgstr ""
 
-#: build/index.js:4
+#: build/index.js:9
 msgid "Add sitemap URL and AI rules to robots.txt"
 msgstr ""
 
-#: build/index.js:4
+#: build/index.js:9
 msgid "Your robots.txt"
 msgstr ""
 
 #. translators: %s: path of the robots.txt file.
-#: build/index.js:5
+#: build/index.js:10
 #, js-format
 msgid "A physical robots.txt file exists (%s). The web server serves it directly, so these settings have no effect. Delete the file to let LW SEO manage robots.txt."
 msgstr ""
 
-#: build/index.js:5
+#: build/index.js:10
 msgid "Head Cleanup"
 msgstr ""
 
-#: build/index.js:5
+#: build/index.js:10
 msgid "Shortlinks"
 msgstr ""
 
-#: build/index.js:5
+#: build/index.js:10
 msgid "Removed from head"
 msgstr ""
 
-#: build/index.js:5
+#: build/index.js:10
 msgid "Kept"
 msgstr ""
 
-#: build/index.js:5
+#: build/index.js:10
 msgid "RSD Link"
 msgstr ""
 
-#: build/index.js:5
+#: build/index.js:10
 msgid "WLW Manifest"
 msgstr ""
 
-#: build/index.js:5
+#: build/index.js:10
 msgid "No data from Yoast SEO, RankMath, SEOPress or All in One SEO was found in the database, so there is nothing to import."
 msgstr ""
 
-#: build/index.js:5
+#: build/index.js:10
 msgid "Import SEO data from other SEO plugins. Existing LW SEO data will not be overwritten."
 msgstr ""
 
 #. translators: %s: name of the other active SEO plugin, e.g. Yoast SEO.
-#: build/index.js:6
+#: build/index.js:11
 #, js-format
 msgid "Another SEO plugin (%s) is active. LW SEO skips its meta tags to avoid duplicates. You can import its data on the Import tab, then deactivate it to use LW SEO fully."
 msgstr ""
@@ -2691,6 +3253,32 @@ msgid "schema"
 msgstr ""
 
 #: includes/Blocks/FAQ/block.json
+#: includes/Blocks/HtmlSitemap/block.json
 msgctxt "block keyword"
 msgid "seo"
+msgstr ""
+
+#: includes/Blocks/HtmlSitemap/block.json
+msgctxt "block title"
+msgid "HTML Sitemap (LW SEO)"
+msgstr ""
+
+#: includes/Blocks/HtmlSitemap/block.json
+msgctxt "block description"
+msgid "A visitor-friendly list of your pages, posts and archives."
+msgstr ""
+
+#: includes/Blocks/HtmlSitemap/block.json
+msgctxt "block keyword"
+msgid "sitemap"
+msgstr ""
+
+#: includes/Blocks/HtmlSitemap/block.json
+msgctxt "block keyword"
+msgid "html sitemap"
+msgstr ""
+
+#: includes/Blocks/HtmlSitemap/block.json
+msgctxt "block keyword"
+msgid "links"
 msgstr ""

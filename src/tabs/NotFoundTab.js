@@ -71,7 +71,7 @@ export default function NotFoundTab( { store } ) {
 						<TextRow
 							title={ __( 'Maximum entries', 'lw-seo' ) }
 							help={ __(
-								'When the log is full, new URLs are not added until old ones are removed.',
+								'When the log is full, the oldest one-off entries make room. Recurring entries are kept.',
 								'lw-seo'
 							) }
 							store={ store }

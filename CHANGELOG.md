@@ -1,5 +1,24 @@
 # Changelog
 
+## [1.9.0] - 2026-10-17
+
+### Added
+- Image sitemap: featured and in-content images (and WooCommerce gallery images) are listed in the XML sitemap; content inside shortcodes and non-media blocks is skipped. Filters: lw_seo_sitemap_images and lw_seo_sitemap_content_images.
+- Browser-readable sitemap view (XSL stylesheet), can be turned off.
+- HTML sitemap: [lw_html_sitemap] shortcode and an HTML sitemap block, cached, following the XML sitemap's noindex and exclusion rules.
+- 404 log (off by default): records missing URLs with hit counts, an admin list with "Create redirect", and WP-CLI `wp lw-seo not-found`. Daily cleanup and a row cap.
+- Redirect URL tester in the Redirects screen and `wp lw-seo redirect test <url>`.
+- IndexNow (off by default): notifies participating search engines when public content is published, updated or deleted; the key file is served by the site; manual submit and log in the Sitemap screen; WP-CLI `wp lw-seo indexnow`.
+- WooCommerce: shop-wide default brand.
+- WooCommerce: ProductGroup structured data for variable products (optional).
+- WooCommerce: shipping details and merchant return policy settings added to product offers.
+- WooCommerce: hidden products get noindex and leave the sitemap; out-of-stock products can be left out of the sitemap.
+- Image alt and title templates (off by default): fill missing or empty alt/title text at display time from %%image_title%%, %%image_caption%%, %%image_filename%% and the usual variables; the media library is not modified.
+- Developer filters: lw_seo_post_noindex, lw_seo_woo_offer, lw_seo_woo_varies_by_map, lw_seo_html_sitemap_sections, lw_seo_html_sitemap_output.
+
+### Fixed
+- Invalid regular-expression redirects no longer emit PHP warnings; they are skipped.
+
 ## [1.8.8] - 2026-10-17
 
 ### Fixed
