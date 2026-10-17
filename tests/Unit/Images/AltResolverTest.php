@@ -27,7 +27,7 @@ final class AltResolverTest extends MonkeyTestCase {
 		parent::setUp();
 		Functions\when( 'wp_strip_all_tags' )->alias( 'strip_tags' );
 		Functions\when( 'get_attached_file' )->justReturn( '/u/a.jpg' );
-		$this->att = new \WP_Post( [ 'ID' => 5, 'post_title' => 'Red apple', 'post_excerpt' => '' ] );
+		$this->att = new \WP_Post( [ 'ID' => 5, 'post_type' => 'attachment', 'post_title' => 'Red apple', 'post_excerpt' => '' ] );
 		$this->stub_options( [ 'image_alt_enabled' => true, 'image_alt_template' => '%%image_title%%' ] );
 	}
 
@@ -61,5 +61,11 @@ final class AltResolverTest extends MonkeyTestCase {
 		$this->stub_options( [ 'image_title_enabled' => true, 'image_title_template' => 'T %%image_title%%' ] );
 		$this->assertSame( [ 'alt' => '', 'title' => 'T Red apple' ], AltResolver::fill( [ 'alt' => '' ], $this->att, null ) );
 		$this->assertSame( [ 'title' => 'Own' ], AltResolver::fill( [ 'title' => 'Own' ], $this->att, null ) );
+	}
+
+	public function test_value_is_plain_decoded_text(): void {
+		$att = new \WP_Post( [ 'ID' => 5, 'post_type' => 'attachment', 'post_title' => '5 &gt; 3 "quoted" &amp; <i>x</i>', 'post_excerpt' => '' ] );
+
+		$this->assertSame( [ 'alt' => '5 > 3 "quoted" & x' ], AltResolver::fill( [ 'alt' => '' ], $att, null ) );
 	}
 }

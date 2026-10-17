@@ -43,6 +43,12 @@ final class ImageVars {
 	 */
 	public static function replace( string $template, ?\WP_Post $attachment, ?\WP_Post $context ): string {
 		$values = self::values( $attachment );
+		$used   = [];
+		foreach ( self::NAMES as $name ) {
+			if ( str_contains( $template, '%%' . $name . '%%' ) ) {
+				$used[] = $name;
+			}
+		}
 
 		foreach ( self::NAMES as $index => $name ) {
 			$template = str_replace( '%%' . $name . '%%', "\x01" . $index . "\x01", $template );
@@ -54,9 +60,36 @@ final class ImageVars {
 			$text = str_replace( "\x01" . $index . "\x01", $values[ $name ], $text );
 		}
 
+		// Image variables were requested but none resolved: nothing meaningful to say.
+		if ( [] !== $used && '' === implode( '', array_intersect_key( $values, array_flip( $used ) ) ) ) {
+			return '';
+		}
+
 		$text = html_entity_decode( wp_strip_all_tags( $text ), ENT_QUOTES, 'UTF-8' );
 
 		return trim( (string) preg_replace( '/\s+/u', ' ', $text ) );
+	}
+
+	/**
+	 * The post only when it is an attachment that may be shown publicly.
+	 *
+	 * @param \WP_Post|null $post Any post.
+	 * @return \WP_Post|null
+	 */
+	public static function usable_attachment( ?\WP_Post $post ): ?\WP_Post {
+		if ( null === $post || 'attachment' !== $post->post_type || (int) $post->ID <= 0 ) {
+			return null;
+		}
+
+		$parent_id = (int) $post->post_parent;
+		if ( $parent_id > 0 ) {
+			$parent = get_post( $parent_id );
+			if ( ! $parent instanceof \WP_Post || ! is_post_publicly_viewable( $parent ) ) {
+				return null;
+			}
+		}
+
+		return $post;
 	}
 
 	/**
@@ -66,7 +99,8 @@ final class ImageVars {
 	 * @return array<string, string>
 	 */
 	private static function values( ?\WP_Post $attachment ): array {
-		if ( null === $attachment || (int) $attachment->ID <= 0 ) {
+		$attachment = self::usable_attachment( $attachment );
+		if ( null === $attachment ) {
 			return array_fill_keys( self::NAMES, '' );
 		}
 

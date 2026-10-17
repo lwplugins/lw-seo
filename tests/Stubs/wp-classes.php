@@ -15,6 +15,8 @@ declare(strict_types=1);
 if ( ! class_exists( 'WP_Post' ) ) {
 	#[AllowDynamicProperties]
 	class WP_Post {
+		public int $post_parent = 0;
+
 		/**
 		 * @param array<string, mixed> $props Properties to set.
 		 */

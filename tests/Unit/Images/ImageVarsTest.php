@@ -27,7 +27,7 @@ final class ImageVarsTest extends MonkeyTestCase {
 	}
 
 	private function attachment( string $title = 'Red apple', string $caption = '' ): \WP_Post {
-		return new \WP_Post( [ 'ID' => 5, 'post_title' => $title, 'post_excerpt' => $caption ] );
+		return new \WP_Post( [ 'ID' => 5, 'post_type' => 'attachment', 'post_title' => $title, 'post_excerpt' => $caption ] );
 	}
 
 	public function test_image_title(): void {
@@ -47,5 +47,33 @@ final class ImageVarsTest extends MonkeyTestCase {
 
 	public function test_unknown_attachment_empty_image_vars(): void {
 		$this->assertSame( '', ImageVars::replace( '%%image_title%% %%image_caption%% %%image_filename%%', null, null ) );
+	}
+
+	public function test_non_attachment_id_gives_empty_image_vars(): void {
+		$post = new \WP_Post( [ 'ID' => 9, 'post_type' => 'post', 'post_title' => 'Secret', 'post_excerpt' => '' ] );
+
+		$this->assertSame( '', ImageVars::replace( '%%image_title%%', $post, null ) );
+	}
+
+	public function test_attachment_of_private_parent_gives_empty_image_vars(): void {
+		$parent = new \WP_Post( [ 'ID' => 3, 'post_type' => 'post' ] );
+		Functions\when( 'get_post' )->justReturn( $parent );
+		Functions\when( 'is_post_publicly_viewable' )->justReturn( false );
+		$att = new \WP_Post( [ 'ID' => 5, 'post_type' => 'attachment', 'post_parent' => 3, 'post_title' => 'Hidden', 'post_excerpt' => '' ] );
+
+		$this->assertSame( '', ImageVars::replace( '%%image_title%%', $att, null ) );
+	}
+
+	public function test_attachment_of_public_parent_is_filled(): void {
+		$parent = new \WP_Post( [ 'ID' => 3, 'post_type' => 'post' ] );
+		Functions\when( 'get_post' )->justReturn( $parent );
+		Functions\when( 'is_post_publicly_viewable' )->justReturn( true );
+		$att = new \WP_Post( [ 'ID' => 5, 'post_type' => 'attachment', 'post_parent' => 3, 'post_title' => 'Shown', 'post_excerpt' => '' ] );
+
+		$this->assertSame( 'Shown', ImageVars::replace( '%%image_title%%', $att, null ) );
+	}
+
+	public function test_mixed_template_without_image_data_is_empty(): void {
+		$this->assertSame( '', ImageVars::replace( '%%image_title%% | %%sitename%%', null, null ) );
 	}
 }

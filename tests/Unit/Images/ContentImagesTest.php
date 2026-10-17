@@ -26,12 +26,13 @@ final class ContentImagesTest extends MonkeyTestCase {
 		parent::setUp();
 		require_once dirname( __DIR__, 2 ) . '/Stubs/html-tag-processor.php';
 		$this->stub_options( [ 'image_alt_enabled' => true, 'image_alt_template' => '%%image_title%%' ] );
+		Functions\when( 'did_action' )->justReturn( 1 );
 		Functions\when( 'is_admin' )->justReturn( false );
 		Functions\when( 'is_feed' )->justReturn( false );
 		Functions\when( 'wp_strip_all_tags' )->alias( 'strip_tags' );
 		Functions\when( 'get_attached_file' )->justReturn( '/u/a.jpg' );
 		Functions\when( 'get_post' )->alias(
-			static fn( $id = null ) => is_int( $id ) ? new \WP_Post( [ 'ID' => $id, 'post_title' => 'Red apple', 'post_excerpt' => '' ] ) : null
+			static fn( $id = null ) => is_int( $id ) ? new \WP_Post( [ 'ID' => $id, 'post_type' => 'attachment', 'post_title' => 'Red apple', 'post_excerpt' => '' ] ) : null
 		);
 	}
 

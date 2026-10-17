@@ -53,10 +53,11 @@ final class ContentImages {
 		}
 
 		$attachment = (int) $attachment_id > 0 ? get_post( (int) $attachment_id ) : null;
+		$attachment = $attachment instanceof \WP_Post ? ImageVars::usable_attachment( $attachment ) : null;
 		$post       = get_post();
 		$after      = AltResolver::fill(
 			$before,
-			$attachment instanceof \WP_Post ? $attachment : null,
+			$attachment,
 			$post instanceof \WP_Post ? $post : null
 		);
 

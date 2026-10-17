@@ -22,8 +22,11 @@ final class AttachmentAttributes {
 	 * @return bool
 	 */
 	public static function is_active(): bool {
-		return AltResolver::is_enabled()
-			&& ! is_admin()
+		if ( ! AltResolver::is_enabled() || ! did_action( 'wp' ) ) {
+			return false;
+		}
+
+		return ! is_admin()
 			&& ! is_feed()
 			&& ! ( defined( 'REST_REQUEST' ) && REST_REQUEST )
 			&& ! HeadMeta::is_conflicting_plugin_active();
