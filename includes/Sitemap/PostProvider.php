@@ -96,22 +96,8 @@ final class PostProvider implements ProviderInterface {
 		$posts = get_posts( self::query_args( $this->post_type, self::PER_PAGE, ( $page - 1 ) * self::PER_PAGE ) );
 
 		$images = (bool) Options::get( 'sitemap_images' );
-		if ( $images && function_exists( 'update_post_thumbnail_cache' ) ) {
-			// Primes the featured-image meta of all posts in one query.
-			$query        = new \WP_Query(); // No arguments: nothing is queried.
-			$query->posts = $posts;
-			update_post_thumbnail_cache( $query );
-		}
-
 		if ( $images ) {
-			/**
-			 * Fires once per sitemap page with its posts, before the image lists are built.
-			 *
-			 * @since 1.9.0
-			 *
-			 * @param \WP_Post[] $posts Posts of the page.
-			 */
-			do_action( 'lw_seo_sitemap_posts', $posts );
+			$this->prime_images( $posts );
 		}
 
 		$excluded = ExcludedPosts::ids( $this->post_type );
@@ -149,5 +135,30 @@ final class PostProvider implements ProviderInterface {
 		}
 
 		return $items;
+	}
+
+	/**
+	 * Prepare a page's image lists: prime the featured-image meta in one
+	 * query and let integrations prime theirs.
+	 *
+	 * @param array<int, \WP_Post> $posts Posts of the page.
+	 * @return void
+	 */
+	private function prime_images( array $posts ): void {
+		if ( function_exists( 'update_post_thumbnail_cache' ) ) {
+			// Primes the featured-image meta of all posts in one query.
+			$query        = new \WP_Query(); // No arguments: nothing is queried.
+			$query->posts = $posts;
+			update_post_thumbnail_cache( $query );
+		}
+
+		/**
+		 * Fires once per sitemap page with its posts, before the image lists are built.
+		 *
+		 * @since 1.9.0
+		 *
+		 * @param \WP_Post[] $posts Posts of the page.
+		 */
+		do_action( 'lw_seo_sitemap_posts', $posts );
 	}
 }

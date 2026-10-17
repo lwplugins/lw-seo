@@ -119,19 +119,9 @@ final class Plugin {
 		new Sitemap();
 		new Schema();
 		new Breadcrumbs();
-		( new ImageSeo() )->register();
 		new RobotsTxt();
 		new LlmsTxtEndpoint();
-
-		// IndexNow (opt-in): the flush handler is always hooked so a stale queue is dropped.
-		IndexNowQueue::register();
-		if ( Options::get( 'indexnow_enabled' ) ) {
-			IndexNowKey::ensure();
-		}
-		new IndexNowKeyFile();
-		new IndexNowWatcher();
-
-		// Content Signals.
+		$this->init_crawl_tools();
 		new ContentSignals();
 
 		// Markdown endpoint.
@@ -145,10 +135,6 @@ final class Plugin {
 
 		// Gutenberg blocks.
 		new FAQBlock();
-		new HtmlSitemapBlock();
-
-		// HTML sitemap shortcode.
-		new HtmlSitemapShortcode();
 
 		// Local SEO.
 		new LocalSchema();
@@ -159,11 +145,6 @@ final class Plugin {
 
 		// 404 handler.
 		new NotFoundHandler();
-
-		// 404 log (opt-in) and its daily pruning.
-		$not_found_log = new NotFoundLogRepository();
-		( new NotFoundLogger( $not_found_log ) )->register();
-		( new NotFoundPruner( $not_found_log ) )->register();
 
 		// One-time v1.3.13 og_image cleanup.
 		( new CleanupV1314() )->register();
@@ -176,6 +157,32 @@ final class Plugin {
 		if ( defined( 'WP_CLI' ) && \WP_CLI ) {
 			CLI\Bootstrap::register();
 		}
+	}
+
+	/**
+	 * Crawl and discovery tools: image alt/title attributes, IndexNow
+	 * notifications, the HTML sitemap (block and shortcode) and the 404 log.
+	 *
+	 * @return void
+	 */
+	private function init_crawl_tools(): void {
+		( new ImageSeo() )->register();
+
+		// IndexNow (opt-in): the flush handler is always hooked so a stale queue is dropped.
+		IndexNowQueue::register();
+		if ( Options::get( 'indexnow_enabled' ) ) {
+			IndexNowKey::ensure();
+		}
+		new IndexNowKeyFile();
+		new IndexNowWatcher();
+
+		new HtmlSitemapBlock();
+		new HtmlSitemapShortcode();
+
+		// 404 log (opt-in) and its daily pruning.
+		$not_found_log = new NotFoundLogRepository();
+		( new NotFoundLogger( $not_found_log ) )->register();
+		( new NotFoundPruner( $not_found_log ) )->register();
 	}
 
 	/**

@@ -80,19 +80,8 @@ class LogRepository {
 			return;
 		}
 
-		// The table is capped, so counting it is cheap. At the cap the oldest
-		// one-off entries make room; recurring ones (hits > 1) are never evicted
-		// here, so a flood of random URLs cannot push out established 404s. With
-		// no one-off row left the new URL is dropped (the daily prune trims).
-		$max_rows = max( 1, $max_rows );
-		$excess   = (int) $wpdb->get_var( "SELECT COUNT(*) FROM {$table}" ) - $max_rows + 1;
-		if ( $excess > 0 ) {
-			$evicted = (int) $wpdb->query(
-				$wpdb->prepare( "DELETE FROM {$table} WHERE hits <= 1 ORDER BY last_seen ASC LIMIT %d", min( $excess, self::MAX_EVICTIONS ) )
-			);
-			if ( 0 === $evicted ) {
-				return;
-			}
+		if ( ! $this->make_room( $max_rows ) ) {
+			return;
 		}
 
 		// ON DUPLICATE KEY covers two concurrent first hits of the same URL.
@@ -110,6 +99,36 @@ class LogRepository {
 			)
 		);
 		// phpcs:enable
+	}
+
+	/**
+	 * Make room for one new row. The table is capped, so counting it is
+	 * cheap. At the cap the oldest one-off entries make room; recurring ones
+	 * (hits > 1) are never evicted here, so a flood of random URLs cannot push
+	 * out established 404s. With no one-off row left the new URL is dropped
+	 * (the daily prune trims).
+	 *
+	 * @param int $max_rows Row cap.
+	 * @return bool Whether a new row may be inserted.
+	 */
+	private function make_room( int $max_rows ): bool {
+		global $wpdb;
+
+		$table    = LogTable::name();
+		$max_rows = max( 1, $max_rows );
+
+		// phpcs:disable WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.DirectDatabaseQuery -- internal prefix-based table name; values are prepared.
+		$excess = (int) $wpdb->get_var( "SELECT COUNT(*) FROM {$table}" ) - $max_rows + 1;
+		if ( $excess <= 0 ) {
+			return true;
+		}
+
+		$evicted = (int) $wpdb->query(
+			$wpdb->prepare( "DELETE FROM {$table} WHERE hits <= 1 ORDER BY last_seen ASC LIMIT %d", min( $excess, self::MAX_EVICTIONS ) )
+		);
+		// phpcs:enable
+
+		return $evicted > 0;
 	}
 
 	/**
