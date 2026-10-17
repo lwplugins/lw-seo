@@ -23,13 +23,25 @@ const NO_DESTINATION = [ 410, 451 ];
  *
  * @param {Object}   props
  * @param {Object}   props.initial Redirect being edited, or null for a new one.
+ * @param {string}   props.source  Source to prefill a new redirect with.
  * @param {Object}   props.types   { code: label }.
  * @param {Function} props.onSaved Receives the saved item.
  * @param {Function} props.onClose Close.
  */
-export default function RedirectForm( { initial, types, onSaved, onClose } ) {
+export default function RedirectForm( {
+	initial,
+	source: initialSource = '',
+	types,
+	onSaved,
+	onClose,
+} ) {
 	const [ form, setForm ] = useState(
-		initial || { source: '', destination: '', type: 301, regex: false }
+		initial || {
+			source: initialSource,
+			destination: '',
+			type: 301,
+			regex: false,
+		}
 	);
 	const [ busy, setBusy ] = useState( false );
 	const [ error, setError ] = useState( '' );

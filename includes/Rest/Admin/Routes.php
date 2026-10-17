@@ -39,6 +39,7 @@ final class Routes {
 		( new SettingsController() )->register_routes();
 		( new RedirectsController() )->register_routes();
 		( new RedirectTestController() )->register_routes();
+		( new NotFoundLogController() )->register_routes();
 		( new MigrationController() )->register_routes();
 	}
 

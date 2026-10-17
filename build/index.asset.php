@@ -11,7 +11,8 @@
 		'wp-i18n',
 		'wp-keycodes',
 		'wp-notices',
-		'wp-primitives'
+		'wp-primitives',
+		'wp-url'
 	),
-	'version' => 'cb3587dd507378c5023e'
+	'version' => 'b19b6d63e461aa58cb18'
 );

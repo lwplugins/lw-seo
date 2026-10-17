@@ -252,3 +252,25 @@ if ( ! class_exists( 'wpdb' ) ) {
 		}
 	}
 }
+
+if ( ! class_exists( 'WP_CLI' ) ) {
+	/**
+	 * Recording WP_CLI stand-in for command unit tests.
+	 */
+	class WP_CLI {
+		/** @var array<int, string> */
+		public static array $log = [];
+
+		public static function confirm( string $question, array $assoc_args = [] ): void {
+			self::$log[] = 'confirm: ' . $question;
+		}
+
+		public static function success( string $message ): void {
+			self::$log[] = 'success: ' . $message;
+		}
+
+		public static function error( string $message ): void {
+			self::$log[] = 'error: ' . $message;
+		}
+	}
+}

@@ -2,6 +2,7 @@
  * WordPress dependencies
  */
 import apiFetch from '@wordpress/api-fetch';
+import { addQueryArgs } from '@wordpress/url';
 
 /**
  * Internal dependencies
@@ -25,6 +26,11 @@ export const api = {
 	exportRedirects: () => apiFetch( { path: path( '/redirects/export' ) } ),
 	importRedirects: ( csv ) => send( '/redirects/import', 'POST', { csv } ),
 	testRedirect: ( url ) => send( '/redirects-test', 'POST', { url } ),
+
+	notFoundLog: ( args, signal ) =>
+		apiFetch( { path: addQueryArgs( path( '/404-log' ), args ), signal } ),
+	deleteNotFound: ( id ) => send( `/404-log/${ Number( id ) }`, 'DELETE' ),
+	clearNotFound: () => send( '/404-log', 'DELETE' ),
 
 	detectMigration: ( provider ) =>
 		apiFetch( { path: path( `/migration/${ provider }` ) } ),

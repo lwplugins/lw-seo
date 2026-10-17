@@ -22,6 +22,7 @@ final class Bootstrap {
 	public static function register(): void {
 		\WP_CLI::add_command( 'lw-seo migrate', MigrateCommand::class );
 		\WP_CLI::add_command( 'lw-seo redirect', RedirectCommand::class );
+		\WP_CLI::add_command( 'lw-seo not-found', NotFoundCommand::class );
 		\WP_CLI::add_command( 'lw-seo sitemap', SitemapCommand::class );
 		\WP_CLI::add_command( 'lw-seo option', OptionCommand::class );
 		\WP_CLI::add_command( 'lw-seo llms', LlmsCommand::class );
