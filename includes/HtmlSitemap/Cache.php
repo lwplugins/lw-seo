@@ -12,8 +12,8 @@ namespace LightweightPlugins\SEO\HtmlSitemap;
 use LightweightPlugins\SEO\LlmsTxt\Cache as VisitorCache;
 
 /**
- * Transient cache for the rendered markup, one entry per argument set.
- * The keys are remembered in an option so a flush can drop them all.
+ * Transient cache for the rendered markup, one entry per argument set and
+ * cache generation.
  */
 final class Cache {
 
@@ -28,14 +28,25 @@ final class Cache {
 	private const TTL = 43200;
 
 	/**
-	 * Option holding the keys in use.
+	 * Option holding the cache generation.
 	 */
-	private const KEYS_OPTION = 'lw_seo_html_sitemap_keys';
+	private const VERSION_OPTION = 'lw_seo_html_sitemap_version';
+
+	/**
+	 * Cache key for a set of resolved arguments. It includes the locale and
+	 * the generation, so a flush changes every key at once.
+	 *
+	 * @param array<string, mixed> $args Resolved arguments.
+	 * @return string
+	 */
+	public static function key( array $args ): string {
+		return md5( (string) wp_json_encode( $args ) . get_locale() . self::version() );
+	}
 
 	/**
 	 * Get cached markup, or build (as a logged-out visitor) and store it.
 	 *
-	 * @param string   $key   Cache key (md5 of the arguments and locale).
+	 * @param string   $key   Cache key from key().
 	 * @param callable $build Builder returning the markup.
 	 * @return string
 	 */
@@ -47,46 +58,26 @@ final class Cache {
 
 		$html = VisitorCache::build_as_visitor( $build );
 		set_transient( self::PREFIX . $key, $html, self::TTL );
-		self::remember_key( $key );
 
 		return $html;
 	}
 
 	/**
-	 * Drop every cached copy.
+	 * Invalidate every cached copy: the generation moves on and the old
+	 * transients expire by their TTL.
 	 *
 	 * @return void
 	 */
 	public static function flush(): void {
-		foreach ( self::keys() as $key ) {
-			delete_transient( self::PREFIX . $key );
-		}
-
-		delete_option( self::KEYS_OPTION );
+		update_option( self::VERSION_OPTION, self::version() + 1, true );
 	}
 
 	/**
-	 * Record a key for flush().
+	 * Current cache generation.
 	 *
-	 * @param string $key Cache key.
-	 * @return void
+	 * @return int
 	 */
-	private static function remember_key( string $key ): void {
-		$keys = self::keys();
-		if ( ! in_array( $key, $keys, true ) ) {
-			$keys[] = $key;
-			update_option( self::KEYS_OPTION, $keys, false );
-		}
-	}
-
-	/**
-	 * Keys in use.
-	 *
-	 * @return array<int, string>
-	 */
-	private static function keys(): array {
-		$keys = get_option( self::KEYS_OPTION, [] );
-
-		return is_array( $keys ) ? array_values( array_filter( $keys, 'is_string' ) ) : [];
+	public static function version(): int {
+		return max( 1, (int) get_option( self::VERSION_OPTION, 1 ) );
 	}
 }

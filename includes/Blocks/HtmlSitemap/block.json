@@ -1,0 +1,38 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "lw-seo/html-sitemap",
+	"version": "1.0.0",
+	"title": "HTML Sitemap (LW SEO)",
+	"category": "lw-seo",
+	"description": "A visitor-friendly list of your pages, posts and archives.",
+	"keywords": [ "sitemap", "html sitemap", "seo", "links" ],
+	"textdomain": "lw-seo",
+	"attributes": {
+		"post_types": {
+			"type": "string",
+			"default": ""
+		},
+		"taxonomies": {
+			"type": "string",
+			"default": ""
+		},
+		"max": {
+			"type": "number",
+			"default": 0
+		},
+		"order": {
+			"type": "string",
+			"default": ""
+		}
+	},
+	"supports": {
+		"className": true,
+		"anchor": true,
+		"html": false,
+		"spacing": {
+			"margin": true,
+			"padding": true
+		}
+	}
+}

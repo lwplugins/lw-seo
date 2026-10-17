@@ -11,6 +11,7 @@ namespace LightweightPlugins\SEO\Tests\Unit\HtmlSitemap;
 
 use Brain\Monkey\Filters;
 use Brain\Monkey\Functions;
+use LightweightPlugins\SEO\Content\Eligibility;
 use LightweightPlugins\SEO\HtmlSitemap\Collector;
 use LightweightPlugins\SEO\Options;
 use LightweightPlugins\SEO\Tests\Unit\MonkeyTestCase;
@@ -166,5 +167,21 @@ final class CollectorTest extends MonkeyTestCase {
 		$this->assertSame( 'taxonomy', $sections[1]['type'] );
 		$this->assertSame( [ 0, 1 ], array_column( $sections[1]['items'], 'depth' ) );
 		$this->assertSame( 'https://example.com/c/6', $sections[1]['items'][1]['url'] );
+	}
+
+	public function test_term_query_excludes_noindex_terms(): void {
+		$captured = null;
+		Functions\when( 'get_terms' )->alias(
+			static function ( array $args ) use ( &$captured ): array {
+				$captured = $args;
+				return [];
+			}
+		);
+		Functions\when( 'is_wp_error' )->justReturn( false );
+
+		Collector::sections( [ 'post' ], [ 'category' ], 500, 'title' );
+
+		$this->assertSame( Eligibility::noindex_meta_query(), $captured['meta_query'] );
+		$this->assertSame( 'term_id', $captured['orderby'] );
 	}
 }

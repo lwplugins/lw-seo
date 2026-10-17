@@ -119,9 +119,14 @@ final class Collector {
 				[
 					'taxonomy'   => $taxonomy,
 					'hide_empty' => true,
-					'orderby'    => 'name',
+					// Explicit id order, sorted by name below: with a name or the
+					// default order WooCommerce sorts product taxonomies by `order`
+					// meta, and its termmeta join combined with the noindex
+					// meta_query drops terms without that meta (see TaxonomyProvider).
+					'orderby'    => 'term_id',
 					'order'      => 'ASC',
 					'number'     => $max,
+					'meta_query' => Eligibility::noindex_meta_query(),
 				],
 				QueryArgs::SITEMAP_TERMS
 			)
@@ -143,6 +148,8 @@ final class Collector {
 				'url'    => (string) $url,
 			];
 		}
+
+		usort( $rows, static fn( array $a, array $b ): int => strcasecmp( $a['title'], $b['title'] ) );
 
 		return [
 			'label'       => $label,

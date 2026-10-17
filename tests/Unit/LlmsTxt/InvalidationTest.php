@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace LightweightPlugins\SEO\Tests\Unit\LlmsTxt;
 
+use Brain\Monkey\Actions;
 use Brain\Monkey\Functions;
 use LightweightPlugins\SEO\LlmsTxt\Invalidation;
 use LightweightPlugins\SEO\Options;
@@ -119,5 +120,53 @@ final class InvalidationTest extends MonkeyTestCase {
 	 */
 	public function test_is_seo_meta_key( string $meta_key, bool $expected ): void {
 		$this->assertSame( $expected, Invalidation::is_seo_meta_key( $meta_key ) );
+	}
+
+	public function test_unlisted_public_type_still_announces_the_change(): void {
+		$this->stub_listed_post_types();
+		Actions\expectDone( 'lw_seo_content_changed' )->once();
+		// The llms.txt cache is not touched: delete_transient is not stubbed.
+		$post = new \WP_Post( [ 'post_type' => 'product', 'post_status' => 'publish' ] );
+
+		Invalidation::flush_for_post( 5, $post );
+		$this->addToAssertionCount( 1 ); // Brain Monkey verifies the expectation on teardown.
+	}
+
+	public function test_non_public_type_announces_nothing(): void {
+		$this->stub_listed_post_types();
+		Functions\when( 'is_post_type_viewable' )->justReturn( false );
+		Actions\expectDone( 'lw_seo_content_changed' )->never();
+
+		Invalidation::flush_for_post( 5, new \WP_Post( [ 'post_type' => 'wp_navigation', 'post_status' => 'publish' ] ) );
+		$this->addToAssertionCount( 1 ); // Brain Monkey verifies the expectation on teardown.
+	}
+
+	public function test_unlisted_type_status_change_announces_the_change(): void {
+		$this->stub_listed_post_types();
+		Actions\expectDone( 'lw_seo_content_changed' )->once();
+
+		Invalidation::flush_for_transition( 'publish', 'draft', new \WP_Post( [ 'post_type' => 'product' ] ) );
+		$this->addToAssertionCount( 1 ); // Brain Monkey verifies the expectation on teardown.
+	}
+
+	public function test_listed_type_flushes_llms_cache_and_announces(): void {
+		$this->stub_listed_post_types();
+		Functions\expect( 'delete_transient' )->atLeast()->once();
+		Actions\expectDone( 'lw_seo_content_changed' )->once();
+
+		Invalidation::flush_for_post( 5, new \WP_Post( [ 'post_type' => 'page', 'post_status' => 'publish' ] ) );
+		$this->addToAssertionCount( 1 ); // Brain Monkey verifies the expectation on teardown.
+	}
+
+	public function test_term_events_and_settings_announce_the_change(): void {
+		$this->stub_options();
+		Functions\when( 'delete_transient' )->justReturn( true );
+
+		Invalidation::register();
+		Invalidation::register_settings();
+
+		foreach ( [ 'created_term', 'edited_term', 'delete_term', 'update_option_' . Options::OPTION_NAME ] as $hook ) {
+			$this->assertNotFalse( has_action( $hook, [ Invalidation::class, 'flush' ] ), $hook );
+		}
 	}
 }

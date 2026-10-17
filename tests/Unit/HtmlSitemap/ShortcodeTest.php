@@ -92,4 +92,12 @@ final class ShortcodeTest extends MonkeyTestCase {
 		$this->assertSame( 'title', $resolved['order'] );
 		$this->assertSame( 500, $resolved['max'] );
 	}
+
+	public function test_max_attribute_can_only_lower_the_setting(): void {
+		$this->stub_options( [ 'html_sitemap_max_items' => 100 ] );
+
+		$this->assertSame( 100, Shortcode::resolve( [ 'max' => '4000' ] )['max'] );
+		$this->assertSame( 40, Shortcode::resolve( [ 'max' => '40' ] )['max'] );
+		$this->assertSame( 100, Shortcode::resolve( [] )['max'] );
+	}
 }

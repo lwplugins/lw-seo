@@ -61,10 +61,8 @@ final class Shortcode {
 	 */
 	public static function output( array $atts ): string {
 		$args = self::resolve( $atts );
-		$key  = md5( (string) wp_json_encode( $args ) . get_locale() );
-
 		$html = Cache::remember(
-			$key,
+			Cache::key( $args ),
 			static function () use ( $args ): string {
 				/**
 				 * Filter the sections of the HTML sitemap before they are rendered.
@@ -106,10 +104,12 @@ final class Shortcode {
 		$post_types = self::names( $atts['post_types'] ?? '', 'html_sitemap_post_types', array_keys( PostTypes::post_types() ) );
 		$taxonomies = self::names( $atts['taxonomies'] ?? '', 'html_sitemap_taxonomies', array_keys( PostTypes::taxonomies() ) );
 
-		$max = (int) ( $atts['max'] ?? 0 );
-		if ( $max < 1 ) {
-			$max = (int) Options::get( 'html_sitemap_max_items' );
-		}
+		// The setting is the ceiling: attributes can only lower it, so a
+		// visitor-facing value cannot multiply cache entries or query size.
+		$setting = (int) Options::get( 'html_sitemap_max_items' );
+		$setting = $setting >= 1 ? min( $setting, self::MAX_ITEMS ) : 500;
+		$max     = (int) ( $atts['max'] ?? 0 );
+		$max     = $max >= 1 ? min( $max, $setting ) : $setting;
 
 		$order = (string) ( $atts['order'] ?? '' );
 		if ( ! in_array( $order, self::ORDERS, true ) ) {
@@ -119,7 +119,7 @@ final class Shortcode {
 		return [
 			'post_types' => $post_types,
 			'taxonomies' => $taxonomies,
-			'max'        => $max >= 1 ? min( $max, self::MAX_ITEMS ) : 500,
+			'max'        => $max,
 			'order'      => in_array( $order, self::ORDERS, true ) ? $order : 'title',
 		];
 	}

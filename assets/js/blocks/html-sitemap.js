@@ -14,100 +14,73 @@
 	const ServerSideRender                          = wp.serverSideRender;
 	const { __ }                                    = wp.i18n;
 
+	const ORDER_OPTIONS = [
+		{ label: __( 'Use the setting', 'lw-seo' ), value: '' },
+		{ label: __( 'Title', 'lw-seo' ), value: 'title' },
+		{ label: __( 'Date', 'lw-seo' ), value: 'date' },
+	];
+
+	function Settings( { attributes, setAttributes } ) {
+		const textField = ( name, label, help ) => el(
+			TextControl,
+			{
+				label: label,
+				help: help,
+				value: attributes[ name ],
+				onChange: ( value ) => setAttributes( { [ name ]: value } ),
+			}
+		);
+
+		return el(
+			PanelBody,
+			{ title: __( 'HTML sitemap', 'lw-seo' ), initialOpen: true },
+			textField(
+				'post_types',
+				__( 'Post types', 'lw-seo' ),
+				__( 'Comma-separated, e.g. page,post. Empty uses the setting.', 'lw-seo' )
+			),
+			textField(
+				'taxonomies',
+				__( 'Taxonomies', 'lw-seo' ),
+				__( 'Comma-separated, e.g. category. Empty uses the setting.', 'lw-seo' )
+			),
+			el(
+				TextControl,
+				{
+					label: __( 'Max items per section', 'lw-seo' ),
+					help: __( '0 uses the setting; it can only lower it.', 'lw-seo' ),
+					type: 'number',
+					min: 0,
+					value: attributes.max,
+					onChange: ( value ) => setAttributes( { max: parseInt( value, 10 ) || 0 } ),
+				}
+			),
+			el(
+				SelectControl,
+				{
+					label: __( 'Order', 'lw-seo' ),
+					value: attributes.order,
+					options: ORDER_OPTIONS,
+					onChange: ( value ) => setAttributes( { order: value } ),
+				}
+			)
+		);
+	}
+
 	registerBlockType(
 		'lw-seo/html-sitemap',
 		{
-			edit( { attributes, setAttributes } ) {
-				const blockProps = useBlockProps();
-
+			edit( props ) {
 				return el(
 					Fragment,
 					null,
-					el(
-						InspectorControls,
-						null,
-						el(
-							PanelBody,
-							{
-								title: __( 'HTML sitemap', 'lw-seo' ),
-								initialOpen: true,
-							},
-							el(
-								TextControl,
-								{
-									label: __( 'Post types', 'lw-seo' ),
-									help: __(
-										'Comma-separated, e.g. page,post. Empty uses the setting.',
-										'lw-seo'
-									),
-								value: attributes.post_types,
-								onChange: ( value ) =>
-								setAttributes( { post_types: value } ),
-								}
-							),
-							el(
-								TextControl,
-								{
-									label: __( 'Taxonomies', 'lw-seo' ),
-									help: __(
-										'Comma-separated, e.g. category. Empty uses the setting.',
-										'lw-seo'
-									),
-								value: attributes.taxonomies,
-								onChange: ( value ) =>
-								setAttributes( { taxonomies: value } ),
-								}
-							),
-							el(
-								TextControl,
-								{
-									label: __( 'Max items per section', 'lw-seo' ),
-									help: __( '0 uses the setting.', 'lw-seo' ),
-									type: 'number',
-									min: 0,
-									value: attributes.max,
-									onChange: ( value ) =>
-									setAttributes(
-										{
-											max: parseInt( value, 10 ) || 0,
-										}
-									),
-								}
-							),
-							el(
-								SelectControl,
-								{
-									label: __( 'Order', 'lw-seo' ),
-									value: attributes.order,
-									options: [
-									{
-										label: __( 'Use the setting', 'lw-seo' ),
-										value: '',
-									},
-									{
-										label: __( 'Title', 'lw-seo' ),
-										value: 'title',
-									},
-									{
-										label: __( 'Date', 'lw-seo' ),
-										value: 'date',
-									},
-									],
-									onChange: ( value ) =>
-									setAttributes( { order: value } ),
-								}
-							)
-						)
-					),
+					el( InspectorControls, null, el( Settings, props ) ),
 					el(
 						'div',
-						blockProps,
+						useBlockProps(),
 						el(
 							ServerSideRender,
-							{
-								block: 'lw-seo/html-sitemap',
-								attributes,
-							}
+							{ block: 'lw-seo/html-sitemap', attributes: props.attributes }
 						)
 					)
 				);

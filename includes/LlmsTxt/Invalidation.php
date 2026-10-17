@@ -24,7 +24,9 @@ final class Invalidation {
 		'deleted_post',
 		'trashed_post',
 		'untrashed_post',
+		'created_term',
 		'edited_term',
+		'delete_term',
 		'update_option_blogname',
 		'update_option_blogdescription',
 		'update_option_permalink_structure',
@@ -45,7 +47,16 @@ final class Invalidation {
 	 */
 	public static function flush(): void {
 		Cache::flush();
+		self::notify();
+	}
 
+	/**
+	 * Tell caches built from the site's content that it changed, without
+	 * touching the llms.txt cache (the changed content is not in llms.txt).
+	 *
+	 * @return void
+	 */
+	public static function notify(): void {
 		/**
 		 * Fires when the site's public content or the plugin settings changed
 		 * and cached documents built from them are stale.
@@ -92,8 +103,14 @@ final class Invalidation {
 	 * @return void
 	 */
 	public static function flush_for_post( int $post_id, mixed $post ): void {
-		if ( $post instanceof \WP_Post && self::should_flush_for_post( $post ) ) {
+		if ( ! $post instanceof \WP_Post ) {
+			return;
+		}
+
+		if ( self::should_flush_for_post( $post ) ) {
 			self::flush();
+		} elseif ( 'publish' === $post->post_status && is_post_type_viewable( (string) $post->post_type ) ) {
+			self::notify();
 		}
 	}
 
@@ -107,8 +124,14 @@ final class Invalidation {
 	 * @return void
 	 */
 	public static function flush_for_transition( string $new_status, string $old_status, mixed $post ): void {
-		if ( $post instanceof \WP_Post && self::should_flush_for_transition( $new_status, $old_status, $post ) ) {
+		if ( ! $post instanceof \WP_Post ) {
+			return;
+		}
+
+		if ( self::should_flush_for_transition( $new_status, $old_status, $post ) ) {
 			self::flush();
+		} elseif ( ( 'publish' === $new_status ) !== ( 'publish' === $old_status ) && is_post_type_viewable( (string) $post->post_type ) ) {
+			self::notify();
 		}
 	}
 
