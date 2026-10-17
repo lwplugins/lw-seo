@@ -91,6 +91,17 @@ final class PostProvider implements ProviderInterface {
 			update_post_thumbnail_cache( $query );
 		}
 
+		if ( $images ) {
+			/**
+			 * Fires once per sitemap page with its posts, before the image lists are built.
+			 *
+			 * @since 1.9.0
+			 *
+			 * @param \WP_Post[] $posts Posts of the page.
+			 */
+			do_action( 'lw_seo_sitemap_posts', $posts );
+		}
+
 		$excluded = ExcludedPosts::ids( $this->post_type );
 
 		$items = [];

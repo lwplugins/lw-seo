@@ -24,6 +24,8 @@ final class ImageCollectorTest extends MonkeyTestCase {
 		Functions\when( 'home_url' )->alias( static fn( $path = '' ) => 'https://example.com' . $path );
 		Functions\when( 'wp_parse_url' )->alias( static fn( $url, $component = -1 ) => parse_url( $url, $component ) );
 		Functions\when( 'get_the_post_thumbnail_url' )->justReturn( false );
+		Functions\when( 'has_blocks' )->justReturn( false );
+		Functions\when( 'strip_shortcodes' )->returnArg();
 	}
 
 	private function post( string $content ): \WP_Post {
@@ -75,5 +77,51 @@ final class ImageCollectorTest extends MonkeyTestCase {
 			->andReturn( [ 'https://example.com/extra.jpg' ] );
 
 		$this->assertSame( [ 'https://example.com/extra.jpg' ], ImageCollector::for_post( $post ) );
+	}
+
+	public function test_shortcode_enclosed_image_not_listed(): void {
+		Functions\when( 'strip_shortcodes' )->alias( static fn( $c ) => preg_replace( '#\[member\].*?\[/member\]#s', '', $c ) );
+
+		$urls = ImageCollector::for_post( $this->post( '[member]<img src="https://example.com/secret.jpg">[/member]<img src="https://example.com/open.jpg">' ) );
+
+		$this->assertSame( [ 'https://example.com/open.jpg' ], $urls );
+	}
+
+	public function test_image_in_non_allowlisted_block_not_listed(): void {
+		Functions\when( 'has_blocks' )->justReturn( true );
+		Functions\when( 'parse_blocks' )->justReturn(
+			[
+				[ 'blockName' => 'acme/members-only', 'innerHTML' => '<img src="https://example.com/secret.jpg">', 'innerBlocks' => [] ],
+				[ 'blockName' => 'core/group', 'innerHTML' => '', 'innerBlocks' => [
+					[ 'blockName' => 'core/image', 'innerHTML' => '<img src="https://example.com/nested.jpg">', 'innerBlocks' => [] ],
+				] ],
+			]
+		);
+
+		$this->assertSame( [], ImageCollector::for_post( $this->post( '<!-- wp:x -->' ) ) );
+	}
+
+	public function test_image_in_core_image_block_listed(): void {
+		Functions\when( 'has_blocks' )->justReturn( true );
+		Functions\when( 'parse_blocks' )->justReturn(
+			[
+				[ 'blockName' => 'core/image', 'innerHTML' => '<img src="https://example.com/a.jpg">', 'innerBlocks' => [] ],
+				[ 'blockName' => null, 'innerHTML' => '<img src="https://example.com/classic.jpg">', 'innerBlocks' => [] ],
+			]
+		);
+
+		$this->assertSame(
+			[ 'https://example.com/a.jpg', 'https://example.com/classic.jpg' ],
+			ImageCollector::for_post( $this->post( '<!-- wp:x -->' ) )
+		);
+	}
+
+	public function test_content_filter_false_lists_featured_only(): void {
+		Functions\when( 'get_the_post_thumbnail_url' )->justReturn( 'https://example.com/feat.jpg' );
+		Filters\expectApplied( 'lw_seo_sitemap_content_images' )->once()->andReturn( false );
+
+		$urls = ImageCollector::for_post( $this->post( '<img src="https://example.com/inline.jpg">' ) );
+
+		$this->assertSame( [ 'https://example.com/feat.jpg' ], $urls );
 	}
 }

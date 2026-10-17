@@ -50,6 +50,8 @@ final class PostProviderTest extends MonkeyTestCase {
 		Functions\when( 'home_url' )->alias( static fn( $path = '' ) => 'https://example.com' . $path );
 		Functions\when( 'wp_parse_url' )->alias( static fn( $url, $component = -1 ) => parse_url( $url, $component ) );
 		Functions\when( 'get_the_post_thumbnail_url' )->justReturn( false );
+		Functions\when( 'has_blocks' )->justReturn( false );
+		Functions\when( 'strip_shortcodes' )->returnArg();
 	}
 
 	protected function tearDown(): void {

@@ -21,6 +21,11 @@ final class ImageCollector {
 	private const MAX_IMAGES = 1000;
 
 	/**
+	 * Blocks whose saved HTML is public as written (no server-side gating).
+	 */
+	private const STATIC_BLOCKS = [ 'core/image', 'core/gallery', 'core/cover', 'core/media-text' ];
+
+	/**
 	 * Absolute image URLs of a post, on this site's host only.
 	 *
 	 * @param \WP_Post $post Post.
@@ -35,7 +40,7 @@ final class ImageCollector {
 			$urls[] = $featured;
 		}
 
-		foreach ( self::sources( (string) $post->post_content ) as $src ) {
+		foreach ( self::sources( self::scannable_html( $post ) ) as $src ) {
 			$urls[] = $src;
 		}
 
@@ -59,6 +64,66 @@ final class ImageCollector {
 		 * @param \WP_Post           $post Post.
 		 */
 		return array_values( array_filter( (array) apply_filters( 'lw_seo_sitemap_images', $clean, $post ), 'is_string' ) );
+	}
+
+	/**
+	 * The part of the post content that is safe to scan for images.
+	 *
+	 * Shortcodes (with their enclosed content) are dropped, and in block
+	 * content only static image blocks and classic chunks are read, so
+	 * access-restricted content does not leak into the public sitemap.
+	 *
+	 * @param \WP_Post $post Post.
+	 * @return string
+	 */
+	private static function scannable_html( \WP_Post $post ): string {
+		/**
+		 * Whether the images inside the post content may be listed.
+		 *
+		 * Restriction plugins can return false to list the featured image only.
+		 *
+		 * @since 1.9.0
+		 *
+		 * @param bool     $include Whether to scan the content (default true).
+		 * @param \WP_Post $post    Post.
+		 */
+		if ( ! apply_filters( 'lw_seo_sitemap_content_images', true, $post ) ) {
+			return '';
+		}
+
+		$content = (string) $post->post_content;
+		if ( function_exists( 'strip_shortcodes' ) ) {
+			$content = strip_shortcodes( $content );
+		}
+
+		if ( function_exists( 'has_blocks' ) && has_blocks( $content ) ) {
+			return self::block_html( parse_blocks( $content ) );
+		}
+
+		return $content;
+	}
+
+	/**
+	 * Saved HTML of the allowlisted blocks, recursively.
+	 *
+	 * @param array<int, array<string, mixed>> $blocks Parsed blocks.
+	 * @return string
+	 */
+	private static function block_html( array $blocks ): string {
+		$html = '';
+
+		foreach ( $blocks as $block ) {
+			$name = $block['blockName'] ?? null;
+
+			if ( null !== $name && ! in_array( $name, self::STATIC_BLOCKS, true ) ) {
+				continue;
+			}
+
+			$html .= (string) ( $block['innerHTML'] ?? '' );
+			$html .= self::block_html( (array) ( $block['innerBlocks'] ?? [] ) );
+		}
+
+		return $html;
 	}
 
 	/**

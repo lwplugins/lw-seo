@@ -19,7 +19,7 @@ use LightweightPlugins\SEO\Tests\Unit\MonkeyTestCase;
 final class SitemapImagesTest extends MonkeyTestCase {
 
 	public function test_appends_gallery_for_products(): void {
-		Functions\when( 'wc_get_product' )->justReturn( new \WC_Product( 7, 0, 0.0, [ 'gallery_image_ids' => [ 11, 12 ] ] ) );
+		Functions\when( 'get_post_meta' )->justReturn( '11,12' );
 		Functions\when( 'wp_get_attachment_image_url' )->alias( static fn( $id ) => 'https://example.com/g' . $id . '.jpg' );
 
 		$post = new \WP_Post( [ 'ID' => 7, 'post_type' => 'product' ] );
@@ -29,10 +29,25 @@ final class SitemapImagesTest extends MonkeyTestCase {
 	}
 
 	public function test_ignores_non_products(): void {
-		Functions\expect( 'wc_get_product' )->never();
+		Functions\expect( 'get_post_meta' )->never();
 
 		$post = new \WP_Post( [ 'ID' => 8, 'post_type' => 'post' ] );
 
 		$this->assertSame( [ 'https://example.com/a.jpg' ], ( new SitemapImages() )->append_gallery( [ 'https://example.com/a.jpg' ], $post ) );
+	}
+
+	public function test_primes_all_gallery_attachments_once_per_page(): void {
+		Functions\when( 'get_post_meta' )->alias( static fn( $id ) => 1 === $id ? '11,12' : '12,13' );
+		Functions\expect( '_prime_post_caches' )->once()->with( [ 11, 12, 13 ], false, true );
+
+		$posts = [
+			new \WP_Post( [ 'ID' => 1, 'post_type' => 'product' ] ),
+			new \WP_Post( [ 'ID' => 2, 'post_type' => 'product' ] ),
+			new \WP_Post( [ 'ID' => 3, 'post_type' => 'post' ] ),
+		];
+
+		( new SitemapImages() )->prime( $posts );
+
+		$this->addToAssertionCount( 1 ); // The once() expectation is verified on teardown.
 	}
 }
