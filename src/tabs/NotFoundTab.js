@@ -71,7 +71,7 @@ export default function NotFoundTab( { store } ) {
 						<TextRow
 							title={ __( 'Maximum entries', 'lw-seo' ) }
 							help={ __(
-								'When the log is full, the oldest one-off entries make room. Recurring entries are kept.',
+								'When the log is full, the oldest one-off entries make room. Recurring entries stay until the daily cleanup.',
 								'lw-seo'
 							) }
 							store={ store }

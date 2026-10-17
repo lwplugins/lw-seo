@@ -154,7 +154,7 @@ export default function ContentTab( { store } ) {
 			<Section
 				title={ __( 'Images', 'lw-seo' ) }
 				description={ __(
-					'Images without alt text, or with an empty alt, get one when the page is displayed. Your media library is not modified.',
+					'Images without alt text, or with an empty alt, get one when the page is displayed. Your media library is not modified. An empty alt is how editors mark decorative images: add role="presentation" or aria-hidden="true" to an image to keep its alt empty.',
 					'lw-seo'
 				) }
 			>

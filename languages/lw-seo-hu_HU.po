@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LW SEO 1.6.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/lw-seo\n"
-"POT-Creation-Date: 2026-10-17T20:56:57+00:00\n"
+"POT-Creation-Date: 2026-10-17T21:18:04+00:00\n"
 "PO-Revision-Date: 2026-09-24 18:50+0000\n"
 "Last-Translator: Claude AI <ai@anthropic.com>\n"
 "Language-Team: LW Plugins <info@lwplugins.com>\n"
@@ -533,8 +533,12 @@ msgid "You are not allowed to activate this plugin."
 msgstr "Nincs jogod bekapcsolni ezt a bővítményt."
 
 #: includes/Admin/Hub/Page.php:135
-msgid "The LW Plugins page files are missing. Re-install the plugin from a release ZIP."
-msgstr "Hiányoznak az LW Plugins oldal fájljai. Telepítsd újra a bővítményt egy kiadási ZIP-ből."
+msgid ""
+"The LW Plugins page files are missing. Re-install the plugin from a release "
+"ZIP."
+msgstr ""
+"Hiányoznak az LW Plugins oldal fájljai. Telepítsd újra a bővítményt egy "
+"kiadási ZIP-ből."
 
 #: includes/Admin/Hub/RegistryFallback.php:32
 msgid "GDPR-compliant cookie consent banner."
@@ -553,20 +557,32 @@ msgid "Rate limiting, bot blocking, IP bans and security headers."
 msgstr "Kéréskorlátozás, botszűrés, IP-tiltás és biztonsági fejlécek."
 
 #: includes/Admin/Hub/RegistryFallback.php:68
-msgid "Lightweight image optimization — auto-convert uploads to WebP via HelloImg."
-msgstr "Könnyű képoptimalizálás: a feltöltések automatikus WebP-konverziója a HelloImg-gel."
+msgid ""
+"Lightweight image optimization — auto-convert uploads to WebP via HelloImg."
+msgstr ""
+"Könnyű képoptimalizálás: a feltöltések automatikus WebP-konverziója a "
+"HelloImg-gel."
 
 #: includes/Admin/Hub/RegistryFallback.php:77
-msgid "Headless LMS backend: courses, lessons, access, progress and quizzes over a REST API."
-msgstr "Headless LMS-háttér: kurzusok, leckék, hozzáférés, haladás és kvízek REST API-n."
+msgid ""
+"Headless LMS backend: courses, lessons, access, progress and quizzes over a "
+"REST API."
+msgstr ""
+"Headless LMS-háttér: kurzusok, leckék, hozzáférés, haladás és kvízek REST "
+"API-n."
 
 #: includes/Admin/Hub/RegistryFallback.php:86
-msgid "Tracking pixels: Meta, GA4, Ads, GTM, TikTok, Pinterest, Bing, Reddit, Snapchat, X."
-msgstr "Követőpixelek: Meta, GA4, Ads, GTM, TikTok, Pinterest, Bing, Reddit, Snapchat, X."
+msgid ""
+"Tracking pixels: Meta, GA4, Ads, GTM, TikTok, Pinterest, Bing, Reddit, "
+"Snapchat, X."
+msgstr ""
+"Követőpixelek: Meta, GA4, Ads, GTM, TikTok, Pinterest, Bing, Reddit, "
+"Snapchat, X."
 
 #: includes/Admin/Hub/RegistryFallback.php:95
 msgid "Malware scanner for files, the database and vulnerable software."
-msgstr "Kártevőkereső a fájlokhoz, az adatbázishoz és a sérülékeny szoftverekhez."
+msgstr ""
+"Kártevőkereső a fájlokhoz, az adatbázishoz és a sérülékeny szoftverekhez."
 
 #: includes/Admin/Hub/RegistryFallback.php:104
 msgid "Essential SEO features without the bloat."
@@ -598,13 +614,21 @@ msgid "# Title..."
 msgstr "# Cím..."
 
 #: includes/Admin/MarkdownOverrideField.php:65
-msgid "If filled, this markdown is served at the /md endpoint instead of the auto-generated content. Ideal for Elementor, Divi, or other page builder pages."
-msgstr "Ha ki van töltve, ez a markdown a /md endpointon lesz kiszolgálva az automatikusan generált tartalom helyett. Ideális Elementor, Divi vagy más page builder oldalakhoz."
+msgid ""
+"If filled, this markdown is served at the /md endpoint instead of the auto-"
+"generated content. Ideal for Elementor, Divi, or other page builder pages."
+msgstr ""
+"Ha ki van töltve, ez a markdown a /md endpointon lesz kiszolgálva az "
+"automatikusan generált tartalom helyett. Ideális Elementor, Divi vagy más "
+"page builder oldalakhoz."
 
 #: includes/Admin/MarkdownOverrideField.php:88 build/editor.js:2
 #: build/term.js:2
-msgid "Only users allowed to post unfiltered HTML can edit the Markdown override."
-msgstr "Csak azok a felhasználók szerkeszthetik a Markdown felülírást, akik posztolhatnak szűrés nélküli HTML-t."
+msgid ""
+"Only users allowed to post unfiltered HTML can edit the Markdown override."
+msgstr ""
+"Csak azok a felhasználók szerkeszthetik a Markdown felülírást, akik "
+"posztolhatnak szűrés nélküli HTML-t."
 
 #: includes/Admin/SettingsPage.php:67
 msgid "SEO Settings"
@@ -616,8 +640,13 @@ msgid "SEO"
 msgstr "SEO"
 
 #: includes/Admin/SettingsPage.php:139
-msgid "The settings screen files are missing. Re-install the plugin from a release ZIP, or run \"npm install && npm run build\" in the plugin directory."
-msgstr "A beállítóoldal fájljai hiányoznak. Telepítsd újra a bővítményt egy kiadási ZIP-ből, vagy futtasd az \"npm install && npm run build\" parancsot a bővítmény mappájában."
+msgid ""
+"The settings screen files are missing. Re-install the plugin from a release "
+"ZIP, or run \"npm install && npm run build\" in the plugin directory."
+msgstr ""
+"A beállítóoldal fájljai hiányoznak. Telepítsd újra a bővítményt egy kiadási "
+"ZIP-ből, vagy futtasd az \"npm install && npm run build\" parancsot a "
+"bővítmény mappájában."
 
 #: includes/Breadcrumbs.php:45 includes/Breadcrumbs.php:67
 #: includes/Breadcrumbs.php:400 includes/Breadcrumbs.php:420
@@ -675,8 +704,11 @@ msgid "Get SEO Meta"
 msgstr "SEO Meta lekérése"
 
 #: includes/Integrations/SiteManager/SeoAbilities.php:52
-msgid "Get SEO metadata for a post or term (title, description, social, signals)."
-msgstr "SEO metaadatok lekérése egy bejegyzéshez vagy kifejezéshez (cím, leírás, social, jelzések)."
+msgid ""
+"Get SEO metadata for a post or term (title, description, social, signals)."
+msgstr ""
+"SEO metaadatok lekérése egy bejegyzéshez vagy kifejezéshez (cím, leírás, "
+"social, jelzések)."
 
 #: includes/Integrations/SiteManager/SeoAbilities.php:62
 #: includes/Integrations/SiteManager/SeoAbilities.php:95
@@ -697,8 +729,16 @@ msgid "Set SEO metadata for a post or term."
 msgstr "SEO metaadatok beállítása egy bejegyzéshez vagy kifejezéshez."
 
 #: includes/Integrations/SiteManager/SeoAbilities.php:103
-msgid "SEO fields: title, description, noindex, og_title, og_description, og_image, ai_train, ai_input, search, markdown_content. markdown_content requires the unfiltered_html capability; without it the field is left unchanged and listed in \"skipped\"."
-msgstr "SEO mezők: title, description, noindex, og_title, og_description, og_image, ai_train, ai_input, search, markdown_content. A markdown_content mezőhöz unfiltered_html jogosultság kell; enélkül a mező változatlan marad, és a \"skipped\" listában lesz feltüntetve."
+msgid ""
+"SEO fields: title, description, noindex, og_title, og_description, og_image, "
+"ai_train, ai_input, search, markdown_content. markdown_content requires the "
+"unfiltered_html capability; without it the field is left unchanged and "
+"listed in \"skipped\"."
+msgstr ""
+"SEO mezők: title, description, noindex, og_title, og_description, og_image, "
+"ai_train, ai_input, search, markdown_content. A markdown_content mezőhöz "
+"unfiltered_html jogosultság kell; enélkül a mező változatlan marad, és a "
+"\"skipped\" listában lesz feltüntetve."
 
 #: includes/Integrations/SiteManager/SeoAbilities.php:137
 msgid "Get Content Signals"
@@ -706,7 +746,8 @@ msgstr "Tartalmi jelzések lekérése"
 
 #: includes/Integrations/SiteManager/SeoAbilities.php:138
 msgid "Get resolved AI content signals for a post or term."
-msgstr "Feloldott AI tartalomjelzések lekérése egy bejegyzéshez vagy kifejezéshez."
+msgstr ""
+"Feloldott AI tartalomjelzések lekérése egy bejegyzéshez vagy kifejezéshez."
 
 #: includes/Integrations/SiteManager/SeoAbilities.php:172
 msgid "Get Markdown"
@@ -714,7 +755,8 @@ msgstr "Markdown lekérése"
 
 #: includes/Integrations/SiteManager/SeoAbilities.php:173
 msgid "Get the markdown representation of a post, product, or term."
-msgstr "Egy bejegyzés, termék vagy kifejezés markdown reprezentációjának lekérése."
+msgstr ""
+"Egy bejegyzés, termék vagy kifejezés markdown reprezentációjának lekérése."
 
 #: includes/Integrations/SiteManager/SeoAbilities.php:208
 msgid "Get SEO Options"
@@ -911,79 +953,143 @@ msgstr "AI keresés"
 
 #: includes/MetaBox.php:332 build/editor.js:2
 msgid "Override the global Content Signals settings for this content."
-msgstr "Felülírja a globális Tartalmi jelzések beállításait ennél a tartalomnál."
+msgstr ""
+"Felülírja a globális Tartalmi jelzések beállításait ennél a tartalomnál."
 
 #. translators: %d: number of posts.
 #: includes/Migration/AIOSEO/WarningCollector.php:62
 #, php-format
-msgid "%d post(s) use All in One SEO robots settings LW SEO has no per-post option for (noarchive, nosnippet, noimageindex, noodp, notranslate). Only noindex and nofollow are imported."
-msgstr "%d bejegyzés olyan All in One SEO robots beállítást használ, amihez az LW SEO-ban nincs bejegyzésenkénti opció (noarchive, nosnippet, noimageindex, noodp, notranslate). Csak a noindex és a nofollow kerül át."
+msgid ""
+"%d post(s) use All in One SEO robots settings LW SEO has no per-post option "
+"for (noarchive, nosnippet, noimageindex, noodp, notranslate). Only noindex "
+"and nofollow are imported."
+msgstr ""
+"%d bejegyzés olyan All in One SEO robots beállítást használ, amihez az LW "
+"SEO-ban nincs bejegyzésenkénti opció (noarchive, nosnippet, noimageindex, "
+"noodp, notranslate). Csak a noindex és a nofollow kerül át."
 
 #. translators: %d: number of posts.
 #: includes/Migration/AIOSEO/WarningCollector.php:68
 #, php-format
-msgid "%d post(s) have All in One SEO focus keyphrases. LW SEO has no content analysis, so they are not imported."
-msgstr "%d bejegyzésnél van All in One SEO fókusz kulcskifejezés. Az LW SEO nem végez tartalomelemzést, ezért ezek nem kerülnek át."
+msgid ""
+"%d post(s) have All in One SEO focus keyphrases. LW SEO has no content "
+"analysis, so they are not imported."
+msgstr ""
+"%d bejegyzésnél van All in One SEO fókusz kulcskifejezés. Az LW SEO nem "
+"végez tartalomelemzést, ezért ezek nem kerülnek át."
 
 #. translators: %d: number of posts.
 #: includes/Migration/AIOSEO/WarningCollector.php:74
 #, php-format
-msgid "%d post(s) have schema added in All in One SEO. LW SEO generates schema automatically and does not import per-post schema."
-msgstr "%d bejegyzéshez adtál hozzá schemát az All in One SEO-ban. Az LW SEO automatikusan állítja elő a schemát, a bejegyzésenkénti schemát nem veszi át."
+msgid ""
+"%d post(s) have schema added in All in One SEO. LW SEO generates schema "
+"automatically and does not import per-post schema."
+msgstr ""
+"%d bejegyzéshez adtál hozzá schemát az All in One SEO-ban. Az LW SEO "
+"automatikusan állítja elő a schemát, a bejegyzésenkénti schemát nem veszi át."
 
 #. translators: %s: comma-separated table names.
 #: includes/Migration/AIOSEO/WarningCollector.php:119
 #, php-format
-msgid "All in One SEO Pro tables were found (%s). Term SEO and redirects from the Pro version are not imported; re-create them in LW SEO (term fields, Redirects tab)."
-msgstr "All in One SEO Pro táblákat találtunk (%s). A Pro verzió kifejezés-SEO adatai és átirányításai nem kerülnek át; hozd létre őket újra az LW SEO-ban (kifejezés mezők, Átirányítások fül)."
+msgid ""
+"All in One SEO Pro tables were found (%s). Term SEO and redirects from the "
+"Pro version are not imported; re-create them in LW SEO (term fields, "
+"Redirects tab)."
+msgstr ""
+"All in One SEO Pro táblákat találtunk (%s). A Pro verzió kifejezés-SEO "
+"adatai és átirányításai nem kerülnek át; hozd létre őket újra az LW SEO-ban "
+"(kifejezés mezők, Átirányítások fül)."
 
 #. translators: %s: comma-separated list of RankMath WooCommerce permalink features without an LW SEO equivalent enabled.
 #: includes/Migration/RankMath/WarningCollector.php:80
 #, php-format
-msgid "RankMath has active WooCommerce permalink rewrites that LW SEO is not (yet) mirroring (%s). The migrator will copy these flags into LW SEO; running the migration applies the equivalent slug-only rules. Categories whose root slug collides with a page/reserved slug are auto-skipped to avoid 404s."
-msgstr "A RankMath-nak aktív WooCommerce permalink átírásai vannak, amelyeket az LW SEO (még) nem tükröz (%s). A migrátor átmásolja ezeket a jelöléseket az LW SEO-ba; a migráció futtatása alkalmazza az egyenértékű, csak slug alapú szabályokat. Azok a kategóriák, amelyek gyökér slugja oldal/foglalt sluggall ütközik, automatikusan kihagyásra kerülnek a 404-ek elkerülésére."
+msgid ""
+"RankMath has active WooCommerce permalink rewrites that LW SEO is not (yet) "
+"mirroring (%s). The migrator will copy these flags into LW SEO; running the "
+"migration applies the equivalent slug-only rules. Categories whose root slug "
+"collides with a page/reserved slug are auto-skipped to avoid 404s."
+msgstr ""
+"A RankMath-nak aktív WooCommerce permalink átírásai vannak, amelyeket az LW "
+"SEO (még) nem tükröz (%s). A migrátor átmásolja ezeket a jelöléseket az LW "
+"SEO-ba; a migráció futtatása alkalmazza az egyenértékű, csak slug alapú "
+"szabályokat. Azok a kategóriák, amelyek gyökér slugja oldal/foglalt sluggall "
+"ütközik, automatikusan kihagyásra kerülnek a 404-ek elkerülésére."
 
 #. translators: %d: number of posts with custom RankMath schema markup.
 #: includes/Migration/RankMath/WarningCollector.php:109
 #, php-format
-msgid "%d post(s) have custom RankMath Schema markup (rank_math_schema_*). LW SEO generates schema automatically and does not import per-post schema overrides — you will need to re-create any custom schema in the LW SEO Schema module."
-msgstr "%d bejegyzésnek egyedi RankMath Schema markupja van (rank_math_schema_*). Az LW SEO automatikusan generál schema-t, és nem importál bejegyzésenkénti schema felülbírálásokat — az egyedi schema-kat újra létre kell hoznod az LW SEO Schema modulban."
+msgid ""
+"%d post(s) have custom RankMath Schema markup (rank_math_schema_*). LW SEO "
+"generates schema automatically and does not import per-post schema overrides "
+"— you will need to re-create any custom schema in the LW SEO Schema module."
+msgstr ""
+"%d bejegyzésnek egyedi RankMath Schema markupja van (rank_math_schema_*). Az "
+"LW SEO automatikusan generál schema-t, és nem importál bejegyzésenkénti "
+"schema felülbírálásokat — az egyedi schema-kat újra létre kell hoznod az LW "
+"SEO Schema modulban."
 
 #. translators: %s: comma-separated list of RankMath meta keys with no LW SEO equivalent.
 #: includes/Migration/RankMath/WarningCollector.php:142
 #, php-format
-msgid "The following RankMath meta keys have no LW SEO equivalent and will not be migrated: %s"
-msgstr "A következő RankMath meta kulcsoknak nincs LW SEO megfelelője, és nem lesznek migrálva: %s"
+msgid ""
+"The following RankMath meta keys have no LW SEO equivalent and will not be "
+"migrated: %s"
+msgstr ""
+"A következő RankMath meta kulcsoknak nincs LW SEO megfelelője, és nem "
+"lesznek migrálva: %s"
 
 #. translators: %s: comma-separated list of SEOPress meta keys with counts.
 #: includes/Migration/SEOPress/WarningCollector.php:72
 #, php-format
-msgid "The following SEOPress meta keys have no LW SEO equivalent and will not be migrated: %s"
-msgstr "Ezeknek a SEOPress meta kulcsoknak nincs LW SEO megfelelője, ezért nem kerülnek át: %s"
+msgid ""
+"The following SEOPress meta keys have no LW SEO equivalent and will not be "
+"migrated: %s"
+msgstr ""
+"Ezeknek a SEOPress meta kulcsoknak nincs LW SEO megfelelője, ezért nem "
+"kerülnek át: %s"
 
 #. translators: %d: number of term settings.
 #: includes/Migration/SEOPress/WarningCollector.php:94
 #, php-format
-msgid "%d SEOPress term setting(s) (canonical URL or nofollow) have no LW SEO term field and will not be migrated."
-msgstr "%d SEOPress kifejezés-beállításnak (kanonikus URL vagy nofollow) nincs LW SEO kifejezés mezője, ezért nem kerül át."
+msgid ""
+"%d SEOPress term setting(s) (canonical URL or nofollow) have no LW SEO term "
+"field and will not be migrated."
+msgstr ""
+"%d SEOPress kifejezés-beállításnak (kanonikus URL vagy nofollow) nincs LW "
+"SEO kifejezés mezője, ezért nem kerül át."
 
 #. translators: 1: source SEO plugin name, 2: comma-separated list of template variables with occurrence counts.
 #: includes/Migration/Support/VariableLog.php:66
 #, php-format
-msgid "These %1$s template variables have no LW SEO equivalent and were left out of the imported titles and descriptions: %2$s"
-msgstr "Ezeknek a(z) %1$s sablonváltozóknak nincs LW SEO megfelelője, ezért kimaradtak az átvett címekből és leírásokból: %2$s"
+msgid ""
+"These %1$s template variables have no LW SEO equivalent and were left out of "
+"the imported titles and descriptions: %2$s"
+msgstr ""
+"Ezeknek a(z) %1$s sablonváltozóknak nincs LW SEO megfelelője, ezért "
+"kimaradtak az átvett címekből és leírásokból: %2$s"
 
 #. translators: %d: number of posts with custom Yoast schema settings.
 #: includes/Migration/Yoast/WarningCollector.php:58
 #, php-format
-msgid "%d post(s) have custom Yoast schema settings (page/article type). LW SEO generates schema automatically and does not import per-post schema overrides — you will need to re-create any custom schema in the LW SEO Schema module."
-msgstr "%d bejegyzésnek egyedi Yoast schema beállításai vannak (oldal/cikk típus). Az LW SEO automatikusan generál schema-t, és nem importál bejegyzésenkénti schema felülbírálásokat — az egyedi schema-kat újra létre kell hoznod az LW SEO Schema modulban."
+msgid ""
+"%d post(s) have custom Yoast schema settings (page/article type). LW SEO "
+"generates schema automatically and does not import per-post schema overrides "
+"— you will need to re-create any custom schema in the LW SEO Schema module."
+msgstr ""
+"%d bejegyzésnek egyedi Yoast schema beállításai vannak (oldal/cikk típus). "
+"Az LW SEO automatikusan generál schema-t, és nem importál bejegyzésenkénti "
+"schema felülbírálásokat — az egyedi schema-kat újra létre kell hoznod az LW "
+"SEO Schema modulban."
 
 #. translators: %s: comma-separated list of Yoast meta keys with no LW SEO equivalent.
 #: includes/Migration/Yoast/WarningCollector.php:90
 #, php-format
-msgid "The following Yoast meta keys have no LW SEO equivalent and will not be migrated: %s"
-msgstr "A következő Yoast meta kulcsoknak nincs LW SEO megfelelője, és nem lesznek migrálva: %s"
+msgid ""
+"The following Yoast meta keys have no LW SEO equivalent and will not be "
+"migrated: %s"
+msgstr ""
+"A következő Yoast meta kulcsoknak nincs LW SEO megfelelője, és nem lesznek "
+"migrálva: %s"
 
 #: includes/Redirects/DuplicateSource.php:63
 msgid "A redirect for this source already exists."
@@ -1131,7 +1237,7 @@ msgstr "Adj meg legalább egy URL-t."
 msgid "Submit at most %d URLs at a time."
 msgstr "Egyszerre legfeljebb %d URL küldhető be."
 
-#: includes/Rest/Admin/IndexNowController.php:132
+#: includes/Rest/Admin/IndexNowController.php:149
 msgid "Turn on IndexNow first."
 msgstr "Előbb kapcsold be az IndexNow-t."
 
@@ -1151,7 +1257,7 @@ msgstr "Nincs CSV adat megadva."
 msgid "Redirect not found."
 msgstr "Átirányítás nem található."
 
-#: includes/Rest/Admin/SettingsMeta.php:58
+#: includes/Rest/Admin/SettingsMeta.php:57
 msgid "Other"
 msgstr "Egyéb"
 
@@ -1176,8 +1282,13 @@ msgid "Author ID"
 msgstr "Szerző ID"
 
 #: lw-seo.php:43
-msgid "Autoloader not found. Please run \"composer install\" in the plugin directory, or re-install the plugin from a release ZIP."
-msgstr "Az autoloader nem található. Kérlek, futtasd a \"composer install\" parancsot a bővítmény könyvtárában, vagy telepítsd újra a bővítményt egy kiadási ZIP fájlból."
+msgid ""
+"Autoloader not found. Please run \"composer install\" in the plugin "
+"directory, or re-install the plugin from a release ZIP."
+msgstr ""
+"Az autoloader nem található. Kérlek, futtasd a \"composer install\" "
+"parancsot a bővítmény könyvtárában, vagy telepítsd újra a bővítményt egy "
+"kiadási ZIP fájlból."
 
 #: assets/hub/index.js:1
 msgid "All LW plugins on GitHub"
@@ -1375,7 +1486,8 @@ msgstr "Kérdés címsor tag"
 
 #: assets/js/blocks/faq.js:189
 msgid "This block automatically generates FAQPage schema for better SEO."
-msgstr "Ez a blokk automatikusan létrehozza a FAQPage schema-t a jobb SEO érdekében."
+msgstr ""
+"Ez a blokk automatikusan létrehozza a FAQPage schema-t a jobb SEO érdekében."
 
 #: assets/js/blocks/faq.js:200
 msgid "FAQ Block"
@@ -1391,7 +1503,8 @@ msgstr "kérdések"
 
 #: assets/js/blocks/faq.js:210
 msgid "No questions yet. Click the button below to add your first FAQ."
-msgstr "Még nincsenek kérdések. Kattints az alábbi gombra az első FAQ hozzáadásához."
+msgstr ""
+"Még nincsenek kérdések. Kattints az alábbi gombra az első FAQ hozzáadásához."
 
 #: assets/js/blocks/faq.js:238
 msgid "Add Question"
@@ -1431,7 +1544,7 @@ msgstr "Vesszővel elválasztva, pl. category. Üresen a beállítás érvényes
 
 #: assets/js/blocks/html-sitemap.js:50 build/index.js:9
 msgid "Max items per section"
-msgstr "Elemek legfeljebb szakaszonként"
+msgstr "Elemek maximális száma szakaszonként"
 
 #: assets/js/blocks/html-sitemap.js:51
 msgid "0 uses the setting; it can only lower it."
@@ -1464,11 +1577,16 @@ msgstr "Csere"
 
 #: build/editor.js:2
 msgid "Priority: Social Image, then Featured Image, then the default image."
-msgstr "Sorrend: közösségi kép, majd kiemelt kép, végül az alapértelmezett kép."
+msgstr ""
+"Sorrend: közösségi kép, majd kiemelt kép, végül az alapértelmezett kép."
 
 #: build/editor.js:2
-msgid "If filled, this markdown is served at the /md endpoint instead of the auto-generated content. Ideal for page builder pages."
-msgstr "Ha ki van töltve, a /md végpont ezt a markdownt adja vissza az automatikusan generált tartalom helyett. Oldalépítővel készült oldalakhoz ideális."
+msgid ""
+"If filled, this markdown is served at the /md endpoint instead of the auto-"
+"generated content. Ideal for page builder pages."
+msgstr ""
+"Ha ki van töltve, a /md végpont ezt a markdownt adja vissza az automatikusan "
+"generált tartalom helyett. Oldalépítővel készült oldalakhoz ideális."
 
 #: build/index.js:1
 msgid "Settings saved."
@@ -1732,8 +1850,12 @@ msgid "Migrated options"
 msgstr "Átvett beállítások"
 
 #: build/index.js:1
-msgid "Are you sure you want to run the migration? Existing LW SEO data will not be overwritten."
-msgstr "Biztos, hogy lefuttatod a migrációt? A meglévő LW SEO adatok nem lesznek felülírva."
+msgid ""
+"Are you sure you want to run the migration? Existing LW SEO data will not be "
+"overwritten."
+msgstr ""
+"Biztos, hogy lefuttatod a migrációt? A meglévő LW SEO adatok nem lesznek "
+"felülírva."
 
 #: build/index.js:1
 msgid "Looking for SEO plugin data"
@@ -1776,7 +1898,8 @@ msgid "Source is a regular expression"
 msgstr "A forrás reguláris kifejezés"
 
 #: build/index.js:1
-msgid "Advanced: use patterns like ^/category/(.*)$ with $1 in the destination."
+msgid ""
+"Advanced: use patterns like ^/category/(.*)$ with $1 in the destination."
 msgstr "Haladó: használj ilyen mintát: ^/category/(.*)$, a célban pedig $1-et."
 
 #: build/index.js:1 build/index.js:3
@@ -1885,7 +2008,7 @@ msgstr "Találatok"
 
 #: build/index.js:3
 msgid "Last seen"
-msgstr "Utoljára"
+msgstr "Utoljára látva"
 
 #: build/index.js:3
 msgid "Referrer"
@@ -1928,12 +2051,16 @@ msgid "Logged 404 URLs"
 msgstr "Naplózott 404-es URL-ek"
 
 #: build/index.js:3
-msgid "Missing URLs visitors and bots requested. Create a redirect to send them somewhere useful."
-msgstr "A látogatók és botok által kért, nem létező URL-ek. Hozz létre átirányítást, hogy hasznos helyre kerüljenek."
+msgid ""
+"Missing URLs visitors and bots requested. Create a redirect to send them "
+"somewhere useful."
+msgstr ""
+"A látogatók és botok által kért, nem létező URL-ek. Hozz létre átirányítást, "
+"hogy hasznos helyre kerüljenek."
 
 #: build/index.js:3
 msgid "Retry"
-msgstr "Újra"
+msgstr "Újrapróbálás"
 
 #: build/index.js:3
 msgid "Search URL"
@@ -1969,7 +2096,9 @@ msgstr "CSV letöltése"
 
 #: build/index.js:3
 msgid "Import redirects from a CSV file. Format: source,destination,type,regex"
-msgstr "Átirányítások importálása CSV fájlból. Formátum: source,destination,type,regex"
+msgstr ""
+"Átirányítások importálása CSV fájlból. Formátum: "
+"source,destination,type,regex"
 
 #. translators: 1: imported redirects, 2: skipped rows.
 #: build/index.js:4
@@ -1982,11 +2111,11 @@ msgstr "CSV importálása"
 
 #: build/index.js:4
 msgid "Matched"
-msgstr "Találat"
+msgstr "Egyezik"
 
 #: build/index.js:4
 msgid "No match"
-msgstr "Nincs találat"
+msgstr "Nincs egyezés"
 
 #: build/index.js:4
 msgid "Invalid regex"
@@ -1997,8 +2126,11 @@ msgid "Test a URL"
 msgstr "URL tesztelése"
 
 #: build/index.js:4
-msgid "Check which redirect a path or URL would hit. The query string is ignored."
-msgstr "Nézd meg, melyik átirányítás érvényesülne egy útvonalnál vagy URL-nél. A lekérdezési karakterlánc figyelmen kívül marad."
+msgid ""
+"Check which redirect a path or URL would hit. The query string is ignored."
+msgstr ""
+"Nézd meg, melyik átirányítás érvényesülne egy útvonalnál vagy URL-nél. A "
+"lekérdezési karakterlánc figyelmen kívül marad."
 
 #: build/index.js:4
 msgid "URL or path"
@@ -2035,8 +2167,12 @@ msgid "IndexNow"
 msgstr "IndexNow"
 
 #: build/index.js:6
-msgid "Tell search engines about new, changed and deleted content right away instead of waiting for the next crawl."
-msgstr "Azonnal értesítsd a keresőmotorokat az új, módosított és törölt tartalmakról a következő bejárásra várás helyett."
+msgid ""
+"Tell search engines about new, changed and deleted content right away "
+"instead of waiting for the next crawl."
+msgstr ""
+"Azonnal értesítsd a keresőmotorokat az új, módosított és törölt tartalmakról "
+"a következő bejárásra várás helyett."
 
 #: build/index.js:6 build/index.js:8 build/index.js:9
 msgid "Enabled"
@@ -2047,8 +2183,14 @@ msgid "Off"
 msgstr "Ki"
 
 #: build/index.js:6
-msgid "When on, URLs of public content are sent to api.indexnow.org when they are published, updated or deleted. Bing, Yandex, Seznam, Naver and others use it; Google does not."
-msgstr "Bekapcsolva a nyilvános tartalmak URL-jei az api.indexnow.org címre kerülnek, amikor közzéteszed, frissíted vagy törlöd őket. A Bing, a Yandex, a Seznam, a Naver és mások használják; a Google nem."
+msgid ""
+"When on, URLs of public content are sent to api.indexnow.org when they are "
+"published, updated or deleted. Bing, Yandex, Seznam, Naver and others use "
+"it; Google does not."
+msgstr ""
+"Bekapcsolva a nyilvános tartalmak URL-jei az api.indexnow.org címre "
+"kerülnek, amikor közzéteszed, frissíted vagy törlöd őket. A Bing, a Yandex, "
+"a Seznam, a Naver és mások használják; a Google nem."
 
 #: build/index.js:6
 msgid "Key file"
@@ -2056,7 +2198,8 @@ msgstr "Kulcsfájl"
 
 #: build/index.js:6
 msgid "Search engines fetch this file to confirm the site is yours."
-msgstr "A keresőmotorok ezt a fájlt kérik le annak igazolására, hogy az oldal a tiéd."
+msgstr ""
+"A keresőmotorok ezt a fájlt kérik le annak igazolására, hogy az oldal a tiéd."
 
 #: build/index.js:6
 msgid "New key generated."
@@ -2072,8 +2215,11 @@ msgstr "URL-ek beküldése most"
 
 #. translators: %d: maximum number of URLs.
 #: build/index.js:7
-msgid "One address per line, from this site only, up to %d. Save your changes first."
-msgstr "Soronként egy cím, csak ennek az oldalnak a címei, legfeljebb %d. Előbb mentsd a változtatásokat."
+msgid ""
+"One address per line, from this site only, up to %d. Save your changes first."
+msgstr ""
+"Soronként egy cím, csak ennek az oldalnak a címei, legfeljebb %d. Előbb "
+"mentsd a változtatásokat."
 
 #: build/index.js:7 build/index.js:8
 msgid "URLs"
@@ -2113,8 +2259,12 @@ msgid "Shipping"
 msgstr "Szállítás"
 
 #: build/index.js:8
-msgid "Adds shipping cost and delivery time to the product offers in the structured data."
-msgstr "A szállítási költséget és a kézbesítési időt hozzáadja a termékajánlatokhoz a strukturált adatokban."
+msgid ""
+"Adds shipping cost and delivery time to the product offers in the structured "
+"data."
+msgstr ""
+"A szállítási költséget és a kézbesítési időt hozzáadja a termékajánlatokhoz "
+"a strukturált adatokban."
 
 #: build/index.js:8
 msgid "Shipping details"
@@ -2125,8 +2275,11 @@ msgid "Countries"
 msgstr "Országok"
 
 #: build/index.js:8
-msgid "Two-letter country codes you ship to, separated by commas (for example HU, DE, AT)."
-msgstr "A célországok kétbetűs kódjai vesszővel elválasztva (például HU, DE, AT)."
+msgid ""
+"Two-letter country codes you ship to, separated by commas (for example HU, "
+"DE, AT)."
+msgstr ""
+"A célországok kétbetűs kódjai vesszővel elválasztva (például HU, DE, AT)."
 
 #: build/index.js:8
 msgid "Shipping cost"
@@ -2183,7 +2336,9 @@ msgstr "Visszaküldés"
 
 #: build/index.js:9
 msgid "Adds your return policy to the product offers in the structured data."
-msgstr "A visszaküldési szabályzatot hozzáadja a termékajánlatokhoz a strukturált adatokban."
+msgstr ""
+"A visszaküldési szabályzatot hozzáadja a termékajánlatokhoz a strukturált "
+"adatokban."
 
 #: build/index.js:9
 msgid "Return policy"
@@ -2195,7 +2350,9 @@ msgstr "Ország"
 
 #: build/index.js:9
 msgid "Two-letter code of the country the policy applies to (for example HU)."
-msgstr "Annak az országnak a kétbetűs kódja, amelyre a szabályzat vonatkozik (például HU)."
+msgstr ""
+"Annak az országnak a kétbetűs kódja, amelyre a szabályzat vonatkozik "
+"(például HU)."
 
 #: build/index.js:9
 msgid "Policy"
@@ -2394,8 +2551,16 @@ msgid "Images"
 msgstr "Képek"
 
 #: build/index.js:9
-msgid "Images without alt text, or with an empty alt, get one when the page is displayed. Your media library is not modified."
-msgstr "A helyettesítő szöveg nélküli vagy üres alt szövegű képek az oldal megjelenítésekor kapnak egyet. A médiatár nem módosul."
+msgid ""
+"Images without alt text, or with an empty alt, get one when the page is "
+"displayed. Your media library is not modified. An empty alt is how editors "
+"mark decorative images: add role=\"presentation\" or aria-hidden=\"true\" to "
+"an image to keep its alt empty."
+msgstr ""
+"Az alt szöveg nélküli vagy üres alt szövegű képek az oldal megjelenítésekor "
+"kapnak egyet. A médiatár nem módosul. Az üres alt szöveggel jelölik a "
+"szerkesztők a dekoratív képeket: ha egy kép alt szövegét üresen akarod "
+"hagyni, adj neki role=\"presentation\" vagy aria-hidden=\"true\" attribútumot."
 
 #: build/index.js:9
 msgid "Alt text"
@@ -2463,7 +2628,9 @@ msgstr "Alapértelmezett közösségi kép"
 
 #: build/index.js:9
 msgid "Used when a post has no featured image. Recommended: 1200x630px."
-msgstr "Akkor használjuk, ha egy bejegyzésnek nincs kiemelt képe. Ajánlott: 1200x630px."
+msgstr ""
+"Akkor használjuk, ha egy bejegyzésnek nincs kiemelt képe. Ajánlott: "
+"1200x630px."
 
 #: build/index.js:9
 msgid "Social Profiles"
@@ -2482,16 +2649,23 @@ msgid "Readable view in browsers (XSL)"
 msgstr "Böngészőben olvasható nézet (XSL)"
 
 #: build/index.js:9
-msgid "Browsers that dropped XSLT show the raw XML; search engines are not affected."
-msgstr "Az XSLT-t már nem támogató böngészők a nyers XML-t mutatják; a keresőmotorokat ez nem érinti."
+msgid ""
+"Browsers that dropped XSLT show the raw XML; search engines are not affected."
+msgstr ""
+"Az XSLT-t már nem támogató böngészők a nyers XML-t mutatják; a "
+"keresőmotorokat ez nem érinti."
 
 #: build/index.js:9
 msgid "Custom Post Types"
 msgstr "Egyéni bejegyzéstípusok"
 
 #: build/index.js:9
-msgid "New custom post types are included automatically. Content set to noindex is always left out."
-msgstr "Az új egyéni bejegyzéstípusok automatikusan bekerülnek. A noindexre állított tartalom mindig kimarad."
+msgid ""
+"New custom post types are included automatically. Content set to noindex is "
+"always left out."
+msgstr ""
+"Az új egyéni bejegyzéstípusok automatikusan bekerülnek. A noindexre állított "
+"tartalom mindig kimarad."
 
 #: build/index.js:9
 msgid "Custom Taxonomies"
@@ -2499,19 +2673,29 @@ msgstr "Egyéni taxonómiák"
 
 #: build/index.js:9
 msgid "Custom taxonomy archives are only listed when switched on here."
-msgstr "Az egyéni taxonómia archívumok csak akkor vannak listázva, ha itt be van kapcsolva."
+msgstr ""
+"Az egyéni taxonómia archívumok csak akkor vannak listázva, ha itt be van "
+"kapcsolva."
 
 #: build/index.js:9
-msgid "A page for your visitors that links to your content. Add it with the shortcode or the \"HTML Sitemap (LW SEO)\" block."
-msgstr "Egy oldal a látogatóknak, amely a tartalmaidra hivatkozik. Add hozzá a shortcode-dal vagy a „HTML oldaltérkép (LW SEO)” blokkal."
+msgid ""
+"A page for your visitors that links to your content. Add it with the "
+"shortcode or the \"HTML Sitemap (LW SEO)\" block."
+msgstr ""
+"Egy oldal a látogatóknak, amely a tartalmaidra hivatkozik. Add hozzá a "
+"shortcode-dal vagy a „HTML oldaltérkép (LW SEO)” blokkal."
 
 #: build/index.js:9
 msgid "Shortcode"
 msgstr "Shortcode"
 
 #: build/index.js:9
-msgid "Optional attributes: post_types, taxonomies, max, order (title or date). They override the settings below."
-msgstr "Választható attribútumok: post_types, taxonomies, max, order (title vagy date). Felülírják az alábbi beállításokat."
+msgid ""
+"Optional attributes: post_types, taxonomies, max, order (title or date). "
+"They override the settings below."
+msgstr ""
+"Választható attribútumok: post_types, taxonomies, max, order (title vagy "
+"date). Felülírják az alábbi beállításokat."
 
 #: build/index.js:9
 msgid "Content set to noindex is always left out."
@@ -2519,7 +2703,9 @@ msgstr "A noindex-re állított tartalom mindig kimarad."
 
 #: build/index.js:9
 msgid "Longer lists are cut off and get a \"View all\" link."
-msgstr "A hosszabb listák le lesznek vágva, és „Összes megtekintése” hivatkozást kapnak."
+msgstr ""
+"A hosszabb listák le lesznek vágva, és „Összes megtekintése” hivatkozást "
+"kapnak."
 
 #: build/index.js:9
 msgid "Newest first"
@@ -2530,8 +2716,15 @@ msgid "Content Signals"
 msgstr "Tartalmi jelzések"
 
 #: build/index.js:9
-msgid "Tell AI systems how they may use your content. Sent as a Content-Signal HTTP header, a meta tag and a robots.txt line. \"Not specified\" neither grants nor restricts that use."
-msgstr "Mondd meg az AI rendszereknek, hogyan használhatják a tartalmadat. Content-Signal HTTP headerként, meta tagként és egy robots.txt sorban kerül elküldésre. A \"Nincs megadva\" sem nem engedélyezi, sem nem korlátozza ezt a használatot."
+msgid ""
+"Tell AI systems how they may use your content. Sent as a Content-Signal HTTP "
+"header, a meta tag and a robots.txt line. \"Not specified\" neither grants "
+"nor restricts that use."
+msgstr ""
+"Mondd meg az AI rendszereknek, hogyan használhatják a tartalmadat. Content-"
+"Signal HTTP headerként, meta tagként és egy robots.txt sorban kerül "
+"elküldésre. A \"Nincs megadva\" sem nem engedélyezi, sem nem korlátozza ezt "
+"a használatot."
 
 #: build/index.js:9
 msgid "AI Input (RAG, grounding)"
@@ -2559,23 +2752,32 @@ msgstr "Engedélyezd az llms.txt-t AI crawler-ek számára"
 
 #: build/index.js:9
 msgid "One sentence shown as the summary line. Empty = the site tagline."
-msgstr "Egy mondat, ami összefoglaló sorként jelenik meg. Üresen = a webhely jelmondata."
+msgstr ""
+"Egy mondat, ami összefoglaló sorként jelenik meg. Üresen = a webhely "
+"jelmondata."
 
 #: build/index.js:9
 msgid "Introduction"
 msgstr "Bevezetés"
 
 #: build/index.js:9
-msgid "Optional Markdown text shown before the page lists. Do not use headings."
-msgstr "Opcionális Markdown szöveg, ami az oldallisták előtt jelenik meg. Ne használj címsorokat."
+msgid ""
+"Optional Markdown text shown before the page lists. Do not use headings."
+msgstr ""
+"Opcionális Markdown szöveg, ami az oldallisták előtt jelenik meg. Ne "
+"használj címsorokat."
 
 #: build/index.js:9
 msgid "Content types"
 msgstr "Tartalomtípusok"
 
 #: build/index.js:9
-msgid "Each type becomes its own section. Noindex content and content with AI Input set to \"No\" are left out."
-msgstr "Minden típus külön szekció lesz. A noindex tartalom és az \"AI bemenet\" mezőnél \"Nem\"-re állított tartalom kimarad."
+msgid ""
+"Each type becomes its own section. Noindex content and content with AI Input "
+"set to \"No\" are left out."
+msgstr ""
+"Minden típus külön szekció lesz. A noindex tartalom és az \"AI bemenet\" "
+"mezőnél \"Nem\"-re állított tartalom kimarad."
 
 #: build/index.js:9
 msgid "Items per section"
@@ -2583,7 +2785,8 @@ msgstr "Elemek szekciónként"
 
 #: build/index.js:9
 msgid "Pages are listed in menu order, other types newest first."
-msgstr "Az oldalak menüsorrendben, a többi típus a legújabbal kezdve van listázva."
+msgstr ""
+"Az oldalak menüsorrendben, a többi típus a legújabbal kezdve van listázva."
 
 #: build/index.js:9
 msgid "Markdown links"
@@ -2602,20 +2805,32 @@ msgid "Extra links"
 msgstr "Extra linkek"
 
 #: build/index.js:9
-msgid "One per line: Title | https://url | optional description. Listed under \"Optional\"."
-msgstr "Soronként egy: Cím | https://url | opcionális leírás. Az \"Optional\" szekcióban jelennek meg."
+msgid ""
+"One per line: Title | https://url | optional description. Listed under "
+"\"Optional\"."
+msgstr ""
+"Soronként egy: Cím | https://url | opcionális leírás. Az \"Optional\" "
+"szekcióban jelennek meg."
 
 #: build/index.js:9
 msgid "llms-full.txt"
 msgstr "llms-full.txt"
 
 #: build/index.js:9
-msgid "Built as a logged-out visitor. Content-restriction plugins that only protect the main page query may not apply here; use the lw_seo_post_is_eligible filter to leave restricted posts out."
-msgstr "Kijelentkezett látogatóként épül fel. Azok a tartalomkorlátozó bővítmények, amelyek csak a fő oldallekérdezést védik, itt nem biztos, hogy érvényesülnek; használd az lw_seo_post_is_eligible filtert, hogy a korlátozott bejegyzések kimaradjanak."
+msgid ""
+"Built as a logged-out visitor. Content-restriction plugins that only protect "
+"the main page query may not apply here; use the lw_seo_post_is_eligible "
+"filter to leave restricted posts out."
+msgstr ""
+"Kijelentkezett látogatóként épül fel. Azok a tartalomkorlátozó bővítmények, "
+"amelyek csak a fő oldallekérdezést védik, itt nem biztos, hogy "
+"érvényesülnek; használd az lw_seo_post_is_eligible filtert, hogy a "
+"korlátozott bejegyzések kimaradjanak."
 
 #: build/index.js:9
 msgid "Also serve /llms-full.txt with the full Markdown content (max 1 MB)"
-msgstr "Szolgáld ki a /llms-full.txt-t is a teljes Markdown tartalommal (max. 1 MB)"
+msgstr ""
+"Szolgáld ki a /llms-full.txt-t is a teljes Markdown tartalommal (max. 1 MB)"
 
 #: build/index.js:9
 msgid "AI Crawler Access"
@@ -2630,8 +2845,12 @@ msgid "All AI training crawlers"
 msgstr "Minden AI-tanító crawler"
 
 #: build/index.js:9
-msgid "Covers every crawler with that purpose, including ones added in future updates."
-msgstr "Lefedi az összes ilyen célú crawlert, beleértve a jövőbeli frissítésekben hozzáadottakat is."
+msgid ""
+"Covers every crawler with that purpose, including ones added in future "
+"updates."
+msgstr ""
+"Lefedi az összes ilyen célú crawlert, beleértve a jövőbeli frissítésekben "
+"hozzáadottakat is."
 
 #: build/index.js:9
 msgid "All AI search crawlers"
@@ -2642,16 +2861,26 @@ msgid "All user-triggered AI fetchers"
 msgstr "Minden felhasználó által indított AI-lekérő"
 
 #: build/index.js:9
-msgid "robots.txt is a request, not an enforcement. OpenAI, Perplexity, Meta and Amazon state that their user-triggered fetchers may ignore it."
-msgstr "A robots.txt egy kérés, nem kikényszerítés. Az OpenAI, a Perplexity, a Meta és az Amazon szerint a felhasználó által indított lekérőik figyelmen kívül hagyhatják."
+msgid ""
+"robots.txt is a request, not an enforcement. OpenAI, Perplexity, Meta and "
+"Amazon state that their user-triggered fetchers may ignore it."
+msgstr ""
+"A robots.txt egy kérés, nem kikényszerítés. Az OpenAI, a Perplexity, a Meta "
+"és az Amazon szerint a felhasználó által indított lekérőik figyelmen kívül "
+"hagyhatják."
 
 #: build/index.js:9
 msgid "Optimize your WooCommerce products for search engines and social media."
-msgstr "Optimalizáld a WooCommerce termékeidet keresőmotorokhoz és közösségi médiához."
+msgstr ""
+"Optimalizáld a WooCommerce termékeidet keresőmotorokhoz és közösségi "
+"médiához."
 
 #: build/index.js:9
-msgid "Adds product-specific OpenGraph tags, Schema.org Product markup, and more."
-msgstr "Termékspecifikus OpenGraph tageket, Schema.org Product jelölést és még sok mást ad hozzá."
+msgid ""
+"Adds product-specific OpenGraph tags, Schema.org Product markup, and more."
+msgstr ""
+"Termékspecifikus OpenGraph tageket, Schema.org Product jelölést és még sok "
+"mást ad hozzá."
 
 #: build/index.js:9
 msgid "Product Title"
@@ -2662,7 +2891,8 @@ msgid "Shop Title"
 msgstr "Bolt címe"
 
 #: build/index.js:9
-msgid "Title of the shop page (product archive). %%title%% is the shop page title."
+msgid ""
+"Title of the shop page (product archive). %%title%% is the shop page title."
 msgstr "A bolt oldal (termékarchívum) címe. A %%title%% a bolt oldal címe."
 
 #: build/index.js:9
@@ -2678,8 +2908,14 @@ msgid "Permalinks"
 msgstr "Permalinkek"
 
 #: build/index.js:9
-msgid "Slug-only WooCommerce permalinks. Categories whose root slug collides with a page, reserved slug, or another taxonomy/CPT base are automatically skipped to avoid breaking existing URLs."
-msgstr "Csak slugot tartalmazó WooCommerce permalinkek. Azokat a kategóriákat, amelyek fő slugja ütközik egy oldallal, foglalt sluggal vagy másik taxonómia/CPT alappal, automatikusan kihagyjuk, hogy a meglévő URL-ek ne törjenek el."
+msgid ""
+"Slug-only WooCommerce permalinks. Categories whose root slug collides with a "
+"page, reserved slug, or another taxonomy/CPT base are automatically skipped "
+"to avoid breaking existing URLs."
+msgstr ""
+"Csak slugot tartalmazó WooCommerce permalinkek. Azokat a kategóriákat, "
+"amelyek fő slugja ütközik egy oldallal, foglalt sluggal vagy másik taxonómia/"
+"CPT alappal, automatikusan kihagyjuk, hogy a meglévő URL-ek ne törjenek el."
 
 #: build/index.js:9
 msgid "Category base"
@@ -2714,19 +2950,27 @@ msgid "Skipped categories (slug collision):"
 msgstr "Kihagyott kategóriák (slug-ütközés):"
 
 #: build/index.js:9
-msgid "These category slugs already belong to a page, reserved WordPress slug, or another taxonomy/CPT base. They keep their default WooCommerce URL. Rename either the category or the conflicting slug to convert."
-msgstr "Ezek a kategóriaslugok már egy oldalhoz, foglalt WordPress-slughoz vagy másik taxonómia/CPT alaphoz tartoznak, ezért megtartják az alapértelmezett WooCommerce URL-jüket. Az átalakításhoz nevezd át a kategóriát vagy az ütköző slugot."
+msgid ""
+"These category slugs already belong to a page, reserved WordPress slug, or "
+"another taxonomy/CPT base. They keep their default WooCommerce URL. Rename "
+"either the category or the conflicting slug to convert."
+msgstr ""
+"Ezek a kategóriaslugok már egy oldalhoz, foglalt WordPress-slughoz vagy "
+"másik taxonómia/CPT alaphoz tartoznak, ezért megtartják az alapértelmezett "
+"WooCommerce URL-jüket. Az átalakításhoz nevezd át a kategóriát vagy az "
+"ütköző slugot."
 
 #: build/index.js:9
 msgid "Product schema"
-msgstr "Termék séma"
+msgstr "Termékséma"
 
 #: build/index.js:9
 msgid "Product Schema"
 msgstr "Termék Schema"
 
 #: build/index.js:9
-msgid "Structured data for products including price, availability, and reviews."
+msgid ""
+"Structured data for products including price, availability, and reviews."
 msgstr "Strukturált adatok a termékekhez: ár, elérhetőség és értékelések."
 
 #: build/index.js:9
@@ -2742,16 +2986,22 @@ msgid "Product variants as ProductGroup"
 msgstr "Termékváltozatok ProductGroup-ként"
 
 #: build/index.js:9
-msgid "Each variation gets its own price and availability in the structured data."
-msgstr "Minden változat saját árat és elérhetőséget kap a strukturált adatokban."
+msgid ""
+"Each variation gets its own price and availability in the structured data."
+msgstr ""
+"Minden változat saját árat és elérhetőséget kap a strukturált adatokban."
 
 #: build/index.js:9
 msgid "Default brand"
 msgstr "Alapértelmezett márka"
 
 #: build/index.js:9
-msgid "Used as the product brand when a product has no brand attribute or brand term."
-msgstr "Akkor ez lesz a termék márkája, ha a terméknek nincs márka attribútuma vagy márka kifejezése."
+msgid ""
+"Used as the product brand when a product has no brand attribute or brand "
+"term."
+msgstr ""
+"Akkor ez lesz a termék márkája, ha a terméknek nincs márka attribútuma vagy "
+"márka-kategóriája."
 
 #: build/index.js:9
 msgid "Sitemap and indexing"
@@ -2790,8 +3040,12 @@ msgid "Business Information"
 msgstr "Vállalkozási információk"
 
 #: build/index.js:9
-msgid "Add LocalBusiness structured data to help your business appear in local search results."
-msgstr "Adj hozzá LocalBusiness strukturált adatokat, hogy a vállalkozásod megjelenjen a helyi keresési találatok között."
+msgid ""
+"Add LocalBusiness structured data to help your business appear in local "
+"search results."
+msgstr ""
+"Adj hozzá LocalBusiness strukturált adatokat, hogy a vállalkozásod "
+"megjelenjen a helyi keresési találatok között."
 
 #: build/index.js:9
 msgid "Enable LocalBusiness schema"
@@ -2914,8 +3168,11 @@ msgid "Edit"
 msgstr "Szerkesztés"
 
 #: build/index.js:9
-msgid "Create and manage URL redirects to prevent 404 errors and preserve SEO value."
-msgstr "URL átirányítások létrehozása és kezelése a 404 hibák megelőzéséhez és az SEO érték megőrzéséhez."
+msgid ""
+"Create and manage URL redirects to prevent 404 errors and preserve SEO value."
+msgstr ""
+"URL átirányítások létrehozása és kezelése a 404 hibák megelőzéséhez és az "
+"SEO érték megőrzéséhez."
 
 #: build/index.js:9
 msgid "Process redirects"
@@ -2947,15 +3204,20 @@ msgstr "Biztos, hogy törölni akarod ezt az átirányítást?"
 
 #: build/index.js:9
 msgid "Configure how 404 (Not Found) errors are handled on your site."
-msgstr "Állítsd be, hogyan legyenek kezelve a 404 (Nem található) hibák az oldaladon."
+msgstr ""
+"Állítsd be, hogyan legyenek kezelve a 404 (Nem található) hibák az oldaladon."
 
 #: build/index.js:9
 msgid "Redirect 404 to Homepage"
 msgstr "404 átirányítása a kezdőlapra"
 
 #: build/index.js:9
-msgid "When enabled, visitors who land on a non-existent page will be redirected to your homepage with a 302 (temporary) redirect."
-msgstr "Ha engedélyezed, a nem létező oldalra érkező látogatók a kezdőlapodra lesznek átirányítva 302-es (ideiglenes) átirányítással."
+msgid ""
+"When enabled, visitors who land on a non-existent page will be redirected to "
+"your homepage with a 302 (temporary) redirect."
+msgstr ""
+"Ha engedélyezed, a nem létező oldalra érkező látogatók a kezdőlapodra "
+"lesznek átirányítva 302-es (ideiglenes) átirányítással."
 
 #: build/index.js:9
 msgid "Redirect every 404 to the homepage"
@@ -2966,16 +3228,24 @@ msgid "404 Log"
 msgstr "404-napló"
 
 #: build/index.js:9
-msgid "Keep a short list of missing URLs so you can redirect them. Off by default."
-msgstr "Tarts egy rövid listát a nem létező URL-ekről, hogy átirányíthasd őket. Alapból ki van kapcsolva."
+msgid ""
+"Keep a short list of missing URLs so you can redirect them. Off by default."
+msgstr ""
+"Tarts egy rövid listát a nem létező URL-ekről, hogy átirányíthasd őket. "
+"Alapból ki van kapcsolva."
 
 #: build/index.js:9
 msgid "Log 404 errors"
 msgstr "404-es hibák naplózása"
 
 #: build/index.js:9
-msgid "Stores the requested path, a hit count and the referrer without its query string. Static files such as images are skipped."
-msgstr "Eltárolja a kért útvonalat, a találatszámot és a hivatkozó oldalt a lekérdezési karakterlánc nélkül. A statikus fájlok, például a képek kimaradnak."
+msgid ""
+"Stores the requested path, a hit count and the referrer without its query "
+"string. Static files such as images are skipped."
+msgstr ""
+"Eltárolja a kért útvonalat, a találatszámot és a hivatkozó oldalt a "
+"lekérdezési karakterlánc nélkül. A statikus fájlok, például a képek "
+"kimaradnak."
 
 #: build/index.js:9
 msgid "Logging missing URLs"
@@ -2991,11 +3261,15 @@ msgstr "A régebbi bejegyzések naponta törlődnek."
 
 #: build/index.js:9
 msgid "Maximum entries"
-msgstr "Bejegyzések legfeljebb"
+msgstr "Bejegyzések maximális száma"
 
 #: build/index.js:9
-msgid "When the log is full, the oldest one-off entries make room. Recurring entries are kept."
-msgstr "Ha megtelik a napló, a legrégebbi egyszeri bejegyzések adnak helyet. Az ismétlődők megmaradnak."
+msgid ""
+"When the log is full, the oldest one-off entries make room. Recurring "
+"entries stay until the daily cleanup."
+msgstr ""
+"Ha megtelik a napló, a legrégebbi egyszeri bejegyzések adnak helyet. Az "
+"ismétlődők a napi takarításig maradnak."
 
 #: build/index.js:9
 msgid "Store user agent"
@@ -3007,7 +3281,7 @@ msgstr "A látogató böngészőjének vagy a bot nevét is megőrzi."
 
 #: build/index.js:9
 msgid "Storing user agents"
-msgstr "User agentek tárolása"
+msgstr "User agent tárolása"
 
 #: build/index.js:9
 msgid "Features"
@@ -3019,7 +3293,9 @@ msgstr "Morzsamenü"
 
 #: build/index.js:9
 msgid "Use shortcode [lw_breadcrumbs] or function lw_seo_breadcrumbs()."
-msgstr "Használd a [lw_breadcrumbs] shortcode-ot vagy az lw_seo_breadcrumbs() függvényt."
+msgstr ""
+"Használd a [lw_breadcrumbs] shortcode-ot vagy az lw_seo_breadcrumbs() "
+"függvényt."
 
 #: build/index.js:9
 msgid "Schema.org"
@@ -3043,8 +3319,14 @@ msgstr "A robots.txt fájlod"
 
 #. translators: %s: path of the robots.txt file.
 #: build/index.js:10
-msgid "A physical robots.txt file exists (%s). The web server serves it directly, so these settings have no effect. Delete the file to let LW SEO manage robots.txt."
-msgstr "Létezik egy fizikai robots.txt fájl (%s). A webszerver közvetlenül azt szolgálja ki, ezért ezek a beállítások nem hatnak. Töröld a fájlt, hogy az LW SEO kezelhesse a robots.txt-t."
+msgid ""
+"A physical robots.txt file exists (%s). The web server serves it directly, "
+"so these settings have no effect. Delete the file to let LW SEO manage "
+"robots.txt."
+msgstr ""
+"Létezik egy fizikai robots.txt fájl (%s). A webszerver közvetlenül azt "
+"szolgálja ki, ezért ezek a beállítások nem hatnak. Töröld a fájlt, hogy az "
+"LW SEO kezelhesse a robots.txt-t."
 
 #: build/index.js:10
 msgid "Head Cleanup"
@@ -3071,25 +3353,43 @@ msgid "WLW Manifest"
 msgstr "WLW manifest"
 
 #: build/index.js:10
-msgid "No data from Yoast SEO, RankMath, SEOPress or All in One SEO was found in the database, so there is nothing to import."
-msgstr "Nem találtunk Yoast SEO, RankMath, SEOPress vagy All in One SEO adatot az adatbázisban, így nincs mit átvenni."
+msgid ""
+"No data from Yoast SEO, RankMath, SEOPress or All in One SEO was found in "
+"the database, so there is nothing to import."
+msgstr ""
+"Nem találtunk Yoast SEO, RankMath, SEOPress vagy All in One SEO adatot az "
+"adatbázisban, így nincs mit átvenni."
 
 #: build/index.js:10
-msgid "Import SEO data from other SEO plugins. Existing LW SEO data will not be overwritten."
-msgstr "SEO adatok importálása más SEO bővítményekből. A meglévő LW SEO adatok nem lesznek felülírva."
+msgid ""
+"Import SEO data from other SEO plugins. Existing LW SEO data will not be "
+"overwritten."
+msgstr ""
+"SEO adatok importálása más SEO bővítményekből. A meglévő LW SEO adatok nem "
+"lesznek felülírva."
 
 #. translators: %s: name of the other active SEO plugin, e.g. Yoast SEO.
 #: build/index.js:11
-msgid "Another SEO plugin (%s) is active. LW SEO skips its meta tags to avoid duplicates. You can import its data on the Import tab, then deactivate it to use LW SEO fully."
-msgstr "Egy másik SEO bővítmény (%s) aktív. Az LW SEO kihagyja a meta tagjeit, hogy elkerülje a duplikációt. Az adatait átveheted az Importálás fülön, utána kapcsold ki az LW SEO teljes használatához."
+msgid ""
+"Another SEO plugin (%s) is active. LW SEO skips its meta tags to avoid "
+"duplicates. You can import its data on the Import tab, then deactivate it to "
+"use LW SEO fully."
+msgstr ""
+"Egy másik SEO bővítmény (%s) aktív. Az LW SEO kihagyja a meta tagjeit, hogy "
+"elkerülje a duplikációt. Az adatait átveheted az Importálás fülön, utána "
+"kapcsold ki az LW SEO teljes használatához."
 
 #: build/term.js:2
 msgid "noindex this archive"
 msgstr "noindex erre az archívumra"
 
 #: build/term.js:2
-msgid "If filled, this markdown is served at the /md endpoint instead of the auto-generated content."
-msgstr "Ha ki van töltve, ez a markdown a /md endpointon lesz kiszolgálva az automatikusan generált tartalom helyett."
+msgid ""
+"If filled, this markdown is served at the /md endpoint instead of the auto-"
+"generated content."
+msgstr ""
+"Ha ki van töltve, ez a markdown a /md endpointon lesz kiszolgálva az "
+"automatikusan generált tartalom helyett."
 
 #: includes/Blocks/FAQ/block.json
 msgctxt "block title"
@@ -3098,8 +3398,11 @@ msgstr "FAQ (LW SEO)"
 
 #: includes/Blocks/FAQ/block.json
 msgctxt "block description"
-msgid "Add frequently asked questions with FAQPage schema markup for better SEO."
-msgstr "Adj hozzá gyakran ismételt kérdéseket FAQPage schema jelöléssel a jobb SEO érdekében."
+msgid ""
+"Add frequently asked questions with FAQPage schema markup for better SEO."
+msgstr ""
+"Adj hozzá gyakran ismételt kérdéseket FAQPage schema jelöléssel a jobb SEO "
+"érdekében."
 
 #: includes/Blocks/FAQ/block.json
 msgctxt "block keyword"
@@ -3150,6 +3453,20 @@ msgstr "html oldaltérkép"
 msgctxt "block keyword"
 msgid "links"
 msgstr "hivatkozások"
+
+#~ msgid ""
+#~ "Images without alt text, or with an empty alt, get one when the page is "
+#~ "displayed. Your media library is not modified."
+#~ msgstr ""
+#~ "A helyettesítő szöveg nélküli vagy üres alt szövegű képek az oldal "
+#~ "megjelenítésekor kapnak egyet. A médiatár nem módosul."
+
+#~ msgid ""
+#~ "When the log is full, the oldest one-off entries make room. Recurring "
+#~ "entries are kept."
+#~ msgstr ""
+#~ "Ha megtelik a napló, a legrégebbi egyszeri bejegyzések adnak helyet. Az "
+#~ "ismétlődők megmaradnak."
 
 #~ msgid "Schema.org and sitemap"
 #~ msgstr "Schema.org és oldaltérkép"
