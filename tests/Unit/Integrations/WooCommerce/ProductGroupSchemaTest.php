@@ -65,7 +65,7 @@ final class ProductGroupSchemaTest extends MonkeyTestCase {
 		$group = ProductGroupSchema::convert( $this->group(), $this->parent() );
 
 		$this->assertSame( 'ProductGroup', $group['@type'] );
-		$this->assertSame( self::PERMALINK . '#product', $group['@id'] );
+		$this->assertSame( self::$permalink . '#product', $group['@id'] );
 		$this->assertSame( 'MézVitéz', $group['brand']['name'] );
 		$this->assertSame( [ 'https://schema.org/color', 'https://schema.org/size' ], $group['variesBy'] );
 		$this->assertSame( [ 'POLO-KEK-XL', 'POLO-PIROS-M' ], array_column( $group['hasVariant'], 'sku' ) );

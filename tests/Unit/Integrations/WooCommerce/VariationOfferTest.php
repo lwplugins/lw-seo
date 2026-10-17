@@ -37,7 +37,7 @@ final class VariationOfferTest extends MonkeyTestCase {
 	public function test_url_has_attribute_args(): void {
 		$variant = VariationOffer::variant( $this->variation( 101 ), $this->parent(), $this->group(), $this->terms() );
 
-		$this->assertSame( self::PERMALINK . '?attribute_pa_szin=kek&attribute_meret=XL', $variant['offers']['url'] );
+		$this->assertSame( self::$permalink . '?attribute_pa_szin=kek&attribute_meret=XL', $variant['offers']['url'] );
 		$this->assertSame( 'Áfonyás póló - kék, XL', $variant['name'] );
 		$this->assertSame( 'kék', $variant['color'] );
 		$this->assertSame( 'XL', $variant['size'] );

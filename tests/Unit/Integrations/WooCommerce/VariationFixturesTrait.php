@@ -16,10 +16,10 @@ use Brain\Monkey\Functions;
  */
 trait VariationFixturesTrait {
 
-	private const PERMALINK = 'https://shop.test/uzlet/afonyas-polo/';
+	private static string $permalink = 'https://shop.test/uzlet/afonyas-polo/';
 
 	private function stub_variation_functions(): void {
-		Functions\when( 'get_permalink' )->justReturn( self::PERMALINK );
+		Functions\when( 'get_permalink' )->justReturn( self::$permalink );
 		Functions\when( 'add_query_arg' )->alias( static fn( array $args, string $url ) => $url . '?' . http_build_query( $args ) );
 		Functions\when( 'get_woocommerce_currency' )->justReturn( 'HUF' );
 		Functions\when( 'get_bloginfo' )->justReturn( 'Shop' );
@@ -94,9 +94,9 @@ trait VariationFixturesTrait {
 	private function group(): array {
 		return [
 			'@type'  => 'Product',
-			'@id'    => self::PERMALINK . '#product',
+			'@id'    => self::$permalink . '#product',
 			'name'   => 'Áfonyás póló',
-			'url'    => self::PERMALINK,
+			'url'    => self::$permalink,
 			'image'  => [ 'https://shop.test/img/parent.jpg' ],
 			'brand'  => [ '@type' => 'Brand', 'name' => 'MézVitéz' ],
 			'sku'    => 'POLO',
