@@ -137,6 +137,14 @@ No. Rewrite rules are flushed automatically on activation, whenever the sitemap 
 
 Your sitemap is available at `yoursite.com/sitemap.xml`
 
+= How do I show an HTML sitemap? =
+
+Add the `[lw_html_sitemap]` shortcode or the HTML sitemap block to a page. Choose the post types, taxonomies, items per section and order under **LW Plugins → SEO → Sitemap → HTML sitemap**.
+
+= How do I find broken links? =
+
+Turn on the 404 log under **LW Plugins → SEO → 404**. Missing URLs are listed with hit counts and a "Create redirect" action, or run `wp lw-seo not-found list`.
+
 = Where can I find robots.txt and llms.txt? =
 
 * robots.txt: `yoursite.com/robots.txt`

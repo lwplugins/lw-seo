@@ -28,9 +28,23 @@ Lightweight SEO plugin for WordPress - minimal footprint, maximum impact.
 - **Auto-generated** - Posts, pages, categories, tags and WooCommerce products
 - **Custom Post Types** - Every public CPT (ACF, CPT UI, …) is included automatically, with a per-type toggle
 - **Custom Taxonomies** - Opt-in, per taxonomy
+- **Image sitemap** - Featured, in-content and WooCommerce gallery images are listed (content inside shortcodes and non-media blocks is skipped); toggle under **Sitemap → XML Sitemap → Include images**
+- **Browser-readable view** - XSL stylesheet so the sitemap is easy to read in a browser; can be turned off
 - **Clean** - noindex types/taxonomies, noindex and password-protected posts, and the WooCommerce cart/checkout/my account pages are left out
-- **Developer filters** - `lw_seo_sitemap_post_types`, `lw_seo_sitemap_exclude_post`, `lw_seo_sitemap_excluded_ids`, `lw_seo_sitemap_urls`
+- **Developer filters** - `lw_seo_sitemap_post_types`, `lw_seo_sitemap_exclude_post`, `lw_seo_sitemap_excluded_ids`, `lw_seo_sitemap_urls`, `lw_seo_sitemap_images`, `lw_seo_sitemap_content_images`
 - Available at `yoursite.com/sitemap.xml` (per-type files: `sitemap-{type}.xml`)
+
+### HTML Sitemap
+- **Shortcode** - `[lw_html_sitemap]`
+- **Block** - `lw-seo/html-sitemap`
+- Cached, and follows the XML sitemap's noindex and exclusion rules; configured under **Sitemap → HTML sitemap** (post types, taxonomies, items per section, order)
+- **Developer filters** - `lw_seo_html_sitemap_sections`, `lw_seo_html_sitemap_output`
+
+### IndexNow
+- **Off by default** - turn it on under **Sitemap → IndexNow**
+- Notifies participating search engines when public, indexable content is published, updated or deleted
+- **External service** - when enabled, the page URLs, your host name, a verification key generated on your site and the key file URL are sent to `api.indexnow.org`; no personal data. The key file is served by your site
+- Manual URL submit and a log of recent submissions in the same screen; `wp lw-seo indexnow`
 
 ### Schema.org / JSON-LD
 - **WebSite Schema** - Site-wide structured data
@@ -58,7 +72,11 @@ Lightweight SEO plugin for WordPress - minimal footprint, maximum impact.
 - **Auto-Detection** - Automatically enables when WooCommerce is active
 - **Product OpenGraph** - Price, currency, availability, brand, condition
 - **Shop Title** - Title template for the shop page (product archive)
-- **Product Schema** - Full Schema.org Product markup with offers
+- **Product Schema** - Full Schema.org Product markup with offers, filterable via `lw_seo_woo_product_schema` and `lw_seo_woo_offer`
+- **Default Brand** - Shop-wide brand used when a product has none
+- **ProductGroup** - Optional ProductGroup markup for variable products (`lw_seo_woo_varies_by_map`)
+- **Shipping & Returns** - Shipping details and merchant return policy added to product offers
+- **Hidden & Out-of-Stock Products** - Hidden products get noindex and leave the sitemap; out-of-stock products can be left out of the sitemap
 - **Reviews Schema** - Product reviews and aggregate ratings
 - **Product Sitemap** - Include products and product categories
 - **Custom Settings** - Dedicated WooCommerce SEO settings tab
@@ -73,10 +91,15 @@ Lightweight SEO plugin for WordPress - minimal footprint, maximum impact.
 
 ### Redirects & 404
 - **Redirect Manager** - 301, 302, 307, 410 and 451 redirects, with CSV import/export
+- **URL tester** - Check which rule a URL would match, in the Redirects screen or with `wp lw-seo redirect test <url>`
+- **404 log** - Off by default; records missing URLs with hit counts, with a "Create redirect" action in the **404** tab, a daily cleanup and a row cap (`wp lw-seo not-found list|clear|prune`)
 - **404 to homepage** - Optional redirect of 404s to the homepage, as a last resort after your redirect rules and WordPress's own redirects (renamed slugs, guessed URLs)
 
 ### Migration
 - **Import from Yoast SEO, Rank Math, SEOPress and All in One SEO** - Options and title templates, post and term SEO data, primary categories and redirects, with a dry-run preview; never overwrites LW SEO data (admin Import tab or `wp lw-seo migrate`, see [docs/migration.md](docs/migration.md))
+
+### Images
+- **Alt and title templates** - Off by default; fill missing or empty image alt/title text at display time from `%%image_title%%`, `%%image_caption%%`, `%%image_filename%%` and the usual variables (**Content → Images**). The media library is not modified.
 
 ### Cleanup
 - Remove shortlinks
@@ -90,10 +113,10 @@ Lightweight SEO plugin for WordPress - minimal footprint, maximum impact.
 - Translations: Hungarian (hu_HU) included
 
 ### Developer & Automation
-- **WP-CLI** - `wp lw-seo option|sitemap|llms|robots|crawlers|redirect|migrate …` — every setting can be read and set (validated) from the command line, see [docs/cli.md](docs/cli.md)
+- **WP-CLI** - `wp lw-seo option|sitemap|llms|robots|crawlers|redirect|not-found|indexnow|migrate …` — every setting can be read and set (validated) from the command line, see [docs/cli.md](docs/cli.md)
 - **REST API** - Read-only `lw-seo/v1` endpoints for headless setups, see [docs/rest-api.md](docs/rest-api.md)
 - **LW Site Manager abilities** - `lw-seo/get-meta`, `set-meta`, `get-content-signals`, `get-markdown`, `get-options` (per-object permission checks), see [docs/site-manager-abilities.md](docs/site-manager-abilities.md)
-- **Hooks** - see [docs/developers.md](docs/developers.md)
+- **Hooks** - including `lw_seo_post_noindex`, `lw_seo_woo_offer`, `lw_seo_woo_varies_by_map`, `lw_seo_html_sitemap_sections` and `lw_seo_html_sitemap_output`; see [docs/developers.md](docs/developers.md)
 
 ## Installation
 
@@ -133,6 +156,7 @@ Use these in title templates:
 | `%%currentyear%%` | Current year |
 | `%%page%%` / `%%pagenumber%%` | Page number |
 | `%%searchphrase%%` | Search query |
+| `%%image_title%%` / `%%image_caption%%` / `%%image_filename%%` | Image title, caption and file name (image alt/title templates only) |
 
 Full reference: [docs/template-variables.md](docs/template-variables.md)
 
