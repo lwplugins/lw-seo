@@ -98,11 +98,13 @@ final class ImageCollector {
 	 * @return string
 	 */
 	private static function scannable_html( \WP_Post $post ): string {
-		if ( ! self::content_allowed( $post ) ) {
+		$content = (string) $post->post_content;
+
+		// Most posts have no inline image: skip the shortcode and block parsing.
+		if ( false === stripos( $content, '<img' ) || ! self::content_allowed( $post ) ) {
 			return '';
 		}
 
-		$content = (string) $post->post_content;
 		if ( function_exists( 'strip_shortcodes' ) ) {
 			$content = strip_shortcodes( $content );
 		}

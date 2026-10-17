@@ -45,6 +45,21 @@ final class ImageCollectorTest extends MonkeyTestCase {
 		$this->assertSame( [ 'https://example.com/feat.jpg', 'https://example.com/inline.jpg' ], $urls );
 	}
 
+	public function test_content_without_img_skips_shortcode_and_block_parsing(): void {
+		$parsed = 0;
+		Functions\when( 'strip_shortcodes' )->alias(
+			static function ( string $content ) use ( &$parsed ): string {
+				++$parsed;
+				return $content;
+			}
+		);
+
+		$urls = ImageCollector::for_post( $this->post( '<!-- wp:paragraph --><p>[gallery ids="1"] text</p><!-- /wp:paragraph -->' ) );
+
+		$this->assertSame( [], $urls );
+		$this->assertSame( 0, $parsed, 'content without <img must not be parsed' );
+	}
+
 	public function test_content_images_same_host_only(): void {
 		$urls = ImageCollector::for_post(
 			$this->post( '<img src="https://cdn.other.com/a.jpg"><img class="x" src=\'https://example.com/b.jpg\'>' )
@@ -98,7 +113,7 @@ final class ImageCollectorTest extends MonkeyTestCase {
 			]
 		);
 
-		$this->assertSame( [], ImageCollector::for_post( $this->post( '<!-- wp:x -->' ) ) );
+		$this->assertSame( [], ImageCollector::for_post( $this->post( '<!-- wp:x --><img src="https://example.com/secret.jpg"><!-- /wp:x -->' ) ) );
 	}
 
 	public function test_image_in_core_image_block_listed(): void {
@@ -112,7 +127,7 @@ final class ImageCollectorTest extends MonkeyTestCase {
 
 		$this->assertSame(
 			[ 'https://example.com/a.jpg', 'https://example.com/classic.jpg' ],
-			ImageCollector::for_post( $this->post( '<!-- wp:x -->' ) )
+			ImageCollector::for_post( $this->post( '<!-- wp:image --><img src="https://example.com/a.jpg"><!-- /wp:image -->' ) )
 		);
 	}
 

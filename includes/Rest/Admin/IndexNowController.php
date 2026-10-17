@@ -115,6 +115,23 @@ final class IndexNowController {
 	}
 
 	/**
+	 * IndexNow state for the settings screen. The key is created as soon as
+	 * the feature is on, so the key URL shows right after the first save.
+	 *
+	 * @return array{key_url: string, log: array<int, array<string, mixed>>}
+	 */
+	public static function meta(): array {
+		if ( Options::get( 'indexnow_enabled' ) ) {
+			Key::ensure();
+		}
+
+		return [
+			'key_url' => '' === Key::get() ? '' : Key::location(),
+			'log'     => self::log(),
+		];
+	}
+
+	/**
 	 * Log for the UI: newest first.
 	 *
 	 * @return array<int, array<string, mixed>>

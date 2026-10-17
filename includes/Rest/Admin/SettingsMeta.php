@@ -13,7 +13,6 @@ use LightweightPlugins\SEO\Admin\Data\BusinessTypes;
 use LightweightPlugins\SEO\Content\PostTypes;
 use LightweightPlugins\SEO\Crawlers\Registry;
 use LightweightPlugins\SEO\Images\ImageVars;
-use LightweightPlugins\SEO\IndexNow\Key;
 use LightweightPlugins\SEO\Meta\HeadMeta;
 use LightweightPlugins\SEO\Options;
 use LightweightPlugins\SEO\ReplaceVars;
@@ -65,10 +64,7 @@ final class SettingsMeta {
 			'woo_skipped_categories' => array_values( array_map( 'strval', PermalinkWatcher::get_skipped() ) ),
 			'variables'              => self::variables(),
 			'image_variables'        => ImageVars::labels(),
-			'indexnow'               => [
-				'key_url' => '' === Key::get() ? '' : Key::location(),
-				'log'     => IndexNowController::log(),
-			],
+			'indexnow'               => IndexNowController::meta(),
 		];
 	}
 

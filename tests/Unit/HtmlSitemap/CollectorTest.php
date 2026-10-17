@@ -146,6 +146,13 @@ final class CollectorTest extends MonkeyTestCase {
 		$this->assertSame( 'DESC', $this->queries['post']['order'] );
 	}
 
+	public function test_query_primes_the_term_cache(): void {
+		// Eligibility filters (WooCommerce catalog visibility) read terms per post.
+		Collector::sections( [ 'post' ], [], 500, 'title' );
+
+		$this->assertNotFalse( $this->queries['post']['update_post_term_cache'] ?? true );
+	}
+
 	public function test_unknown_type_is_ignored(): void {
 		$sections = Collector::sections( [ 'nope', 'post' ], [], 500, 'title' );
 

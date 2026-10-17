@@ -71,9 +71,10 @@ final class Collector {
 		$excluded = ExcludedPosts::ids( $post_type );
 		$args     = PostProvider::query_args( $post_type, $max + 1 + count( $excluded ), 0 );
 
-		$args['orderby']                = 'date' === $order ? 'date' : 'title';
-		$args['order']                  = 'date' === $order ? 'DESC' : 'ASC';
-		$args['update_post_term_cache'] = false;
+		// The term cache stays on: eligibility filters (WooCommerce catalog
+		// visibility) read each product's terms, which would be N+1 queries.
+		$args['orderby'] = 'date' === $order ? 'date' : 'title';
+		$args['order']   = 'date' === $order ? 'DESC' : 'ASC';
 
 		$rows = [];
 		foreach ( get_posts( $args ) as $post ) {

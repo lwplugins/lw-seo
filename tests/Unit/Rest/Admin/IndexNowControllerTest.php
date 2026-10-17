@@ -160,4 +160,22 @@ final class IndexNowControllerTest extends MonkeyTestCase {
 
 		$this->assertSame( [ [ 'time' => 2 ], [ 'time' => 1 ] ], IndexNowController::log() );
 	}
+
+	public function test_meta_creates_the_key_once_enabled(): void {
+		$this->stub_site( true );
+		unset( $this->store['lw_seo_indexnow_key'] );
+
+		$meta = IndexNowController::meta();
+
+		$this->assertMatchesRegularExpression( '#^https://Example\.com/[a-f0-9]{32}\.txt$#', $meta['key_url'] );
+		$this->assertSame( [], $meta['log'] );
+	}
+
+	public function test_meta_has_no_key_url_while_disabled(): void {
+		$this->stub_site( false );
+		unset( $this->store['lw_seo_indexnow_key'] );
+
+		$this->assertSame( '', IndexNowController::meta()['key_url'] );
+		$this->assertArrayNotHasKey( 'lw_seo_indexnow_key', $this->store );
+	}
 }
