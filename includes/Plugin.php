@@ -34,6 +34,7 @@ use LightweightPlugins\SEO\IndexNow\Watcher as IndexNowWatcher;
 use LightweightPlugins\SEO\LlmsTxt\Endpoint as LlmsTxtEndpoint;
 use LightweightPlugins\SEO\Markdown\Endpoint as MarkdownEndpoint;
 use LightweightPlugins\SEO\Markdown\Discovery as MarkdownDiscovery;
+use LightweightPlugins\SEO\Images\ImageSeo;
 use LightweightPlugins\SEO\Meta\HeadMeta;
 use LightweightPlugins\SEO\Meta\TitleFilter;
 
@@ -118,6 +119,7 @@ final class Plugin {
 		new Sitemap();
 		new Schema();
 		new Breadcrumbs();
+		( new ImageSeo() )->register();
 		new RobotsTxt();
 		new LlmsTxtEndpoint();
 

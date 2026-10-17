@@ -28,6 +28,19 @@ export default function ContentTab( { store } ) {
 		/>
 	);
 
+	const imageVars = (
+		<Vars
+			names={ [
+				'image_title',
+				'image_caption',
+				'image_filename',
+				'title',
+				'sitename',
+				'sep',
+			] }
+		/>
+	);
+
 	return (
 		<>
 			<Section
@@ -135,6 +148,46 @@ export default function ContentTab( { store } ) {
 					title={ __( '404 Page Title', 'lw-seo' ) }
 					store={ store }
 					name="title_404"
+					mono
+				/>
+			</Section>
+			<Section
+				title={ __( 'Images', 'lw-seo' ) }
+				description={ __(
+					'Only images without alt text are changed, when the page is displayed. Your media library is not modified.',
+					'lw-seo'
+				) }
+			>
+				<SwitchRow
+					title={ __( 'Alt text', 'lw-seo' ) }
+					help={ __(
+						'Fill in missing alt text from the template.',
+						'lw-seo'
+					) }
+					store={ store }
+					name="image_alt_enabled"
+				/>
+				<TextRow
+					title={ __( 'Alt Text Template', 'lw-seo' ) }
+					help={ imageVars }
+					store={ store }
+					name="image_alt_template"
+					mono
+				/>
+				<SwitchRow
+					title={ __( 'Title attribute', 'lw-seo' ) }
+					help={ __(
+						'Add a title attribute to images that have none.',
+						'lw-seo'
+					) }
+					store={ store }
+					name="image_title_enabled"
+				/>
+				<TextRow
+					title={ __( 'Title Attribute Template', 'lw-seo' ) }
+					help={ imageVars }
+					store={ store }
+					name="image_title_template"
 					mono
 				/>
 			</Section>

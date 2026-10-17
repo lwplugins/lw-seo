@@ -185,6 +185,12 @@ final class Options {
 			'not_found_log_max_rows'          => 1000,
 			'not_found_log_retention_days'    => 30,
 			'not_found_log_store_ua'          => false,
+
+			// Image SEO.
+			'image_alt_enabled'               => false,
+			'image_alt_template'              => '%%image_title%%',
+			'image_title_enabled'             => false,
+			'image_title_template'            => '%%image_title%%',
 		] + Registry::option_defaults() + OpeningHours::option_defaults();
 	}
 
