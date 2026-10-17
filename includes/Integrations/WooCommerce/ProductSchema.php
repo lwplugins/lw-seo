@@ -38,7 +38,7 @@ final class ProductSchema {
 		}
 
 		// WooCommerce Brands sets brand from the product_brand taxonomy; keep it.
-		$brand = empty( $markup['brand'] ) ? $this->get_product_brand( $product ) : '';
+		$brand = empty( $markup['brand'] ) ? BrandResolver::for_product( $product ) : '';
 		if ( '' !== $brand ) {
 			$markup['brand'] = [
 				'@type' => 'Brand',
@@ -102,7 +102,7 @@ final class ProductSchema {
 		}
 
 		// Brand.
-		$brand = $this->get_product_brand( $product );
+		$brand = BrandResolver::for_product( $product );
 		if ( $brand ) {
 			$schema['brand'] = [
 				'@type' => 'Brand',
@@ -164,30 +164,6 @@ final class ProductSchema {
 		}
 
 		return $images;
-	}
-
-	/**
-	 * Get product brand.
-	 *
-	 * @param \WC_Product $product The product.
-	 * @return string
-	 */
-	private function get_product_brand( \WC_Product $product ): string {
-		// Try product attribute.
-		$brand = $product->get_attribute( 'brand' );
-
-		if ( $brand ) {
-			return $brand;
-		}
-
-		// Try taxonomy.
-		$brand_terms = get_the_terms( $product->get_id(), 'product_brand' );
-
-		if ( is_array( $brand_terms ) && ! empty( $brand_terms ) ) {
-			return $brand_terms[0]->name;
-		}
-
-		return '';
 	}
 
 	/**

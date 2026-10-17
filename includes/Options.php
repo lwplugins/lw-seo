@@ -133,6 +133,10 @@ final class Options {
 			'sitemap_products'                => true,
 			'sitemap_product_cat'             => true,
 			'sitemap_product_tag'             => false,
+			'woo_default_brand'               => '',
+			'woo_sitemap_exclude_hidden'      => true,
+			'woo_noindex_hidden'              => true,
+			'woo_sitemap_exclude_outofstock'  => false,
 
 			// WooCommerce permalink rewrites (RankMath-compatible).
 			'wc_remove_category_base'         => false,

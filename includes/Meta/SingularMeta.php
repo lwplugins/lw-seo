@@ -91,7 +91,18 @@ final class SingularMeta {
 	 * @return void
 	 */
 	private function render_robots( \WP_Post $post ): void {
-		$noindex  = Options::get_post_meta( $post->ID, 'noindex' ) || Options::get( 'noindex_' . $post->post_type );
+		$noindex = Options::get_post_meta( $post->ID, 'noindex' ) || Options::get( 'noindex_' . $post->post_type );
+
+		/**
+		 * Filter whether a singular post is noindex.
+		 *
+		 * @since 1.9.0
+		 *
+		 * @param bool     $noindex Whether the post is noindex by its meta or post type setting.
+		 * @param \WP_Post $post    The post.
+		 */
+		$noindex = (bool) apply_filters( 'lw_seo_post_noindex', (bool) $noindex, $post );
+
 		$nofollow = Options::get_post_meta( $post->ID, 'nofollow' );
 
 		$robots = [];

@@ -115,7 +115,7 @@ export default function WooTab( { store } ) {
 					</Notice>
 				) }
 			</Section>
-			<Section title={ __( 'Schema.org and sitemap', 'lw-seo' ) }>
+			<Section title={ __( 'Product schema', 'lw-seo' ) }>
 				<SwitchRow
 					title={ __( 'Product Schema', 'lw-seo' ) }
 					help={ __(
@@ -137,6 +137,17 @@ export default function WooTab( { store } ) {
 					) }
 					offText={ __( 'Off', 'lw-seo' ) }
 				/>
+				<TextRow
+					title={ __( 'Default brand', 'lw-seo' ) }
+					help={ __(
+						'Used as the product brand when a product has no brand attribute or brand term.',
+						'lw-seo'
+					) }
+					store={ store }
+					name="woo_default_brand"
+				/>
+			</Section>
+			<Section title={ __( 'Sitemap and indexing', 'lw-seo' ) }>
 				<SwitchRow
 					title={ __( 'Products in Sitemap', 'lw-seo' ) }
 					store={ store }
@@ -157,6 +168,31 @@ export default function WooTab( { store } ) {
 					name="sitemap_product_tag"
 					onText={ inc }
 					offText={ exc }
+				/>
+				<SwitchRow
+					title={ __( 'Hidden products', 'lw-seo' ) }
+					help={ __(
+						'Products with catalog visibility set to Hidden.',
+						'lw-seo'
+					) }
+					store={ store }
+					name="woo_sitemap_exclude_hidden"
+					onText={ exc }
+					offText={ inc }
+				/>
+				<SwitchRow
+					title={ __( 'Noindex hidden products', 'lw-seo' ) }
+					store={ store }
+					name="woo_noindex_hidden"
+					onText={ __( 'noindex', 'lw-seo' ) }
+					offText={ __( 'Indexed', 'lw-seo' ) }
+				/>
+				<SwitchRow
+					title={ __( 'Out-of-stock products', 'lw-seo' ) }
+					store={ store }
+					name="woo_sitemap_exclude_outofstock"
+					onText={ exc }
+					offText={ inc }
 				/>
 			</Section>
 		</>

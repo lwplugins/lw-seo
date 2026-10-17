@@ -57,6 +57,7 @@ final class Integration implements IntegrationInterface {
 			return;
 		}
 
+		( new CatalogVisibility() )->register();
 		new OpenGraph();
 		new Schema();
 		new PermalinkWatcher();
