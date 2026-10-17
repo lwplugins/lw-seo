@@ -37,12 +37,22 @@ final class LogRepositoryTest extends MonkeyTestCase {
 		$this->assertStringContainsString( "'/o\\'brien'", $sql, 'values must be escaped by prepare()' );
 	}
 
-	public function test_new_url_is_skipped_at_the_row_cap(): void {
+	public function test_oldest_entry_is_evicted_before_the_insert_at_the_cap(): void {
 		$this->db->var_queue = [ '5' ];
 
 		( new LogRepository() )->record( '/new', '', '', 5 );
 
-		$this->assertCount( 2, $this->db->queries, 'lookup and count only, no insert' );
+		$this->assertCount( 4, $this->db->queries );
+		$this->assertSame( 'DELETE FROM wp_lw_seo_404_log ORDER BY last_seen ASC LIMIT 1', $this->db->queries[2] );
+		$this->assertStringContainsString( 'INSERT INTO', $this->db->queries[3] );
+	}
+
+	public function test_eviction_is_bounded_per_request(): void {
+		$this->db->var_queue = [ '500' ];
+
+		( new LogRepository() )->record( '/new', '', '', 5 );
+
+		$this->assertStringContainsString( 'ORDER BY last_seen ASC LIMIT 10', $this->db->queries[2] );
 	}
 
 	public function test_new_url_is_inserted_below_the_cap(): void {
@@ -50,6 +60,7 @@ final class LogRepositoryTest extends MonkeyTestCase {
 
 		( new LogRepository() )->record( '/new', '', '', 5 );
 
+		$this->assertCount( 3, $this->db->queries, 'no DELETE below the cap' );
 		$this->assertStringContainsString( 'INSERT INTO', $this->db->queries[2] );
 	}
 

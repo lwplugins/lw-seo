@@ -37,9 +37,6 @@ final class LoggerTest extends MonkeyTestCase {
 		Functions\when( 'absint' )->alias( static fn( $v ) => abs( (int) $v ) );
 		Functions\when( 'apply_filters' )->alias( static fn( string $hook, $value ) => $value );
 		Functions\when( 'wp_using_ext_object_cache' )->justReturn( false );
-		if ( ! defined( 'DAY_IN_SECONDS' ) ) {
-			define( 'DAY_IN_SECONDS', 86400 );
-		}
 	}
 
 	protected function tearDown(): void {

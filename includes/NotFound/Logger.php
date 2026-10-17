@@ -38,11 +38,6 @@ final class Logger {
 	private const CACHE_GROUP = 'lw_seo_404';
 
 	/**
-	 * Seconds a URL is not written again.
-	 */
-	public const THROTTLE = 60;
-
-	/**
 	 * Constructor.
 	 *
 	 * @param LogRepository $repository Log storage.
@@ -76,7 +71,7 @@ final class Logger {
 		// With a persistent object cache the throttle costs no DB access; without
 		// one, LogRepository::record() skips a row written in the last THROTTLE
 		// seconds (a transient per URL would create an options row per URL).
-		if ( wp_using_ext_object_cache() && ! wp_cache_add( 'lw_seo_404_t_' . md5( $path ), 1, self::CACHE_GROUP, self::THROTTLE ) ) {
+		if ( wp_using_ext_object_cache() && ! wp_cache_add( 'lw_seo_404_t_' . md5( $path ), 1, self::CACHE_GROUP, LogRepository::THROTTLE ) ) {
 			return;
 		}
 

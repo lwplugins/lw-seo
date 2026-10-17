@@ -20,13 +20,18 @@ namespace LightweightPlugins\SEO\NotFound;
 class LogRepository {
 
 	/**
+	 * Seconds a URL is not written again (shared with the Logger's cache throttle).
+	 */
+	public const THROTTLE = 60;
+
+	/**
+	 * Most rows evicted by one request when the table is over its cap.
+	 */
+	private const MAX_EVICTIONS = 10;
+
+	/**
 	 * Sortable columns (request value => column).
 	 */
-	/**
-	 * Seconds a row is not written again.
-	 */
-	private const THROTTLE = 60;
-
 	private const ORDERBY = [
 		'last_seen' => 'last_seen',
 		'hits'      => 'hits',
@@ -36,8 +41,8 @@ class LogRepository {
 	/**
 	 * Count a hit on a path.
 	 *
-	 * A row seen in the last 60 s is left alone, an older one gets one UPDATE,
-	 * and a new URL is inserted only while the table is below the row cap.
+	 * A row seen in the last 60 s is left alone and an older one gets one UPDATE.
+	 * A new URL is inserted; at the row cap the oldest entries are evicted first.
 	 *
 	 * @param string $path       Requested path.
 	 * @param string $referrer   Referrer URL without its query string.
@@ -75,9 +80,14 @@ class LogRepository {
 			return;
 		}
 
-		// The table is capped, so counting it is cheap. A full table takes no new URLs.
-		if ( (int) $wpdb->get_var( "SELECT COUNT(*) FROM {$table}" ) >= max( 1, $max_rows ) ) {
-			return;
+		// The table is capped, so counting it is cheap. At the cap the oldest
+		// entries make room, so a flood of random URLs cannot lock real 404s out.
+		$max_rows = max( 1, $max_rows );
+		$excess   = (int) $wpdb->get_var( "SELECT COUNT(*) FROM {$table}" ) - $max_rows + 1;
+		if ( $excess > 0 ) {
+			$wpdb->query(
+				$wpdb->prepare( "DELETE FROM {$table} ORDER BY last_seen ASC LIMIT %d", min( $excess, self::MAX_EVICTIONS ) )
+			);
 		}
 
 		// ON DUPLICATE KEY covers two concurrent first hits of the same URL.
