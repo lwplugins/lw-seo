@@ -67,6 +67,27 @@ final class ImageCollector {
 	}
 
 	/**
+	 * Whether images beyond the featured image may be listed for a post.
+	 *
+	 * @param \WP_Post $post Post.
+	 * @return bool
+	 */
+	public static function content_allowed( \WP_Post $post ): bool {
+		/**
+		 * Whether the images inside the post content (and integration
+		 * galleries) may be listed.
+		 *
+		 * Restriction plugins can return false to list the featured image only.
+		 *
+		 * @since 1.9.0
+		 *
+		 * @param bool     $include Whether to list them (default true).
+		 * @param \WP_Post $post    Post.
+		 */
+		return (bool) apply_filters( 'lw_seo_sitemap_content_images', true, $post );
+	}
+
+	/**
 	 * The part of the post content that is safe to scan for images.
 	 *
 	 * Shortcodes (with their enclosed content) are dropped, and in block
@@ -77,17 +98,7 @@ final class ImageCollector {
 	 * @return string
 	 */
 	private static function scannable_html( \WP_Post $post ): string {
-		/**
-		 * Whether the images inside the post content may be listed.
-		 *
-		 * Restriction plugins can return false to list the featured image only.
-		 *
-		 * @since 1.9.0
-		 *
-		 * @param bool     $include Whether to scan the content (default true).
-		 * @param \WP_Post $post    Post.
-		 */
-		if ( ! apply_filters( 'lw_seo_sitemap_content_images', true, $post ) ) {
+		if ( ! self::content_allowed( $post ) ) {
 			return '';
 		}
 

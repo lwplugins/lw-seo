@@ -9,6 +9,8 @@ declare(strict_types=1);
 
 namespace LightweightPlugins\SEO\Integrations\WooCommerce;
 
+use LightweightPlugins\SEO\Sitemap\ImageCollector;
+
 /**
  * Adds the product gallery to the images listed for a product. Gallery ids
  * come from the (already cached) post meta and the attachments of a whole
@@ -54,7 +56,7 @@ final class SitemapImages {
 	public function append_gallery( $urls, \WP_Post $post ): array {
 		$urls = is_array( $urls ) ? array_values( $urls ) : [];
 
-		if ( 'product' !== $post->post_type ) {
+		if ( 'product' !== $post->post_type || ! ImageCollector::content_allowed( $post ) ) {
 			return $urls;
 		}
 
