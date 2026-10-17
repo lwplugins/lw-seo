@@ -9,6 +9,7 @@ import { __ } from '@wordpress/i18n';
  */
 import { SwitchRow, TextRow } from '../components/Fields';
 import Section from '../components/Section';
+import PoliciesSection from './woo/PoliciesSection';
 
 const inc = __( 'Included', 'lw-seo' );
 const exc = __( 'Left out', 'lw-seo' );
@@ -158,6 +159,7 @@ export default function WooTab( { store } ) {
 					name="woo_default_brand"
 				/>
 			</Section>
+			<PoliciesSection store={ store } />
 			<Section title={ __( 'Sitemap and indexing', 'lw-seo' ) }>
 				<SwitchRow
 					title={ __( 'Products in Sitemap', 'lw-seo' ) }

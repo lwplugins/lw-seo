@@ -9,6 +9,8 @@ declare(strict_types=1);
 
 namespace LightweightPlugins\SEO\CLI;
 
+use LightweightPlugins\SEO\Admin\CommerceSanitizer;
+
 /**
  * Turns a raw `wp lw-seo option set` CLI string into a typed value, matched
  * against an option's default. Pure — no WordPress or WP-CLI calls, so
@@ -72,6 +74,10 @@ final class OptionValueParser {
 	 * @throws \InvalidArgumentException When $raw cannot be parsed for the target type.
 	 */
 	public static function parse( string $key, string $raw, mixed $default, array $choices ): mixed {
+		if ( CommerceSanitizer::handles( $key ) ) {
+			return self::parse_commerce( $key, $raw, $default );
+		}
+
 		if ( is_bool( $default ) ) {
 			return self::parse_bool( $raw );
 		}
@@ -92,6 +98,31 @@ final class OptionValueParser {
 		}
 
 		return $raw;
+	}
+
+	/**
+	 * Parse a shipping or return policy value with the settings screen's rules.
+	 *
+	 * @param string $key     Option key.
+	 * @param string $raw     Raw CLI value.
+	 * @param mixed  $default Option default.
+	 * @return int|string
+	 *
+	 * @throws \InvalidArgumentException When a number or country list is invalid.
+	 */
+	private static function parse_commerce( string $key, string $raw, mixed $default ): int|string {
+		if ( is_int( $default ) ) {
+			return CommerceSanitizer::days( self::parse_int( $raw ) );
+		}
+
+		$clean = CommerceSanitizer::value( $key, $raw, $default );
+
+		if ( '' === $clean && '' !== trim( $raw ) ) {
+			// phpcs:ignore WordPress.Security.EscapeOutput.ExceptionNotEscaped -- CLI-only message; WP_CLI::error() prints it as plain text, never rendered as HTML.
+			throw new \InvalidArgumentException( sprintf( 'Invalid value "%s" for %s.', $raw, $key ) );
+		}
+
+		return $clean;
 	}
 
 	/**

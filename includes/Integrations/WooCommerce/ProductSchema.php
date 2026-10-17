@@ -188,7 +188,7 @@ final class ProductSchema {
 			$offer['seller'] = $seller;
 		}
 
-		return $offer;
+		return (array) apply_filters( 'lw_seo_woo_offer', $offer, $product );
 	}
 
 	/**

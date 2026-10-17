@@ -32,6 +32,10 @@ final class SettingsSanitizer {
 		'content_signals_ai_input' => [ '', 'yes', 'no' ],
 		'content_signals_ai_train' => [ '', 'yes', 'no' ],
 		'html_sitemap_order'       => [ 'title', 'date' ],
+		'woo_shipping_rate_type'   => [ 'flat', 'free' ],
+		'woo_return_category'      => [ 'finite', 'not_permitted', 'unlimited' ],
+		'woo_return_method'        => [ 'by_mail', 'in_store' ],
+		'woo_return_fees'          => [ 'free', 'customer_pays' ],
 	];
 
 	/**
@@ -82,6 +86,10 @@ final class SettingsSanitizer {
 	 * @return mixed
 	 */
 	private static function value( string $key, mixed $value, mixed $default ): mixed {
+		if ( CommerceSanitizer::handles( $key ) ) {
+			return CommerceSanitizer::value( $key, $value, $default );
+		}
+
 		if ( is_bool( $default ) ) {
 			return ! empty( $value );
 		}

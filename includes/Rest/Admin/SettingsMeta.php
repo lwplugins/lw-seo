@@ -38,6 +38,7 @@ final class SettingsMeta {
 
 		return [
 			'woo_active'             => Loader::is_active( 'woocommerce' ),
+			'woo_currency'           => function_exists( 'get_woocommerce_currency' ) ? (string) get_woocommerce_currency() : '',
 			'conflict_plugin'        => HeadMeta::conflicting_plugin_name(),
 			'urls'                   => [
 				'sitemap' => home_url( '/sitemap.xml' ),

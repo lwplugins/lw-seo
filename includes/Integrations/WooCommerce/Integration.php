@@ -62,6 +62,10 @@ final class Integration implements IntegrationInterface {
 		new Schema();
 		new PermalinkWatcher();
 		new SitemapImages();
+
+		if ( Options::get( 'schema_enabled' ) && Options::get( 'woo_schema_enabled', true ) ) {
+			OfferPolicies::register();
+		}
 	}
 
 	/**
