@@ -70,6 +70,8 @@ final class ActivatorTest extends MonkeyTestCase {
 		$this->assertContains( '^sitemap\.xml$', $this->rules, 'sitemap index rule missing' );
 		$this->assertContains( '^sitemap-([a-z0-9_-]+)\.xml$', $this->rules, 'sitemap sub-rule missing' );
 		$this->assertContains( '^sitemap-([a-z0-9_-]+?)-(\d+)\.xml$', $this->rules, 'paged sitemap rule missing' );
+		$this->assertContains( '^sitemap\.xsl$', $this->rules, 'sitemap stylesheet rule missing' );
+		$this->assertContains( '^sitemap\.xsl$', $this->rules, 'sitemap stylesheet rule missing' );
 		$this->assertContains( '^llms\.txt$', $this->rules, 'llms.txt rule missing' );
 		$this->assertNotContains( '^llms-full\.txt$', $this->rules, 'llms-full.txt is opt-in' );
 		$this->assertSame( [ 'md', 'markdown' ], $this->endpoints );
@@ -87,6 +89,7 @@ final class ActivatorTest extends MonkeyTestCase {
 		Activator::activate();
 
 		$this->assertNotContains( '^sitemap\.xml$', $this->rules );
+		$this->assertNotContains( '^sitemap\.xsl$', $this->rules );
 		$this->assertContains( '^llms\.txt$', $this->rules );
 		$this->assertSame( 1, $this->flushes );
 	}
@@ -117,12 +120,19 @@ final class ActivatorTest extends MonkeyTestCase {
 		$this->assertSame( [ 'lw_seo_404_prune', 'lw_seo_indexnow_flush' ], $cleared );
 	}
 
-	public function test_deactivate_drops_stored_rules_instead_of_regenerating_them(): void {
-		Functions\expect( 'delete_option' )->once()->with( 'rewrite_rules' );
+	public function test_deactivate_drops_stored_rules_and_the_indexnow_queue(): void {
+		$deleted = [];
+		Functions\when( 'delete_option' )->alias(
+			static function ( string $name ) use ( &$deleted ): bool {
+				$deleted[] = $name;
+				return true;
+			}
+		);
 		Functions\when( 'wp_clear_scheduled_hook' )->justReturn( 1 );
 
 		Activator::deactivate();
 
+		$this->assertSame( [ 'rewrite_rules', 'lw_seo_indexnow_queue' ], $deleted );
 		$this->assertSame( [], $this->rules, 'deactivation must not register rules' );
 		$this->assertSame( 0, $this->flushes, 'a flush would re-add the rules registered on init' );
 	}

@@ -80,6 +80,8 @@ final class Sitemap {
 			'index.php?lw_sitemap=$matches[1]',
 			'top'
 		);
+
+		Stylesheet::add_rewrite_rule();
 	}
 
 	/**
@@ -247,7 +249,6 @@ final class Sitemap {
 	public static function activate(): void {
 		$sitemap = new self();
 		$sitemap->add_rewrite_rules();
-		Stylesheet::add_rewrite_rule();
 		flush_rewrite_rules();
 	}
 

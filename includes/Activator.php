@@ -65,7 +65,9 @@ final class Activator {
 		delete_option( 'rewrite_rules' );
 
 		NotFound\Pruner::unschedule();
+		// Pending IndexNow URLs must not be sent after a later reactivation.
+		delete_option( IndexNow\Queue::OPTION );
 		// Created by the IndexNow queue; clearing a hook that never ran is harmless.
-		wp_clear_scheduled_hook( 'lw_seo_indexnow_flush' );
+		wp_clear_scheduled_hook( IndexNow\Queue::HOOK );
 	}
 }
