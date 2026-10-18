@@ -224,6 +224,43 @@ final class SeoAbilities {
 				'meta'                => self::readonly_meta(),
 			]
 		);
+
+		wp_register_ability(
+			'lw-seo/set-options',
+			[
+				'label'               => __( 'Set SEO Options', 'lw-seo' ),
+				'description'         => __( 'Update global LW SEO settings. Only the submitted keys change; each value is sanitized like a save on the settings screen. Use lw-seo/get-options for the keys and their current values.', 'lw-seo' ),
+				'category'            => 'seo',
+				'execute_callback'    => [ SeoService::class, 'set_options' ],
+				'permission_callback' => $permissions->callback( 'can_manage_options' ),
+				'input_schema'        => [
+					'type'       => 'object',
+					'properties' => [
+						'options' => [
+							'type'        => 'object',
+							'description' => __( 'Option keys and their new values, e.g. {"separator": "|", "sitemap_enabled": true}.', 'lw-seo' ),
+						],
+					],
+					'required'   => [ 'options' ],
+				],
+				'output_schema'       => [
+					'type'       => 'object',
+					'properties' => [
+						'success' => [ 'type' => 'boolean' ],
+						'updated' => [
+							'type'  => 'array',
+							'items' => [ 'type' => 'string' ],
+						],
+						'skipped' => [
+							'type'  => 'array',
+							'items' => [ 'type' => 'string' ],
+						],
+						'options' => [ 'type' => 'object' ],
+					],
+				],
+				'meta'                => self::write_meta(),
+			]
+		);
 	}
 
 	/**

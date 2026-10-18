@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace LightweightPlugins\SEO\Integrations\SiteManager;
 
 use LightweightPlugins\SEO\Admin\MarkdownOverrideField;
+use LightweightPlugins\SEO\Admin\SettingsStore;
 use LightweightPlugins\SEO\ContentSignals;
 use LightweightPlugins\SEO\Markdown\Dispatcher;
 use LightweightPlugins\SEO\Options;
@@ -131,6 +132,32 @@ final class SeoService {
 		return [
 			'success' => true,
 			'options' => Options::get_all(),
+		];
+	}
+
+	/**
+	 * Update global LW SEO options.
+	 *
+	 * A partial update through the settings screen's own save path: only the
+	 * submitted keys change, each sanitized like a settings-screen save.
+	 * Unknown keys are not saved and are listed in "skipped".
+	 *
+	 * @param array<string, mixed> $input Input parameters.
+	 * @return array<string, mixed>|\WP_Error
+	 */
+	public static function set_options( array $input ): array|\WP_Error {
+		$submitted = isset( $input['options'] ) && is_array( $input['options'] ) ? $input['options'] : [];
+		$known     = array_intersect_key( $submitted, Options::get_defaults() );
+
+		if ( [] === $known ) {
+			return new \WP_Error( 'no_options', __( 'No known LW SEO option keys were submitted. Use lw-seo/get-options to list them.', 'lw-seo' ), [ 'status' => 400 ] );
+		}
+
+		return [
+			'success' => true,
+			'updated' => array_keys( $known ),
+			'skipped' => array_keys( array_diff_key( $submitted, $known ) ),
+			'options' => SettingsStore::save( $known ),
 		];
 	}
 

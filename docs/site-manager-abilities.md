@@ -1,6 +1,6 @@
 # LW Site Manager - SEO Abilities
 
-LW SEO registers 5 abilities with LW Site Manager, enabling AI agents and automation tools to manage SEO settings programmatically.
+LW SEO registers 6 abilities with LW Site Manager, enabling AI agents and automation tools to manage SEO settings programmatically.
 
 These abilities are only active when LW Site Manager is also installed and activated. No hard dependency - the integration is a no-op otherwise.
 
@@ -13,6 +13,7 @@ These abilities are only active when LW Site Manager is also installed and activ
 | `lw-seo/get-content-signals` | readonly | Get resolved AI Content Signals |
 | `lw-seo/get-markdown` | readonly | Get content as markdown |
 | `lw-seo/get-options` | readonly | Get global SEO settings |
+| `lw-seo/set-options` | write | Update global SEO settings |
 
 ## Authentication
 
@@ -255,6 +256,40 @@ curl -u "user:app-password" \
 }
 ```
 
+## lw-seo/set-options
+
+Update global LW SEO settings. Only the submitted keys change; every other
+setting keeps its stored value. Each value is sanitized exactly like a save
+on the settings screen (same sanitizer, same `update_option()` side
+effects such as the rewrite flush and the llms.txt cache). Keys that are
+not LW SEO options are not saved and are listed in `skipped`. Use
+`lw-seo/get-options` for the key names and their current values.
+
+**Method:** POST
+
+```bash
+curl -u "user:app-password" -X POST \
+  -H "Content-Type: application/json" \
+  -d '{"input": {"options": {"separator": "|", "sitemap_images": true}}}' \
+  "https://example.com/wp-json/wp-abilities/v1/abilities/lw-seo/set-options/run"
+```
+
+**Response (excerpt):**
+```json
+{
+  "success": true,
+  "updated": ["separator", "sitemap_images"],
+  "skipped": [],
+  "options": {
+    "separator": "|",
+    "sitemap_images": true
+  }
+}
+```
+
+When no submitted key is an LW SEO option, the ability returns a 400
+`WP_Error` (`no_options`) and saves nothing.
+
 ## Examples
 
 ### Bulk SEO meta update
@@ -297,3 +332,4 @@ above.
 | `lw-seo/get-content-signals` | `edit_posts`, and read access to the target object |
 | `lw-seo/get-markdown` | `edit_posts`, and read access to the target object |
 | `lw-seo/get-options` | `manage_options` |
+| `lw-seo/set-options` | `manage_options` |

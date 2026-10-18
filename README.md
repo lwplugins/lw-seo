@@ -115,7 +115,7 @@ Lightweight SEO plugin for WordPress - minimal footprint, maximum impact.
 ### Developer & Automation
 - **WP-CLI** - `wp lw-seo option|sitemap|llms|robots|crawlers|redirect|not-found|indexnow|migrate …` — every setting can be read and set (validated) from the command line, see [docs/cli.md](docs/cli.md)
 - **REST API** - Read-only `lw-seo/v1` endpoints for headless setups, see [docs/rest-api.md](docs/rest-api.md)
-- **LW Site Manager abilities** - `lw-seo/get-meta`, `set-meta`, `get-content-signals`, `get-markdown`, `get-options` (per-object permission checks), see [docs/site-manager-abilities.md](docs/site-manager-abilities.md)
+- **LW Site Manager abilities** - `lw-seo/get-meta`, `set-meta`, `get-content-signals`, `get-markdown`, `get-options`, `set-options` (per-object permission checks), see [docs/site-manager-abilities.md](docs/site-manager-abilities.md)
 - **Hooks** - including `lw_seo_post_noindex`, `lw_seo_woo_offer`, `lw_seo_woo_varies_by_map`, `lw_seo_html_sitemap_sections` and `lw_seo_html_sitemap_output`; see [docs/developers.md](docs/developers.md)
 
 ## Installation

@@ -3,7 +3,7 @@ Contributors: lwplugins
 Tags: seo, sitemap, schema, opengraph, breadcrumbs
 Requires at least: 6.6
 Tested up to: 7.1
-Stable tag: 1.9.0
+Stable tag: 1.9.1
 Requires PHP: 8.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -168,6 +168,9 @@ Only if you turn on IndexNow. See External services below.
 6. Settings page - Advanced tab
 
 == Changelog ==
+
+= 1.9.1 =
+* New: `lw-seo/set-options` ability: AI agents (through LW Site Manager's MCP server) and REST clients can update the global LW SEO settings. Only the submitted keys change, each sanitized like a save on the settings screen; requires manage_options.
 
 = 1.9.0 =
 * New: Image sitemap: featured and in-content images (and WooCommerce gallery images) are listed in the XML sitemap; content inside shortcodes and non-media blocks is skipped. Filters: lw_seo_sitemap_images and lw_seo_sitemap_content_images.

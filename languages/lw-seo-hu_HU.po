@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LW SEO 1.6.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/lw-seo\n"
-"POT-Creation-Date: 2026-10-17T21:18:04+00:00\n"
+"POT-Creation-Date: 2026-10-18T05:23:04+00:00\n"
 "PO-Revision-Date: 2026-09-24 18:50+0000\n"
 "Last-Translator: Claude AI <ai@anthropic.com>\n"
 "Language-Team: LW Plugins <info@lwplugins.com>\n"
@@ -766,42 +766,72 @@ msgstr "SEO opciók lekérése"
 msgid "Get global LW SEO settings."
 msgstr "Globális LW SEO beállítások lekérése."
 
-#: includes/Integrations/SiteManager/SeoService.php:54
-#: includes/Integrations/SiteManager/SeoService.php:74
+#: includes/Integrations/SiteManager/SeoAbilities.php:231
+msgid "Set SEO Options"
+msgstr "SEO-beállítások módosítása"
+
+#: includes/Integrations/SiteManager/SeoAbilities.php:232
+msgid ""
+"Update global LW SEO settings. Only the submitted keys change; each value is "
+"sanitized like a save on the settings screen. Use lw-seo/get-options for the "
+"keys and their current values."
+msgstr ""
+"Az LW SEO webhelyszintű beállításainak módosítása. Csak a beküldött kulcsok "
+"változnak, mindegyik értéket úgy tisztítja, mint a beállításoldal mentése. A "
+"kulcsokat és a jelenlegi értékeket a lw-seo/get-options adja meg."
+
+#: includes/Integrations/SiteManager/SeoAbilities.php:241
+msgid ""
+"Option keys and their new values, e.g. {\"separator\": \"|\", "
+"\"sitemap_enabled\": true}."
+msgstr ""
+"A beállításkulcsok és az új értékeik, pl. {\"separator\": \"|\", "
+"\"sitemap_enabled\": true}."
+
+#: includes/Integrations/SiteManager/SeoService.php:55
+#: includes/Integrations/SiteManager/SeoService.php:75
 msgid "Provide post_id or term_id."
 msgstr "Adj meg post_id-t vagy term_id-t."
 
-#: includes/Integrations/SiteManager/SeoService.php:107
+#: includes/Integrations/SiteManager/SeoService.php:108
 msgid "Post or term not found."
 msgstr "A bejegyzés vagy kifejezés nem található."
 
-#: includes/Integrations/SiteManager/SeoService.php:146
-#: includes/Integrations/SiteManager/SeoService.php:207
+#: includes/Integrations/SiteManager/SeoService.php:153
+msgid ""
+"No known LW SEO option keys were submitted. Use lw-seo/get-options to list "
+"them."
+msgstr ""
+"Egyetlen ismert LW SEO beállításkulcs sem érkezett. A listájukat a lw-seo/get-"
+"options adja meg."
+
+#: includes/Integrations/SiteManager/SeoService.php:173
+#: includes/Integrations/SiteManager/SeoService.php:234
 #: includes/Rest/PublicObjectAccess.php:130
 msgid "Post not found."
 msgstr "A bejegyzés nem található."
 
-#: includes/Integrations/SiteManager/SeoService.php:176
-#: includes/Integrations/SiteManager/SeoService.php:227
+#: includes/Integrations/SiteManager/SeoService.php:203
+#: includes/Integrations/SiteManager/SeoService.php:254
 #: includes/Rest/PublicObjectAccess.php:139
 msgid "Term not found."
 msgstr "A kifejezés nem található."
 
-#: includes/Integrations/SiteManager/SeoService.php:211
+#: includes/Integrations/SiteManager/SeoService.php:238
 msgid "You are not allowed to edit this post."
 msgstr "Nincs jogosultságod a bejegyzés szerkesztéséhez."
 
-#: includes/Integrations/SiteManager/SeoService.php:231
+#: includes/Integrations/SiteManager/SeoService.php:258
 msgid "You are not allowed to edit this term."
 msgstr "Nincs jogosultságod a kifejezés szerkesztéséhez."
 
 #. translators: %d: number of fields updated
-#: includes/Integrations/SiteManager/SeoService.php:275
+#: includes/Integrations/SiteManager/SeoService.php:302
 #, php-format
 msgid "%d SEO fields updated."
 msgstr "%d SEO mező frissítve."
 
-#: includes/Integrations/SiteManager/SeoService.php:303
+#: includes/Integrations/SiteManager/SeoService.php:330
 msgid "You are not allowed to read this post or term."
 msgstr "Nincs jogosultságod a bejegyzés vagy kifejezés olvasásához."
 
@@ -2560,7 +2590,8 @@ msgstr ""
 "Az alt szöveg nélküli vagy üres alt szövegű képek az oldal megjelenítésekor "
 "kapnak egyet. A médiatár nem módosul. Az üres alt szöveggel jelölik a "
 "szerkesztők a dekoratív képeket: ha egy kép alt szövegét üresen akarod "
-"hagyni, adj neki role=\"presentation\" vagy aria-hidden=\"true\" attribútumot."
+"hagyni, adj neki role=\"presentation\" vagy aria-hidden=\"true\" "
+"attribútumot."
 
 #: build/index.js:9
 msgid "Alt text"

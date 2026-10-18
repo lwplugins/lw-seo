@@ -1,5 +1,10 @@
 # Changelog
 
+## [1.9.1] - 2026-10-18
+
+### Added
+- `lw-seo/set-options` ability: AI agents (through LW Site Manager's MCP server) and REST clients can update the global LW SEO settings. Only the submitted keys change, each sanitized like a save on the settings screen; requires manage_options.
+
 ## [1.9.0] - 2026-10-17
 
 ### Added
