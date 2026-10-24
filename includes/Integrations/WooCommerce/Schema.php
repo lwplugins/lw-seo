@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace LightweightPlugins\SEO\Integrations\WooCommerce;
 
 use LightweightPlugins\SEO\Options;
+use LightweightPlugins\SEO\Schema\JsonLd;
 
 /**
  * Handles WooCommerce Product Schema.org JSON-LD.
@@ -121,7 +122,7 @@ final class Schema {
 			return;
 		}
 
-		$json = wp_json_encode( $schema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT );
+		$json = JsonLd::encode( $schema );
 
 		echo "\n<!-- LW SEO WooCommerce Schema -->\n";
 		echo '<script type="application/ld+json">' . "\n";

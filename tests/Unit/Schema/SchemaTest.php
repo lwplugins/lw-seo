@@ -242,4 +242,50 @@ final class SchemaTest extends MonkeyTestCase {
 		$this->assertNotContains( 'Person', $types );
 		$this->assertSame( [ 'WebSite', 'WebPage' ], $types );
 	}
+
+	/**
+	 * Invoke the private current-URL builder with a given request path.
+	 *
+	 * @param string $request Value of $wp->request.
+	 * @return string
+	 */
+	private function current_url_for( string $request ): string {
+		$this->arrange_environment();
+		// Mirrors core home_url(): a non-empty path is joined with one slash.
+		Functions\when( 'home_url' )->alias(
+			static fn( $path = '' ) => 'https://example.test' . ( '' !== $path ? '/' . ltrim( $path, '/' ) : '' )
+		);
+		// Mirrors the character filter of core esc_url_raw().
+		Functions\when( 'esc_url_raw' )->alias(
+			static fn( string $url ) => (string) preg_replace( '|[^a-z0-9-~+_.?#=!&;,/:%@$\|*\'()\[\]\\x80-\\xff]|i', '', $url )
+		);
+
+		$GLOBALS['wp'] = (object) [ 'request' => $request ];
+
+		$method = new \ReflectionMethod( Schema::class, 'get_current_url' );
+		$url = $method->invoke( new Schema() );
+
+		unset( $GLOBALS['wp'] );
+
+		return $url;
+	}
+
+	/**
+	 * A plain request path keeps the existing URL shape.
+	 */
+	public function test_current_url_for_plain_request(): void {
+		$this->assertSame( 'https://example.test/search/hello/', $this->current_url_for( 'search/hello' ) );
+		$this->assertSame( 'https://example.test', $this->current_url_for( '' ) );
+	}
+
+	/**
+	 * The current URL only carries URL-safe characters.
+	 */
+	public function test_current_url_is_url_safe(): void {
+		$url = $this->current_url_for( 'page/<2>' );
+
+		$this->assertStringNotContainsString( '<', $url );
+		$this->assertStringNotContainsString( '>', $url );
+		$this->assertSame( 'https://example.test/page/2/', $url );
+	}
 }

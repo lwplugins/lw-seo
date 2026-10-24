@@ -45,7 +45,7 @@ final class Schema {
 			'@graph'   => $graph,
 		];
 
-		$json = wp_json_encode( $schema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT );
+		$json = JsonLd::encode( $schema );
 
 		echo "\n<!-- LW SEO Schema -->\n";
 		echo '<script type="application/ld+json">' . "\n";
@@ -340,7 +340,7 @@ final class Schema {
 	 */
 	private function get_current_url(): string {
 		global $wp;
-		return home_url( $wp->request ? $wp->request . '/' : '' );
+		return esc_url_raw( home_url( $wp->request ? $wp->request . '/' : '' ) );
 	}
 
 	/**

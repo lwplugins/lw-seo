@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace LightweightPlugins\SEO\Local;
 
 use LightweightPlugins\SEO\Options;
+use LightweightPlugins\SEO\Schema\JsonLd;
 
 /**
  * Handles LocalBusiness Schema.org JSON-LD output.
@@ -63,7 +64,7 @@ final class Schema {
 			return;
 		}
 
-		$json = wp_json_encode( $schema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT );
+		$json = JsonLd::encode( $schema );
 
 		echo "\n<!-- LW SEO Local Business Schema -->\n";
 		echo '<script type="application/ld+json">' . "\n";

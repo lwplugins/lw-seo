@@ -66,7 +66,7 @@ final class TermScreen {
 			'termName'        => $term->name,
 		];
 
-		wp_add_inline_script( self::HANDLE, 'window.lwSeoTerm = ' . wp_json_encode( $data ) . ';', 'before' );
+		wp_add_inline_script( self::HANDLE, 'window.lwSeoTerm = ' . wp_json_encode( $data, JSON_HEX_TAG | JSON_HEX_AMP ) . ';', 'before' );
 
 		echo '<tr class="lw-seo-term-row"><td colspan="2"><div id="lw-seo-term-root"></div></td></tr>';
 	}
