@@ -1,5 +1,10 @@
 # Changelog
 
+## [1.9.2] - 2026-10-24
+
+### Fixed
+- Structured data (JSON-LD) and term editor data are encoded more strictly, and the current page URL in the structured data is sanitized.
+
 ## [1.9.1] - 2026-10-18
 
 ### Added
