@@ -205,4 +205,46 @@ final class TitleFilterTest extends MonkeyTestCase {
 
 		$this->assertSame( [ 'title' => 'News archive - Site' ], $parts );
 	}
+
+	/**
+	 * Issue #22: a title that prints the page number itself does not get
+	 * WordPress's "Page 2" part on top of it.
+	 *
+	 * @dataProvider provide_page_number_variables
+	 *
+	 * @param string $variable Page number variable.
+	 */
+	public function test_a_template_with_a_page_variable_drops_the_wordpress_page_part( string $variable ): void {
+		Functions\when( 'is_category' )->justReturn( true );
+		Functions\when( 'get_queried_object' )->justReturn( new \WP_Term( [ 'term_id' => 5, 'taxonomy' => 'category', 'name' => 'News' ] ) );
+		Functions\when( 'get_term_meta' )->justReturn( '%%term_title%% ' . $variable . ' %%sep%% %%sitename%%' );
+		Functions\when( 'get_query_var' )->justReturn( 2 );
+		Functions\stubTranslationFunctions();
+		$GLOBALS['wp_query'] = (object) [ 'max_num_pages' => 2 ];
+
+		$parts = ( new TitleFilter() )->filter_title( [ 'title' => 'News', 'page' => 'Page 2', 'site' => 'Site' ] );
+
+		unset( $GLOBALS['wp_query'] );
+		$this->assertArrayNotHasKey( 'page', $parts );
+	}
+
+	/**
+	 * @return array<string, array{0: string}>
+	 */
+	public static function provide_page_number_variables(): array {
+		return [
+			'%%page%%'       => [ '%%page%%' ],
+			'%%pagenumber%%' => [ '%%pagenumber%%' ],
+		];
+	}
+
+	public function test_a_template_without_a_page_variable_keeps_the_wordpress_page_part(): void {
+		Functions\when( 'is_category' )->justReturn( true );
+		Functions\when( 'get_queried_object' )->justReturn( new \WP_Term( [ 'term_id' => 5, 'taxonomy' => 'category', 'name' => 'News' ] ) );
+		Functions\when( 'get_term_meta' )->justReturn( '%%term_title%% %%sep%% %%sitename%%' );
+
+		$parts = ( new TitleFilter() )->filter_title( [ 'title' => 'News', 'page' => 'Page 2', 'site' => 'Site' ] );
+
+		$this->assertSame( 'Page 2', $parts['page'] ?? null );
+	}
 }

@@ -304,7 +304,7 @@ final class ReplaceVars {
 	}
 
 	/**
-	 * Get page string like "Page 2 of 5".
+	 * Get page string like "Page 2 of 5", empty on the first page.
 	 *
 	 * @return string
 	 */
@@ -312,7 +312,7 @@ final class ReplaceVars {
 		$page  = (int) self::get_page_number();
 		$total = (int) self::get_page_total();
 
-		if ( $page <= 1 && $total <= 1 ) {
+		if ( $page <= 1 ) {
 			return '';
 		}
 

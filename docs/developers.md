@@ -185,6 +185,19 @@ $html = apply_filters( 'lw_seo_html_sitemap_output', $html, $args );
 $endpoint = apply_filters( 'lw_seo_indexnow_endpoint', $endpoint );
 
 /**
+ * Filter whether IndexNow may notify search engines from this site. Only
+ * consulted while IndexNow is switched on. By default it is paused while
+ * Settings → Reading discourages search engines or the environment type is
+ * not production.
+ *
+ * @since 1.9.2
+ *
+ * @param bool   $active Default decision.
+ * @param string $reason 'not_public', 'environment', or '' when active.
+ */
+$active = apply_filters( 'lw_seo_indexnow_active', $active, $reason );
+
+/**
  * Fires when the site's public content or the plugin settings changed and
  * cached documents built from them (llms.txt, HTML sitemap, ...) are stale.
  *

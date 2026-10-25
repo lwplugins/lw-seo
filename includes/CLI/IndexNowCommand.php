@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace LightweightPlugins\SEO\CLI;
 
+use LightweightPlugins\SEO\IndexNow\Activity;
 use LightweightPlugins\SEO\IndexNow\Client;
 use LightweightPlugins\SEO\IndexNow\Key;
 use LightweightPlugins\SEO\IndexNow\Log;
@@ -38,6 +39,11 @@ final class IndexNowCommand {
 	 */
 	public function submit( array $args, array $assoc_args ): void {
 		if ( ! $this->enabled() ) {
+			return;
+		}
+
+		if ( ! Activity::is_active() ) {
+			\WP_CLI::error( Activity::message( Activity::reason() ) );
 			return;
 		}
 
@@ -80,6 +86,10 @@ final class IndexNowCommand {
 	 */
 	public function status( array $args, array $assoc_args ): void {
 		\WP_CLI::line( 'Enabled: ' . ( Options::get( 'indexnow_enabled' ) ? 'yes' : 'no' ) );
+		$reason = Activity::reason();
+		if ( '' !== $reason && Activity::REASON_DISABLED !== $reason ) {
+			\WP_CLI::warning( Activity::message( $reason ) );
+		}
 		\WP_CLI::line( 'Key file: ' . ( '' === Key::get() ? '(none yet)' : Key::location() ) );
 		\WP_CLI::line( 'Queued changes: ' . Queue::size() );
 

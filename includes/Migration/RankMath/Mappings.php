@@ -148,5 +148,7 @@ final class Mappings {
 		'name'             => 'author',
 		'term'             => 'term_title',
 		'term_description' => 'term_description',
+		// Empty on the first page, like %%pagenumber%% (%%page%% always prints the number).
+		'page'             => 'pagenumber',
 	];
 }

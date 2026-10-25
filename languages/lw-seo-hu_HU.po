@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LW SEO 1.6.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/lw-seo\n"
-"POT-Creation-Date: 2026-10-18T05:23:04+00:00\n"
+"POT-Creation-Date: 2026-10-25T18:11:07+00:00\n"
 "PO-Revision-Date: 2026-09-24 18:50+0000\n"
 "Last-Translator: Claude AI <ai@anthropic.com>\n"
 "Language-Team: LW Plugins <info@lwplugins.com>\n"
@@ -695,6 +695,28 @@ msgstr "Kép felirata"
 msgid "Image file name"
 msgstr "Kép fájlneve"
 
+#: includes/IndexNow/Activity.php:92
+msgid "IndexNow is turned off."
+msgstr "Az IndexNow ki van kapcsolva."
+
+#: includes/IndexNow/Activity.php:93
+msgid ""
+"IndexNow is paused: search engines are discouraged from indexing this site "
+"(Settings → Reading)."
+msgstr ""
+"Az IndexNow szünetel: a keresőmotorok el vannak tiltva az oldal "
+"indexelésétől (Beállítások → Olvasás)."
+
+#. translators: %s: environment type, e.g. staging.
+#: includes/IndexNow/Activity.php:96
+#, php-format
+msgid "IndexNow is paused: this is a \"%s\" environment, not production."
+msgstr "Az IndexNow szünetel: ez egy „%s” környezet, nem éles (production)."
+
+#: includes/IndexNow/Activity.php:99
+msgid "IndexNow is paused by the lw_seo_indexnow_active filter."
+msgstr "Az IndexNow-t az lw_seo_indexnow_active szűrő szünetelteti."
+
 #: includes/Integrations/SiteManager/Integration.php:60
 msgid "Search engine optimization abilities"
 msgstr "Keresőoptimalizálási képességek"
@@ -802,8 +824,8 @@ msgid ""
 "No known LW SEO option keys were submitted. Use lw-seo/get-options to list "
 "them."
 msgstr ""
-"Egyetlen ismert LW SEO beállításkulcs sem érkezett. A listájukat a lw-seo/get-"
-"options adja meg."
+"Egyetlen ismert LW SEO beállításkulcs sem érkezett. A listájukat a lw-seo/"
+"get-options adja meg."
 
 #: includes/Integrations/SiteManager/SeoService.php:173
 #: includes/Integrations/SiteManager/SeoService.php:234
@@ -1145,18 +1167,18 @@ msgstr "Ez a tartalom jogi okokból nem elérhető."
 msgid "Return to homepage"
 msgstr "Vissza a kezdőlapra"
 
-#: includes/Redirects/Manager.php:279
+#: includes/Redirects/Manager.php:331
 msgid "Invalid format."
 msgstr "Érvénytelen formátum."
 
 #. translators: 1: CSV line number, 2: reason the line was skipped
-#: includes/Redirects/Manager.php:298
+#: includes/Redirects/Manager.php:350
 #, php-format
 msgid "Line %1$d: %2$s"
 msgstr "%1$d. sor: %2$s"
 
 #. translators: 1: CSV line number, 2: reason the line was skipped
-#: includes/Redirects/Manager.php:298
+#: includes/Redirects/Manager.php:350
 msgid "Could not be saved."
 msgstr "Nem sikerült menteni."
 
@@ -1252,22 +1274,22 @@ msgid "Page X of Y"
 msgstr "X/Y. oldal"
 
 #. translators: %s: first rejected URL.
-#: includes/Rest/Admin/IndexNowController.php:76
+#: includes/Rest/Admin/IndexNowController.php:81
 #, php-format
 msgid "Only addresses on this site can be submitted: %s"
 msgstr "Csak ennek az oldalnak a címei küldhetők be: %s"
 
-#: includes/Rest/Admin/IndexNowController.php:84
+#: includes/Rest/Admin/IndexNowController.php:89
 msgid "Enter at least one URL."
 msgstr "Adj meg legalább egy URL-t."
 
 #. translators: %d: maximum number of URLs.
-#: includes/Rest/Admin/IndexNowController.php:91
+#: includes/Rest/Admin/IndexNowController.php:96
 #, php-format
 msgid "Submit at most %d URLs at a time."
 msgstr "Egyszerre legfeljebb %d URL küldhető be."
 
-#: includes/Rest/Admin/IndexNowController.php:149
+#: includes/Rest/Admin/IndexNowController.php:159
 msgid "Turn on IndexNow first."
 msgstr "Előbb kapcsold be az IndexNow-t."
 

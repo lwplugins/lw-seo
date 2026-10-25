@@ -152,6 +152,58 @@ final class Manager {
 	}
 
 	/**
+	 * Delete several redirects, by listed position or stable UUID. Every ID is
+	 * resolved before anything is removed, so one deletion never shifts the
+	 * position of another; when any ID is unknown, nothing is deleted.
+	 *
+	 * @param array<int, string> $ids Positions or UUIDs.
+	 * @return array<int, string> The unknown IDs, empty on success.
+	 */
+	public static function delete_many( array $ids ): array {
+		$redirects = self::get_all();
+		$keys      = [];
+		$missing   = [];
+
+		foreach ( $ids as $id ) {
+			$key = self::find_key( $redirects, (string) $id );
+
+			if ( null === $key ) {
+				$missing[] = (string) $id;
+				continue;
+			}
+
+			$keys[ $key ] = true;
+		}
+
+		if ( [] === $missing && [] !== $keys ) {
+			update_option( self::OPTION_NAME, array_values( array_diff_key( $redirects, $keys ) ), false );
+		}
+
+		return $missing;
+	}
+
+	/**
+	 * Array key of a redirect given by position or UUID.
+	 *
+	 * @param array<int, array<string, mixed>> $redirects Stored redirects.
+	 * @param string                           $id        Position or UUID.
+	 * @return int|null
+	 */
+	private static function find_key( array $redirects, string $id ): ?int {
+		if ( ctype_digit( $id ) ) {
+			return isset( $redirects[ (int) $id ] ) ? (int) $id : null;
+		}
+
+		foreach ( $redirects as $key => $redirect ) {
+			if ( '' !== $id && ( $redirect['id'] ?? '' ) === $id ) {
+				return (int) $key;
+			}
+		}
+
+		return null;
+	}
+
+	/**
 	 * Delete all redirects.
 	 *
 	 * @return bool Success.

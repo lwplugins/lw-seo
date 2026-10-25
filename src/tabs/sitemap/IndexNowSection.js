@@ -1,7 +1,7 @@
 /**
  * WordPress dependencies
  */
-import { Button, TextareaControl } from '@wordpress/components';
+import { Button, Notice, TextareaControl } from '@wordpress/components';
 import { useDispatch } from '@wordpress/data';
 import { useState } from '@wordpress/element';
 import { __, sprintf } from '@wordpress/i18n';
@@ -38,6 +38,8 @@ export default function IndexNowSection( { store } ) {
 	const [ newKeyUrl, setKeyUrl ] = useState( null );
 	const [ newLog, setLog ] = useState( null );
 	const keyUrl = newKeyUrl ?? meta.indexnow?.key_url ?? '';
+	// Why a switched-on IndexNow sends nothing (non-public or non-production site).
+	const paused = meta.indexnow?.paused ?? '';
 	const log = newLog ?? meta.indexnow?.log ?? [];
 	const [ urls, setUrls ] = useState( '' );
 	const [ busy, setBusy ] = useState( false );
@@ -110,6 +112,11 @@ export default function IndexNowSection( { store } ) {
 					'lw-seo'
 				) }
 			/>
+			{ options.indexnow_enabled && paused && (
+				<Notice status="warning" isDismissible={ false }>
+					{ paused }
+				</Notice>
+			) }
 			{ options.indexnow_enabled && keyUrl && (
 				<SettingRow
 					title={ __( 'Key file', 'lw-seo' ) }

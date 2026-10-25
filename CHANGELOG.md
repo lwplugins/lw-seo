@@ -1,8 +1,12 @@
 # Changelog
 
-## [1.9.2] - 2026-10-24
+## [1.9.2] - 2026-10-25
 
 ### Fixed
+- IndexNow no longer sends anything from a site that discourages search engines (Settings → Reading) or whose environment type is not production, such as a staging or local copy of the database. Nothing is queued or sent and the key file is not served; the IndexNow screen and `wp lw-seo indexnow status` say why. The new `lw_seo_indexnow_active` filter overrides the decision (#25).
+- The Rank Math import maps `%page%` to `%%pagenumber%%`, so imported titles no longer show a "1" on every first page (#22).
+- `%%pagenumber%%` is empty on the first page of a paginated archive too, and a title that prints the page number itself no longer gets the page number a second time at the end (#22).
+- `wp lw-seo redirect delete` takes several IDs (or the stable UUIDs, now shown by `redirect list`) and resolves them all before deleting, so deleting one no longer shifts the IDs of the others and removes the wrong redirect (#22).
 - Structured data (JSON-LD) and term editor data are encoded more strictly, and the current page URL in the structured data is sanitized.
 
 ## [1.9.1] - 2026-10-18

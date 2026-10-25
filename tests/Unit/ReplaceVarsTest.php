@@ -99,6 +99,39 @@ final class ReplaceVarsTest extends MonkeyTestCase {
 	/**
 	 * The separator comes from the saved plugin options when set.
 	 */
+	/**
+	 * Issue #22: the page string is empty on the first page of a paginated
+	 * archive, and only shows from page 2 on.
+	 *
+	 * @dataProvider provide_pagination
+	 *
+	 * @param int    $paged    Current page query var.
+	 * @param int    $total    Total pages.
+	 * @param string $expected Expected %%pagenumber%%.
+	 */
+	public function test_pagenumber_is_empty_on_the_first_page( int $paged, int $total, string $expected ): void {
+		Functions\stubTranslationFunctions();
+		Functions\when( 'get_query_var' )->justReturn( $paged );
+		$GLOBALS['wp_query'] = (object) [ 'max_num_pages' => $total ];
+
+		$result = ReplaceVars::replace( '%%pagenumber%%' );
+
+		unset( $GLOBALS['wp_query'] );
+		$this->assertSame( $expected, $result );
+	}
+
+	/**
+	 * @return array<string, array{0: int, 1: int, 2: string}>
+	 */
+	public static function provide_pagination(): array {
+		return [
+			'single page'            => [ 0, 1, '' ],
+			'first of two (paged 0)' => [ 0, 2, '' ],
+			'first of two (paged 1)' => [ 1, 2, '' ],
+			'second of two'          => [ 2, 2, 'Page 2 of 2' ],
+		];
+	}
+
 	public function test_sep_uses_separator_from_saved_options(): void {
 		Functions\when( 'get_option' )->alias(
 			static fn( string $key, $default_value = false ) => 'lw_seo_options' === $key

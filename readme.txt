@@ -44,7 +44,7 @@ LW SEO provides essential SEO features without the bloat. No upsells, no trackin
 * Image sitemap (featured, in-content and WooCommerce gallery images) and a browser-readable sitemap view
 * HTML sitemap with a shortcode and a block, cached
 * 404 log (off by default) with hit counts and one-click redirect creation
-* IndexNow (off by default) to notify participating search engines about changes
+* IndexNow (off by default) to notify participating search engines about changes; paused on sites that discourage search engines or are not in production
 * Image alt and title templates (off by default), applied at display time
 * 404 to homepage redirect option (after WordPress's own redirects for renamed slugs and guessed URLs)
 
@@ -156,7 +156,7 @@ Only if you turn on IndexNow. See External services below.
 
 == External services ==
 
-**IndexNow** (off by default). When you turn it on under Sitemap → IndexNow, LW SEO sends the address of public, indexable content to api.indexnow.org when it is published, updated or deleted, so participating search engines can recrawl it. Sent: your site's host name, the page URLs, a verification key generated on your site and the key file's URL. No personal data is sent. Terms: https://www.indexnow.org/terms , privacy: https://privacy.microsoft.com/privacystatement
+**IndexNow** (off by default). When you turn it on under Sitemap → IndexNow, LW SEO sends the address of public, indexable content to api.indexnow.org when it is published, updated or deleted, so participating search engines can recrawl it. Sent: your site's host name, the page URLs, a verification key generated on your site and the key file's URL. No personal data is sent. Nothing is sent while Settings → Reading discourages search engines or the environment type is not production. Terms: https://www.indexnow.org/terms , privacy: https://privacy.microsoft.com/privacystatement
 
 == Screenshots ==
 
@@ -170,6 +170,10 @@ Only if you turn on IndexNow. See External services below.
 == Changelog ==
 
 = 1.9.2 =
+* Fix: IndexNow no longer sends anything from a site that discourages search engines (Settings → Reading) or whose environment type is not production, such as a staging or local copy of the database. Nothing is queued or sent and the key file is not served; the IndexNow screen and `wp lw-seo indexnow status` say why. The new `lw_seo_indexnow_active` filter overrides the decision (#25).
+* Fix: The Rank Math import maps `%page%` to `%%pagenumber%%`, so imported titles no longer show a "1" on every first page (#22).
+* Fix: `%%pagenumber%%` is empty on the first page of a paginated archive too, and a title that prints the page number itself no longer gets the page number a second time at the end (#22).
+* Fix: `wp lw-seo redirect delete` takes several IDs (or the stable UUIDs, now shown by `redirect list`) and resolves them all before deleting, so deleting one no longer shifts the IDs of the others and removes the wrong redirect (#22).
 * Fix: Structured data (JSON-LD) and term editor data are encoded more strictly, and the current page URL in the structured data is sanitized.
 
 = 1.9.1 =

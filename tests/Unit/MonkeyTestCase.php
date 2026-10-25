@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace LightweightPlugins\SEO\Tests\Unit;
 
 use Brain\Monkey;
+use Brain\Monkey\Functions;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -26,6 +27,8 @@ abstract class MonkeyTestCase extends TestCase {
 	protected function setUp(): void {
 		parent::setUp();
 		Monkey\setUp();
+		// A production site unless a test says otherwise (IndexNow gates on it).
+		Functions\when( 'wp_get_environment_type' )->justReturn( 'production' );
 	}
 
 	/**

@@ -9,8 +9,6 @@ declare(strict_types=1);
 
 namespace LightweightPlugins\SEO\IndexNow;
 
-use LightweightPlugins\SEO\Options;
-
 /**
  * Serves /{key}.txt. The rewrite pattern matches any 32-hex name, so
  * regenerating the key needs no rewrite flush.
@@ -21,7 +19,7 @@ final class KeyFile {
 	 * Constructor.
 	 */
 	public function __construct() {
-		if ( ! Options::get( 'indexnow_enabled' ) ) {
+		if ( ! Activity::is_active() ) {
 			return;
 		}
 
@@ -57,7 +55,7 @@ final class KeyFile {
 	 * @return string|null
 	 */
 	public static function content_for( string $requested ): ?string {
-		if ( ! Options::get( 'indexnow_enabled' ) ) {
+		if ( ! Activity::is_active() ) {
 			return null;
 		}
 

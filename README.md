@@ -45,6 +45,7 @@ Lightweight SEO plugin for WordPress - minimal footprint, maximum impact.
 - Notifies participating search engines when public, indexable content is published, updated or deleted
 - **External service** - when enabled, the page URLs, your host name, a verification key generated on your site and the key file URL are sent to `api.indexnow.org`; no personal data. The key file is served by your site
 - Manual URL submit and a log of recent submissions in the same screen; `wp lw-seo indexnow`
+- **Paused on non-public sites** - nothing is queued, sent or served while "Discourage search engines" is set or the environment type is not `production` (so a copied database does not notify search engines); the `lw_seo_indexnow_active` filter overrides it
 
 ### Schema.org / JSON-LD
 - **WebSite Schema** - Site-wide structured data
@@ -154,7 +155,8 @@ Use these in title templates:
 | `%%currentdate%%` | Current date |
 | `%%currentmonth%%` | Current month |
 | `%%currentyear%%` | Current year |
-| `%%page%%` / `%%pagenumber%%` | Page number |
+| `%%page%%` | Page number |
+| `%%pagenumber%%` | "Page 2 of 5", empty on the first page |
 | `%%searchphrase%%` | Search query |
 | `%%image_title%%` / `%%image_caption%%` / `%%image_filename%%` | Image title, caption and file name (image alt/title templates only) |
 

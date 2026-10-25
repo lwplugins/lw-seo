@@ -191,11 +191,15 @@ wp lw-seo sitemap flush
 ```
 wp lw-seo redirect list [--format=<table|csv|json|count>]
 wp lw-seo redirect add <source> <destination> [--type=<301|302|307|410|451>] [--regex]
-wp lw-seo redirect delete <id>
+wp lw-seo redirect delete <id>...
 wp lw-seo redirect delete --all [--yes]
 wp lw-seo redirect import <file>
 wp lw-seo redirect export [<file>]
 ```
+
+`redirect delete` takes one or more IDs or UUIDs as `redirect list` shows
+them. All are resolved before any is deleted, so the IDs of the others do not
+shift; if one is unknown, nothing is deleted.
 
 `redirect add` and `redirect import` skip a source that already has a
 redirect.
@@ -225,7 +229,9 @@ wp lw-seo not-found prune
 ## `wp lw-seo indexnow`
 
 IndexNow is off by default (**Sitemap → IndexNow**); `submit` and `key` need it
-turned on. Submitting sends the URLs to api.indexnow.org.
+turned on. Submitting sends the URLs to api.indexnow.org. `submit` also refuses
+(and `status` warns) while the site discourages search engines or the
+environment type is not `production`.
 
 ```
 wp lw-seo indexnow submit <url>... [--queue]

@@ -85,10 +85,11 @@ final class TitleFilter {
 	 */
 	private function front_page_title( array $title_parts ): array {
 		$page         = FrontPageMeta::page();
-		$custom_title = null !== $page ? ObjectText::post( $page, 'title' ) : '';
+		$saved        = null !== $page ? ObjectText::saved_post( $page, 'title' ) : '';
+		$custom_title = null !== $page ? ObjectText::resolve( $saved, $page ) : '';
 
 		if ( '' !== $custom_title ) {
-			return $this->custom_title( $title_parts, $custom_title );
+			return $this->custom_title( $title_parts, $custom_title, $saved );
 		}
 
 		return $this->apply_template( $title_parts, (string) Options::get( 'title_home' ) );
@@ -113,10 +114,11 @@ final class TitleFilter {
 			return $title_parts;
 		}
 
-		$custom_title = ObjectText::post( $post, 'title' );
+		$saved        = ObjectText::saved_post( $post, 'title' );
+		$custom_title = ObjectText::resolve( $saved, $post );
 
 		if ( ! empty( $custom_title ) ) {
-			return $this->custom_title( $title_parts, $custom_title );
+			return $this->custom_title( $title_parts, $custom_title, $saved );
 		}
 
 		return $this->apply_template( $title_parts, (string) Options::get( 'title_page' ), $post );
@@ -135,10 +137,11 @@ final class TitleFilter {
 			return $title_parts;
 		}
 
-		$custom_title = ObjectText::post( $post, 'title' );
+		$saved        = ObjectText::saved_post( $post, 'title' );
+		$custom_title = ObjectText::resolve( $saved, $post );
 
 		if ( ! empty( $custom_title ) ) {
-			return $this->custom_title( $title_parts, $custom_title );
+			return $this->custom_title( $title_parts, $custom_title, $saved );
 		}
 
 		return $this->apply_template( $title_parts, (string) Options::get( 'title_' . $post->post_type ), $post );
@@ -157,10 +160,11 @@ final class TitleFilter {
 			return $title_parts;
 		}
 
-		$custom_title = ObjectText::term( $term, 'title' );
+		$saved        = ObjectText::saved_term( $term, 'title' );
+		$custom_title = ObjectText::resolve( $saved, null, $term );
 
 		if ( ! empty( $custom_title ) ) {
-			return $this->custom_title( $title_parts, $custom_title );
+			return $this->custom_title( $title_parts, $custom_title, $saved );
 		}
 
 		return $this->apply_template( $title_parts, (string) Options::get( 'title_' . $term->taxonomy ), null, $term );
@@ -171,14 +175,14 @@ final class TitleFilter {
 	 * site name / tagline suffix is dropped, the same way a template drops it.
 	 *
 	 * @param array<string, string> $title_parts Title parts.
-	 * @param string                $title       The custom title.
+	 * @param string                $title       The custom title, variables filled in.
+	 * @param string                $saved       The custom title as saved.
 	 * @return array<string, string>
 	 */
-	private function custom_title( array $title_parts, string $title ): array {
+	private function custom_title( array $title_parts, string $title, string $saved ): array {
 		$title_parts['title'] = $title;
-		unset( $title_parts['site'], $title_parts['tagline'] );
 
-		return $title_parts;
+		return $this->drop_suffixes( $title_parts, $saved );
 	}
 
 	/**
@@ -203,7 +207,25 @@ final class TitleFilter {
 		}
 
 		$title_parts['title'] = ReplaceVars::replace( $template, $post, $term, $user );
+
+		return $this->drop_suffixes( $title_parts, $template );
+	}
+
+	/**
+	 * Drop the parts WordPress adds after the title: the site name and
+	 * tagline always, the "Page 2" part when the title prints the page number
+	 * itself.
+	 *
+	 * @param array<string, string> $title_parts Title parts.
+	 * @param string                $source      The title as written, variables unresolved.
+	 * @return array<string, string>
+	 */
+	private function drop_suffixes( array $title_parts, string $source ): array {
 		unset( $title_parts['site'], $title_parts['tagline'] );
+
+		if ( 1 === preg_match( '/%%page(number)?%%/', $source ) ) {
+			unset( $title_parts['page'] );
+		}
 
 		return $title_parts;
 	}

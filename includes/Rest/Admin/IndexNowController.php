@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace LightweightPlugins\SEO\Rest\Admin;
 
+use LightweightPlugins\SEO\IndexNow\Activity;
 use LightweightPlugins\SEO\IndexNow\Client;
 use LightweightPlugins\SEO\IndexNow\Key;
 use LightweightPlugins\SEO\IndexNow\Log;
@@ -62,6 +63,10 @@ final class IndexNowController {
 	public function submit( WP_REST_Request $request ) {
 		if ( ! Options::get( 'indexnow_enabled' ) ) {
 			return $this->disabled();
+		}
+
+		if ( ! Activity::is_active() ) {
+			return new WP_Error( 'lw_seo_indexnow_inactive', Activity::message( Activity::reason() ), [ 'status' => 400 ] );
 		}
 
 		$raw = $request->get_param( 'urls' );
@@ -118,15 +123,20 @@ final class IndexNowController {
 	 * IndexNow state for the settings screen. The key is created as soon as
 	 * the feature is on, so the key URL shows right after the first save.
 	 *
-	 * @return array{key_url: string, log: array<int, array<string, mixed>>}
+	 * `paused` explains why a switched-on IndexNow sends nothing ('' otherwise).
+	 *
+	 * @return array{key_url: string, paused: string, log: array<int, array<string, mixed>>}
 	 */
 	public static function meta(): array {
-		if ( Options::get( 'indexnow_enabled' ) ) {
+		$reason = Activity::reason();
+
+		if ( Activity::REASON_DISABLED !== $reason ) {
 			Key::ensure();
 		}
 
 		return [
 			'key_url' => '' === Key::get() ? '' : Key::location(),
+			'paused'  => Activity::REASON_DISABLED === $reason ? '' : Activity::message( $reason ),
 			'log'     => self::log(),
 		];
 	}

@@ -182,6 +182,17 @@ final class QueueTest extends MonkeyTestCase {
 		$this->assertArrayNotHasKey( 'lw_seo_indexnow_queue', $this->store );
 	}
 
+	public function test_flush_on_a_non_public_site_drops_the_queue_without_sending(): void {
+		$this->stub_store( true );
+		$this->store['blog_public']           = '0';
+		$this->store['lw_seo_indexnow_queue'] = [ 'https://e.com/a/' ];
+		Functions\expect( 'wp_remote_post' )->never();
+
+		Queue::flush();
+
+		$this->assertArrayNotHasKey( 'lw_seo_indexnow_queue', $this->store );
+	}
+
 	public function test_disabling_clears_queue_and_event(): void {
 		Functions\expect( 'delete_option' )->once()->with( 'lw_seo_indexnow_queue' );
 		Functions\expect( 'wp_clear_scheduled_hook' )->once()->with( 'lw_seo_indexnow_flush' );

@@ -36,7 +36,7 @@ final class Watcher {
 	 * Constructor.
 	 */
 	public function __construct() {
-		if ( ! Options::get( 'indexnow_enabled' ) ) {
+		if ( ! Activity::is_active() ) {
 			return;
 		}
 

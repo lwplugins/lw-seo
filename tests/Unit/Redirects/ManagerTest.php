@@ -168,4 +168,54 @@ final class ManagerTest extends MonkeyTestCase {
 			[ $result['imported'], $result['skipped'], $result['errors'] ]
 		);
 	}
+
+	/**
+	 * Issue #22: deleting several redirects by their listed IDs removes
+	 * exactly those, not the ones that slid into their place.
+	 */
+	public function test_delete_many_removes_the_listed_redirects(): void {
+		$this->options[ Manager::OPTION_NAME ] = $this->rules( [ 'a', 'b', 'c', 'd' ] );
+
+		$missing = Manager::delete_many( [ '1', '2' ] );
+
+		$this->assertSame( [], $missing );
+		$this->assertSame( [ '/a', '/d' ], array_column( $this->options[ Manager::OPTION_NAME ], 'source' ) );
+	}
+
+	public function test_delete_many_accepts_the_stable_uuid(): void {
+		$this->options[ Manager::OPTION_NAME ] = $this->rules( [ 'a', 'b', 'c' ] );
+
+		Manager::delete_many( [ 'uuid-c', '0' ] );
+
+		$this->assertSame( [ '/b' ], array_column( $this->options[ Manager::OPTION_NAME ], 'source' ) );
+	}
+
+	public function test_delete_many_reports_unknown_ids_and_deletes_nothing(): void {
+		$this->options[ Manager::OPTION_NAME ] = $this->rules( [ 'a', 'b' ] );
+
+		$missing = Manager::delete_many( [ '1', '7', 'nope' ] );
+
+		$this->assertSame( [ '7', 'nope' ], $missing );
+		$this->assertCount( 2, $this->options[ Manager::OPTION_NAME ] );
+	}
+
+	/**
+	 * Stored redirect rows.
+	 *
+	 * @param array<int, string> $names Row names.
+	 * @return array<int, array<string, mixed>>
+	 */
+	private function rules( array $names ): array {
+		return array_map(
+			static fn( string $name ): array => [
+				'id'          => 'uuid-' . $name,
+				'source'      => '/' . $name,
+				'destination' => '/to-' . $name,
+				'type'        => 301,
+				'regex'       => false,
+				'hits'        => 0,
+			],
+			$names
+		);
+	}
 }

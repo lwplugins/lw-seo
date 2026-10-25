@@ -35,6 +35,7 @@ final class RedirectCommand {
 		foreach ( Manager::get_all() as $id => $redirect ) {
 			$rows[] = [
 				'id'          => (string) $id,
+				'uuid'        => (string) ( $redirect['id'] ?? '' ),
 				'source'      => $redirect['source'],
 				'destination' => $redirect['destination'],
 				'type'        => (string) $redirect['type'],
@@ -43,7 +44,7 @@ final class RedirectCommand {
 			];
 		}
 		$format = $assoc_args['format'] ?? 'table';
-		\WP_CLI\Utils\format_items( $format, $rows, [ 'id', 'source', 'destination', 'type', 'regex', 'hits' ] );
+		\WP_CLI\Utils\format_items( $format, $rows, [ 'id', 'uuid', 'source', 'destination', 'type', 'regex', 'hits' ] );
 	}
 
 	/**
@@ -83,12 +84,13 @@ final class RedirectCommand {
 	}
 
 	/**
-	 * Delete a redirect by ID, or all redirects.
+	 * Delete redirects by ID, or all redirects.
 	 *
 	 * ## OPTIONS
 	 *
-	 * [<id>]
-	 * : Redirect ID to delete.
+	 * [<id>...]
+	 * : One or more redirect IDs or UUIDs, as `list` shows them. All are
+	 * resolved before any is deleted, so the IDs of the others do not shift.
 	 *
 	 * [--all]
 	 * : Delete every redirect.
@@ -96,7 +98,7 @@ final class RedirectCommand {
 	 * [--yes]
 	 * : Skip confirmation.
 	 *
-	 * @param array<int, string>    $args       [id?].
+	 * @param array<int, string>    $args       IDs or UUIDs.
 	 * @param array<string, string> $assoc_args Associative args.
 	 * @return void
 	 */
@@ -108,15 +110,17 @@ final class RedirectCommand {
 			return;
 		}
 
-		if ( ! isset( $args[0] ) || '' === $args[0] ) {
-			\WP_CLI::error( 'Provide a redirect ID or use --all.' );
+		if ( [] === $args ) {
+			\WP_CLI::error( 'Provide one or more redirect IDs or use --all.' );
 		}
 
-		if ( ! Manager::delete( (int) $args[0] ) ) {
-			\WP_CLI::error( sprintf( 'No redirect with ID %d.', (int) $args[0] ) );
+		$missing = Manager::delete_many( $args );
+
+		if ( [] !== $missing ) {
+			\WP_CLI::error( sprintf( 'No redirect with ID %s. Nothing was deleted.', implode( ', ', $missing ) ) );
 		}
 
-		\WP_CLI::success( sprintf( 'Redirect #%d deleted.', (int) $args[0] ) );
+		\WP_CLI::success( sprintf( 'Deleted %d redirect(s): %s.', count( $args ), implode( ', ', $args ) ) );
 	}
 
 	/**

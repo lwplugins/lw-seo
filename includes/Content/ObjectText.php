@@ -37,7 +37,18 @@ final class ObjectText {
 	 * @return string '' when the post has no value.
 	 */
 	public static function post( \WP_Post $post, string $field ): string {
-		return self::resolve( MetaCoerce::as_string( Options::get_post_meta( (int) $post->ID, $field ) ), $post );
+		return self::resolve( self::saved_post( $post, $field ), $post );
+	}
+
+	/**
+	 * A post's own SEO text field as saved, variables unresolved.
+	 *
+	 * @param \WP_Post $post  Post object.
+	 * @param string   $field LW SEO meta field.
+	 * @return string
+	 */
+	public static function saved_post( \WP_Post $post, string $field ): string {
+		return MetaCoerce::as_string( Options::get_post_meta( (int) $post->ID, $field ) );
 	}
 
 	/**
@@ -48,7 +59,18 @@ final class ObjectText {
 	 * @return string '' when the term has no value.
 	 */
 	public static function term( \WP_Term $term, string $field ): string {
-		return self::resolve( MetaCoerce::as_string( Options::get_term_meta( (int) $term->term_id, $field ) ), null, $term );
+		return self::resolve( self::saved_term( $term, $field ), null, $term );
+	}
+
+	/**
+	 * A term's own SEO text field as saved, variables unresolved.
+	 *
+	 * @param \WP_Term $term  Term object.
+	 * @param string   $field LW SEO meta field.
+	 * @return string
+	 */
+	public static function saved_term( \WP_Term $term, string $field ): string {
+		return MetaCoerce::as_string( Options::get_term_meta( (int) $term->term_id, $field ) );
 	}
 
 	/**

@@ -105,7 +105,8 @@ final class Queue {
 		$queue = self::pending();
 		delete_option( self::OPTION );
 
-		if ( 0 === self::count( $queue ) || ! Options::get( 'indexnow_enabled' ) ) {
+		// An inactive site (switched off, not public, not production) drops it.
+		if ( 0 === self::count( $queue ) || ! Activity::is_active() ) {
 			return;
 		}
 
