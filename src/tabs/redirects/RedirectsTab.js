@@ -13,7 +13,7 @@ import {
 } from '@wordpress/components';
 import { useDispatch } from '@wordpress/data';
 import { useCallback, useState } from '@wordpress/element';
-import { __ } from '@wordpress/i18n';
+import { __, _n, sprintf } from '@wordpress/i18n';
 import { plus } from '@wordpress/icons';
 import { store as noticesStore } from '@wordpress/notices';
 
@@ -34,7 +34,7 @@ import { tableLabels } from './tableLabels';
 
 /**
  * Redirects: on/off (option), the list (search, type filter, sort by hits),
- * add/edit modal, delete, CSV import/export. List changes save immediately.
+ * add/edit modal, delete (one or the selected rows), CSV import/export. List changes save immediately.
  *
  * @param {Object} props
  * @param {Object} props.store Settings store.
@@ -44,6 +44,8 @@ export default function RedirectsTab( { store } ) {
 	const list = useRemote( load );
 	const [ editing, setEditing ] = useState( null ); // null | 'new' | item
 	const [ deleting, setDeleting ] = useState( null );
+	const [ selected, setSelected ] = useState( [] );
+	const [ bulkDeleting, setBulkDeleting ] = useState( null ); // null | ids
 	const { createSuccessNotice, createErrorNotice } =
 		useDispatch( noticesStore );
 	const items = list.data?.items || [];
@@ -138,9 +140,35 @@ export default function RedirectsTab( { store } ) {
 		setDeleting( null );
 		try {
 			await api.deleteRedirect( item.id );
+			setSelected( ( ids ) => ids.filter( ( id ) => id !== item.id ) );
 			createSuccessNotice( __( 'Redirect deleted.', 'lw-seo' ), {
 				type: 'snackbar',
 			} );
+			list.reload();
+		} catch ( e ) {
+			createErrorNotice( errorMessage( e ), { type: 'snackbar' } );
+		}
+	};
+
+	const removeSelected = async () => {
+		const ids = bulkDeleting;
+		setBulkDeleting( null );
+		try {
+			await api.deleteRedirects( ids );
+			createSuccessNotice(
+				sprintf(
+					/* translators: %d: number of deleted redirects. */
+					_n(
+						'%d redirect deleted.',
+						'%d redirects deleted.',
+						ids.length,
+						'lw-seo'
+					),
+					ids.length
+				),
+				{ type: 'snackbar' }
+			);
+			setSelected( [] );
 			list.reload();
 		} catch ( e ) {
 			createErrorNotice( errorMessage( e ), { type: 'snackbar' } );
@@ -217,6 +245,17 @@ export default function RedirectsTab( { store } ) {
 							),
 						} }
 						getRowId={ ( r ) => r.id }
+						getRowLabel={ ( r ) => r.source }
+						selection={ { selected, onChange: setSelected } }
+						bulkActions={ [
+							{
+								id: 'delete',
+								label: __( 'Delete', 'lw-seo' ),
+								isDestructive: true,
+								onClick: ( rows, ids ) =>
+									setBulkDeleting( ids ),
+							},
+						] }
 					/>
 				) }
 			</Section>
@@ -251,6 +290,23 @@ export default function RedirectsTab( { store } ) {
 					'lw-seo'
 				) }{ ' ' }
 				<code>{ deleting?.source }</code>
+			</ConfirmDialog>
+			<ConfirmDialog
+				isOpen={ !! bulkDeleting }
+				confirmButtonText={ __( 'Delete', 'lw-seo' ) }
+				onConfirm={ removeSelected }
+				onCancel={ () => setBulkDeleting( null ) }
+			>
+				{ sprintf(
+					/* translators: %d: number of selected redirects. */
+					_n(
+						'Are you sure you want to delete %d redirect?',
+						'Are you sure you want to delete %d redirects?',
+						bulkDeleting?.length || 0,
+						'lw-seo'
+					),
+					bulkDeleting?.length || 0
+				) }
 			</ConfirmDialog>
 		</>
 	);

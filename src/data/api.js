@@ -23,6 +23,7 @@ export const api = {
 		send( `/redirects/${ encodeURIComponent( id ) }`, 'PUT', data ),
 	deleteRedirect: ( id ) =>
 		send( `/redirects/${ encodeURIComponent( id ) }`, 'DELETE' ),
+	deleteRedirects: ( ids ) => send( '/redirects/delete', 'POST', { ids } ),
 	exportRedirects: () => apiFetch( { path: path( '/redirects/export' ) } ),
 	importRedirects: ( csv ) => send( '/redirects/import', 'POST', { csv } ),
 	testRedirect: ( url ) => send( '/redirects-test', 'POST', { url } ),

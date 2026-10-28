@@ -208,4 +208,8 @@ One SEO smart tag is left as it is.
 The Yoast SEO and Rank Math importers work the same way. They import
 options, post and term meta, primary categories and redirects (Yoast SEO
 Premium, Rank Math). Their mappings are documented in the
-[changelog](../CHANGELOG.md) (1.3.x and 1.4.0).
+[changelog](../CHANGELOG.md) (1.3.x and 1.4.0). Since 1.9.3 the Rank Math
+importer also brings over the title template and noindex setting of every
+public taxonomy (`tax_<taxonomy>_title` / `_robots`) and the product archive
+title (`pt_product_archive_title`); a setting still at the LW SEO default is
+replaced, one you changed is kept.

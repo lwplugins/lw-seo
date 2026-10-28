@@ -288,6 +288,32 @@ final class ReplaceVarsTest extends MonkeyTestCase {
 	}
 
 	/**
+	 * Issue #26: an empty variable between two separators leaves one
+	 * separator, so "Name %%sep%% %%pagenumber%% %%sep%% Shop" works on the
+	 * first page too.
+	 *
+	 * @dataProvider provide_separator_runs
+	 *
+	 * @param string $input    Template string.
+	 * @param string $expected Expected replacement result.
+	 */
+	public function test_separators_left_next_to_each_other_are_merged( string $input, string $expected ): void {
+		$this->assertSame( $expected, ReplaceVars::replace( $input ) );
+	}
+
+	/**
+	 * @return array<string, array{string, string}>
+	 */
+	public static function provide_separator_runs(): array {
+		return [
+			'empty variable between' => [ 'Név %%sep%% %%nemletezik%% %%sep%% Bolt', 'Név - Bolt' ],
+			'three in a row'         => [ 'Név %%sep%% %%sep%% %%sep%% Bolt', 'Név - Bolt' ],
+			'not next to each other' => [ 'A %%sep%% B %%sep%% C', 'A - B - C' ],
+			'literal dash in text'   => [ 'Covid-19 %%sep%% Bolt', 'Covid-19 - Bolt' ],
+		];
+	}
+
+	/**
 	 * Edge cases that need no scenario-specific stubs.
 	 *
 	 * @dataProvider provide_edge_cases

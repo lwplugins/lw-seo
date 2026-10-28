@@ -78,6 +78,29 @@ final class RedirectsControllerTest extends MonkeyTestCase {
 		$this->assertSame( '/changed', $result->get_data()['destination'] );
 	}
 
+	public function test_bulk_delete_removes_every_listed_redirect(): void {
+		$result = ( new RedirectsController() )->delete_items( new \WP_REST_Request( [ 'ids' => [ 'id-a', 'id-b' ] ] ) );
+
+		$this->assertInstanceOf( \WP_REST_Response::class, $result );
+		$this->assertSame( [ 'deleted' => 2 ], $result->get_data() );
+		$this->assertSame( [], $this->options[ Manager::OPTION_NAME ] );
+	}
+
+	public function test_bulk_delete_deletes_nothing_when_an_id_is_unknown(): void {
+		$result = ( new RedirectsController() )->delete_items( new \WP_REST_Request( [ 'ids' => [ 'id-a', 'gone' ] ] ) );
+
+		$this->assertInstanceOf( \WP_Error::class, $result );
+		$this->assertSame( 'lw_seo_redirect_not_found', $result->get_error_code() );
+		$this->assertCount( 2, $this->options[ Manager::OPTION_NAME ] );
+	}
+
+	public function test_bulk_delete_rejects_an_empty_list(): void {
+		$result = ( new RedirectsController() )->delete_items( new \WP_REST_Request( [ 'ids' => [] ] ) );
+
+		$this->assertInstanceOf( \WP_Error::class, $result );
+		$this->assertSame( [ 'status' => 400 ], $result->get_error_data() );
+	}
+
 	/**
 	 * Assert the 400 duplicate-source error.
 	 *

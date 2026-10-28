@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace LightweightPlugins\SEO\Migration\RankMath;
 
+use LightweightPlugins\SEO\Meta\TaxonomyTemplates;
 use LightweightPlugins\SEO\Migration\VariableConverter;
 use LightweightPlugins\SEO\Options;
 
@@ -71,14 +72,15 @@ final class OptionsMigrator {
 	 * @return int Number of migrated options.
 	 */
 	private function migrate_title_options( array $rm_titles, array &$lw_options, array &$details ): int {
-		$count = 0;
+		$count    = 0;
+		$defaults = Options::get_defaults();
 
-		foreach ( Mappings::TITLE_OPTIONS_MAP as $rm_key => $lw_key ) {
+		foreach ( $this->title_map() as $rm_key => $lw_key ) {
 			if ( ! isset( $rm_titles[ $rm_key ] ) ) {
 				continue;
 			}
 
-			if ( isset( $lw_options[ $lw_key ] ) && '' !== $lw_options[ $lw_key ] ) {
+			if ( $this->is_customised( $lw_options, $defaults, $lw_key ) ) {
 				continue;
 			}
 
@@ -91,6 +93,41 @@ final class OptionsMigrator {
 		}
 
 		return $count;
+	}
+
+	/**
+	 * The fixed title/robots mapping plus the title template and robots
+	 * setting of every other public taxonomy (WooCommerce product
+	 * categories, tags and attributes, custom taxonomies).
+	 *
+	 * @return array<string, string> Rank Math key => LW SEO key.
+	 */
+	private function title_map(): array {
+		$map = Mappings::TITLE_OPTIONS_MAP;
+
+		foreach ( TaxonomyTemplates::taxonomies() as $taxonomy ) {
+			$map[ 'tax_' . $taxonomy . '_title' ]  = 'title_' . $taxonomy;
+			$map[ 'tax_' . $taxonomy . '_robots' ] = 'noindex_' . $taxonomy;
+		}
+
+		return $map;
+	}
+
+	/**
+	 * Whether the site owner set a title/robots option to something other
+	 * than the LW SEO default (a stored default is imported over).
+	 *
+	 * @param array<string, mixed> $lw_options Stored LW SEO options.
+	 * @param array<string, mixed> $defaults   LW SEO defaults.
+	 * @param string               $lw_key     Option key.
+	 * @return bool
+	 */
+	private function is_customised( array $lw_options, array $defaults, string $lw_key ): bool {
+		if ( ! isset( $lw_options[ $lw_key ] ) || '' === $lw_options[ $lw_key ] ) {
+			return false;
+		}
+
+		return ! array_key_exists( $lw_key, $defaults ) || $lw_options[ $lw_key ] !== $defaults[ $lw_key ];
 	}
 
 	/**

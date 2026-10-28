@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.9.3] - 2026-10-28
+
+### Added
+- Every public taxonomy has a title template and a noindex setting under **Content → Taxonomies**, not only categories and tags: WooCommerce product categories, product tags and attributes and custom taxonomies too. The settings screen keeps them on save and `wp lw-seo option set title_<taxonomy> …` accepts them. The default is the category template (#26).
+- Select several redirects in the Redirects list and delete them at once (#29).
+
+### Fixed
+- The Rank Math import brings over the title template and noindex setting of every public taxonomy (for example the "Brand: " prefix of product attribute pages) and the product archive title, not only the category and tag templates. A template still at the LW SEO default is replaced by the imported one; one you changed is kept (#26).
+- When an empty variable leaves two separators next to each other in a title, only one is kept, so "%%term_title%% %%sep%% %%pagenumber%% %%sep%% %%sitename%%" also reads well on the first page (#26).
+
 ## [1.9.2] - 2026-10-25
 
 ### Fixed

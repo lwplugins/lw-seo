@@ -51,6 +51,8 @@ final class ReplaceVars {
 		self::$term = $term;
 		self::$user = $user;
 
+		$has_sep = str_contains( $string, '%%sep%%' );
+
 		// Find all %%variable%% patterns.
 		$string = preg_replace_callback(
 			'/%%([a-z_]+)%%/',
@@ -59,7 +61,13 @@ final class ReplaceVars {
 		);
 
 		// Clean up multiple spaces.
-		$string = preg_replace( '/\s+/', ' ', $string );
+		$string = (string) preg_replace( '/\s+/', ' ', $string );
+
+		// An empty variable between two separators leaves just one.
+		if ( $has_sep ) {
+			$sep    = preg_quote( self::get_separator(), '/' );
+			$string = (string) preg_replace( '/' . $sep . '(?: ' . $sep . ')+/u', self::get_separator(), $string );
+		}
 
 		return trim( $string );
 	}

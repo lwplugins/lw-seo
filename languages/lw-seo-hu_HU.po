@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LW SEO 1.6.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/lw-seo\n"
-"POT-Creation-Date: 2026-10-25T18:11:07+00:00\n"
+"POT-Creation-Date: 2026-10-28T11:18:27+00:00\n"
 "PO-Revision-Date: 2026-09-24 18:50+0000\n"
 "Last-Translator: Claude AI <ai@anthropic.com>\n"
 "Language-Team: LW Plugins <info@lwplugins.com>\n"
@@ -488,7 +488,7 @@ msgstr "Turisztikai információs központ"
 msgid "Travel Agency"
 msgstr "Utazási iroda"
 
-#: includes/Admin/Data/BusinessTypes.php:137 build/index.js:1 build/index.js:9
+#: includes/Admin/Data/BusinessTypes.php:137 build/index.js:1 build/index.js:10
 msgid "General"
 msgstr "Általános"
 
@@ -914,7 +914,7 @@ msgstr "Meta leírás"
 msgid "Enter a meta description..."
 msgstr "Adj meg egy meta leírást..."
 
-#: includes/MetaBox.php:174 build/index.js:1 build/index.js:9
+#: includes/MetaBox.php:174 build/index.js:1 build/index.js:10
 msgid "noindex"
 msgstr "noindex"
 
@@ -991,7 +991,7 @@ msgstr "Igen"
 msgid "No"
 msgstr "Nem"
 
-#: includes/MetaBox.php:297 build/editor.js:2 build/index.js:9 build/term.js:2
+#: includes/MetaBox.php:297 build/editor.js:2 build/index.js:10 build/term.js:2
 msgid "AI Training"
 msgstr "AI tanítás"
 
@@ -1196,80 +1196,80 @@ msgstr "Érvénytelen regex minta."
 
 #. translators: 1: current page number, 2: total page count
 #. translators: 1: current page, 2: total pages.
-#: includes/ReplaceVars.php:320 build/index.js:1
+#: includes/ReplaceVars.php:328 build/index.js:1
 #, php-format
 msgid "Page %1$d of %2$d"
 msgstr "%1$d/%2$d oldal"
 
-#: includes/ReplaceVars.php:330
+#: includes/ReplaceVars.php:338
 msgid "Site name"
 msgstr "Webhely neve"
 
-#: includes/ReplaceVars.php:331
+#: includes/ReplaceVars.php:339
 msgid "Site tagline"
 msgstr "Webhely jelmondata"
 
-#: includes/ReplaceVars.php:332
+#: includes/ReplaceVars.php:340
 msgid "Separator"
 msgstr "Elválasztó"
 
-#: includes/ReplaceVars.php:333
+#: includes/ReplaceVars.php:341
 msgid "Post/page title"
 msgstr "Bejegyzés/oldal címe"
 
-#: includes/ReplaceVars.php:334
+#: includes/ReplaceVars.php:342
 msgid "Post excerpt"
 msgstr "Bejegyzés kivonata"
 
-#: includes/ReplaceVars.php:335
+#: includes/ReplaceVars.php:343
 msgid "Post date"
 msgstr "Bejegyzés dátuma"
 
-#: includes/ReplaceVars.php:336
+#: includes/ReplaceVars.php:344
 msgid "Post modified date"
 msgstr "Bejegyzés módosításának dátuma"
 
-#: includes/ReplaceVars.php:337
+#: includes/ReplaceVars.php:345
 msgid "Author name"
 msgstr "Szerző neve"
 
-#: includes/ReplaceVars.php:338
+#: includes/ReplaceVars.php:346
 msgid "Primary category"
 msgstr "Elsődleges kategória"
 
-#: includes/ReplaceVars.php:339
+#: includes/ReplaceVars.php:347
 msgid "First tag"
 msgstr "Első címke"
 
-#: includes/ReplaceVars.php:340
+#: includes/ReplaceVars.php:348
 msgid "Term name"
 msgstr "Kifejezés neve"
 
-#: includes/ReplaceVars.php:341
+#: includes/ReplaceVars.php:349
 msgid "Term description"
 msgstr "Kifejezés leírása"
 
-#: includes/ReplaceVars.php:342
+#: includes/ReplaceVars.php:350
 msgid "Search query"
 msgstr "Keresési lekérdezés"
 
-#: includes/ReplaceVars.php:343
+#: includes/ReplaceVars.php:351
 msgid "Current year"
 msgstr "Aktuális év"
 
-#: includes/ReplaceVars.php:344
+#: includes/ReplaceVars.php:352
 msgid "Current month"
 msgstr "Aktuális hónap"
 
-#: includes/ReplaceVars.php:345
+#: includes/ReplaceVars.php:353
 msgid "Current date"
 msgstr "Aktuális dátum"
 
-#: includes/ReplaceVars.php:346
+#: includes/ReplaceVars.php:354
 msgid "Page number"
 msgstr "Oldalszám"
 
-#: includes/ReplaceVars.php:347
+#: includes/ReplaceVars.php:355
 msgid "Page X of Y"
 msgstr "X/Y. oldal"
 
@@ -1297,15 +1297,19 @@ msgstr "Előbb kapcsold be az IndexNow-t."
 msgid "Unknown migration source."
 msgstr "Ismeretlen migrációs forrás."
 
-#: includes/Rest/Admin/RedirectsController.php:85
+#: includes/Rest/Admin/RedirectsController.php:86
 msgid "Failed to add redirect."
 msgstr "Nem sikerült hozzáadni az átirányítást."
 
-#: includes/Rest/Admin/RedirectsController.php:151
+#: includes/Rest/Admin/RedirectsController.php:139
+msgid "No redirects selected."
+msgstr "Nincs kijelölt átirányítás."
+
+#: includes/Rest/Admin/RedirectsController.php:172
 msgid "No CSV data provided."
 msgstr "Nincs CSV adat megadva."
 
-#: includes/Rest/Admin/RedirectsController.php:233
+#: includes/Rest/Admin/RedirectsController.php:254
 msgid "Redirect not found."
 msgstr "Átirányítás nem található."
 
@@ -1566,7 +1570,7 @@ msgstr "Kérdés hozzáadása"
 msgid "Use the setting"
 msgstr "A beállítás szerint"
 
-#: assets/js/blocks/html-sitemap.js:19 build/index.js:9
+#: assets/js/blocks/html-sitemap.js:19 build/index.js:10
 msgid "Title"
 msgstr "Cím"
 
@@ -1574,11 +1578,11 @@ msgstr "Cím"
 msgid "Date"
 msgstr "Dátum"
 
-#: assets/js/blocks/html-sitemap.js:36 build/index.js:9
+#: assets/js/blocks/html-sitemap.js:36 build/index.js:10
 msgid "HTML sitemap"
 msgstr "HTML oldaltérkép"
 
-#: assets/js/blocks/html-sitemap.js:39 build/index.js:9
+#: assets/js/blocks/html-sitemap.js:39 build/index.js:10
 msgid "Post types"
 msgstr "Tartalomtípusok"
 
@@ -1586,7 +1590,7 @@ msgstr "Tartalomtípusok"
 msgid "Comma-separated, e.g. page,post. Empty uses the setting."
 msgstr "Vesszővel elválasztva, pl. page,post. Üresen a beállítás érvényes."
 
-#: assets/js/blocks/html-sitemap.js:44 build/index.js:9
+#: assets/js/blocks/html-sitemap.js:44 build/index.js:9 build/index.js:10
 msgid "Taxonomies"
 msgstr "Taxonómiák"
 
@@ -1594,7 +1598,7 @@ msgstr "Taxonómiák"
 msgid "Comma-separated, e.g. category. Empty uses the setting."
 msgstr "Vesszővel elválasztva, pl. category. Üresen a beállítás érvényes."
 
-#: assets/js/blocks/html-sitemap.js:50 build/index.js:9
+#: assets/js/blocks/html-sitemap.js:50 build/index.js:10
 msgid "Max items per section"
 msgstr "Elemek maximális száma szakaszonként"
 
@@ -1602,7 +1606,7 @@ msgstr "Elemek maximális száma szakaszonként"
 msgid "0 uses the setting; it can only lower it."
 msgstr "A 0 a beállítást használja; csak csökkenteni lehet vele."
 
-#: assets/js/blocks/html-sitemap.js:61 build/index.js:9
+#: assets/js/blocks/html-sitemap.js:61 build/index.js:10
 msgid "Order"
 msgstr "Sorrend"
 
@@ -1684,7 +1688,7 @@ msgstr "Tartalomtípusok"
 msgid "Social Media"
 msgstr "Közösségi média"
 
-#: build/index.js:1 build/index.js:9
+#: build/index.js:1 build/index.js:10
 msgid "XML Sitemap"
 msgstr "XML oldaltérkép"
 
@@ -1700,15 +1704,15 @@ msgstr "AI / LLM beállítások"
 msgid "WooCommerce"
 msgstr "WooCommerce"
 
-#: build/index.js:1 build/index.js:9
+#: build/index.js:1 build/index.js:10
 msgid "WooCommerce SEO"
 msgstr "WooCommerce SEO"
 
-#: build/index.js:1 build/index.js:9
+#: build/index.js:1 build/index.js:10
 msgid "Local SEO"
 msgstr "Helyi SEO"
 
-#: build/index.js:1 build/index.js:9
+#: build/index.js:1 build/index.js:10
 msgid "Redirects"
 msgstr "Átirányítások"
 
@@ -1716,7 +1720,7 @@ msgstr "Átirányítások"
 msgid "Redirect Manager"
 msgstr "Átirányításkezelő"
 
-#: build/index.js:1 build/index.js:9
+#: build/index.js:1 build/index.js:12
 msgid "404 Error Handling"
 msgstr "404 hibakezelés"
 
@@ -1732,7 +1736,7 @@ msgstr "Importálás"
 msgid "Import SEO Data"
 msgstr "SEO adatok importálása"
 
-#: build/index.js:1 build/index.js:9
+#: build/index.js:1 build/index.js:10
 msgid "Not specified"
 msgstr "Nincs megadva"
 
@@ -1756,11 +1760,11 @@ msgstr "AI kereső crawlerek"
 msgid "User-triggered fetchers"
 msgstr "Felhasználó által indított lekérők"
 
-#: build/index.js:1 build/index.js:9
+#: build/index.js:1 build/index.js:10
 msgid "Blocked"
 msgstr "Tiltva"
 
-#: build/index.js:1 build/index.js:9
+#: build/index.js:1 build/index.js:10
 msgid "Allowed"
 msgstr "Engedélyezve"
 
@@ -1768,7 +1772,7 @@ msgstr "Engedélyezve"
 msgid "Variables:"
 msgstr "Változók:"
 
-#: build/index.js:1 build/index.js:9
+#: build/index.js:1 build/index.js:10
 msgid "Indexed"
 msgstr "Indexelve"
 
@@ -1962,11 +1966,11 @@ msgstr "Mégse"
 msgid "Update Redirect"
 msgstr "Átirányítás frissítése"
 
-#: build/index.js:1 build/index.js:9
+#: build/index.js:1 build/index.js:10
 msgid "Add Redirect"
 msgstr "Átirányítás hozzáadása"
 
-#: build/index.js:1 build/index.js:9
+#: build/index.js:1 build/index.js:10
 msgid "Search"
 msgstr "Keresés"
 
@@ -2054,7 +2058,7 @@ msgstr "%2$d közül %1$d elemre vonatkozik"
 msgid "URL"
 msgstr "URL"
 
-#: build/index.js:3 build/index.js:9
+#: build/index.js:3 build/index.js:10
 msgid "Hits"
 msgstr "Találatok"
 
@@ -2066,7 +2070,7 @@ msgstr "Utoljára látva"
 msgid "Referrer"
 msgstr "Hivatkozó oldal"
 
-#: build/index.js:3 build/index.js:9
+#: build/index.js:3 build/index.js:10
 msgid "Actions"
 msgstr "Műveletek"
 
@@ -2078,7 +2082,7 @@ msgstr "Átirányítás létrehozása"
 msgid "Log entry deleted."
 msgstr "A naplóbejegyzés törölve."
 
-#: build/index.js:3 build/index.js:9
+#: build/index.js:3 build/index.js:10
 msgid "Delete"
 msgstr "Törlés"
 
@@ -2126,7 +2130,7 @@ msgstr "Egy naplózott URL sem felel meg a keresésnek."
 msgid "No 404 URLs logged yet."
 msgstr "Még nincs naplózott 404-es URL."
 
-#: build/index.js:3 build/index.js:9
+#: build/index.js:3 build/index.js:10
 msgid "Redirect added."
 msgstr "Átirányítás hozzáadva."
 
@@ -2226,11 +2230,11 @@ msgstr ""
 "Azonnal értesítsd a keresőmotorokat az új, módosított és törölt tartalmakról "
 "a következő bejárásra várás helyett."
 
-#: build/index.js:6 build/index.js:8 build/index.js:9
+#: build/index.js:6 build/index.js:8 build/index.js:10 build/index.js:12
 msgid "Enabled"
 msgstr "Be"
 
-#: build/index.js:6 build/index.js:8 build/index.js:9
+#: build/index.js:6 build/index.js:8 build/index.js:10 build/index.js:12
 msgid "Off"
 msgstr "Ki"
 
@@ -2298,7 +2302,7 @@ msgstr "Idő"
 msgid "Result"
 msgstr "Eredmény"
 
-#: build/index.js:8 build/index.js:9
+#: build/index.js:8 build/index.js:9 build/index.js:10
 msgid "Included"
 msgstr "Benne van"
 
@@ -2396,7 +2400,7 @@ msgstr ""
 msgid "Return policy"
 msgstr "Visszaküldési szabályzat"
 
-#: build/index.js:9
+#: build/index.js:9 build/index.js:10
 msgid "Country"
 msgstr "Ország"
 
@@ -2518,7 +2522,7 @@ msgstr "Bejegyzések és oldalak"
 msgid "Post Title Template"
 msgstr "Bejegyzéscím-sablon"
 
-#: build/index.js:9
+#: build/index.js:9 build/index.js:10
 msgid "Posts"
 msgstr "Bejegyzések"
 
@@ -2530,7 +2534,7 @@ msgstr "A bejegyzések alapból noindex-esek legyenek."
 msgid "Page Title Template"
 msgstr "Oldalcím-sablon"
 
-#: build/index.js:9
+#: build/index.js:9 build/index.js:10
 msgid "Pages"
 msgstr "Oldalak"
 
@@ -2542,7 +2546,7 @@ msgstr "Az oldalak alapból noindex-esek legyenek."
 msgid "Category Title Template"
 msgstr "Kategóriacím-sablon"
 
-#: build/index.js:9
+#: build/index.js:9 build/index.js:10
 msgid "Categories"
 msgstr "Kategóriák"
 
@@ -2554,7 +2558,7 @@ msgstr "A kategóriák legyenek noindex-esek."
 msgid "Tag Title Template"
 msgstr "Címkecím-sablon"
 
-#: build/index.js:9
+#: build/index.js:9 build/index.js:10
 msgid "Tags"
 msgstr "Címkék"
 
@@ -2562,47 +2566,56 @@ msgstr "Címkék"
 msgid "Set tags to noindex."
 msgstr "A címkék legyenek noindex-esek."
 
-#: build/index.js:9
+#. translators: %s: taxonomy name, e.g. "Product categories".
+#: build/index.js:10
+msgid "%s Title Template"
+msgstr "%s – címsablon"
+
+#: build/index.js:10
+msgid "Set this taxonomy to noindex."
+msgstr "Ennek a taxonómiának az oldalai legyenek noindex-esek."
+
+#: build/index.js:10
 msgid "Archives and special pages"
 msgstr "Archívumok és különleges oldalak"
 
-#: build/index.js:9
+#: build/index.js:10
 msgid "Author Archive Title"
 msgstr "Szerzői archívum címe"
 
-#: build/index.js:9
+#: build/index.js:10
 msgid "Author Archives"
 msgstr "Szerzői archívumok"
 
-#: build/index.js:9
+#: build/index.js:10
 msgid "Set author archives to noindex."
 msgstr "A szerzői archívumok legyenek noindex-esek."
 
-#: build/index.js:9
+#: build/index.js:10
 msgid "Date Archive Title"
 msgstr "Dátum-archívum címe"
 
-#: build/index.js:9
+#: build/index.js:10
 msgid "Date Archives"
 msgstr "Dátum archívumok"
 
-#: build/index.js:9
+#: build/index.js:10
 msgid "Set date archives to noindex."
 msgstr "A dátum-archívumok legyenek noindex-esek."
 
-#: build/index.js:9
+#: build/index.js:10
 msgid "Search Results Title"
 msgstr "Keresési találatok címe"
 
-#: build/index.js:9
+#: build/index.js:10
 msgid "404 Page Title"
 msgstr "404-es oldal címe"
 
-#: build/index.js:9
+#: build/index.js:10
 msgid "Images"
 msgstr "Képek"
 
-#: build/index.js:9
+#: build/index.js:10
 msgid ""
 "Images without alt text, or with an empty alt, get one when the page is "
 "displayed. Your media library is not modified. An empty alt is how editors "
@@ -2615,104 +2628,104 @@ msgstr ""
 "hagyni, adj neki role=\"presentation\" vagy aria-hidden=\"true\" "
 "attribútumot."
 
-#: build/index.js:9
+#: build/index.js:10
 msgid "Alt text"
 msgstr "Alt szöveg"
 
-#: build/index.js:9
+#: build/index.js:10
 msgid "Fill in missing alt text from the template."
 msgstr "A hiányzó alt szöveg kitöltése a sablonból."
 
-#: build/index.js:9
+#: build/index.js:10
 msgid "Alt Text Template"
 msgstr "Alt szöveg sablon"
 
-#: build/index.js:9
+#: build/index.js:10
 msgid "Title attribute"
 msgstr "Title attribútum"
 
-#: build/index.js:9
+#: build/index.js:10
 msgid "Add a title attribute to images that have none."
 msgstr "Title attribútum hozzáadása a nélküle lévő képekhez."
 
-#: build/index.js:9
+#: build/index.js:10
 msgid "Title Attribute Template"
 msgstr "Title attribútum sablon"
 
-#: build/index.js:9
+#: build/index.js:10
 msgid "Meta Tags"
 msgstr "Meta tagek"
 
-#: build/index.js:9
+#: build/index.js:10
 msgid "Settings for Open Graph and Twitter Cards."
 msgstr "Beállítások az Open Graph és a Twitter Cards funkcióhoz."
 
-#: build/index.js:9
+#: build/index.js:10
 msgid "Open Graph"
 msgstr "Open Graph"
 
-#: build/index.js:9
+#: build/index.js:10
 msgid "Enable Open Graph meta tags"
 msgstr "Open Graph meta tagek engedélyezése"
 
-#: build/index.js:9
+#: build/index.js:10
 msgid "Twitter Cards"
 msgstr "Twitter Cards"
 
-#: build/index.js:9
+#: build/index.js:10
 msgid "Enable Twitter Card meta tags"
 msgstr "Twitter Card meta tagek engedélyezése"
 
-#: build/index.js:9
+#: build/index.js:10
 msgid "Default Card Type"
 msgstr "Alapértelmezett kártyatípus"
 
-#: build/index.js:9
+#: build/index.js:10
 msgid "Summary with large image"
 msgstr "Összefoglaló nagy képpel"
 
-#: build/index.js:9
+#: build/index.js:10
 msgid "Summary"
 msgstr "Összefoglaló"
 
-#: build/index.js:9
+#: build/index.js:10
 msgid "Default Social Image"
 msgstr "Alapértelmezett közösségi kép"
 
-#: build/index.js:9
+#: build/index.js:10
 msgid "Used when a post has no featured image. Recommended: 1200x630px."
 msgstr ""
 "Akkor használjuk, ha egy bejegyzésnek nincs kiemelt képe. Ajánlott: "
 "1200x630px."
 
-#: build/index.js:9
+#: build/index.js:10
 msgid "Social Profiles"
 msgstr "Közösségi profilok"
 
-#: build/index.js:9
+#: build/index.js:10
 msgid "Your sitemap:"
 msgstr "Az oldaltérképed:"
 
-#: build/index.js:9
+#: build/index.js:10
 msgid "Include images"
 msgstr "Képek felvétele"
 
-#: build/index.js:9
+#: build/index.js:10
 msgid "Readable view in browsers (XSL)"
 msgstr "Böngészőben olvasható nézet (XSL)"
 
-#: build/index.js:9
+#: build/index.js:10
 msgid ""
 "Browsers that dropped XSLT show the raw XML; search engines are not affected."
 msgstr ""
 "Az XSLT-t már nem támogató böngészők a nyers XML-t mutatják; a "
 "keresőmotorokat ez nem érinti."
 
-#: build/index.js:9
+#: build/index.js:10
 msgid "Custom Post Types"
 msgstr "Egyéni bejegyzéstípusok"
 
-#: build/index.js:9
+#: build/index.js:10
 msgid ""
 "New custom post types are included automatically. Content set to noindex is "
 "always left out."
@@ -2720,17 +2733,17 @@ msgstr ""
 "Az új egyéni bejegyzéstípusok automatikusan bekerülnek. A noindexre állított "
 "tartalom mindig kimarad."
 
-#: build/index.js:9
+#: build/index.js:10
 msgid "Custom Taxonomies"
 msgstr "Egyéni taxonómiák"
 
-#: build/index.js:9
+#: build/index.js:10
 msgid "Custom taxonomy archives are only listed when switched on here."
 msgstr ""
 "Az egyéni taxonómia archívumok csak akkor vannak listázva, ha itt be van "
 "kapcsolva."
 
-#: build/index.js:9
+#: build/index.js:10
 msgid ""
 "A page for your visitors that links to your content. Add it with the "
 "shortcode or the \"HTML Sitemap (LW SEO)\" block."
@@ -2738,11 +2751,11 @@ msgstr ""
 "Egy oldal a látogatóknak, amely a tartalmaidra hivatkozik. Add hozzá a "
 "shortcode-dal vagy a „HTML oldaltérkép (LW SEO)” blokkal."
 
-#: build/index.js:9
+#: build/index.js:10
 msgid "Shortcode"
 msgstr "Shortcode"
 
-#: build/index.js:9
+#: build/index.js:10
 msgid ""
 "Optional attributes: post_types, taxonomies, max, order (title or date). "
 "They override the settings below."
@@ -2750,25 +2763,25 @@ msgstr ""
 "Választható attribútumok: post_types, taxonomies, max, order (title vagy "
 "date). Felülírják az alábbi beállításokat."
 
-#: build/index.js:9
+#: build/index.js:10
 msgid "Content set to noindex is always left out."
 msgstr "A noindex-re állított tartalom mindig kimarad."
 
-#: build/index.js:9
+#: build/index.js:10
 msgid "Longer lists are cut off and get a \"View all\" link."
 msgstr ""
 "A hosszabb listák le lesznek vágva, és „Összes megtekintése” hivatkozást "
 "kapnak."
 
-#: build/index.js:9
+#: build/index.js:10
 msgid "Newest first"
 msgstr "Legújabb elöl"
 
-#: build/index.js:9
+#: build/index.js:10
 msgid "Content Signals"
 msgstr "Tartalmi jelzések"
 
-#: build/index.js:9
+#: build/index.js:10
 msgid ""
 "Tell AI systems how they may use your content. Sent as a Content-Signal HTTP "
 "header, a meta tag and a robots.txt line. \"Not specified\" neither grants "
@@ -2779,52 +2792,52 @@ msgstr ""
 "elküldésre. A \"Nincs megadva\" sem nem engedélyezi, sem nem korlátozza ezt "
 "a használatot."
 
-#: build/index.js:9
+#: build/index.js:10
 msgid "AI Input (RAG, grounding)"
 msgstr "AI bemenet (RAG, grounding)"
 
-#: build/index.js:9
+#: build/index.js:10
 msgid "llms.txt File"
 msgstr "llms.txt fájl"
 
-#: build/index.js:9
+#: build/index.js:10
 msgid "Your llms.txt:"
 msgstr "A te llms.txt fájlod:"
 
-#: build/index.js:9
+#: build/index.js:10
 msgid "Learn more"
 msgstr "Tudj meg többet"
 
-#: build/index.js:9
+#: build/index.js:10
 msgid "llms.txt"
 msgstr "llms.txt"
 
-#: build/index.js:9
+#: build/index.js:10
 msgid "Enable llms.txt for AI crawlers"
 msgstr "Engedélyezd az llms.txt-t AI crawler-ek számára"
 
-#: build/index.js:9
+#: build/index.js:10
 msgid "One sentence shown as the summary line. Empty = the site tagline."
 msgstr ""
 "Egy mondat, ami összefoglaló sorként jelenik meg. Üresen = a webhely "
 "jelmondata."
 
-#: build/index.js:9
+#: build/index.js:10
 msgid "Introduction"
 msgstr "Bevezetés"
 
-#: build/index.js:9
+#: build/index.js:10
 msgid ""
 "Optional Markdown text shown before the page lists. Do not use headings."
 msgstr ""
 "Opcionális Markdown szöveg, ami az oldallisták előtt jelenik meg. Ne "
 "használj címsorokat."
 
-#: build/index.js:9
+#: build/index.js:10
 msgid "Content types"
 msgstr "Tartalomtípusok"
 
-#: build/index.js:9
+#: build/index.js:10
 msgid ""
 "Each type becomes its own section. Noindex content and content with AI Input "
 "set to \"No\" are left out."
@@ -2832,32 +2845,32 @@ msgstr ""
 "Minden típus külön szekció lesz. A noindex tartalom és az \"AI bemenet\" "
 "mezőnél \"Nem\"-re állított tartalom kimarad."
 
-#: build/index.js:9
+#: build/index.js:10
 msgid "Items per section"
 msgstr "Elemek szekciónként"
 
-#: build/index.js:9
+#: build/index.js:10
 msgid "Pages are listed in menu order, other types newest first."
 msgstr ""
 "Az oldalak menüsorrendben, a többi típus a legújabbal kezdve van listázva."
 
-#: build/index.js:9
+#: build/index.js:10
 msgid "Markdown links"
 msgstr "Markdown hivatkozások"
 
-#: build/index.js:9
+#: build/index.js:10
 msgid "Link to the Markdown version of each page (/md)"
 msgstr "Link az oldalak Markdown változatára (/md)"
 
-#: build/index.js:9
+#: build/index.js:10
 msgid "Link to the HTML page"
 msgstr "Link a HTML oldalra"
 
-#: build/index.js:9
+#: build/index.js:10
 msgid "Extra links"
 msgstr "Extra linkek"
 
-#: build/index.js:9
+#: build/index.js:10
 msgid ""
 "One per line: Title | https://url | optional description. Listed under "
 "\"Optional\"."
@@ -2865,11 +2878,11 @@ msgstr ""
 "Soronként egy: Cím | https://url | opcionális leírás. Az \"Optional\" "
 "szekcióban jelennek meg."
 
-#: build/index.js:9
+#: build/index.js:10
 msgid "llms-full.txt"
 msgstr "llms-full.txt"
 
-#: build/index.js:9
+#: build/index.js:10
 msgid ""
 "Built as a logged-out visitor. Content-restriction plugins that only protect "
 "the main page query may not apply here; use the lw_seo_post_is_eligible "
@@ -2880,24 +2893,24 @@ msgstr ""
 "érvényesülnek; használd az lw_seo_post_is_eligible filtert, hogy a "
 "korlátozott bejegyzések kimaradjanak."
 
-#: build/index.js:9
+#: build/index.js:10
 msgid "Also serve /llms-full.txt with the full Markdown content (max 1 MB)"
 msgstr ""
 "Szolgáld ki a /llms-full.txt-t is a teljes Markdown tartalommal (max. 1 MB)"
 
-#: build/index.js:9
+#: build/index.js:10
 msgid "AI Crawler Access"
 msgstr "AI crawler hozzáférés"
 
-#: build/index.js:9
+#: build/index.js:10
 msgid "Blocked crawlers get a \"Disallow: /\" rule in robots.txt."
 msgstr "A tiltott crawlerek \"Disallow: /\" szabályt kapnak a robots.txt-ben."
 
-#: build/index.js:9
+#: build/index.js:10
 msgid "All AI training crawlers"
 msgstr "Minden AI-tanító crawler"
 
-#: build/index.js:9
+#: build/index.js:10
 msgid ""
 "Covers every crawler with that purpose, including ones added in future "
 "updates."
@@ -2905,15 +2918,15 @@ msgstr ""
 "Lefedi az összes ilyen célú crawlert, beleértve a jövőbeli frissítésekben "
 "hozzáadottakat is."
 
-#: build/index.js:9
+#: build/index.js:10
 msgid "All AI search crawlers"
 msgstr "Minden AI-kereső crawler"
 
-#: build/index.js:9
+#: build/index.js:10
 msgid "All user-triggered AI fetchers"
 msgstr "Minden felhasználó által indított AI-lekérő"
 
-#: build/index.js:9
+#: build/index.js:10
 msgid ""
 "robots.txt is a request, not an enforcement. OpenAI, Perplexity, Meta and "
 "Amazon state that their user-triggered fetchers may ignore it."
@@ -2922,45 +2935,45 @@ msgstr ""
 "és az Amazon szerint a felhasználó által indított lekérőik figyelmen kívül "
 "hagyhatják."
 
-#: build/index.js:9
+#: build/index.js:10
 msgid "Optimize your WooCommerce products for search engines and social media."
 msgstr ""
 "Optimalizáld a WooCommerce termékeidet keresőmotorokhoz és közösségi "
 "médiához."
 
-#: build/index.js:9
+#: build/index.js:10
 msgid ""
 "Adds product-specific OpenGraph tags, Schema.org Product markup, and more."
 msgstr ""
 "Termékspecifikus OpenGraph tageket, Schema.org Product jelölést és még sok "
 "mást ad hozzá."
 
-#: build/index.js:9
+#: build/index.js:10
 msgid "Product Title"
 msgstr "Termék címe"
 
-#: build/index.js:9
+#: build/index.js:10
 msgid "Shop Title"
 msgstr "Bolt címe"
 
-#: build/index.js:9
+#: build/index.js:10
 msgid ""
 "Title of the shop page (product archive). %%title%% is the shop page title."
 msgstr "A bolt oldal (termékarchívum) címe. A %%title%% a bolt oldal címe."
 
-#: build/index.js:9
+#: build/index.js:10
 msgid "Products"
 msgstr "Termékek"
 
-#: build/index.js:9
+#: build/index.js:10
 msgid "Add noindex to product pages."
 msgstr "A termékoldalak kapjanak noindexet."
 
-#: build/index.js:9
+#: build/index.js:10
 msgid "Permalinks"
 msgstr "Permalinkek"
 
-#: build/index.js:9
+#: build/index.js:10
 msgid ""
 "Slug-only WooCommerce permalinks. Categories whose root slug collides with a "
 "page, reserved slug, or another taxonomy/CPT base are automatically skipped "
@@ -2970,39 +2983,39 @@ msgstr ""
 "amelyek fő slugja ütközik egy oldallal, foglalt sluggal vagy másik taxonómia/"
 "CPT alappal, automatikusan kihagyjuk, hogy a meglévő URL-ek ne törjenek el."
 
-#: build/index.js:9
+#: build/index.js:10
 msgid "Category base"
 msgstr "Kategória bázis"
 
-#: build/index.js:9
+#: build/index.js:10
 msgid "Remove /product-category/ from product category URLs"
 msgstr "A /product-category/ eltávolítása a termékkategória URL-ekből"
 
-#: build/index.js:9
+#: build/index.js:10
 msgid "Keep"
 msgstr "Megtart"
 
-#: build/index.js:9
+#: build/index.js:10
 msgid "Parent slugs"
 msgstr "Szülő slugok"
 
-#: build/index.js:9
+#: build/index.js:10
 msgid "Remove parent category slugs (leaf-only URLs)"
 msgstr "Szülőkategória-slugok eltávolítása (csak a legalsó szint az URL-ben)"
 
-#: build/index.js:9
+#: build/index.js:10
 msgid "Product base"
 msgstr "Termék alap"
 
-#: build/index.js:9
+#: build/index.js:10
 msgid "Remove /product/ from product URLs"
 msgstr "A /product/ eltávolítása a termék URL-ekből"
 
-#: build/index.js:9
+#: build/index.js:10
 msgid "Skipped categories (slug collision):"
 msgstr "Kihagyott kategóriák (slug-ütközés):"
 
-#: build/index.js:9
+#: build/index.js:10
 msgid ""
 "These category slugs already belong to a page, reserved WordPress slug, or "
 "another taxonomy/CPT base. They keep their default WooCommerce URL. Rename "
@@ -3013,42 +3026,42 @@ msgstr ""
 "WooCommerce URL-jüket. Az átalakításhoz nevezd át a kategóriát vagy az "
 "ütköző slugot."
 
-#: build/index.js:9
+#: build/index.js:10
 msgid "Product schema"
 msgstr "Termékséma"
 
-#: build/index.js:9
+#: build/index.js:10
 msgid "Product Schema"
 msgstr "Termék Schema"
 
-#: build/index.js:9
+#: build/index.js:10
 msgid ""
 "Structured data for products including price, availability, and reviews."
 msgstr "Strukturált adatok a termékekhez: ár, elérhetőség és értékelések."
 
-#: build/index.js:9
+#: build/index.js:10
 msgid "Include Reviews"
 msgstr "Értékelések beemelése"
 
-#: build/index.js:9
+#: build/index.js:10
 msgid "Include product reviews in Schema"
 msgstr "Termékértékelések beemelése a Schema-ba"
 
-#: build/index.js:9
+#: build/index.js:10
 msgid "Product variants as ProductGroup"
 msgstr "Termékváltozatok ProductGroup-ként"
 
-#: build/index.js:9
+#: build/index.js:10
 msgid ""
 "Each variation gets its own price and availability in the structured data."
 msgstr ""
 "Minden változat saját árat és elérhetőséget kap a strukturált adatokban."
 
-#: build/index.js:9
+#: build/index.js:10
 msgid "Default brand"
 msgstr "Alapértelmezett márka"
 
-#: build/index.js:9
+#: build/index.js:10
 msgid ""
 "Used as the product brand when a product has no brand attribute or brand "
 "term."
@@ -3056,43 +3069,43 @@ msgstr ""
 "Akkor ez lesz a termék márkája, ha a terméknek nincs márka attribútuma vagy "
 "márka-kategóriája."
 
-#: build/index.js:9
+#: build/index.js:10
 msgid "Sitemap and indexing"
 msgstr "Oldaltérkép és indexelés"
 
-#: build/index.js:9
+#: build/index.js:10
 msgid "Products in Sitemap"
 msgstr "Termékek a webhelytérképben"
 
-#: build/index.js:9
+#: build/index.js:10
 msgid "Product Categories"
 msgstr "Termékkategóriák"
 
-#: build/index.js:9
+#: build/index.js:10
 msgid "Product Tags"
 msgstr "Termékcímkék"
 
-#: build/index.js:9
+#: build/index.js:10
 msgid "Hidden products"
 msgstr "Rejtett termékek"
 
-#: build/index.js:9
+#: build/index.js:10
 msgid "Products with catalog visibility set to Hidden."
 msgstr "A katalógus-láthatóságban „Rejtett” értékre állított termékek."
 
-#: build/index.js:9
+#: build/index.js:10
 msgid "Noindex hidden products"
 msgstr "Rejtett termékek noindex-elése"
 
-#: build/index.js:9
+#: build/index.js:10
 msgid "Out-of-stock products"
 msgstr "Elfogyott termékek"
 
-#: build/index.js:9
+#: build/index.js:10
 msgid "Business Information"
 msgstr "Vállalkozási információk"
 
-#: build/index.js:9
+#: build/index.js:10
 msgid ""
 "Add LocalBusiness structured data to help your business appear in local "
 "search results."
@@ -3100,171 +3113,185 @@ msgstr ""
 "Adj hozzá LocalBusiness strukturált adatokat, hogy a vállalkozásod "
 "megjelenjen a helyi keresési találatok között."
 
-#: build/index.js:9
+#: build/index.js:10
 msgid "Enable LocalBusiness schema"
 msgstr "LocalBusiness schema engedélyezése"
 
-#: build/index.js:9
+#: build/index.js:10
 msgid "Business Type"
 msgstr "Vállalkozás típusa"
 
-#: build/index.js:9
+#: build/index.js:10
 msgid "Select the type that best describes your business."
 msgstr "Válaszd ki azt a típust, ami a legjobban leírja a vállalkozásodat."
 
-#: build/index.js:9
+#: build/index.js:10
 msgid "Business Name"
 msgstr "Vállalkozás neve"
 
-#: build/index.js:9
+#: build/index.js:10
 msgid "Leave empty to use the site name."
 msgstr "Hagyd üresen a webhely nevének használatához."
 
-#: build/index.js:9
+#: build/index.js:10
 msgid "Business Description"
 msgstr "Vállalkozás leírása"
 
-#: build/index.js:9
+#: build/index.js:10
 msgid "Price Range"
 msgstr "Árkategória"
 
-#: build/index.js:9
+#: build/index.js:10
 msgid "Address and contact"
 msgstr "Cím és elérhetőség"
 
-#: build/index.js:9
+#: build/index.js:10
 msgid "Street Address"
 msgstr "Utca, házszám"
 
-#: build/index.js:9
+#: build/index.js:10
 msgid "Address Line 2"
 msgstr "Cím 2. sora"
 
-#: build/index.js:9
+#: build/index.js:10
 msgid "City"
 msgstr "Város"
 
-#: build/index.js:9
+#: build/index.js:10
 msgid "State / Region"
 msgstr "Állam / régió"
 
-#: build/index.js:9
+#: build/index.js:10
 msgid "Postal Code"
 msgstr "Irányítószám"
 
-#: build/index.js:9
+#: build/index.js:10
 msgid "Use ISO 3166–1 alpha-2 code (e.g., HU, US, DE)."
 msgstr "ISO 3166-1 alpha-2 kód (pl. HU, US, DE)."
 
-#: build/index.js:9
+#: build/index.js:10
 msgid "Phone"
 msgstr "Telefon"
 
-#: build/index.js:9
+#: build/index.js:10
 msgid "Email"
 msgstr "Email"
 
-#: build/index.js:9
+#: build/index.js:10
 msgid "Opening Hours"
 msgstr "Nyitvatartás"
 
-#: build/index.js:9
+#: build/index.js:10
 msgid "Opening hours"
 msgstr "Nyitvatartás"
 
-#: build/index.js:9
+#: build/index.js:10
 msgid "Include opening hours in schema"
 msgstr "A nyitvatartás kerüljön a sémába"
 
-#: build/index.js:9
+#: build/index.js:10
 msgid "Coordinates"
 msgstr "Koordináták"
 
-#: build/index.js:9
+#: build/index.js:10
 msgid "Find coordinates on"
 msgstr "Koordináták keresése itt:"
 
-#: build/index.js:9
+#: build/index.js:10
 msgid "(right-click the location)."
 msgstr "(kattints jobb gombbal a helyre)."
 
-#: build/index.js:9
+#: build/index.js:10
 msgid "Latitude"
 msgstr "Szélesség"
 
-#: build/index.js:9
+#: build/index.js:10
 msgid "Longitude"
 msgstr "Hosszúság"
 
-#: build/index.js:9
+#: build/index.js:10
 msgid "Source"
 msgstr "Forrás"
 
-#: build/index.js:9
+#: build/index.js:10
 msgid "Regex"
 msgstr "Regex"
 
-#: build/index.js:9
+#: build/index.js:10
 msgid "Destination"
 msgstr "Cél"
 
-#: build/index.js:9
+#: build/index.js:10
 msgid "N/A"
 msgstr "N/A"
 
-#: build/index.js:9
+#: build/index.js:10
 msgid "Type"
 msgstr "Típus"
 
-#: build/index.js:9
+#: build/index.js:10
 msgid "Edit"
 msgstr "Szerkesztés"
 
-#: build/index.js:9
+#: build/index.js:10
 msgid ""
 "Create and manage URL redirects to prevent 404 errors and preserve SEO value."
 msgstr ""
 "URL átirányítások létrehozása és kezelése a 404 hibák megelőzéséhez és az "
 "SEO érték megőrzéséhez."
 
-#: build/index.js:9
+#: build/index.js:10
 msgid "Process redirects"
 msgstr "Átirányítások feldolgozása"
 
-#: build/index.js:9
+#: build/index.js:10
 msgid "Redirect rules are active"
 msgstr "Az átirányítási szabályok aktívak"
 
-#: build/index.js:9
+#: build/index.js:10
 msgid "Existing Redirects"
 msgstr "Meglévő átirányítások"
 
-#: build/index.js:9
+#: build/index.js:10
 msgid "Search source or destination"
 msgstr "Keresés forrásban vagy célban"
 
-#: build/index.js:9
+#: build/index.js:10
 msgid "Redirect updated."
 msgstr "Átirányítás frissítve."
 
-#: build/index.js:9
+#: build/index.js:10
 msgid "Redirect deleted."
 msgstr "Átirányítás törölve."
 
-#: build/index.js:9
+#: build/index.js:10
 msgid "Are you sure you want to delete this redirect?"
 msgstr "Biztos, hogy törölni akarod ezt az átirányítást?"
 
-#: build/index.js:9
+#. translators: %d: number of deleted redirects.
+#: build/index.js:11
+msgid "%d redirect deleted."
+msgid_plural "%d redirects deleted."
+msgstr[0] "%d átirányítás törölve."
+msgstr[1] "%d átirányítás törölve."
+
+#. translators: %d: number of selected redirects.
+#: build/index.js:12
+msgid "Are you sure you want to delete %d redirect?"
+msgid_plural "Are you sure you want to delete %d redirects?"
+msgstr[0] "Biztos, hogy törölni akarod a kijelölt %d átirányítást?"
+msgstr[1] "Biztos, hogy törölni akarod a kijelölt %d átirányítást?"
+
+#: build/index.js:12
 msgid "Configure how 404 (Not Found) errors are handled on your site."
 msgstr ""
 "Állítsd be, hogyan legyenek kezelve a 404 (Nem található) hibák az oldaladon."
 
-#: build/index.js:9
+#: build/index.js:12
 msgid "Redirect 404 to Homepage"
 msgstr "404 átirányítása a kezdőlapra"
 
-#: build/index.js:9
+#: build/index.js:12
 msgid ""
 "When enabled, visitors who land on a non-existent page will be redirected to "
 "your homepage with a 302 (temporary) redirect."
@@ -3272,26 +3299,26 @@ msgstr ""
 "Ha engedélyezed, a nem létező oldalra érkező látogatók a kezdőlapodra "
 "lesznek átirányítva 302-es (ideiglenes) átirányítással."
 
-#: build/index.js:9
+#: build/index.js:12
 msgid "Redirect every 404 to the homepage"
 msgstr "Minden 404 átirányítása a kezdőlapra"
 
-#: build/index.js:9
+#: build/index.js:12
 msgid "404 Log"
 msgstr "404-napló"
 
-#: build/index.js:9
+#: build/index.js:12
 msgid ""
 "Keep a short list of missing URLs so you can redirect them. Off by default."
 msgstr ""
 "Tarts egy rövid listát a nem létező URL-ekről, hogy átirányíthasd őket. "
 "Alapból ki van kapcsolva."
 
-#: build/index.js:9
+#: build/index.js:12
 msgid "Log 404 errors"
 msgstr "404-es hibák naplózása"
 
-#: build/index.js:9
+#: build/index.js:12
 msgid ""
 "Stores the requested path, a hit count and the referrer without its query "
 "string. Static files such as images are skipped."
@@ -3300,23 +3327,23 @@ msgstr ""
 "lekérdezési karakterlánc nélkül. A statikus fájlok, például a képek "
 "kimaradnak."
 
-#: build/index.js:9
+#: build/index.js:12
 msgid "Logging missing URLs"
 msgstr "A hiányzó URL-ek naplózása"
 
-#: build/index.js:9
+#: build/index.js:12
 msgid "Keep entries for (days)"
 msgstr "Bejegyzések megőrzése (nap)"
 
-#: build/index.js:9
+#: build/index.js:12
 msgid "Older entries are removed daily."
 msgstr "A régebbi bejegyzések naponta törlődnek."
 
-#: build/index.js:9
+#: build/index.js:12
 msgid "Maximum entries"
 msgstr "Bejegyzések maximális száma"
 
-#: build/index.js:9
+#: build/index.js:12
 msgid ""
 "When the log is full, the oldest one-off entries make room. Recurring "
 "entries stay until the daily cleanup."
@@ -3324,54 +3351,54 @@ msgstr ""
 "Ha megtelik a napló, a legrégebbi egyszeri bejegyzések adnak helyet. Az "
 "ismétlődők a napi takarításig maradnak."
 
-#: build/index.js:9
+#: build/index.js:12
 msgid "Store user agent"
 msgstr "User agent tárolása"
 
-#: build/index.js:9
+#: build/index.js:12
 msgid "Also keeps the visitor browser or bot name."
 msgstr "A látogató böngészőjének vagy a bot nevét is megőrzi."
 
-#: build/index.js:9
+#: build/index.js:12
 msgid "Storing user agents"
 msgstr "User agent tárolása"
 
-#: build/index.js:9
+#: build/index.js:12
 msgid "Features"
 msgstr "Funkciók"
 
-#: build/index.js:9
+#: build/index.js:12
 msgid "Breadcrumbs"
 msgstr "Morzsamenü"
 
-#: build/index.js:9
+#: build/index.js:12
 msgid "Use shortcode [lw_breadcrumbs] or function lw_seo_breadcrumbs()."
 msgstr ""
 "Használd a [lw_breadcrumbs] shortcode-ot vagy az lw_seo_breadcrumbs() "
 "függvényt."
 
-#: build/index.js:9
+#: build/index.js:12
 msgid "Schema.org"
 msgstr "Schema.org"
 
-#: build/index.js:9
+#: build/index.js:12
 msgid "Output Schema.org JSON-LD"
 msgstr "Schema.org JSON-LD kiírása"
 
-#: build/index.js:9
+#: build/index.js:12
 msgid "robots.txt"
 msgstr "robots.txt"
 
-#: build/index.js:9
+#: build/index.js:12
 msgid "Add sitemap URL and AI rules to robots.txt"
 msgstr "Sitemap URL és AI szabályok hozzáadása a robots.txt-hez"
 
-#: build/index.js:9
+#: build/index.js:12
 msgid "Your robots.txt"
 msgstr "A robots.txt fájlod"
 
 #. translators: %s: path of the robots.txt file.
-#: build/index.js:10
+#: build/index.js:13
 msgid ""
 "A physical robots.txt file exists (%s). The web server serves it directly, "
 "so these settings have no effect. Delete the file to let LW SEO manage "
@@ -3381,31 +3408,31 @@ msgstr ""
 "szolgálja ki, ezért ezek a beállítások nem hatnak. Töröld a fájlt, hogy az "
 "LW SEO kezelhesse a robots.txt-t."
 
-#: build/index.js:10
+#: build/index.js:13
 msgid "Head Cleanup"
 msgstr "Head takarítás"
 
-#: build/index.js:10
+#: build/index.js:13
 msgid "Shortlinks"
 msgstr "Rövid linkek"
 
-#: build/index.js:10
+#: build/index.js:13
 msgid "Removed from head"
 msgstr "Eltávolítva a headből"
 
-#: build/index.js:10
+#: build/index.js:13
 msgid "Kept"
 msgstr "Megtartva"
 
-#: build/index.js:10
+#: build/index.js:13
 msgid "RSD Link"
 msgstr "RSD link"
 
-#: build/index.js:10
+#: build/index.js:13
 msgid "WLW Manifest"
 msgstr "WLW manifest"
 
-#: build/index.js:10
+#: build/index.js:13
 msgid ""
 "No data from Yoast SEO, RankMath, SEOPress or All in One SEO was found in "
 "the database, so there is nothing to import."
@@ -3413,7 +3440,7 @@ msgstr ""
 "Nem találtunk Yoast SEO, RankMath, SEOPress vagy All in One SEO adatot az "
 "adatbázisban, így nincs mit átvenni."
 
-#: build/index.js:10
+#: build/index.js:13
 msgid ""
 "Import SEO data from other SEO plugins. Existing LW SEO data will not be "
 "overwritten."
@@ -3422,7 +3449,7 @@ msgstr ""
 "lesznek felülírva."
 
 #. translators: %s: name of the other active SEO plugin, e.g. Yoast SEO.
-#: build/index.js:11
+#: build/index.js:14
 msgid ""
 "Another SEO plugin (%s) is active. LW SEO skips its meta tags to avoid "
 "duplicates. You can import its data on the Import tab, then deactivate it to "

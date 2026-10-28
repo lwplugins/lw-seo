@@ -37,6 +37,7 @@ use LightweightPlugins\SEO\Markdown\Discovery as MarkdownDiscovery;
 use LightweightPlugins\SEO\Images\ImageSeo;
 use LightweightPlugins\SEO\Meta\HeadMeta;
 use LightweightPlugins\SEO\Meta\TitleFilter;
+use LightweightPlugins\SEO\Meta\TaxonomyTemplates;
 
 /**
  * Main plugin class.
@@ -78,6 +79,7 @@ final class Plugin {
 
 		( new HeadMeta() )->register();
 		( new TitleFilter() )->register();
+		TaxonomyTemplates::register();
 
 		// Cleanup hooks.
 		if ( Options::get( 'remove_shortlinks' ) ) {

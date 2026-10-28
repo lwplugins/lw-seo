@@ -90,25 +90,26 @@ final class Mappings {
 	 * RankMath title options → LW SEO options mapping.
 	 */
 	public const TITLE_OPTIONS_MAP = [
-		'title_separator'      => 'separator',
-		'homepage_title'       => 'title_home',
-		'homepage_description' => 'desc_home',
-		'pt_post_title'        => 'title_post',
-		'pt_page_title'        => 'title_page',
-		'pt_product_title'     => 'title_product',
-		'tax_category_title'   => 'title_category',
-		'tax_post_tag_title'   => 'title_post_tag',
-		'author_archive_title' => 'title_author',
-		'date_archive_title'   => 'title_date',
-		'search_title'         => 'title_search',
-		'404_title'            => 'title_404',
-		'pt_post_robots'       => 'noindex_post',
-		'pt_page_robots'       => 'noindex_page',
-		'pt_product_robots'    => 'noindex_product',
-		'tax_category_robots'  => 'noindex_category',
-		'tax_post_tag_robots'  => 'noindex_post_tag',
-		'author_robots'        => 'noindex_author',
-		'date_robots'          => 'noindex_date',
+		'title_separator'          => 'separator',
+		'homepage_title'           => 'title_home',
+		'homepage_description'     => 'desc_home',
+		'pt_post_title'            => 'title_post',
+		'pt_page_title'            => 'title_page',
+		'pt_product_title'         => 'title_product',
+		'pt_product_archive_title' => 'title_ptarchive_product',
+		'tax_category_title'       => 'title_category',
+		'tax_post_tag_title'       => 'title_post_tag',
+		'author_archive_title'     => 'title_author',
+		'date_archive_title'       => 'title_date',
+		'search_title'             => 'title_search',
+		'404_title'                => 'title_404',
+		'pt_post_robots'           => 'noindex_post',
+		'pt_page_robots'           => 'noindex_page',
+		'pt_product_robots'        => 'noindex_product',
+		'tax_category_robots'      => 'noindex_category',
+		'tax_post_tag_robots'      => 'noindex_post_tag',
+		'author_robots'            => 'noindex_author',
+		'date_robots'              => 'noindex_date',
 	];
 
 	/**
@@ -150,5 +151,7 @@ final class Mappings {
 		'term_description' => 'term_description',
 		// Empty on the first page, like %%pagenumber%% (%%page%% always prints the number).
 		'page'             => 'pagenumber',
+		// On a post type archive %%title%% is the archive title.
+		'pt_plural'        => 'title',
 	];
 }

@@ -1,7 +1,8 @@
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n';
+import { Fragment } from '@wordpress/element';
+import { __, sprintf } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
@@ -13,7 +14,15 @@ import Vars from '../components/Vars';
 const on = __( 'noindex', 'lw-seo' );
 const off = __( 'Indexed', 'lw-seo' );
 
+// Categories and tags have their own rows; every other public taxonomy
+// (product categories, tags, attributes) is listed after them.
+const BUILT_IN_TAXONOMIES = [ 'category', 'post_tag' ];
+
 export default function ContentTab( { store } ) {
+	const taxonomies = ( store.data.meta.taxonomies || [] ).filter(
+		( { name } ) => ! BUILT_IN_TAXONOMIES.includes( name )
+	);
+
 	const vars = (
 		<Vars
 			names={ [
@@ -105,6 +114,31 @@ export default function ContentTab( { store } ) {
 					onText={ on }
 					offText={ off }
 				/>
+				{ taxonomies.map( ( { name, label } ) => (
+					<Fragment key={ name }>
+						<TextRow
+							title={ sprintf(
+								/* translators: %s: taxonomy name, e.g. "Product categories". */
+								__( '%s Title Template', 'lw-seo' ),
+								label
+							) }
+							store={ store }
+							name={ `title_${ name }` }
+							mono
+						/>
+						<SwitchRow
+							title={ label }
+							help={ __(
+								'Set this taxonomy to noindex.',
+								'lw-seo'
+							) }
+							store={ store }
+							name={ `noindex_${ name }` }
+							onText={ on }
+							offText={ off }
+						/>
+					</Fragment>
+				) ) }
 			</Section>
 			<Section title={ __( 'Archives and special pages', 'lw-seo' ) }>
 				<TextRow

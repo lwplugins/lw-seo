@@ -11,6 +11,7 @@ namespace LightweightPlugins\SEO;
 
 use LightweightPlugins\SEO\Crawlers\Registry;
 use LightweightPlugins\SEO\Local\OpeningHours;
+use LightweightPlugins\SEO\Meta\TaxonomyTemplates;
 
 /**
  * Handles plugin options and settings.
@@ -191,7 +192,7 @@ final class Options {
 			'image_alt_template'              => '%%image_title%%',
 			'image_title_enabled'             => false,
 			'image_title_template'            => '%%image_title%%',
-		] + Registry::option_defaults() + OpeningHours::option_defaults();
+		] + Registry::option_defaults() + OpeningHours::option_defaults() + TaxonomyTemplates::defaults();
 	}
 
 	/**

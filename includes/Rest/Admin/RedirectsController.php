@@ -19,7 +19,7 @@ use WP_REST_Response;
 use WP_REST_Server;
 
 /**
- * CRUD, CSV export and CSV import under lw-seo/v1/admin/redirects.
+ * CRUD, bulk delete, CSV export and CSV import under lw-seo/v1/admin/redirects.
  */
 final class RedirectsController {
 
@@ -29,8 +29,8 @@ final class RedirectsController {
 	private const BASE = '/admin/redirects';
 
 	/**
-	 * Register the routes. The fixed export/import routes come before the
-	 * id route.
+	 * Register the routes. The fixed delete/export/import routes come before
+	 * the id route.
 	 *
 	 * @return void
 	 */
@@ -42,6 +42,7 @@ final class RedirectsController {
 				WP_REST_Server::CREATABLE => 'create_item',
 			]
 		);
+		$this->route( self::BASE . '/delete', [ WP_REST_Server::CREATABLE => 'delete_items' ] );
 		$this->route( self::BASE . '/export', [ WP_REST_Server::READABLE => 'export_items' ] );
 		$this->route( self::BASE . '/import', [ WP_REST_Server::CREATABLE => 'import_items' ] );
 		$this->route(
@@ -123,6 +124,26 @@ final class RedirectsController {
 		}
 
 		return new WP_REST_Response( [ 'deleted' => true ] );
+	}
+
+	/**
+	 * Delete several redirects by id. When any id is unknown, nothing is
+	 * deleted.
+	 *
+	 * @param WP_REST_Request $request Request.
+	 * @return WP_REST_Response|WP_Error
+	 */
+	public function delete_items( WP_REST_Request $request ) {
+		$ids = array_values( array_unique( array_map( 'strval', (array) $request->get_param( 'ids' ) ) ) );
+		if ( [] === $ids ) {
+			return $this->invalid( __( 'No redirects selected.', 'lw-seo' ) );
+		}
+
+		if ( [] !== Manager::delete_many( $ids ) ) {
+			return $this->not_found();
+		}
+
+		return new WP_REST_Response( [ 'deleted' => count( $ids ) ] );
 	}
 
 	/**

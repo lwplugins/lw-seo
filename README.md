@@ -14,6 +14,7 @@ Lightweight SEO plugin for WordPress - minimal footprint, maximum impact.
 ### Meta Tags & Titles
 - **Custom Titles** - Per-post/page title override with template variables
 - **Meta Descriptions** - Auto-generated from the excerpt (through `get_the_excerpt()`, so membership/paywall plugins can mask it), filterable via `lw_seo_meta_description`
+- **Taxonomy Titles** - A title template and noindex switch for every public taxonomy, WooCommerce product categories, tags and attributes included (`title_<taxonomy>`, `noindex_<taxonomy>`); two separators left next to each other by an empty variable become one
 - **Title Separator** - Customizable separator character
 - **Canonical URLs** - One self-referencing canonical per page (also on `/page/2/` of archives), filterable via `lw_seo_canonical_url`
 - **Robots Control** - noindex/nofollow per post
@@ -91,7 +92,7 @@ Lightweight SEO plugin for WordPress - minimal footprint, maximum impact.
 - **Shortcodes** - `[lw_address]`, `[lw_phone]`, `[lw_email]`, `[lw_hours]`, `[lw_map]`
 
 ### Redirects & 404
-- **Redirect Manager** - 301, 302, 307, 410 and 451 redirects, with CSV import/export
+- **Redirect Manager** - 301, 302, 307, 410 and 451 redirects, with CSV import/export and bulk delete
 - **URL tester** - Check which rule a URL would match, in the Redirects screen or with `wp lw-seo redirect test <url>`
 - **404 log** - Off by default; records missing URLs with hit counts, with a "Create redirect" action in the **404** tab, a daily cleanup and a row cap (`wp lw-seo not-found list|clear|prune`)
 - **404 to homepage** - Optional redirect of 404s to the homepage, as a last resort after your redirect rules and WordPress's own redirects (renamed slugs, guessed URLs)

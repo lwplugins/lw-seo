@@ -3,7 +3,7 @@ Contributors: lwplugins
 Tags: seo, sitemap, schema, opengraph, breadcrumbs
 Requires at least: 6.6
 Tested up to: 7.1
-Stable tag: 1.9.2
+Stable tag: 1.9.3
 Requires PHP: 8.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -19,6 +19,7 @@ LW SEO provides essential SEO features without the bloat. No upsells, no trackin
 **Meta & Titles**
 
 * Custom meta titles with template variables
+* Title template and noindex setting for every public taxonomy, including WooCommerce product categories, tags and attributes
 * Auto-generated meta descriptions
 * Customizable title separator
 * Canonical URLs, self-referencing on paginated archives, filterable (lw_seo_canonical_url)
@@ -39,7 +40,7 @@ LW SEO provides essential SEO features without the bloat. No upsells, no trackin
 * Breadcrumbs with shortcode and PHP function
 * URL Redirect Manager (301, 302, 307, 410, 451), with a URL tester
 * Regex redirect support
-* CSV import/export for redirects
+* CSV import/export and bulk delete for redirects
 * Import from Yoast SEO, Rank Math, SEOPress and All in One SEO (dry-run preview, never overwrites LW SEO data)
 * Image sitemap (featured, in-content and WooCommerce gallery images) and a browser-readable sitemap view
 * HTML sitemap with a shortcode and a block, cached
@@ -168,6 +169,12 @@ Only if you turn on IndexNow. See External services below.
 6. Settings page - Advanced tab
 
 == Changelog ==
+
+= 1.9.3 =
+* New: Every public taxonomy has a title template and a noindex setting under **Content → Taxonomies**, not only categories and tags: WooCommerce product categories, product tags and attributes and custom taxonomies too. The settings screen keeps them on save and `wp lw-seo option set title_<taxonomy> …` accepts them. The default is the category template (#26).
+* New: Select several redirects in the Redirects list and delete them at once (#29).
+* Fix: The Rank Math import brings over the title template and noindex setting of every public taxonomy (for example the "Brand: " prefix of product attribute pages) and the product archive title, not only the category and tag templates. A template still at the LW SEO default is replaced by the imported one; one you changed is kept (#26).
+* Fix: When an empty variable leaves two separators next to each other in a title, only one is kept, so "%%term_title%% %%sep%% %%pagenumber%% %%sep%% %%sitename%%" also reads well on the first page (#26).
 
 = 1.9.2 =
 * Fix: IndexNow no longer sends anything from a site that discourages search engines (Settings → Reading) or whose environment type is not production, such as a staging or local copy of the database. Nothing is queued or sent and the key file is not served; the IndexNow screen and `wp lw-seo indexnow status` say why. The new `lw_seo_indexnow_active` filter overrides the decision (#25).
