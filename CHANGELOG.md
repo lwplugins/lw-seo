@@ -1,5 +1,10 @@
 # Changelog
 
+## [1.9.4] - 2026-10-31
+
+### Fixed
+- Product offers have a `validFrom` date: the start of the sale for a sale price, otherwise the date the product was published. Search Console no longer reports "Missing field validFrom" for merchant listings. A `validFrom` already in the offer is kept.
+
 ## [1.9.3] - 2026-10-28
 
 ### Added

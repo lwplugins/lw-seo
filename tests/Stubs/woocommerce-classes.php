@@ -94,6 +94,14 @@ if ( ! class_exists( 'WC_Product' ) ) {
 			return $this->prop( 'date_on_sale_to', null );
 		}
 
+		public function get_date_on_sale_from( $context = 'view' ) {
+			return $this->prop( 'date_on_sale_from', null );
+		}
+
+		public function get_date_created( $context = 'view' ) {
+			return $this->prop( 'date_created', null );
+		}
+
 		public function get_catalog_visibility( $context = 'view' ) {
 			return $this->prop( 'catalog_visibility', 'visible' );
 		}

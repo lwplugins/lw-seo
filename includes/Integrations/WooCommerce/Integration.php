@@ -65,6 +65,7 @@ final class Integration implements IntegrationInterface {
 
 		if ( Options::get( 'schema_enabled' ) && Options::get( 'woo_schema_enabled', true ) ) {
 			OfferPolicies::register();
+			OfferValidity::register();
 		}
 	}
 

@@ -3,7 +3,7 @@ Contributors: lwplugins
 Tags: seo, sitemap, schema, opengraph, breadcrumbs
 Requires at least: 6.6
 Tested up to: 7.1
-Stable tag: 1.9.3
+Stable tag: 1.9.4
 Requires PHP: 8.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -169,6 +169,9 @@ Only if you turn on IndexNow. See External services below.
 6. Settings page - Advanced tab
 
 == Changelog ==
+
+= 1.9.4 =
+* Fix: Product offers have a `validFrom` date: the start of the sale for a sale price, otherwise the date the product was published. Search Console no longer reports "Missing field validFrom" for merchant listings. A `validFrom` already in the offer is kept.
 
 = 1.9.3 =
 * New: Every public taxonomy has a title template and a noindex setting under **Content → Taxonomies**, not only categories and tags: WooCommerce product categories, product tags and attributes and custom taxonomies too. The settings screen keeps them on save and `wp lw-seo option set title_<taxonomy> …` accepts them. The default is the category template (#26).
