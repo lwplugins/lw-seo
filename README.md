@@ -111,6 +111,7 @@ Lightweight SEO plugin for WordPress - minimal footprint, maximum impact.
 ### Admin Interface
 - Unified **LW Plugins** menu
 - Modern tabbed settings interface
+- **Quick search** - Search field at the top of the sidebar (also Cmd/Ctrl+K) that finds sections and settings by name or help text and jumps to them
 - WordPress media library integration
 - Translations: Hungarian (hu_HU) included
 

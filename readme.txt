@@ -3,7 +3,7 @@ Contributors: lwplugins
 Tags: seo, sitemap, schema, opengraph, breadcrumbs
 Requires at least: 6.6
 Tested up to: 7.1
-Stable tag: 1.9.4
+Stable tag: 1.9.5
 Requires PHP: 8.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -72,6 +72,7 @@ LW SEO provides essential SEO features without the bloat. No upsells, no trackin
 **Admin**
 
 * Unified "LW Plugins" admin menu
+* Quick search (Cmd/Ctrl+K) to jump to any section or setting
 * Modern tabbed settings interface
 * WordPress media library integration
 
@@ -169,6 +170,9 @@ Only if you turn on IndexNow. See External services below.
 6. Settings page - Advanced tab
 
 == Changelog ==
+
+= 1.9.5 =
+* New: Admin quick search: a search field at the top of the sidebar (also Cmd/Ctrl+K) finds sections, cards and settings by name or help text, accent-insensitive, and opens the match: it switches to the tab, scrolls to the setting and highlights it. Recently opened results are listed first.
 
 = 1.9.4 =
 * Fix: Product offers have a `validFrom` date: the start of the sale for a sale price, otherwise the date the product was published. Search Console no longer reports "Missing field validFrom" for merchant listings. A `validFrom` already in the offer is kept.
