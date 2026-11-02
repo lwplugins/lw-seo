@@ -104,6 +104,41 @@ final class MatcherTest extends MonkeyTestCase {
 		$this->assertNull( Matcher::match( '/other/' ) );
 	}
 
+	/**
+	 * Browsers send non-ASCII paths percent-encoded; the stored source may
+	 * be written either way (#29).
+	 *
+	 * @dataProvider provide_encoded_paths
+	 */
+	public function test_non_ascii_path_matches_in_either_form( string $source, string $request ): void {
+		$this->rules( [ [ $source, '/new', 301, false ] ] );
+
+		$this->assertNotNull( Matcher::match( $request ) );
+	}
+
+	public static function provide_encoded_paths(): array {
+		return [
+			'decoded source, encoded request' => [ '/tag/café', '/tag/caf%C3%A9/' ],
+			'encoded source, encoded request' => [ '/tag/caf%C3%A9', '/tag/caf%C3%A9/' ],
+			'encoded source, decoded request' => [ '/tag/caf%C3%A9', '/tag/café' ],
+			'lowercase hex in the request'    => [ '/tag/café', '/tag/caf%c3%a9' ],
+		];
+	}
+
+	public function test_non_ascii_path_does_not_match_its_stripped_form(): void {
+		$this->rules( [ [ '/tag/caf', '/new', 301, false ] ] );
+
+		$this->assertNull( Matcher::match( '/tag/caf%C3%A9/' ) );
+	}
+
+	public function test_regex_sees_the_decoded_path(): void {
+		$this->rules( [ [ '^/tag/(.+)$', '/topic/$1', 301, true ] ] );
+
+		$match = Matcher::match( '/tag/caf%C3%A9/' );
+
+		$this->assertSame( 'https://example.test/topic/café/', $match['destination'] );
+	}
+
 	public function test_gone_has_empty_destination(): void {
 		$this->rules(
 			[

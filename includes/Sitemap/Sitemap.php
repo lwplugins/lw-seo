@@ -35,6 +35,7 @@ final class Sitemap {
 		add_action( 'template_redirect', [ $this, 'handle_sitemap_request' ] );
 		add_filter( 'query_vars', [ $this, 'add_query_vars' ] );
 		Stylesheet::register();
+		LegacyAliases::register();
 
 		// Disable core sitemaps.
 		add_filter( 'wp_sitemaps_enabled', '__return_false' );

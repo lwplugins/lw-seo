@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace LightweightPlugins\SEO\Redirects;
 
+use LightweightPlugins\SEO\Helpers\UrlField;
 use LightweightPlugins\SEO\Options;
 
 /**
@@ -41,7 +42,8 @@ final class Handler {
 		}
 
 		// Get current URL path.
-		$request_uri = isset( $_SERVER['REQUEST_URI'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) ) : '';
+		// Encoded octets are kept: non-ASCII paths arrive percent-encoded.
+		$request_uri = isset( $_SERVER['REQUEST_URI'] ) ? UrlField::clean( wp_unslash( $_SERVER['REQUEST_URI'] ) ) : ''; // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- UrlField::clean() is sanitize_text_field() that keeps %XX octets.
 		if ( empty( $request_uri ) ) {
 			return;
 		}

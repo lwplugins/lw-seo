@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace LightweightPlugins\SEO\Rest\Admin;
 
 use LightweightPlugins\SEO\Redirects\Matcher;
+use LightweightPlugins\SEO\Helpers\UrlField;
 use WP_REST_Request;
 use WP_REST_Response;
 use WP_REST_Server;
@@ -45,6 +46,6 @@ final class RedirectTestController {
 	 * @return WP_REST_Response
 	 */
 	public function test_url( WP_REST_Request $request ): WP_REST_Response {
-		return new WP_REST_Response( Matcher::explain( sanitize_text_field( (string) $request->get_param( 'url' ) ) ) );
+		return new WP_REST_Response( Matcher::explain( UrlField::clean( (string) $request->get_param( 'url' ) ) ) );
 	}
 }

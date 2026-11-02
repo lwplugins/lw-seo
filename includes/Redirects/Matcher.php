@@ -96,7 +96,8 @@ final class Matcher {
 	 */
 	private static function verdict( array $rule, string $path ): string {
 		if ( empty( $rule['regex'] ) ) {
-			return $rule['source'] === $path ? 'matched' : 'no';
+			// Normalized here too, so sources stored percent-encoded still match.
+			return Manager::normalize_source( (string) $rule['source'] ) === $path ? 'matched' : 'no';
 		}
 
 		// phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged -- A stored pattern may be invalid; false means "invalid", not a warning in the front end.
@@ -127,7 +128,7 @@ final class Matcher {
 			'source'      => (string) $rule['source'],
 			'type'        => $type,
 			'regex'       => $regex,
-			'destination' => in_array( $type, [ 410, 451 ], true ) ? '' : self::destination( $rule, $regex, $path ),
+			'destination' => in_array( $type, [ 410, 451 ], true ) ? '' : self::destination( $rule, $regex, rawurldecode( $path ) ),
 		];
 	}
 

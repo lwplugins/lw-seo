@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.9.6] - 2026-11-02
+
+### Added
+- `/sitemap_index.xml` (used by other SEO plugins) and `/wp-sitemap.xml` (WordPress core) redirect to the LW SEO sitemap with a 301, so a sitemap address already submitted in Search Console keeps working after switching plugins.
+
+### Fixed
+- Redirects now work on addresses with accented or non-Latin characters, such as `/tag/café/` (#29). Browsers send these characters percent-encoded, and the redirect handler stripped the encoded part, so the address never matched its rule. The source can be entered either way (`/tag/café/` or `/tag/caf%C3%A9/`), in the admin, the redirect tester and imports alike. The same fix applies to the Markdown (`/md`) version of such pages.
+
 ## [1.9.5] - 2026-11-01
 
 ### Added

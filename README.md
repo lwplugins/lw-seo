@@ -33,7 +33,7 @@ Lightweight SEO plugin for WordPress - minimal footprint, maximum impact.
 - **Browser-readable view** - XSL stylesheet so the sitemap is easy to read in a browser; can be turned off
 - **Clean** - noindex types/taxonomies, noindex and password-protected posts, and the WooCommerce cart/checkout/my account pages are left out
 - **Developer filters** - `lw_seo_sitemap_post_types`, `lw_seo_sitemap_exclude_post`, `lw_seo_sitemap_excluded_ids`, `lw_seo_sitemap_urls`, `lw_seo_sitemap_images`, `lw_seo_sitemap_content_images`
-- Available at `yoursite.com/sitemap.xml` (per-type files: `sitemap-{type}.xml`)
+- Available at `yoursite.com/sitemap.xml` (per-type files: `sitemap-{type}.xml`); `/sitemap_index.xml` and `/wp-sitemap.xml` redirect to it with a 301
 
 ### HTML Sitemap
 - **Shortcode** - `[lw_html_sitemap]`

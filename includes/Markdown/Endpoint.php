@@ -11,6 +11,7 @@ namespace LightweightPlugins\SEO\Markdown;
 
 use LightweightPlugins\SEO\Content\Eligibility;
 use LightweightPlugins\SEO\ContentSignals;
+use LightweightPlugins\SEO\Helpers\UrlField;
 use LightweightPlugins\SEO\Options;
 
 /**
@@ -120,7 +121,8 @@ final class Endpoint {
 	 * @return string
 	 */
 	private function request_path(): string {
-		$uri = sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ?? '' ) );
+		// Encoded octets are kept: non-ASCII slugs arrive percent-encoded.
+		$uri = UrlField::clean( wp_unslash( $_SERVER['REQUEST_URI'] ?? '' ) ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- UrlField::clean() is sanitize_text_field() that keeps %XX octets.
 
 		return RequestPath::relative( (string) wp_parse_url( $uri, PHP_URL_PATH ), (string) wp_parse_url( home_url(), PHP_URL_PATH ) );
 	}

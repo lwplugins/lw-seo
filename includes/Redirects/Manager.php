@@ -259,6 +259,9 @@ final class Manager {
 			$source = substr( $source, strlen( $site_url ) );
 		}
 
+		// Compare paths decoded: browsers send non-ASCII characters percent-encoded.
+		$source = rawurldecode( $source );
+
 		// Ensure leading slash.
 		if ( ! str_starts_with( $source, '/' ) ) {
 			$source = '/' . $source;

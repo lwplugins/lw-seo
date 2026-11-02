@@ -12,6 +12,7 @@ namespace LightweightPlugins\SEO\Rest\Admin;
 use LightweightPlugins\SEO\Redirects\DuplicateSource;
 use LightweightPlugins\SEO\Redirects\Manager;
 use LightweightPlugins\SEO\Redirects\Repository;
+use LightweightPlugins\SEO\Helpers\UrlField;
 use LightweightPlugins\SEO\Redirects\Validator;
 use WP_Error;
 use WP_REST_Request;
@@ -191,8 +192,8 @@ final class RedirectsController {
 	 */
 	private function input( WP_REST_Request $request ): array {
 		return [
-			sanitize_text_field( (string) $request->get_param( 'source' ) ),
-			sanitize_text_field( (string) $request->get_param( 'destination' ) ),
+			UrlField::clean( (string) $request->get_param( 'source' ) ),
+			UrlField::clean( (string) $request->get_param( 'destination' ) ),
 			Validator::normalize_type( (int) $request->get_param( 'type' ) ),
 			rest_sanitize_boolean( $request->get_param( 'regex' ) ?? false ),
 		];

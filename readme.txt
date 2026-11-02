@@ -3,7 +3,7 @@ Contributors: lwplugins
 Tags: seo, sitemap, schema, opengraph, breadcrumbs
 Requires at least: 6.6
 Tested up to: 7.1
-Stable tag: 1.9.5
+Stable tag: 1.9.6
 Requires PHP: 8.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -137,7 +137,7 @@ No. Rewrite rules are flushed automatically on activation, whenever the sitemap 
 
 = Where can I find the sitemap? =
 
-Your sitemap is available at `yoursite.com/sitemap.xml`
+Your sitemap is available at `yoursite.com/sitemap.xml`. The addresses `/sitemap_index.xml` and `/wp-sitemap.xml` redirect to it, so a sitemap address submitted while another SEO plugin was active keeps working.
 
 = How do I show an HTML sitemap? =
 
@@ -170,6 +170,10 @@ Only if you turn on IndexNow. See External services below.
 6. Settings page - Advanced tab
 
 == Changelog ==
+
+= 1.9.6 =
+* New: `/sitemap_index.xml` (used by other SEO plugins) and `/wp-sitemap.xml` (WordPress core) redirect to the LW SEO sitemap with a 301, so a sitemap address already submitted in Search Console keeps working after switching plugins.
+* Fix: Redirects now work on addresses with accented or non-Latin characters, such as `/tag/café/` (#29). Browsers send these characters percent-encoded, and the redirect handler stripped the encoded part, so the address never matched its rule. The source can be entered either way (`/tag/café/` or `/tag/caf%C3%A9/`), in the admin, the redirect tester and imports alike. The same fix applies to the Markdown (`/md`) version of such pages.
 
 = 1.9.5 =
 * New: Admin quick search: a search field at the top of the sidebar (also Cmd/Ctrl+K) finds sections, cards and settings by name or help text, accent-insensitive, and opens the match: it switches to the tab, scrolls to the setting and highlights it. Recently opened results are listed first.
