@@ -136,7 +136,30 @@ final class MatcherTest extends MonkeyTestCase {
 
 		$match = Matcher::match( '/tag/caf%C3%A9/' );
 
-		$this->assertSame( 'https://example.test/topic/café/', $match['destination'] );
+		$this->assertSame( 'https://example.test/topic/caf%C3%A9/', $match['destination'] );
+	}
+
+	/**
+	 * A decoded capture must not add a query, fragment, user info or a new
+	 * path root to the destination.
+	 *
+	 * @dataProvider provide_unsafe_captures
+	 */
+	public function test_regex_captures_are_re_encoded( string $destination, string $request, string $expected ): void {
+		$this->rules( [ [ '^/old/(.+)$', $destination, 301, true ] ] );
+
+		$this->assertSame( $expected, Matcher::match( $request )['destination'] );
+	}
+
+	public static function provide_unsafe_captures(): array {
+		return [
+			'query'         => [ '/new/$1', '/old/a%3Fx=1', 'https://example.test/new/a%3Fx%3D1' ],
+			'fragment'      => [ '/new/$1', '/old/a%23b', 'https://example.test/new/a%23b' ],
+			'user info'     => [ 'https://other.test$1', '/old/%40evil.test', 'https://other.test%40evil.test' ],
+			'backslash'     => [ '/new/$1', '/old/%5C%5Cevil.test', 'https://example.test/new/%5C%5Cevil.test' ],
+			'slash kept'    => [ '/new/${1}', '/old/a/b', 'https://example.test/new/a/b' ],
+			'percent sign'  => [ '/new/$1', '/old/100%25', 'https://example.test/new/100%25' ],
+		];
 	}
 
 	public function test_gone_has_empty_destination(): void {

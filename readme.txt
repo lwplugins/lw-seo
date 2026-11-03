@@ -3,7 +3,7 @@ Contributors: lwplugins
 Tags: seo, sitemap, schema, opengraph, breadcrumbs
 Requires at least: 6.6
 Tested up to: 7.1
-Stable tag: 1.9.6
+Stable tag: 1.9.7
 Requires PHP: 8.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -170,6 +170,9 @@ Only if you turn on IndexNow. See External services below.
 6. Settings page - Advanced tab
 
 == Changelog ==
+
+= 1.9.7 =
+* Fix: Regex redirects with `$1`-style references insert the matched part of the address percent-encoded, so accented captures produce a valid destination URL and a captured part only ever adds to the path.
 
 = 1.9.6 =
 * New: `/sitemap_index.xml` (used by other SEO plugins) and `/wp-sitemap.xml` (WordPress core) redirect to the LW SEO sitemap with a 301, so a sitemap address already submitted in Search Console keeps working after switching plugins.

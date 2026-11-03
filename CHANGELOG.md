@@ -1,5 +1,10 @@
 # Changelog
 
+## [1.9.7] - 2026-11-03
+
+### Fixed
+- Regex redirects with `$1`-style references insert the matched part of the address percent-encoded, so accented captures produce a valid destination URL and a captured part only ever adds to the path.
+
 ## [1.9.6] - 2026-11-02
 
 ### Added

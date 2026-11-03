@@ -144,10 +144,50 @@ final class Matcher {
 		$destination = (string) $rule['destination'];
 
 		if ( $regex && str_contains( $destination, '$' ) ) {
-			$destination = (string) preg_replace( Manager::regex_pattern( (string) $rule['source'] ), $destination, $path );
+			$destination = self::fill_captures( Manager::regex_pattern( (string) $rule['source'] ), $destination, $path );
 		}
 
 		return str_starts_with( $destination, 'http' ) ? $destination : home_url( $destination );
+	}
+
+	/**
+	 * Like preg_replace(), but the text taken from the decoded request path
+	 * (captured groups and the unmatched rest) goes in percent-encoded, so it
+	 * can only add path segments, never a query, fragment, user info or host.
+	 *
+	 * @param string $pattern  Delimited pattern.
+	 * @param string $template Destination with `$n`, `${n}` or `\n` references.
+	 * @param string $path     Decoded request path.
+	 * @return string
+	 */
+	private static function fill_captures( string $pattern, string $template, string $path ): string {
+		$rest  = preg_split( $pattern, $path );
+		$found = preg_match_all( $pattern, $path, $matches, PREG_SET_ORDER );
+		if ( false === $rest || ! $found ) {
+			return $template;
+		}
+
+		$out = self::encode_path( (string) array_shift( $rest ) );
+		foreach ( $matches as $i => $groups ) {
+			$out .= (string) preg_replace_callback(
+				'/(?|\$\{(\d{1,2})\}|\$(\d{1,2})|\\\\(\d{1,2}))/',
+				static fn( array $ref ): string => self::encode_path( (string) ( $groups[ (int) $ref[1] ] ?? '' ) ),
+				$template
+			);
+			$out .= self::encode_path( (string) ( $rest[ $i ] ?? '' ) );
+		}
+
+		return $out;
+	}
+
+	/**
+	 * Percent-encode every path segment, keeping the slashes.
+	 *
+	 * @param string $text Decoded text.
+	 * @return string
+	 */
+	private static function encode_path( string $text ): string {
+		return implode( '/', array_map( 'rawurlencode', explode( '/', $text ) ) );
 	}
 
 	/**
