@@ -1,8 +1,9 @@
 # Changelog
 
-## [1.9.7] - 2026-11-03
+## [1.9.7] - 2026-11-05
 
 ### Fixed
+- Admin quick search: moving the mouse over a result no longer breaks the dialog (a console error, and Enter or the arrow keys stopped working); the result under the pointer becomes the selected one.
 - Regex redirects with `$1`-style references insert the matched part of the address percent-encoded, so accented captures produce a valid destination URL and a captured part only ever adds to the path.
 
 ## [1.9.6] - 2026-11-02

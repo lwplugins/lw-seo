@@ -172,6 +172,7 @@ Only if you turn on IndexNow. See External services below.
 == Changelog ==
 
 = 1.9.7 =
+* Fix: Admin quick search: moving the mouse over a result no longer breaks the dialog (a console error, and Enter or the arrow keys stopped working); the result under the pointer becomes the selected one.
 * Fix: Regex redirects with `$1`-style references insert the matched part of the address percent-encoded, so accented captures produce a valid destination URL and a captured part only ever adds to the path.
 
 = 1.9.6 =
