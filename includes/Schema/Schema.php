@@ -112,7 +112,7 @@ final class Schema {
 			'url'         => home_url( '/' ),
 			'name'        => get_bloginfo( 'name' ),
 			'description' => get_bloginfo( 'description' ),
-			'inLanguage'  => get_locale(),
+			'inLanguage'  => Language::tag(),
 		];
 
 		// Add search action.
@@ -210,7 +210,7 @@ final class Schema {
 			'url'             => $this->get_current_url(),
 			'name'            => wp_get_document_title(),
 			'isPartOf'        => [ '@id' => home_url( '/#website' ) ],
-			'inLanguage'      => get_locale(),
+			'inLanguage'      => Language::tag(),
 			'potentialAction' => [
 				[
 					'@type'  => 'ReadAction',
@@ -263,8 +263,8 @@ final class Schema {
 			'datePublished'    => get_the_date( 'c', $post ),
 			'dateModified'     => get_the_modified_date( 'c', $post ),
 			'mainEntityOfPage' => [ '@id' => get_permalink( $post ) . '#webpage' ],
-			'wordCount'        => str_word_count( wp_strip_all_tags( $post->post_content ) ),
-			'inLanguage'       => get_locale(),
+			'wordCount'        => WordCount::from_content( $post->post_content ),
+			'inLanguage'       => Language::tag(),
 		];
 
 		// Author.
@@ -396,7 +396,7 @@ final class Schema {
 			'url'             => $url,
 			'name'            => get_the_title( $post ),
 			'isPartOf'        => [ '@id' => home_url( '/#website' ) ],
-			'inLanguage'      => get_locale(),
+			'inLanguage'      => Language::tag(),
 			'datePublished'   => get_the_date( 'c', $post ),
 			'dateModified'    => get_the_modified_date( 'c', $post ),
 			'potentialAction' => [
@@ -438,8 +438,8 @@ final class Schema {
 			'datePublished'    => get_the_date( 'c', $post ),
 			'dateModified'     => get_the_modified_date( 'c', $post ),
 			'mainEntityOfPage' => [ '@id' => $url . '#webpage' ],
-			'wordCount'        => str_word_count( wp_strip_all_tags( $post->post_content ) ),
-			'inLanguage'       => get_locale(),
+			'wordCount'        => WordCount::from_content( $post->post_content ),
+			'inLanguage'       => Language::tag(),
 		];
 
 		// Author.

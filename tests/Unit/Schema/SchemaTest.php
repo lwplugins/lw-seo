@@ -46,9 +46,11 @@ final class SchemaTest extends MonkeyTestCase {
 			static fn( string $show ) => match ( $show ) {
 				'name'        => 'Teszt Oldal',
 				'description' => 'Ez a szlogen',
+				'language'    => 'hu-HU',
 				default       => '',
 			}
 		);
+		// The schema must not use the underscore locale (#33).
 		Functions\when( 'get_locale' )->justReturn( 'hu_HU' );
 		Functions\when( 'get_permalink' )->justReturn( 'https://example.test/cikk/' );
 		Functions\when( 'get_the_title' )->alias(
@@ -58,21 +60,21 @@ final class SchemaTest extends MonkeyTestCase {
 		Functions\when( 'get_the_modified_date' )->justReturn( '2026-07-17T12:00:00+00:00' );
 		Functions\when( 'has_post_thumbnail' )->justReturn( false );
 		Functions\when( 'wp_strip_all_tags' )->alias( 'strip_tags' );
+		Functions\when( 'strip_shortcodes' )->returnArg();
 		Functions\when( 'has_blocks' )->justReturn( false );
 	}
 
 	/**
 	 * @return \WP_Post
 	 */
-	private function make_post( string $post_type ): \WP_Post {
+	private function make_post( string $post_type, string $content = 'one two three four five' ): \WP_Post {
 		return new \WP_Post(
 			[
 				'ID'           => 7,
 				'post_type'    => $post_type,
 				'post_author'  => 42,
 				'post_title'   => 'Cikk címe',
-				// ASCII content keeps str_word_count() deterministic across locales.
-				'post_content' => 'one two three four five',
+				'post_content' => $content,
 			]
 		);
 	}
@@ -134,7 +136,7 @@ final class SchemaTest extends MonkeyTestCase {
 		$this->assertSame( 'WebSite', $website['@type'] );
 		$this->assertSame( 'https://example.test/#website', $website['@id'] );
 		$this->assertSame( 'Teszt Oldal', $website['name'] );
-		$this->assertSame( 'hu_HU', $website['inLanguage'] );
+		$this->assertSame( 'hu-HU', $website['inLanguage'] );
 		$this->assertSame( 'SearchAction', $website['potentialAction']['@type'] );
 		$this->assertSame(
 			'https://example.test/?s={search_term_string}',
@@ -221,10 +223,26 @@ final class SchemaTest extends MonkeyTestCase {
 		$this->assertSame( 'Cikk címe', $article['headline'] );
 		$this->assertSame( 'https://example.test/cikk/#webpage', $article['mainEntityOfPage']['@id'] );
 		$this->assertSame( 5, $article['wordCount'] );
+		$this->assertSame( 'hu-HU', $article['inLanguage'] );
 		$this->assertSame( 'Person', $article['author']['@type'] );
 		$this->assertSame( 'Szerző Anna', $article['author']['name'] );
 		$this->assertSame( 'https://example.test/#organization', $article['publisher']['@id'] );
 		$this->assertSame( 'Hírek, Tech', $article['keywords'] );
+	}
+
+	/**
+	 * Non-ASCII content is counted per word, not per ASCII run (#33).
+	 */
+	public function test_article_word_count_handles_chinese_and_accented_text(): void {
+		$this->arrange_environment();
+		Functions\when( 'get_userdata' )->justReturn( false );
+		Functions\when( 'get_the_category' )->justReturn( [] );
+
+		$chinese = ( new Schema() )->build_graph_for_post( $this->make_post( 'post', '<p>我喜欢学习中文。</p>' ) )['@graph'][3];
+		$this->assertSame( 7, $chinese['wordCount'] );
+
+		$hungarian = ( new Schema() )->build_graph_for_post( $this->make_post( 'post', 'Árvíztűrő tükörfúrógép' ) )['@graph'][3];
+		$this->assertSame( 2, $hungarian['wordCount'] );
 	}
 
 	/**
