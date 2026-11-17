@@ -3,7 +3,7 @@ Contributors: lwplugins
 Tags: seo, sitemap, schema, opengraph, breadcrumbs
 Requires at least: 6.6
 Tested up to: 7.1
-Stable tag: 1.9.7
+Stable tag: 1.9.8
 Requires PHP: 8.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -170,6 +170,12 @@ Only if you turn on IndexNow. See External services below.
 6. Settings page - Advanced tab
 
 == Changelog ==
+
+= 1.9.8 =
+* New: Redirect import also reads a redirects JSON export from All in One SEO (#29), in the Redirects tab and with `wp lw-seo redirect import`. Source, target, type and regex are taken over; disabled redirects are skipped; every row is checked like a CSV line, and a file that is not valid JSON imports nothing.
+* Fix: Schema `inLanguage` is a standard language tag (`zh-CN`, `hu-HU`, the same as the page's `lang` attribute) instead of the WordPress locale (`zh_CN`) (#33).
+* Fix: Schema `wordCount` counts words in any language (#33). Chinese, Japanese and Korean text counts each character as a word (a Chinese article showed about 3 words), and words with accented letters, such as Hungarian ones, are no longer split apart. Shortcodes are left out of the count.
+* Fix: Redirect import keeps percent-encoded addresses (`/caf%C3%A9/`) in the imported file instead of cutting the encoded characters out.
 
 = 1.9.7 =
 * Fix: Admin quick search: moving the mouse over a result no longer breaks the dialog (a console error, and Enter or the arrow keys stopped working); the result under the pointer becomes the selected one.

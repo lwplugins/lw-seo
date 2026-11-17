@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.9.8] - 2026-11-17
+
+### Added
+- Redirect import also reads a redirects JSON export from All in One SEO (#29), in the Redirects tab and with `wp lw-seo redirect import`. Source, target, type and regex are taken over; disabled redirects are skipped; every row is checked like a CSV line, and a file that is not valid JSON imports nothing.
+
+### Fixed
+- Schema `inLanguage` is a standard language tag (`zh-CN`, `hu-HU`, the same as the page's `lang` attribute) instead of the WordPress locale (`zh_CN`) (#33).
+- Schema `wordCount` counts words in any language (#33). Chinese, Japanese and Korean text counts each character as a word (a Chinese article showed about 3 words), and words with accented letters, such as Hungarian ones, are no longer split apart. Shortcodes are left out of the count.
+- Redirect import keeps percent-encoded addresses (`/caf%C3%A9/`) in the imported file instead of cutting the encoded characters out.
+
 ## [1.9.7] - 2026-11-05
 
 ### Fixed

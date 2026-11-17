@@ -199,7 +199,7 @@ Returns Schema.org JSON-LD structured data for a post.
       "url": "https://example.com/",
       "name": "Site Name",
       "description": "Site tagline",
-      "inLanguage": "en_US",
+      "inLanguage": "en-US",
       "potentialAction": {
         "@type": "SearchAction",
         "target": {
@@ -233,7 +233,7 @@ Returns Schema.org JSON-LD structured data for a post.
       "url": "https://example.com/post-slug/",
       "name": "Post Title",
       "isPartOf": {"@id": "https://example.com/#website"},
-      "inLanguage": "en_US",
+      "inLanguage": "en-US",
       "datePublished": "2024-01-15T10:30:00+00:00",
       "dateModified": "2024-01-16T14:22:00+00:00",
       "primaryImageOfPage": {"@id": "https://example.com/#primaryimage"},
@@ -247,7 +247,7 @@ Returns Schema.org JSON-LD structured data for a post.
       "dateModified": "2024-01-16T14:22:00+00:00",
       "mainEntityOfPage": {"@id": "https://example.com/post-slug/#webpage"},
       "wordCount": 1250,
-      "inLanguage": "en_US",
+      "inLanguage": "en-US",
       "author": {
         "@type": "Person",
         "@id": "https://example.com/author/johndoe/#author",
