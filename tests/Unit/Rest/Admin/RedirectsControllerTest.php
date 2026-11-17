@@ -101,6 +101,55 @@ final class RedirectsControllerTest extends MonkeyTestCase {
 		$this->assertSame( [ 'status' => 400 ], $result->get_error_data() );
 	}
 
+	public function test_import_accepts_an_aioseo_json_export(): void {
+		Functions\when( 'sanitize_textarea_field' )->alias( static fn( $value ) => (string) $value );
+		Functions\when( 'sanitize_file_name' )->alias( static fn( $value ) => (string) $value );
+
+		$result = ( new RedirectsController() )->import_items(
+			new \WP_REST_Request(
+				[
+					'csv'      => '[{"source_url":"/c","target_url":"/new-c","type":"301","regex":"0","enabled":"1"},{"source_url":"/a","target_url":"/z","type":"301","enabled":"1"}]',
+					'filename' => 'aioseo-redirects.json',
+				]
+			)
+		);
+
+		$this->assertInstanceOf( \WP_REST_Response::class, $result );
+		$this->assertSame(
+			[ 'imported' => 1, 'skipped' => 1, 'errors' => [ 'Item 2: A redirect for this source already exists.' ] ],
+			$result->get_data()
+		);
+	}
+
+	/**
+	 * sanitize_textarea_field() drops %XX octets; an imported address must
+	 * keep its percent-encoding (as a redirect added by hand does).
+	 */
+	public function test_import_keeps_percent_encoded_addresses(): void {
+		Functions\when( 'sanitize_textarea_field' )->alias( static fn( $value ) => (string) preg_replace( '/%[a-f0-9]{2}/i', '', (string) $value ) );
+		Functions\when( 'sanitize_file_name' )->alias( static fn( $value ) => (string) $value );
+
+		( new RedirectsController() )->import_items(
+			new \WP_REST_Request( [ 'csv' => '[{"source_url":"/caf%C3%A9","target_url":"https://example.test/k%C3%A1v%C3%A9/","type":"301"}]' ] )
+		);
+
+		$this->assertSame(
+			[ '/café', 'https://example.test/k%C3%A1v%C3%A9/' ],
+			[ $this->options[ Manager::OPTION_NAME ][2]['source'] ?? null, $this->options[ Manager::OPTION_NAME ][2]['destination'] ?? null ]
+		);
+	}
+
+	public function test_import_rejects_malformed_json_without_importing(): void {
+		Functions\when( 'sanitize_textarea_field' )->alias( static fn( $value ) => (string) $value );
+		Functions\when( 'sanitize_file_name' )->alias( static fn( $value ) => (string) $value );
+
+		$result = ( new RedirectsController() )->import_items( new \WP_REST_Request( [ 'csv' => '[{"source_url":"/c"', 'filename' => 'x.json' ] ) );
+
+		$this->assertInstanceOf( \WP_Error::class, $result );
+		$this->assertSame( [ 'status' => 400 ], $result->get_error_data() );
+		$this->assertCount( 2, $this->options[ Manager::OPTION_NAME ] );
+	}
+
 	/**
 	 * Assert the 400 duplicate-source error.
 	 *

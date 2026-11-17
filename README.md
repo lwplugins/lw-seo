@@ -92,7 +92,7 @@ Lightweight SEO plugin for WordPress - minimal footprint, maximum impact.
 - **Shortcodes** - `[lw_address]`, `[lw_phone]`, `[lw_email]`, `[lw_hours]`, `[lw_map]`
 
 ### Redirects & 404
-- **Redirect Manager** - 301, 302, 307, 410 and 451 redirects, with CSV import/export and bulk delete
+- **Redirect Manager** - 301, 302, 307, 410 and 451 redirects, with CSV import/export, JSON import from All in One SEO, and bulk delete
 - **URL tester** - Check which rule a URL would match, in the Redirects screen or with `wp lw-seo redirect test <url>`
 - **404 log** - Off by default; records missing URLs with hit counts, with a "Create redirect" action in the **404** tab, a daily cleanup and a row cap (`wp lw-seo not-found list|clear|prune`)
 - **404 to homepage** - Optional redirect of 404s to the homepage, as a last resort after your redirect rules and WordPress's own redirects (renamed slugs, guessed URLs)

@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace LightweightPlugins\SEO\CLI;
 
 use LightweightPlugins\SEO\Redirects\DuplicateSource;
+use LightweightPlugins\SEO\Redirects\Importer;
 use LightweightPlugins\SEO\Redirects\Manager;
 use LightweightPlugins\SEO\Redirects\Matcher;
 
@@ -124,12 +125,12 @@ final class RedirectCommand {
 	}
 
 	/**
-	 * Import redirects from a CSV file.
+	 * Import redirects from a CSV file or an All in One SEO JSON export.
 	 *
 	 * ## OPTIONS
 	 *
 	 * <file>
-	 * : Path to a CSV file (source,destination,type,regex).
+	 * : Path to a CSV file (source,destination,type,regex) or a .json redirects export.
 	 *
 	 * @param array<int, string>    $args       [file].
 	 * @param array<string, string> $assoc_args Associative args (unused).
@@ -141,7 +142,13 @@ final class RedirectCommand {
 		}
 
 		// phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents -- CLI reads a user-supplied local file path; wp_remote_get is for URLs.
-		$result = Manager::import_csv( (string) file_get_contents( $args[0] ) );
+		$content = (string) file_get_contents( $args[0] );
+		try {
+			$result = Importer::import( $content, $args[0] );
+		} catch ( \InvalidArgumentException $e ) {
+			\WP_CLI::error( $e->getMessage() );
+			return;
+		}
 		\WP_CLI::success( sprintf( 'Imported %d redirect(s), skipped %d.', (int) $result['imported'], (int) $result['skipped'] ) );
 	}
 

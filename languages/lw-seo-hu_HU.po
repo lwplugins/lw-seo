@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LW SEO 1.6.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/lw-seo\n"
-"POT-Creation-Date: 2026-11-01T09:24:43+00:00\n"
+"POT-Creation-Date: 2026-11-17T14:31:44+00:00\n"
 "PO-Revision-Date: 2026-09-24 18:50+0000\n"
 "Last-Translator: Claude AI <ai@anthropic.com>\n"
 "Language-Team: LW Plugins <info@lwplugins.com>\n"
@@ -1147,38 +1147,47 @@ msgstr ""
 msgid "A redirect for this source already exists."
 msgstr "Ehhez a forráshoz már van átirányítás."
 
-#: includes/Redirects/Handler.php:109
+#: includes/Redirects/Handler.php:111
 msgid "Content Deleted"
 msgstr "Tartalom törölve"
 
-#: includes/Redirects/Handler.php:110
+#: includes/Redirects/Handler.php:112
 msgid "The content you are looking for has been permanently removed."
 msgstr "A keresett tartalom véglegesen eltávolítva."
 
-#: includes/Redirects/Handler.php:132
+#: includes/Redirects/Handler.php:134
 msgid "Unavailable For Legal Reasons"
 msgstr "Nem elérhető jogi okokból"
 
-#: includes/Redirects/Handler.php:133
+#: includes/Redirects/Handler.php:135
 msgid "This content is not available due to legal reasons."
 msgstr "Ez a tartalom jogi okokból nem elérhető."
 
-#: includes/Redirects/Handler.php:204
+#: includes/Redirects/Handler.php:206
 msgid "Return to homepage"
 msgstr "Vissza a kezdőlapra"
 
-#: includes/Redirects/Manager.php:331
+#: includes/Redirects/Importer.php:51
 msgid "Invalid format."
 msgstr "Érvénytelen formátum."
 
 #. translators: 1: CSV line number, 2: reason the line was skipped
-#: includes/Redirects/Manager.php:350
+#: includes/Redirects/Importer.php:60
 #, php-format
 msgid "Line %1$d: %2$s"
 msgstr "%1$d. sor: %2$s"
 
-#. translators: 1: CSV line number, 2: reason the line was skipped
-#: includes/Redirects/Manager.php:350
+#: includes/Redirects/Importer.php:78
+msgid "The file is not a valid All in One SEO redirects export (JSON list)."
+msgstr "A fájl nem érvényes All in One SEO átirányítás-export (JSON-lista)."
+
+#. translators: 1: position of the redirect in the JSON file, 2: reason it was skipped
+#: includes/Redirects/Importer.php:92
+#, php-format
+msgid "Item %1$d: %2$s"
+msgstr "%1$d. elem: %2$s"
+
+#: includes/Redirects/Importer.php:115
 msgid "Could not be saved."
 msgstr "Nem sikerült menteni."
 
@@ -1297,19 +1306,19 @@ msgstr "Előbb kapcsold be az IndexNow-t."
 msgid "Unknown migration source."
 msgstr "Ismeretlen migrációs forrás."
 
-#: includes/Rest/Admin/RedirectsController.php:86
+#: includes/Rest/Admin/RedirectsController.php:88
 msgid "Failed to add redirect."
 msgstr "Nem sikerült hozzáadni az átirányítást."
 
-#: includes/Rest/Admin/RedirectsController.php:139
+#: includes/Rest/Admin/RedirectsController.php:141
 msgid "No redirects selected."
 msgstr "Nincs kijelölt átirányítás."
 
-#: includes/Rest/Admin/RedirectsController.php:172
-msgid "No CSV data provided."
-msgstr "Nincs CSV adat megadva."
+#: includes/Rest/Admin/RedirectsController.php:175
+msgid "No data to import."
+msgstr "Nincs importálható adat."
 
-#: includes/Rest/Admin/RedirectsController.php:254
+#: includes/Rest/Admin/RedirectsController.php:261
 msgid "Redirect not found."
 msgstr "Átirányítás nem található."
 
@@ -2192,10 +2201,14 @@ msgid "Download CSV"
 msgstr "CSV letöltése"
 
 #: build/index.js:4
-msgid "Import redirects from a CSV file. Format: source,destination,type,regex"
+msgid ""
+"Import redirects from a CSV file (source,destination,type,regex) or a JSON "
+"redirects export from All in One SEO. Disabled redirects in the export are "
+"skipped."
 msgstr ""
-"Átirányítások importálása CSV fájlból. Formátum: "
-"source,destination,type,regex"
+"Importálj átirányításokat CSV-fájlból (source,destination,type,regex) vagy "
+"az All in One SEO JSON-exportjából. Az exportban kikapcsolt átirányításokat "
+"kihagyjuk."
 
 #. translators: 1: imported redirects, 2: skipped rows.
 #: build/index.js:5
@@ -2203,8 +2216,8 @@ msgid "Imported %1$d redirects, skipped %2$d."
 msgstr "%1$d átirányítás importálva, %2$d kihagyva."
 
 #: build/index.js:5
-msgid "Import CSV"
-msgstr "CSV importálása"
+msgid "Import file"
+msgstr "Fájl importálása"
 
 #: build/index.js:5
 msgid "Matched"
@@ -3574,6 +3587,18 @@ msgstr "html oldaltérkép"
 msgctxt "block keyword"
 msgid "links"
 msgstr "hivatkozások"
+
+#~ msgid "No CSV data provided."
+#~ msgstr "Nincs CSV adat megadva."
+
+#~ msgid ""
+#~ "Import redirects from a CSV file. Format: source,destination,type,regex"
+#~ msgstr ""
+#~ "Átirányítások importálása CSV fájlból. Formátum: "
+#~ "source,destination,type,regex"
+
+#~ msgid "Import CSV"
+#~ msgstr "CSV importálása"
 
 #~ msgid ""
 #~ "Images without alt text, or with an empty alt, get one when the page is "

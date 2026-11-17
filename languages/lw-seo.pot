@@ -2,14 +2,14 @@
 # This file is distributed under the GPL-2.0-or-later.
 msgid ""
 msgstr ""
-"Project-Id-Version: LW SEO 1.9.5\n"
+"Project-Id-Version: LW SEO 1.9.7\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/lw-seo\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-11-01T09:25:16+00:00\n"
+"POT-Creation-Date: 2026-11-17T14:31:57+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: lw-seo\n"
@@ -1091,38 +1091,47 @@ msgstr ""
 msgid "A redirect for this source already exists."
 msgstr ""
 
-#: includes/Redirects/Handler.php:109
+#: includes/Redirects/Handler.php:111
 msgid "Content Deleted"
 msgstr ""
 
-#: includes/Redirects/Handler.php:110
+#: includes/Redirects/Handler.php:112
 msgid "The content you are looking for has been permanently removed."
 msgstr ""
 
-#: includes/Redirects/Handler.php:132
+#: includes/Redirects/Handler.php:134
 msgid "Unavailable For Legal Reasons"
 msgstr ""
 
-#: includes/Redirects/Handler.php:133
+#: includes/Redirects/Handler.php:135
 msgid "This content is not available due to legal reasons."
 msgstr ""
 
-#: includes/Redirects/Handler.php:204
+#: includes/Redirects/Handler.php:206
 msgid "Return to homepage"
 msgstr ""
 
-#: includes/Redirects/Manager.php:331
+#: includes/Redirects/Importer.php:51
 msgid "Invalid format."
 msgstr ""
 
 #. translators: 1: CSV line number, 2: reason the line was skipped
-#: includes/Redirects/Manager.php:350
+#: includes/Redirects/Importer.php:60
 #, php-format
 msgid "Line %1$d: %2$s"
 msgstr ""
 
-#. translators: 1: CSV line number, 2: reason the line was skipped
-#: includes/Redirects/Manager.php:350
+#: includes/Redirects/Importer.php:78
+msgid "The file is not a valid All in One SEO redirects export (JSON list)."
+msgstr ""
+
+#. translators: 1: position of the redirect in the JSON file, 2: reason it was skipped
+#: includes/Redirects/Importer.php:92
+#, php-format
+msgid "Item %1$d: %2$s"
+msgstr ""
+
+#: includes/Redirects/Importer.php:115
 msgid "Could not be saved."
 msgstr ""
 
@@ -1242,19 +1251,19 @@ msgstr ""
 msgid "Unknown migration source."
 msgstr ""
 
-#: includes/Rest/Admin/RedirectsController.php:86
+#: includes/Rest/Admin/RedirectsController.php:88
 msgid "Failed to add redirect."
 msgstr ""
 
-#: includes/Rest/Admin/RedirectsController.php:139
+#: includes/Rest/Admin/RedirectsController.php:141
 msgid "No redirects selected."
 msgstr ""
 
-#: includes/Rest/Admin/RedirectsController.php:172
-msgid "No CSV data provided."
+#: includes/Rest/Admin/RedirectsController.php:175
+msgid "No data to import."
 msgstr ""
 
-#: includes/Rest/Admin/RedirectsController.php:254
+#: includes/Rest/Admin/RedirectsController.php:261
 msgid "Redirect not found."
 msgstr ""
 
@@ -2167,7 +2176,7 @@ msgid "Download CSV"
 msgstr ""
 
 #: build/index.js:4
-msgid "Import redirects from a CSV file. Format: source,destination,type,regex"
+msgid "Import redirects from a CSV file (source,destination,type,regex) or a JSON redirects export from All in One SEO. Disabled redirects in the export are skipped."
 msgstr ""
 
 #. translators: 1: imported redirects, 2: skipped rows.
@@ -2177,7 +2186,7 @@ msgid "Imported %1$d redirects, skipped %2$d."
 msgstr ""
 
 #: build/index.js:5
-msgid "Import CSV"
+msgid "Import file"
 msgstr ""
 
 #: build/index.js:5

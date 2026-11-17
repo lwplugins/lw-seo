@@ -34,6 +34,14 @@ final class UrlFieldTest extends MonkeyTestCase {
 	public function test_still_strips_markup(): void {
 		$this->assertSame( '/old', UrlField::clean( ' <b>/old</b> ' ) );
 	}
+
+	public function test_multiline_keeps_line_breaks_and_octets(): void {
+		Functions\when( 'sanitize_textarea_field' )->alias(
+			static fn( string $value ): string => trim( (string) preg_replace( '/%[a-f0-9]{2}/i', '', wp_strip_all_tags_stub( $value ) ) )
+		);
+
+		$this->assertSame( "/a,/caf%C3%A9\n/b,/c", UrlField::clean( "/a,/caf%C3%A9\n/b,/c", true ) );
+	}
 }
 
 /**

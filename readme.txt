@@ -40,7 +40,7 @@ LW SEO provides essential SEO features without the bloat. No upsells, no trackin
 * Breadcrumbs with shortcode and PHP function
 * URL Redirect Manager (301, 302, 307, 410, 451), with a URL tester
 * Regex redirect support
-* CSV import/export and bulk delete for redirects
+* CSV import/export, JSON import from All in One SEO, and bulk delete for redirects
 * Import from Yoast SEO, Rank Math, SEOPress and All in One SEO (dry-run preview, never overwrites LW SEO data)
 * Image sitemap (featured, in-content and WooCommerce gallery images) and a browser-readable sitemap view
 * HTML sitemap with a shortcode and a block, cached

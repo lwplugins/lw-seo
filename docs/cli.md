@@ -201,6 +201,11 @@ wp lw-seo redirect export [<file>]
 them. All are resolved before any is deleted, so the IDs of the others do not
 shift; if one is unknown, nothing is deleted.
 
+`redirect import` reads a CSV file (`source,destination,type,regex`) or an
+All in One SEO redirects JSON export (a `.json` file, or content that starts
+with a JSON list; disabled redirects are skipped). A JSON file that cannot be
+parsed is an error, and nothing is imported.
+
 `redirect add` and `redirect import` skip a source that already has a
 redirect.
 

@@ -14,7 +14,8 @@ import SettingRow from '../../components/SettingRow';
 import { api, errorMessage } from '../../data/api';
 
 /**
- * CSV export (browser download) and import (read locally, sent as text).
+ * CSV export (browser download) and CSV or All in One SEO JSON import
+ * (read locally, sent as text).
  *
  * @param {Object}   props
  * @param {Function} props.onImported Reload the list.
@@ -41,14 +42,14 @@ export default function ImportExport( { onImported } ) {
 		setBusy( '' );
 	};
 
-	const importCsv = async ( file ) => {
+	const importFile = async ( file ) => {
 		if ( ! file ) {
 			return;
 		}
 		setBusy( 'import' );
 		setResult( null );
 		try {
-			const r = await api.importRedirects( await file.text() );
+			const r = await api.importRedirects( await file.text(), file.name );
 			setResult( [
 				r.errors?.length ? 'error' : 'ok',
 				sprintf(
@@ -89,18 +90,18 @@ export default function ImportExport( { onImported } ) {
 			<SettingRow
 				title={ __( 'Import', 'lw-seo' ) }
 				help={ __(
-					'Import redirects from a CSV file. Format: source,destination,type,regex',
+					'Import redirects from a CSV file (source,destination,type,regex) or a JSON redirects export from All in One SEO. Disabled redirects in the export are skipped.',
 					'lw-seo'
 				) }
 			>
 				<div className="lw-admin-inline">
 					<FormFileUpload
 						__next40pxDefaultSize
-						accept=".csv,text/csv"
+						accept=".csv,text/csv,.json,application/json"
 						icon={ upload }
 						variant="secondary"
 						onChange={ ( event ) =>
-							importCsv( event.currentTarget.files?.[ 0 ] )
+							importFile( event.currentTarget.files?.[ 0 ] )
 						}
 						render={ ( { openFileDialog } ) => (
 							<Button
@@ -110,7 +111,7 @@ export default function ImportExport( { onImported } ) {
 								isBusy={ busy === 'import' }
 								onClick={ openFileDialog }
 							>
-								{ __( 'Import CSV', 'lw-seo' ) }
+								{ __( 'Import file', 'lw-seo' ) }
 							</Button>
 						) }
 					/>

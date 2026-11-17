@@ -305,66 +305,13 @@ final class Manager {
 	}
 
 	/**
-	 * Import redirects from CSV.
+	 * Import redirects from CSV (kept for existing callers; see Importer).
 	 *
 	 * @param string $csv_content CSV content.
 	 * @return array{imported: int, skipped: int, errors: array<string>}
 	 */
 	public static function import_csv( string $csv_content ): array {
-		$result = [
-			'imported' => 0,
-			'skipped'  => 0,
-			'errors'   => [],
-		];
-
-		$lines = explode( "\n", $csv_content );
-
-		foreach ( $lines as $line_num => $line ) {
-			$line = trim( $line );
-			if ( empty( $line ) ) {
-				continue;
-			}
-
-			// Skip header row.
-			if ( 0 === $line_num && str_contains( strtolower( $line ), 'source' ) ) {
-				continue;
-			}
-
-			$parts = str_getcsv( $line, ',', '"', '\\' );
-			$error = __( 'Invalid format.', 'lw-seo' );
-
-			if ( count( $parts ) >= 2 ) {
-				$source      = (string) $parts[0];
-				$destination = (string) $parts[1];
-				$type        = isset( $parts[2] ) ? (int) $parts[2] : 301;
-				$regex       = self::csv_flag( (string) ( $parts[3] ?? '' ) );
-				$error       = Validator::error( $source, $destination, $type, $regex );
-				if ( null === $error && null !== DuplicateSource::find( self::get_all(), $source, $regex ) ) {
-					$error = DuplicateSource::message();
-				}
-
-				if ( null === $error && false !== self::add( $source, $destination, $type, $regex ) ) {
-					++$result['imported'];
-					continue;
-				}
-			}
-
-			/* translators: 1: CSV line number, 2: reason the line was skipped */
-			$result['errors'][] = sprintf( __( 'Line %1$d: %2$s', 'lw-seo' ), $line_num + 1, $error ?? __( 'Could not be saved.', 'lw-seo' ) );
-			++$result['skipped'];
-		}
-
-		return $result;
-	}
-
-	/**
-	 * Whether a CSV regex column is truthy.
-	 *
-	 * @param string $value Column value.
-	 * @return bool
-	 */
-	private static function csv_flag( string $value ): bool {
-		return in_array( strtolower( trim( $value ) ), [ '1', 'true', 'yes' ], true );
+		return Importer::import_csv( $csv_content );
 	}
 
 	/**

@@ -27,13 +27,15 @@ final class UrlField {
 	/**
 	 * Sanitize a URL, path or pattern typed or sent as text.
 	 *
-	 * @param string $value Raw value.
+	 * @param string $value     Raw value.
+	 * @param bool   $multiline Keep line breaks (an imported file's content).
 	 * @return string
 	 */
-	public static function clean( string $value ): string {
+	public static function clean( string $value, bool $multiline = false ): string {
 		$value     = str_replace( self::MARKER, '', $value );
 		$protected = (string) preg_replace( '/%([0-9a-fA-F]{2})/', self::MARKER . '$1', $value );
+		$clean     = $multiline ? sanitize_textarea_field( $protected ) : sanitize_text_field( $protected );
 
-		return str_replace( self::MARKER, '%', sanitize_text_field( $protected ) );
+		return str_replace( self::MARKER, '%', $clean );
 	}
 }

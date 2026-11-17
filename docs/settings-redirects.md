@@ -126,13 +126,15 @@ source,destination,type,regex
 /deleted-page/,,410,false
 ```
 
-### Import from CSV
+### Import from CSV or JSON
 
-1. Prepare a CSV file with columns: `source`, `destination`, `type`, `regex`
-2. Select the file
-3. Click **Import CSV**
+1. Prepare a CSV file with columns: `source`, `destination`, `type`, `regex`,
+   or use a redirects JSON export from All in One SEO (see below)
+2. Click **Import file**
+3. Select the file
 
-Rows whose source already has a redirect are skipped and listed in the result.
+Rows whose source already has a redirect, or that fail validation, are
+skipped and listed in the result.
 
 **CSV Format:**
 
@@ -142,6 +144,27 @@ Rows whose source already has a redirect are skipped and listed in the result.
 | destination | No* | Target URL (empty for 410/451) |
 | type | No | 301, 302, 307, 410, 451 (default: 301) |
 | regex | No | true, false, 1, 0, yes, no (default: false) |
+
+**All in One SEO JSON export:**
+
+A `.json` file (or any file whose content is a JSON list) is read as an All in
+One SEO redirects export:
+
+```json
+[{"id":"1","source_url":"/example/","target_url":"https://example.com/","type":"301","regex":"0","enabled":"1", "...": "..."}]
+```
+
+| Export field | LW SEO field |
+|--------------|--------------|
+| `source_url` | source |
+| `target_url` | destination |
+| `type` | type (301, 302, 307, 410, 451; anything else becomes 301) |
+| `regex` | regex (`"1"` = regex) |
+| `enabled` | `"0"` rows are skipped and counted as skipped |
+
+Other fields (group, query parameter handling, ignore case/slash, comment,
+dates) have no LW SEO equivalent and are ignored. Every row is checked
+exactly like a CSV line. If the file is not valid JSON, nothing is imported.
 
 ## How It Works
 
@@ -190,6 +213,11 @@ Remove one redirect to break the loop.
 ### From Yoast SEO Premium
 
 Export redirects from Yoast as CSV and import into LW SEO. The format is compatible.
+
+### From All in One SEO
+
+Export the redirects as JSON in All in One SEO and import the file into LW
+SEO as is (see the JSON format above).
 
 ### From Redirection Plugin
 

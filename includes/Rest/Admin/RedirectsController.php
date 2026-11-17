@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace LightweightPlugins\SEO\Rest\Admin;
 
 use LightweightPlugins\SEO\Redirects\DuplicateSource;
+use LightweightPlugins\SEO\Redirects\Importer;
 use LightweightPlugins\SEO\Redirects\Manager;
 use LightweightPlugins\SEO\Redirects\Repository;
 use LightweightPlugins\SEO\Helpers\UrlField;
@@ -20,7 +21,7 @@ use WP_REST_Response;
 use WP_REST_Server;
 
 /**
- * CRUD, bulk delete, CSV export and CSV import under lw-seo/v1/admin/redirects.
+ * CRUD, bulk delete, CSV export and CSV/JSON import under lw-seo/v1/admin/redirects.
  */
 final class RedirectsController {
 
@@ -162,18 +163,23 @@ final class RedirectsController {
 	}
 
 	/**
-	 * Import redirects from CSV text.
+	 * Import redirects from the text of a CSV or All in One SEO JSON file
+	 * (`csv` holds the file content, `filename` its name).
 	 *
 	 * @param WP_REST_Request $request Request.
 	 * @return WP_REST_Response|WP_Error
 	 */
 	public function import_items( WP_REST_Request $request ) {
-		$csv = sanitize_textarea_field( (string) $request->get_param( 'csv' ) );
-		if ( '' === trim( $csv ) ) {
-			return $this->invalid( __( 'No CSV data provided.', 'lw-seo' ) );
+		$content = UrlField::clean( (string) $request->get_param( 'csv' ), true );
+		if ( '' === trim( $content ) ) {
+			return $this->invalid( __( 'No data to import.', 'lw-seo' ) );
 		}
 
-		$result = Manager::import_csv( $csv );
+		try {
+			$result = Importer::import( $content, sanitize_file_name( (string) $request->get_param( 'filename' ) ) );
+		} catch ( \InvalidArgumentException $e ) {
+			return $this->invalid( $e->getMessage() );
+		}
 
 		return new WP_REST_Response(
 			[
