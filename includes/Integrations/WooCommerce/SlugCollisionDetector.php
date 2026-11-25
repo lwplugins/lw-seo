@@ -155,8 +155,8 @@ final class SlugCollisionDetector {
 		];
 
 		foreach ( array_filter( $page_ids ) as $page_id ) {
-			$slug = get_post_field( 'post_name', $page_id );
-			if ( is_string( $slug ) && '' !== $slug ) {
+			$slug = (string) get_post_field( 'post_name', $page_id );
+			if ( '' !== $slug ) {
 				$slugs[] = $slug;
 			}
 		}
